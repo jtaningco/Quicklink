@@ -158,4 +158,4 @@ detailed documentation.
 
 Barebones `url_patterns` to serve static media when in solo development mode.
 
-*Boilerplate code from https://github.com/bueda/django-boilerplate*
+*Boilerplate code from https://github.com/bueda/django-boilerplate and https://github.com/app-generator/boilerplate-code-django*
