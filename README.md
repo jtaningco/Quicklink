@@ -5,7 +5,7 @@ Quicklink is a full-stack web project for our class, **ITMGT45: The Digital Econ
 
 1. Create a python environment with [virtualenv](https://packaging.python.org/guides/installing-using-pip-and-virtual-environments/) or [anaconda](https://docs.conda.io/projects/conda/en/latest/user-guide/tasks/manage-environments.html) 
 
-2. Activate the newly created virtual environment.
+2. Activate the newly created virtual environment. [Alternative tutorial](https://medium.com/@diwassharma/starting-a-python-django-project-on-mac-os-x-c089165cf010)
 
 3. Setup a mySQL database. [Mac](https://medium.com/macoclock/mysql-on-mac-getting-started-cecb65b78e#:~:text=From%20System%20Preferences%2C%20open%20MySQL,launch%20MySQL%20from%20System%20Preferences.) [Windows](https://www.microfocus.com/documentation/idol/IDOL_12_0/MediaServer/Guides/html/English/Content/Getting_Started/Configure/_TRN_Set_up_MySQL.htm) 
    
