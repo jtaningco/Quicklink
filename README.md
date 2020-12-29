@@ -5,9 +5,9 @@ Quicklink is a full-stack web project for our class, **ITMGT45: The Digital Econ
 
 1. Create a python environment with [virtualenv](https://packaging.python.org/guides/installing-using-pip-and-virtual-environments/) or [anaconda](https://docs.conda.io/projects/conda/en/latest/user-guide/tasks/manage-environments.html) 
 
-2. Activate the newly created virutal environment.
+2. Activate the newly created virtual environment.
 
-3. Setup a postgresql database. [Mac](https://www.codementor.io/@engineerapart/getting-started-with-postgresql-on-mac-osx-are8jcopb) [Windows](https://www.microfocus.com/documentation/idol/IDOL_12_0/MediaServer/Guides/html/English/Content/Getting_Started/Configure/_TRN_Set_up_PostgreSQL.htm) 
+3. Setup a mySQL database. [Mac](https://medium.com/macoclock/mysql-on-mac-getting-started-cecb65b78e#:~:text=From%20System%20Preferences%2C%20open%20MySQL,launch%20MySQL%20from%20System%20Preferences.) [Windows](https://www.microfocus.com/documentation/idol/IDOL_12_0/MediaServer/Guides/html/English/Content/Getting_Started/Configure/_TRN_Set_up_MySQL.htm) 
    
 4. Create a new `.env` file in the `config/settings` folder. Template is in `.env.example`. 
   
@@ -30,9 +30,12 @@ Quicklink is a full-stack web project for our class, **ITMGT45: The Digital Econ
                 models.py
                 views.py
                 forms.py
+        config/
+            settings.py
+            wsgi.py
+            urls.py
         lib/
-        logconfig/
-        media/
+        static/
             css/
                 vendor/
             js/
@@ -43,7 +46,6 @@ Quicklink is a full-stack web project for our class, **ITMGT45: The Digital Econ
             dev.txt
             production.txt
         templates/
-        vendor/
         environment.py
         fabfile.py
         manage.py
@@ -51,12 +53,16 @@ Quicklink is a full-stack web project for our class, **ITMGT45: The Digital Econ
 
 ### apps
 
-All of your Django "apps" go in this directory. THese have models, views, forms,
+All of your Django "apps" go in this directory. These have models, views, forms,
 templates or all of the above. These should be Python packages you would add to
 your project's `INSTALLED_APPS` list.
 
 Everything in this directory is added to the `PYTHONPATH` when the
 `environment.py` file is imported.
+
+### config
+
+Contains all the configuration of your Django installation. This includes the `settings.py` (Django app bootstrapper), `wsgi.py` (App production bootstrapper), and `urls.py` (Define URLs served by all apps and nodes)
 
 ### lib
 
@@ -68,24 +74,7 @@ settings file.
 Everything in this directory is added to the `PYTHONPATH` when the
 `environment.py` file is imported.
 
-### logconfig
-
-An extended version of the
-[log_settings](https://github.com/jbalogh/zamboni/blob/master/log_settings.py)
-module from Mozilla's [zamboni](https://github.com/jbalogh/zamboni).
-
-This package includes an `initialize_logging` method (meant to be called from
-the project's `settings.py`) that sets up Python's logging system. The default
-for server deployments is to log to syslog, and the default for solo development
-is simply to log to the console. 
-
-All of your loggers should be children of your app's root logger (defined in
-`settings.py`). This works well at the top of every file that needs logging:
-
-    import logging
-    logger = logging.getLogger('five.' + __name__)
-
-### media
+### static
 
 A subfolder each for CSS, Javascript and images. Third-party files (e.g. the
 960.gs CSS or jQuery) go in a `vendor/` subfolder to keep your own code
@@ -139,23 +128,6 @@ because the best way to fight snakes on a plane is with jQuery on a plane.
 `js` - Just like the `css` block, use the `js` block for page-specific
 Javascript files when you don't want to wipe out the site-wide defaults in
 `site_js`.
-
-### vendor
-
-Python package dependencies loaded as git submodules. pip's support for git
-repositories is somewhat unreliable, and if the specific package is your own
-code it can be a bit easier to debug if it's all in one place (and not off in a
-virtualenv). 
-
-At Bueda we collect general webapp helpers and views in the separate package
-`comrade` and share it among all of our applications. It is included here as an
-example of a Python package as a git submodule (comrade itself should't be
-considered part of this boilerplate - while it might be useful, it's much less
-generic).
-
-Any directory in `vendor/` is added to the `PYTHONPATH` by `environment.py`. The
-packages are *not* installed with pip, however, so if they require any
-compilation (e.g. C/C++ extensions) this method will not work.
 
 ### Files
 
