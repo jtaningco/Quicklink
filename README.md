@@ -31,7 +31,11 @@ Quicklink is a full-stack web project for our class, **ITMGT45: The Digital Econ
                 views.py
                 forms.py
         config/
-            settings.py
+            settings/
+               .env.example
+               base.py
+               local.py
+               production.py
             wsgi.py
             urls.py
         lib/
@@ -42,14 +46,12 @@ Quicklink is a full-stack web project for our class, **ITMGT45: The Digital Econ
                 vendor/
             images/
         requirements/
-            common.txt
-            dev.txt
+            base.txt
+            local.txt
             production.txt
         templates/
-        environment.py
         fabfile.py
         manage.py
-        settings.py
 
 ### apps
 
@@ -131,13 +133,6 @@ Javascript files when you don't want to wipe out the site-wide defaults in
 
 ### Files
 
-#### environment.py
-
-Modifies the `PYTHONPATH` to allow importing from the `apps/`, `lib/` and
-`vendor/` directories. This module is imported at the top of `settings.py` to
-make sure it runs for both local development (using Django's built-in server)
-and in production (run through mod-wsgi, gunicorn, etc.).
-
 #### fabfile.py
 
 We use [Fabric](http://fabfile.org/) to deploy to remote servers in development,
@@ -148,14 +143,5 @@ a collection of our Fabric utilities.
 #### manage.py
 
 The standard Django `manage.py`.
-
-#### settings.py
-
-Many good default settings for Django applications - check the file for more
-detailed documentation.
-
-#### urls.py
-
-Barebones `url_patterns` to serve static media when in solo development mode.
 
 *Boilerplate code from https://github.com/bueda/django-boilerplate and https://github.com/app-generator/boilerplate-code-django*
