@@ -31,11 +31,8 @@ Quicklink is a full-stack web project for our class, **ITMGT45: The Digital Econ
                 views.py
                 forms.py
         config/
-            settings/
-               .env.example
-               base.py
-               local.py
-               production.py
+            .env.example
+            settings.py
             wsgi.py
             urls.py
         lib/
