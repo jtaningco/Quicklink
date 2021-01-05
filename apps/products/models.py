@@ -9,6 +9,6 @@ class Product(models.Model):
     productImage = models.ImageField(null=True, blank=True)
     stock = forms.ChoiceField(choices="Made to Order", widget=forms.RadioSelect) # Include Input in views for integer string
     size = models.CharField(max_length=40)
-    price = models.IntegerField(max_length=15)
+    price = models.IntegerField()
     addon = models.CharField(max_length=40)
     instructions = models.CharField(max_length=100)

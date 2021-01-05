@@ -1,0 +1,33 @@
+.header-container {
+    height: 40px;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    background: #FFF;
+    border: 1px solid #DCDCDC;
+}
+
+.header-content {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+}
+
+.datetime {
+    width: 90%;
+    height: 100%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    align-content: center;
+    color: black;
+    font-family: 'Overpass', sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 16px;
+}

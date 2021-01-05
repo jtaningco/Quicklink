@@ -1,0 +1,28 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block pagetitle %} {% endblock %}</title>
+    <link rel="stylesheet" href="{% static '/css/main.css' %}">
+    <link rel="stylesheet" href="{% static '/css/datetime.css' %}">
+    <script src="{% static '/js/datetime.js' %}"></script>
+</head>
+<body onload="realtimeClock()">
+    <div class="header-container">
+        <div class="header-content">
+            <div class="datetime" id="datetime"></div>
+        </div>
+    </div>
+    {% block mainnav %}
+
+    {% endblock %}
+
+    <main>
+        {% block maincontent %}
+        {% endblock %}
+      </main>
+</body>
+</html>
