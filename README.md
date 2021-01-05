@@ -41,7 +41,7 @@ Quicklink is a full-stack web project for our class, **ITMGT45: The Digital Econ
                 vendor/
             js/
                 vendor/
-            images/
+            media/
         requirements/
             base.txt
             local.txt
