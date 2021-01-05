@@ -1,0 +1,66 @@
+{% extends 'quicklink/base.html' %}
+
+{% block pagetitle %}Products{% endblock %}
+
+{% block maincontent %}
+
+    {% if not products %}
+        <div class="empty-products-container">
+            <div class="empty-products-wrapper">
+                <div class="empty-products-content">
+                    <div class="empty-products-header">
+                        <div class="add-product-btn">
+                            <a href="{% url 'add-product' %}" class="add-product-link">Add Product</a>
+                        </div>
+                    </div>
+                    <div class="empty-products-text">
+                        <h1>You have no products yet!</h1>
+                        <div class="add-product-btn">
+                            <a href="{% url 'add-product' %}" class="add-product-link">Add Product</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    {% else %}
+        <div class="products-container">
+
+            <div class="products-header">
+                <div class="products-header-wrapper">
+                    <div class="products-search-bar"></div>
+                    <div class="products-header-btns">
+                        <a href="" class="preview-menu-btn">Preview Menu</a>
+                        <a href="" class="add-product-btn">Add Product</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="products-wrapper">
+                <table class="products-table">
+                    <tr>
+                        <th></th>
+                        <th>Product</th>
+                        <th>Stocks</th>
+                        <th>Total Sold</th>
+                        <th></th>
+                    </tr>
+
+                    {% for i in products %}
+                        <tr>
+                            <td></td>
+                            <td>{{i.name}}</td>
+                            <td>{{i.stock}}</td>
+                            <td>{{i.sold}}</td> <!-- Insert Total Sold Here -->
+                            <td></td>
+                        </tr>
+                    {% endfor %}
+
+                </table>
+            </div>
+        </div>
+
+
+    {% endif %}
+
+{% endblock %}

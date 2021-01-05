@@ -1,14 +1,25 @@
 from django.db import models
-from django import forms
 from django.db.models.fields import IntegerField
 
 # Create your models here.
+class Tag(models.Model):
+    name = models.CharField(max_length=55, null=True, blank=True)
+
+    def __str__(self):
+        return self.name
+
 class Product(models.Model):
-    name = models.CharField(max_length=40)
-    description = models.CharField(max_length=100)
+    tags = models.ManyToManyField(Tag)
+    name = models.CharField(max_length=55, null=True, blank=False)
+    description = models.CharField(max_length=100, null=True, blank=False)
     productImage = models.ImageField(null=True, blank=True)
-    stock = forms.ChoiceField(choices="Made to Order", widget=forms.RadioSelect) # Include Input in views for integer string
-    size = models.CharField(max_length=40)
-    price = models.IntegerField()
-    addon = models.CharField(max_length=40)
-    instructions = models.CharField(max_length=100)
+    stock = models.CharField(max_length=80, null=True, blank=False) # Include Input in views for integer string (widget=forms.RadioSelect in forms)
+    size = models.CharField(max_length=80, null=True, blank=False)
+    price = models.IntegerField(null=True, blank=False)
+    addon = models.CharField(max_length=80, null=True, blank=True)
+    instructions = models.CharField(max_length=100, null=True, blank=True)
+    
+    sold = models.IntegerField(null=True, blank=False, default=0)
+
+    def __str__(self):
+        return self.name

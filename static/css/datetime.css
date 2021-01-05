@@ -1,4 +1,7 @@
 .header-container {
+    position: sticky;
+    position: -webkit-sticky;
+    top: 0;
     height: 40px;
     width: 100vw;
     display: flex;
@@ -7,6 +10,7 @@
     align-content: center;
     background: #FFF;
     border: 1px solid #DCDCDC;
+    z-index: 999;
 }
 
 .header-content {
