@@ -1,5 +1,5 @@
 # Quicklink
-Quicklink is a full-stack web project for our class, **ITMGT45: The Digital Economy**.
+Quicklink is a full-stack stand-alone web application for our class, **ITMGT45: The Digital Economy**.
 
 ## Setup
 
@@ -21,8 +21,9 @@ Quicklink is a full-stack web project for our class, **ITMGT45: The Digital Econ
 
 ## Directory Structure
 
-    django-boilerplate/
-        apps/
+    Quicklink/
+        apps/                       # project-specific applications
+            __init__.py
             foo/
                 templates/
                      foo/
@@ -30,23 +31,23 @@ Quicklink is a full-stack web project for our class, **ITMGT45: The Digital Econ
                 models.py
                 views.py
                 forms.py
-        config/
+        config/                     # site settings
             .env.example
             settings.py
             wsgi.py
             urls.py
-        lib/
-        static/
+        docs/                       # documentation
+        static/                     # site-specific static files
             css/
                 vendor/
             js/
                 vendor/
-            media/
-        requirements/
+            images/
+        requirements/               # pip requirements files per environment
             base.txt
             local.txt
             production.txt
-        templates/
+        templates/                  # site-specific templates
         fabfile.py
         manage.py
 
@@ -62,16 +63,6 @@ Everything in this directory is added to the `PYTHONPATH` when the
 ### config
 
 Contains all the configuration of your Django installation. This includes the `settings.py` (Django app bootstrapper), `wsgi.py` (App production bootstrapper), and `urls.py` (Define URLs served by all apps and nodes)
-
-### lib
-
-Python packages and modules that aren't true Django 'apps' - i.e. they don't
-have their own models, views or forms. These are just regular Python classes and
-methods, and they don't go in the `INSTALLED_APPS` list of your project's
-settings file. 
-
-Everything in this directory is added to the `PYTHONPATH` when the
-`environment.py` file is imported.
 
 ### static
 
@@ -95,6 +86,12 @@ installed, so it tends to quickly become out of date.
 Project-wide templates (i.e. those not belonging to any specific app in the
 `apps/` folder). The boilerplate includes a `base.html` template that defines
 these blocks:
+
+I put these templates and static files into global templates/static directory, not inside each app. These files are usually edited by people, who doesn't care about project code structure or python at all. If you are full-stack developer working alone or in a small team, you can create per-app templates/static directory. It's really just a matter of taste.
+
+The same applies for locale, although sometimes it's convenient to create separate locale directory.
+
+Tests are usually better to place inside each app, but usually there is many integration/functional tests which tests more apps working together, so global tests directory does make sense.
 
 #### <head>
 
@@ -141,4 +138,7 @@ a collection of our Fabric utilities.
 
 The standard Django `manage.py`.
 
-*Boilerplate code from https://github.com/bueda/django-boilerplate and https://github.com/app-generator/boilerplate-code-django*
+*Boilerplate code from 
+https://github.com/bueda/django-boilerplate
+https://github.com/app-generator/boilerplate-code-django*
+https://stackoverflow.com/questions/22841764/best-practice-for-django-project-working-directory-structure
