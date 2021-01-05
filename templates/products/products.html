@@ -31,7 +31,7 @@
                     <div class="products-search-bar"></div>
                     <div class="products-header-btns">
                         <a href="" class="preview-menu-btn">Preview Menu</a>
-                        <a href="" class="add-product-btn">Add Product</a>
+                        <a href="{% url 'add-product' %}" class="add-product-btn">Add Product</a>
                     </div>
                 </div>
             </div>
@@ -46,13 +46,17 @@
                         <th></th>
                     </tr>
 
-                    {% for i in products %}
+                    {% for product in products %}
                         <tr>
-                            <td></td>
-                            <td>{{i.name}}</td>
-                            <td>{{i.stock}}</td>
-                            <td>{{i.sold}}</td> <!-- Insert Total Sold Here -->
-                            <td></td>
+                            <td>
+                                <input type="checkbox" id="delete " name="delete" value="delete">
+                            </td>
+                            <td>{{product.name}}</td>
+                            <td>{{product.stock}}</td>
+                            <td>{{product.sold}}</td> <!-- Insert Total Sold Here -->
+                            <td><a href="{% url 'update-product' product.id %}">
+                                Edit Product</a>
+                            </td>
                         </tr>
                     {% endfor %}
 

@@ -8,8 +8,11 @@
     <title>Add Product</title>
     <link rel="stylesheet" href="{% static '/css/main.css' %}">
     <link rel="stylesheet" href="{% static '/css/products.css' %}">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.1/css/all.css" integrity="sha384-vp86vTRFVJgpjF9jiIGPEEqYqlDwgyBgEF109VFjmqGmIY/Y4HV4d3Gp2irVfcrp" crossorigin="anonymous">
+    <script src="{% static '/js/addproduct.js' %}"></script>
 </head>
 <body>
+    <form id="product-form" action="" method="POST">
     <div class="product-header-container">
         <div class="product-header-wrapper">
             <div class="product-header-content">
@@ -17,10 +20,10 @@
             </div>
             <div class="product-header-btns">   
                 <button class="secondary-btn">
-                    <a href="" class="secondary-btn-link">Cancel</a>
+                    <a href="{% url 'products' %}" class="secondary-btn-link">Cancel</a>
                 </button>
-                <button class="primary-btn">
-                    <a href="" class="primary-btn-link">Preview Product</a>
+                <button class="primary-btn disabled" id="preview-btn">
+                    <input type="submit" name="Submit" value="Preview Product" id="submitBtn" class="preview-btn disabled">
                 </button>
             </div>
         </div>
@@ -30,11 +33,22 @@
     {% endblock %}
 
     <main>
+        <div class="product-form-container">
+            <div class="product-form-wrapper">
+                <div class="product-form-back">
+                    <a href="{% url 'products' %}" class="subtitle">
+                        <i class="fas fa-chevron-left"></i>
+                        Back to Products
+                    </a>
+                </div>
         
-        <form action="" method="POST">
-            <input type="submit" name="Submit">
-        </form>
-
+                <h2 class="bold" style="color: #FF8A00;">Add a new product</h2>
+                
+                {% csrf_token %}
+                {{ form.as_p }}
+            </div>
+        </div>
     </main>
+    </form>
 </body>
 </html>

@@ -1,0 +1,65 @@
+{% extends 'quicklink/base.html' %}
+
+{% block pagetitle %} {{ product.name }} {% endblock %}
+
+{% block maincontent %}
+    <div class="product-card">
+        <div class="product-card-wrapper">
+            <div class="product-card-hero">
+                <!-- INSERT IMAGE HERE -->
+            </div>
+
+            <div class="product-card-content">
+                <h2 class="bold">{{ product.name }}</h2>
+                <p class="subtitle">{{ product.description }}</p>
+                    
+                {% if product.stock == "Made to Order" %}
+                    <p class="subtitle product-stock">{{ product.stock }}</p>
+                {% else %}
+                    <p class="subtitle product-stock">{{ product.stock }} stock/s available</p>
+                {% endif %}
+
+                {% if not product.instructions %}
+                    <br>
+                {% else %}
+                    <p class="subtitle product-instructions">
+                        Possible Allergens: {{ product.instructions }}</p>
+                {% endif %}
+
+                <p class="bold">Size</p>
+                <div class="product-sizes">
+
+                    <!-- PLACE FOR LOOP HERE -->
+                    <input type="radio" id="{{ product.size }}" name="size" value="{{ product.size }}"
+                        checked>
+                    <label for="{{ product.size }}">{{ product.size }} (Php {{ product.price }})</label>
+                
+                </div>
+
+                <p class="bold">Add-Ons</p>
+                <div class="product-add-ons">
+
+                    <!-- PLACE FOR LOOP HERE -->
+                    <input type="checkbox" id="{{ product.addon }}" name="addon" value="{{ product.addon }}"
+                        checked>
+                    <label for="{{ product.addon }}">{{ product.addon }}</label>
+                
+                </div>
+
+                <p class="bold">Special Instructions</p>
+                <div class="special-instructions">
+                    <input type="text" id="instructions" name="instructions" maxlength="100">
+                </div>
+            </div>
+
+            <div class="product-card-btns">
+                <button class="secondary-btn">
+                    <a href="" class="secondary-btn-link">Back to Editing</a>
+                </button>
+                <button class="primary-btn">
+                    <a href="" class="primary-btn-link">Save Product</a>
+                </button>
+            </div>
+        </div>
+    </div>
+{% endblock %}

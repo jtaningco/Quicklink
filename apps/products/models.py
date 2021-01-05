@@ -8,13 +8,16 @@ class Tag(models.Model):
     def __str__(self):
         return self.name
 
+class Stock(models.Model):
+    stock = models.CharField(max_length=80, null=True, blank=False)
+    size = models.CharField(max_length=80, null=True, blank=False)
+
 class Product(models.Model):
     tags = models.ManyToManyField(Tag)
     name = models.CharField(max_length=55, null=True, blank=False)
     description = models.CharField(max_length=100, null=True, blank=False)
     productImage = models.ImageField(null=True, blank=True)
-    stock = models.CharField(max_length=80, null=True, blank=False) # Include Input in views for integer string (widget=forms.RadioSelect in forms)
-    size = models.CharField(max_length=80, null=True, blank=False)
+    stock = models.ForeignKey(Stock, on_delete=models.CASCADE)
     price = models.IntegerField(null=True, blank=False)
     addon = models.CharField(max_length=80, null=True, blank=True)
     instructions = models.CharField(max_length=100, null=True, blank=True)
