@@ -1,10 +1,15 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
+from django.template import Context, loader
 
 from apps.products.models import Product
 from .forms import ProductForm
 
 # Create your views here.
+def home(request):
+    template = loader.get_template('quicklink/base.html')
+    return HttpResponse(template.render())
+
 def products(request):
     products = Product.objects.all()
     return render(request, 'products/products.html', {'products':products})

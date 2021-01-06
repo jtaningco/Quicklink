@@ -7,9 +7,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Add Product</title>
     <link rel="stylesheet" href="{% static '/css/main.css' %}">
+    <link rel="stylesheet" href="{% static '/css/navbar.css' %}">
     <link rel="stylesheet" href="{% static '/css/products.css' %}">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.1/css/all.css" integrity="sha384-vp86vTRFVJgpjF9jiIGPEEqYqlDwgyBgEF109VFjmqGmIY/Y4HV4d3Gp2irVfcrp" crossorigin="anonymous">
     <script src="{% static '/js/addproduct.js' %}"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
 </head>
 <body>
     <form id="product-form" action="" method="POST">
@@ -28,9 +31,8 @@
             </div>
         </div>
     </div>
-    {% block mainnav %}
-        
-    {% endblock %}
+    
+    {% include 'quicklink/navbar.html' %}
 
     <main>
         <div class="product-form-container">

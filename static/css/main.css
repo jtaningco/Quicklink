@@ -25,6 +25,7 @@
   --primary-main: #798CF2;
   --primary-alt: #0A28BCCC;
   --primary-light: #ABB9FFCC;
+  --primary-pressed: #6678D9;
 
   --secondary-main: #FFAA2DCC;
   --secondary-alt: #FF8A00CC;
@@ -51,14 +52,17 @@
   --pending-light: #FFF7CF;
 
   /* BOX SHADOWS */
-  --regular-box-shadow: 0px 3px 5px rgba(51, 51, 51, 0.15);  
+  --regular-box-shadow: 0px 3px 5px rgba(51, 51, 51, 0.15);
+  --navbar-shadow: 4px 0px 10px rgba(0, 0, 0, 0.1);  
 }
 
+
+/* FONTS */
 h1, h2, h3, p, a, input {
   font-family: 'Overpass', sans-serif;
   font-style: normal;
   font-weight: 400;
-  color: #333;
+  color: var(--muted-dark);
 }
 
 h1 { font-size: 28px; }
@@ -72,6 +76,7 @@ p { font-size: 16px; }
 .bold { font-weight: 700; }
 .extra-bold { font-weight: 800; }
 
+/* BUTTONS */
 button {
   display: flex;
   justify-content: center;
@@ -89,6 +94,8 @@ a {
   padding: 8px 24px;
   text-decoration: none;
 }
+
+.nav-link { font-size: 16px; letter-spacing: 0.025em; }
 
 .primary-btn {
   background: var(--primary-main);
@@ -116,9 +123,10 @@ a {
 
 .secondary-btn-link {
   font-weight: 700;
-  color: #798CF2;
+  color: var(--primary-main);
 }
 
+/* INPUTS */
 .small-input {
   width: 272px;
   height: 40px;
@@ -138,6 +146,8 @@ a {
 }
 
 .input.default, .small-input.default, .large-input.default {
+  display: inline-block;
+  resize: vertical;
   border: 1px solid var(--muted-lighter);
   box-sizing: border-box;
   border-radius: 5px;
@@ -160,6 +170,37 @@ a {
   box-sizing: border-box;
   border-radius: 5px;
 }
+
+/* CONTROLS */
+.radio li {
+  width: auto;
+  height: auto;
+} 
+
+.radio input[type="radio"] {
+  height: 16px;
+  width: 16px;
+  border-radius: 50%;
+  background-color: #fff;
+  border: 1px solid var(--muted-lighter);
+}
+
+.radio:hover input[type="radio"] {
+  background-color: var(--muted-lighter);
+}
+
+.radio input[type="radio"]:checked {
+  background-color: #fff;
+}
+
+.radio label {
+  font-family: 'Overpass', sans-serif;
+  font-style: normal;
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--muted-dark);
+}
+
 
 /*
    * Remove text-shadow in selection highlight:
