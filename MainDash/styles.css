@@ -1,0 +1,89 @@
+@import url('https://fonts.googleapis.com/css2?family=Overpass:wght@400;600;700;800&display=swap');
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    background-color: #F8F9FF;
+    font-family: 'Overpass', sans-serif;
+}
+
+
+.column {
+  float: left;
+  width: 25%;
+  padding: 0 10px;
+  max-width: 376px;
+  margin-top: 128px;
+  margin-bottom: 15px;
+  margin-right: 20px;
+}
+
+
+h3{
+  color: #FF8A00;
+  font-size: 20px;
+  font-weight: 700;
+  text-align: left;
+}
+p {
+  color: #FF8A00;
+  font-size: 20px;
+  font-weight: 700;
+  text-align: left;
+  background-color: #FFFFFF;
+}
+
+h2 {
+  text-align: left;
+  background-color: #FFFFFF;
+  font-weight: 700;
+  font-size: 24px;
+  margin-bottom: 7px;
+  margin-top: 3px;
+
+}
+.caption {
+  text-align: left;
+  background-color: #FFFFFF;
+  color: #757575;
+  font-size: 12px;
+
+}
+.summary {
+  font-size: 12px;
+  text-align: right;
+  color: #798CF2;
+  background-color: #FFFFFF;
+
+}
+
+/* Remove extra left and right margins, due to padding in columns */
+.row {margin: 0 -15px;}
+
+
+
+/* Style the counter cards */
+.card {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2); /* this adds the "card" effect */
+  padding: 16px;
+  text-align: center;
+  background-color: #FFFFFF;
+}
+
+.tr{
+    font-size: 16px;
+    display: table-cell;
+    width: 20%;
+    text-align: center;
+    vertical-align: middle;
+}
+
+/* Responsive columns - one column layout (vertical) on small screens */
+@media screen and (max-width: 600px) {
+  .column {
+    width: 100%;
+    display: block;
+    margin-bottom: 20px;
+  }
+}
