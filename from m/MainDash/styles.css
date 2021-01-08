@@ -58,12 +58,10 @@ h2 {
 
 }
 
-/* Remove extra left and right margins, due to padding in columns */
 .row {margin: 0 -15px;}
 
 
 
-/* Style the counter cards */
 .card {
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2); /* this adds the "card" effect */
   padding: 16px;
@@ -79,7 +77,6 @@ h2 {
     vertical-align: middle;
 }
 
-/* Responsive columns - one column layout (vertical) on small screens */
 @media screen and (max-width: 600px) {
   .column {
     width: 100%;

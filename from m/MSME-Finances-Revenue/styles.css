@@ -1,0 +1,104 @@
+@import url('https://fonts.googleapis.com/css2?family=Overpass:wght@400;600;700;800&display=swap');
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    background-color: #F8F9FF;
+    font-family: 'Overpass', sans-serif;
+}
+
+p.financesHeader {
+  position: absolute;
+  width: 186px;
+  height: 40px;
+  left: 232px;
+  top: 74px;
+
+  /* H1 / Extra Bold */
+
+  font-family: Overpass;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 28px;
+  line-height: 40px;
+  /* identical to box height, or 143% */
+
+  display: flex;
+  align-items: center;
+
+  /* Secondary / Alternative */
+
+  color: #FF8A00;
+}
+.financesCard1 {
+box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2); /* this adds the "card" effect */
+padding: 16px;
+background-color: #FFFFFF;
+position: absolute;
+width: 376px;
+height: 152px;
+left: 232px;
+top: 144px;
+}
+.financesCard2 {
+box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2); /* this adds the "card" effect */
+padding: 16px;
+background-color: #FFFFFF;
+position: absolute;
+width: 376px;
+height: 152px;
+left: 632px;
+top: 144px;
+}
+.financesCard3 {
+box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2); /* this adds the "card" effect */
+padding: 16px;
+background-color: #FFFFFF;
+position: absolute;
+width: 376px;
+height: 152px;
+left: 1032px;
+top: 144px;
+}
+.financesCardHeader {
+  text-align: left;
+  margin-left:25px;
+  margin-bottom: 5px;
+  font-size: 20px;
+  font-weight: 600;
+  color: #FF8A00;
+  background-color: #FFFFFF;
+}
+.financesLargeText {
+/* H1 / Extra Bold */
+font-family: Overpass;
+font-style: normal;
+font-weight: 700;
+font-size: 28px;
+line-height: 40px;
+background-color: #FFFFFF;
+text-align: left;
+margin-left:25px;
+margin-bottom: 10px;
+
+/* Muted / Dark */
+color: #2C2C2C;
+}
+
+
+.financesSmallerText {
+  background-color: #FFFFFF;
+  /* Muted / Light */
+  color: #757575;
+  font-size: 14px;
+  text-align: left;
+  margin-left:25px;
+  margin-bottom: 5px;
+}
+@media screen and (max-width: 600px) {
+  .column {
+    width: 100%;
+    display: block;
+    margin-bottom: 20px;
+  }
