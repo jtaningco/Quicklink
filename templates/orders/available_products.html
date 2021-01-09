@@ -1,0 +1,69 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test</title>
+    <link rel="stylesheet" href="{% static '/css/main.css' %}">
+    <link rel="stylesheet" href="{% static '/css/navbar.css' %}">
+    <link rel="stylesheet" href="{% static '/css/user-products.css' %}">
+    <link rel="stylesheet" href="{% static '/css/datetime.css' %}">
+    <script src="{% static '/js/datetime.js' %}"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+</head>
+
+<body onload="realtimeClock()">
+    <div class="header-container">
+        <div class="header-content">
+            <div class="datetime" id="datetime"></div>
+        </div>
+    </div>
+
+    {% include 'quicklink/navbar.html' %}
+    
+    <main>
+        <div class="user-products-container">
+            <div class="user-products-wrapper">
+                <div class="prototype">
+                    <div class="prototype-wrapper">
+                        <div class="iphone">
+                            <div class="power"></div>
+                            <div class="lock"></div>
+                            <div class="volume up"></div>
+                            <div class="volume down"></div>
+                            <div class="camera"></div>
+                            <div class="speaker"></div>
+                            <div class="screen">
+                                <img src="{% static 'media/prototype/header.png' %}" alt="">
+                                <div class="screen-content">
+                                    <img src="{% static 'media/prototype/mobile-nav.png' %}" alt="">
+                                    <div class="screen-content-products-container">
+                                        <div class="screen-content-products-wrapper">
+                                            {% for product in products %}
+                                            <a href="{% url 'add-order' product.id %}" class='product-card-link'>
+                                                <span class="product-card">
+                                                    <img src="{{ product.image.url }}" alt="" class="product-card-img">
+                                                    <h1 class="subtitle bold">{{ product.name }}</h1>
+                                                    <p class="overline">PHP {{ product.price }} </p>
+                                                </span>
+                                            </a>
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                                </div>
+                                <img src="{% static 'media/prototype/footer.png' %}" alt="">
+                            </div>
+                            <div class="button">
+                                <div class="square"></div>
+                            </div>
+                        </div>
+                      </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</body>
+</html>

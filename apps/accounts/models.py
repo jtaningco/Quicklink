@@ -15,7 +15,7 @@ from django.utils.translation import gettext_lazy as _
 #         error_messages={"unique": _("A user with that username already exists."),},
 #         )
 
-class Customer(models.Model):
+class User(models.Model):
     name = models.CharField(_("name"), max_length=150, null=True)
     mobile_number = models.CharField(_("mobile number"), max_length=15, null=True)
     date_created = models.DateTimeField(auto_now_add=True, null=True)
