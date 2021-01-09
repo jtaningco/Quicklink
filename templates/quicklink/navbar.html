@@ -1,0 +1,75 @@
+{% load static %}    
+    
+<nav class="sidebar">
+    <div class="sidebar-logo">
+        <img src="{% static 'media/logos/navbar-logo.png' %}" alt="">
+    </div>
+    <div class="sidebar-menu">
+        <ul>
+            <!-- 1st button and sub bar  -->
+            <li><a href="#" class="extra-bold nav-link">
+                <img src="{% static 'media/icons/dashboard.png' %}">
+                Dashboard</a>
+            </li>
+    
+            <!-- 2nd button and sub bar  -->
+            <li>
+                <a href="#" class="feat-btn nav-link extra-bold">
+                    <img src="{% static 'media/icons/shop.png' %}">
+                    Shop
+                    <span class="fas fa-caret-right first"></span>
+                </a>
+                <ul class="feat-show">
+                    <li><a href="#" class="bold">Order Summary</a></li>
+                    <li><a href="#" class="bold">Pending Orders</a></li>
+                    <li><a href="#" class="bold">Products</a></li>
+                </ul>
+            </li>
+        
+            <!-- 3rd button and sub bar  -->
+            <li>
+                <a href="#" class="serv-btn extra-bold nav-link">
+                    <img src="{% static 'media/icons/finances.png' %}">
+                    Finances
+                    <span class="fas fa-caret-right second"></span>
+                </a>
+                <ul class="serv-show">
+                    <li><a href="#" class="bold">Total Revenue</a></li>
+                    <li><a href="#" class="bold">Profit</a></li>
+                    <li><a href="#" class="bold">Expenses</a></li>
+                </ul>
+            </li>
+        
+            <!-- 4th button and sub bar  -->
+            <li>
+                <a href="#" class="cldk-btn extra-bold nav-link">
+                    <img src="{% static 'media/icons/settings.png' %}">
+                    Settings
+                    <span class="fas fa-caret-right third"></span>
+                </a>
+                <ul class="cldk-show">
+                    <li><a href="#" class="bold">My Shop</a></li>
+                    <li><a href="#" class="bold">Account</a></li>
+                    <li><a href="#" class="bold">Notifications</a></li>
+                    <li><a href="#" class="bold">Resources</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</nav>
+  
+<script>
+    $('.feat-btn').click(function(){
+        $('nav ul .feat-show').toggleClass("show");
+        $('nav ul .first').toggleClass("rotate");
+    });
+    
+    $('.serv-btn').click(function(){
+        $('nav ul .serv-show').toggleClass("show1");
+        $('nav ul .second').toggleClass("rotate");
+    });
+    $('.cldk-btn').click(function(){
+        $('nav ul .cldk-show').toggleClass("show1");
+        $('nav ul .third').toggleClass("rotate");
+    });
+</script>

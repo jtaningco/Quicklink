@@ -28,39 +28,82 @@
 
             <div class="products-header">
                 <div class="products-header-wrapper">
-                    <div class="products-search-bar"></div>
+                    <div class="products-search-bar">
+                        <input class="searchbar body" type="text" placeholder="Search">
+                    </div>
                     <div class="products-header-btns">
-                        <a href="" class="preview-menu-btn">Preview Menu</a>
-                        <a href="{% url 'add-product' %}" class="add-product-btn">Add Product</a>
+                        <button class="secondary-btn">
+                            <a href="" class="secondary-btn-link">Preview Menu</a>
+                        </button>
+                        <button class="primary-btn">
+                            <a href="{% url 'add-product' %}" class="primary-btn-link">Add Product</a>
+                        </button>
                     </div>
                 </div>
             </div>
 
-            <div class="products-wrapper">
-                <table class="products-table">
-                    <tr>
-                        <th></th>
-                        <th>Product</th>
-                        <th>Stocks</th>
-                        <th>Total Sold</th>
-                        <th></th>
-                    </tr>
-
-                    {% for product in products %}
-                        <tr>
-                            <td>
-                                <input type="checkbox" id="delete " name="delete" value="delete">
-                            </td>
-                            <td>{{product.name}}</td>
-                            <td>{{product.stock}}</td>
-                            <td>{{product.sold}}</td> <!-- Insert Total Sold Here -->
-                            <td><a href="{% url 'update-product' product.id %}">
-                                Edit Product</a>
-                            </td>
+            <div class="products-list">
+                <div class="products-wrapper">
+                    <table class="products-table">
+                        <tr class="products-table-header">
+                            <th class="product-table-cell">
+                                <input type="checkbox" id="select_all" name="select_all" value="select_all">
+                            </th>
+                            <th class="table-header product-table-cell">Product</th>
+                            <th class="table-header product-table-cell">Stocks</th>
+                            <th class="table-header product-table-cell">Total Sold</th>
+                            <th class="table-header product-table-cell">Available</th>
+                            <th ></th>
                         </tr>
-                    {% endfor %}
-
-                </table>
+    
+                        {% for product in products %}
+                            {% if forloop.counter|divisibleby:2 %}
+                                <tr class="products-table-row-2">
+                                    <td class="product-table-cell">
+                                        <input type="checkbox" id="select" name="select" value="select">
+                                    </td>
+                                    <td class="product-table-cell subtitle bold">{{product.name}}</td>
+                                    <td class="product-table-cell subtitle">{{product.stock}}</td>
+                                    <td class="product-table-cell subtitle">{{product.sold}}</td> <!-- Insert Total Sold Here -->
+                                    <td class="product-table-cell">
+                                        <div class="button-wrapper">
+                                            <div class="button r" id="button-1">
+                                                <input type="checkbox" name="switch" class="switch" id="switch">
+                                                <div class="knobs"></div>
+                                                <div class="layer"></div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="product-table-cell"><a href="{% url 'update-product' product.id %}" class="subtitle tertiary-btn-link">
+                                        Edit Product</a>
+                                    </td>
+                                </tr>
+                            {% else %}
+                            <tr class="products-table-row-1">
+                                <td class="product-table-cell table-select">
+                                    <input type="checkbox" id="select" name="select" value="select">
+                                </td>
+                                <td class="product-table-cell subtitle bold">{{product.name}}</td>
+                                <td class="product-table-cell subtitle">{{product.stock}}</td>
+                                <td class="product-table-cell subtitle">{{product.sold}}</td> <!-- Insert Total Sold Here -->
+                                <td class="product-table-cell">
+                                    <div class="button-wrapper">
+                                        <div class="button r" id="button-1">
+                                            <input type="checkbox" name="switch" class="switch" id="switch">
+                                            <div class="knobs"></div>
+                                            <div class="layer"></div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="product-table-cell"><a href="{% url 'update-product' product.id %}" class="subtitle tertiary-btn-link">
+                                    Edit Product</a>
+                                </td>
+                            </tr>
+                            {% endif %}
+                        {% endfor %}
+    
+                    </table>
+                </div>
             </div>
         </div>
 

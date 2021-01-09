@@ -1,0 +1,170 @@
+.empty-orders-content {
+    width: 90%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+}
+
+.empty-orders-content h1 {
+    margin-top: -40px;
+}
+
+.orders-container {
+    width: 100vw;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    background: var(--bg-color);
+}
+
+.orders-header {
+    height: 10vh;
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    align-content: center;
+}
+
+.orders-header-wrapper {
+    height: 100%;
+    width: 90%;
+    padding: 40px 40px 0 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+}
+
+.orders-header-content, .orders-products {
+    flex-basis: 40%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    align-content: center;
+}
+
+.orders-header-content h1 { color: var(--secondary-alt); }
+
+.orders-header-btns, .orders-total {
+    flex-basis: 60%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    align-content: center;
+}
+
+.orders-search-bar {
+    margin: 0 24px;
+}
+
+.primary-btn img, .tertiary-btn-link img {
+    margin: 0 0 0 8px;
+}
+
+.orders-summary {
+    width: 100%;
+    height: auto;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    align-content: center;
+    margin-top: 32px;
+}
+
+.orders-wrapper {
+    height: 100%;
+    width: 90%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+}
+
+.orders-summary-table { 
+    display: table;
+    table-layout: fixed;
+    border-collapse: collapse;
+    border-spacing: 0;
+    margin: 0;
+    width: 100%;
+}
+
+.orders-table-header {
+    height: 72px;
+    width: 100%;
+    background: #FFFFFF;
+    border-top: 1px solid #DCDCDC;
+    border-bottom: 1px solid #DCDCDC;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.orders-table-header th {
+    padding: 0; 
+    margin: 0;
+}
+
+.order-table-row-1,  
+.order-table-row-2 {
+    height: 72px;
+    width: 100%;
+    text-align: center;
+    vertical-align: middle;
+    background-blend-mode: overlay;
+}
+
+.order-table-row-1 { background: rgba(169, 184, 255, 0.03); }
+.order-table-row-2 { background: #FFF; }
+
+.order-table-cell {
+    width: auto;
+    padding: 0 16px;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.table-header { font-size: 10px; }
+
+.status-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+}
+
+/* PENDING ORDERS */
+.orders-header-btns button {
+    margin: 0 8px;
+}
+
+.orders-subheader {
+    height: 7.5vh;
+    width: 100vw;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    align-content: center;
+}
+
+.orders-subheader form {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+}
+
+.orders-subheader button {
+    margin: 0 40px;
+}
+
+.orders-total {
+    padding-right: 32px;
+}

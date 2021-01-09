@@ -2,8 +2,7 @@ from django.db import models
 from django.db.models.deletion import CASCADE
 from django.db.models.fields import IntegerField
 
-from ..accounts.models import Customer
-from ..products.models import Product
+from apps.products.models import Product
 
 # Create your models here.
 class Order(models.Model):
@@ -20,11 +19,14 @@ class Order(models.Model):
         ('Received', 'Received')
     ]
 
-    customer = models.ForeignKey(Customer, null=True, on_delete=models.SET_NULL)
+    # Change user to customer once login authentication has been set
+    # user = models.ForeignKey(User, null=True, on_delete=models.SET_NULL)
     product = models.ForeignKey(Product, null=True, on_delete=models.SET_NULL) 
     order_date = models.DateTimeField(auto_now_add=True, null=True)
-    order_number = models.IntegerField(null=True)
+
     quantity = models.IntegerField(null=True)
+    # Order quantity is different from product quantity -- sum of all products na kasama
+    
     total = models.IntegerField(null=True)
     order_status = models.CharField(max_length=40, null=True, choices=ORDER_STATUS)
     payment_status = models.CharField(max_length=40, null=True, choices=PAYMENT_STATUS)
@@ -32,4 +34,4 @@ class Order(models.Model):
     notes = models.CharField(max_length=255, null=True, blank=True)
 
     def __str__(self):
-        return self.name
+        return self.product.name

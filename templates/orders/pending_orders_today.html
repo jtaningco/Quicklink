@@ -1,0 +1,225 @@
+{% extends 'quicklink/base.html' %}
+{% load static %}
+
+{% block pagetitle %}Pending Orders{% endblock %}
+
+{% block maincontent %}
+
+{% if not orders %}
+        <div class="empty-orders-container">
+            <div class="empty-orders-wrapper">
+                <div class="empty-orders-content">
+                    <h1>You have no pending orders</h1>
+                </div>
+            </div>
+        </div>
+
+    {% else %}
+    <div class="orders-container">
+
+        <div class="orders-header">
+            <div class="orders-header-wrapper">
+                <div class="orders-header-content">
+                    <h1 class="extra-bold">Pending Orders</h1>
+                </div>
+                <div class="orders-header-btns">
+                    <button class="primary-btn active">
+                        <a href="{% url 'pending-orders' %}" class="primary-btn-link">Today</a>
+                    </button>
+                    <button class="tertiary-btn">
+                        <a href="{% url 'pending-next-seven-days' %}" class="tertiary-btn-link subtitle bold">Next 7 days</a>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="orders-subheader">
+            <div class="orders-header-wrapper">
+                <div class="orders-products">
+                    <form method="get">
+                        {{ productFilter.form }}
+                        <button type="submit" class="tertiary-btn-link tertiary-btn subtitle bold">Search</button>
+                    </form>
+                </div>
+                <div class="orders-total">
+                    <p class="bold">Total Pending: {{ orderCount }}</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="orders-summary">
+            <div class="orders-wrapper">
+                <table class="orders-summary-table">
+                    <tr class="orders-table-header">
+                        <th class="table-header order-table-cell">Order Number</th>
+                        <th class="table-header order-table-cell">Customer Name</th>
+                        <th class="table-header order-table-cell">Product</th>
+                        <th class="table-header order-table-cell">Status</th>
+                        <th class="table-header order-table-cell">Quantity</th>
+                        <th class="table-header order-table-cell">Size</th>
+
+                        <!-- Insert Add-On For Loop Here -->
+                        <th class="table-header order-table-cell">Add-On #1</th>
+                        <th class="table-header order-table-cell">Add-On #2</th>
+                        
+                        <th class="table-header order-table-cell">Date of Delivery</th>
+                        <th class="table-header order-table-cell">Additional Notes</th>
+                    </tr>
+
+                    {% for order in orders %}
+                        {% if forloop.counter|divisibleby:2 %}
+                            <tr class="order-table-row-2">
+                                <td class="order-table-cell subtitle">{{ order.id }}</td>
+                                <td class="order-table-cell subtitle">Sample Name</td>
+                                <td class="order-table-cell subtitle">{{ order.product.name }}</td>
+                                
+                                {% if order.order_status == "Pending" %}
+                                    <td class="order-table-cell">
+                                        <div class="status-container">
+                                            <div class="order-status pending">
+                                                <div class="order-status-text pending-text">
+                                                    {{ order.order_status }}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                {% elif order.order_status == "Sent" %}
+                                    <td class="order-table-cell">
+                                        <div class="status-container">
+                                            <div class="order-status sent">
+                                                <div class="order-status-text sent-text">
+                                                    {{ order.order_status }}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                {% elif order.order_status == "Received" %}
+                                    <td class="order-table-cell">
+                                        <div class="status-container">
+                                            <div class="order-status received">
+                                                <div class="order-status-text received-text">
+                                                    {{ order.order_status }}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                {% else %}
+                                    <td class="order-table-cell">
+                                        <div class="status-container">
+                                            <div class="order-status cancelled">
+                                                <div class="order-status-text cancelled-text">
+                                                    {{ order.order_status }}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                {% endif %}
+
+                                <td class="order-table-cell subtitle">{{ order.quantity }}</td>
+                                <td class="order-table-cell subtitle">{{ order.product.size }}</td>
+
+                                <!-- Insert Add-On For Loop Here -->
+                                <td class="order-table-cell subtitle">
+                                    <!-- Insert if statement on add-ons are checked here -->
+                                    <label class="checkbox">
+                                        <input type="checkbox">
+                                        <span class="checkmark"></span>
+                                    </label>
+                                </td>
+                                <td class="order-table-cell subtitle">
+                                    <!-- Insert if statement on add-ons are checked here -->
+                                    <label class="checkbox">
+                                        <input type="checkbox">
+                                        <span class="checkmark"></span>
+                                    </label>
+                                </td>
+                                
+                                <td class="order-table-cell subtitle">{{ order.delivery_date|date:"d-m-Y" }}</td>
+                                <td class="order-table-cell subtitle">
+                                    <a href="" class="tertiary-btn-link bold">See Notes</a>
+                                </td>
+                            </tr>
+
+                        {% else %}
+                            <tr class="order-table-row-1">
+                                <td class="order-table-cell subtitle">{{ order.id }}</td>
+                                <td class="order-table-cell subtitle">Sample Name</td>
+                                <td class="order-table-cell subtitle">{{ order.product.name }}</td>
+                                
+                                {% if order.order_status == "Pending" %}
+                                    <td class="order-table-cell">
+                                        <div class="status-container">
+                                            <div class="order-status pending">
+                                                <div class="order-status-text pending-text">
+                                                    {{ order.order_status }}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                {% elif order.order_status == "Sent" %}
+                                    <td class="order-table-cell">
+                                        <div class="status-container">
+                                            <div class="order-status sent">
+                                                <div class="order-status-text sent-text">
+                                                    {{ order.order_status }}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                {% elif order.order_status == "Received" %}
+                                    <td class="order-table-cell">
+                                        <div class="status-container">
+                                            <div class="order-status received">
+                                                <div class="order-status-text received-text">
+                                                    {{ order.order_status }}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                {% else %}
+                                    <td class="order-table-cell">
+                                        <div class="status-container">
+                                            <div class="order-status cancelled">
+                                                <div class="order-status-text cancelled-text">
+                                                    {{ order.order_status }}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                {% endif %}
+
+                                <td class="order-table-cell subtitle">{{ order.quantity }}</td>
+                                <td class="order-table-cell subtitle">{{ order.product.size }}</td>
+
+                                <!-- Insert Add-On For Loop Here -->
+                                <td class="order-table-cell subtitle">
+                                    <!-- Insert if statement on add-ons are checked here -->
+                                    <label class="checkbox">
+                                        <input type="checkbox">
+                                        <span class="checkmark"></span>
+                                    </label>
+                                </td>
+                                <td class="order-table-cell subtitle">
+                                    <!-- Insert if statement on add-ons are checked here -->
+                                    <label class="checkbox">
+                                        <input type="checkbox">
+                                        <span class="checkmark"></span>
+                                    </label>
+                                </td>
+                                
+                                <td class="order-table-cell subtitle">{{ order.delivery_date|date:"d-m-Y" }}</td>
+                                <td class="order-table-cell subtitle">
+                                    <a href="" class="tertiary-btn-link bold">See Notes</a>
+                                </td>
+                            </tr>
+                        {% endif %}
+                    {% endfor %}
+
+                </table>
+            </div>
+        </div>
+
+    </div>
+    {% endif %}
+
+{% endblock %}

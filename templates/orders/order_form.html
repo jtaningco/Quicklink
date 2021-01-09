@@ -1,0 +1,107 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test</title>
+    <link rel="stylesheet" href="{% static '/css/main.css' %}">
+    <link rel="stylesheet" href="{% static '/css/navbar.css' %}">
+    <link rel="stylesheet" href="{% static '/css/user-products.css' %}">
+    <link rel="stylesheet" href="{% static '/css/datetime.css' %}">
+    <script src="{% static '/js/datetime.js' %}"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+</head>
+
+<body onload="realtimeClock()">
+    <div class="header-container">
+        <div class="header-content">
+            <div class="datetime" id="datetime"></div>
+        </div>
+    </div>
+
+    {% include 'quicklink/navbar.html' %}
+    
+    <main>
+        <div class="user-products-container">
+            <div class="user-products-wrapper">
+                <div class="prototype">
+                    <div class="prototype-wrapper">
+                        <div class="iphone">
+                            <div class="power"></div>
+                            <div class="lock"></div>
+                            <div class="volume up"></div>
+                            <div class="volume down"></div>
+                            <div class="camera"></div>
+                            <div class="speaker"></div>
+                            <div class="screen">
+                                <img src="{% static 'media/prototype/header.png' %}" alt="">
+                                <div class="screen-content">
+                                    <img src="{% static 'media/prototype/mobile-nav.png' %}" alt="">
+                                    <div class="screen-content-order-container">
+                                        <div class="screen-content-order-wrapper">
+                                            <img src="{{ product.image.url }}" class='product-image'>
+
+                                            <div class="order-product-description">
+                                                <h3 class='bold'>{{ product.name }}</h3>
+                                                <p class='product-description'>{{ product.description }}</p>
+                                                {% if product.stock == "Made to Order" %}
+                                                    <p class='product-stock'>{{ product.stock }}</p>
+                                                {% else %}
+                                                    <p class='product-stock'>Stocks available: {{ product.stock }}</p>
+                                                {% endif %}
+                                                <p class='product-instructions'>Possible allergens: {{ product.instructions }}</p>
+                                            </div>
+                                            
+                                            <div class="order-product-size">
+                                                <h2 class='subtitle bold'>Size/Type</h2>
+                                                <div class="order-product-size-input">
+                                                    <label class="radio-mobile">
+                                                        <input type="radio">
+                                                        <span class="radio-select-mobile"></span>
+                                                    </label>
+                                                    <label for="size" class='subtitle product-size'>{{ product.size }} (Php {{ product.price }})</label>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="order-product-addons">
+                                                <h2 class='subtitle bold'>Add-Ons</h2>
+                                                <div class="order-product-addons-input">
+                                                    <label class="checkbox-mobile">
+                                                        <input type="checkbox">
+                                                        <span class="checkmark-mobile"></span>
+                                                    </label>
+                                                    <label for="addon" class='subtitle product-addon'>{{ product.addon }} (+ Php {{ product.addon_price }})</label>
+                                                </div>
+                                            </div>
+
+                                            <div class="order-product-instructions">
+                                                <h2 class='subtitle bold'>Special Instructions</h2>
+                                                <textarea class="mobile-large-input default subtitle" 
+                                                    placeholder="Leave us a note! (Optional)"
+                                                    style="color:#000;"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="order-products-footer">
+                                    {% csrf_token %}
+                                    {{ form.as_p }}
+                                    <input type="submit" value="Add Product" class="add-to-basket-btn subtitle bold">
+                                </div>
+                                <img src="{% static 'media/prototype/footer.png' %}" alt="">
+                            </div>
+                            <div class="button">
+                                <div class="square"></div>
+                            </div>
+                        </div>
+                      </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</body>
+</html>
+        
