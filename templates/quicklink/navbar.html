@@ -7,28 +7,28 @@
     <div class="sidebar-menu">
         <ul>
             <!-- 1st button and sub bar  -->
-            <li><a href="#" class="extra-bold nav-link">
+            <li class="extra-bold nav-link"><a href="#" class="extra-bold nav-link">
                 <img src="{% static 'media/icons/dashboard.png' %}">
                 Dashboard</a>
             </li>
     
             <!-- 2nd button and sub bar  -->
             <li>
-                <a href="#" class="feat-btn nav-link extra-bold">
+                <a class="feat-btn nav-link extra-bold">
                     <img src="{% static 'media/icons/shop.png' %}">
                     Shop
                     <span class="fas fa-caret-right first"></span>
                 </a>
                 <ul class="feat-show">
-                    <li><a href="#" class="bold">Order Summary</a></li>
-                    <li><a href="#" class="bold">Pending Orders</a></li>
-                    <li><a href="#" class="bold">Products</a></li>
+                    <li><a href="{% url 'orders:order-summary' %}" class="bold">Order Summary</a></li>
+                    <li><a href="{% url 'orders:pending-orders' %}" class="bold">Pending Orders</a></li>
+                    <li><a href="{% url 'products:products' %}" class="bold">Products</a></li>
                 </ul>
             </li>
         
             <!-- 3rd button and sub bar  -->
             <li>
-                <a href="#" class="serv-btn extra-bold nav-link">
+                <a class="serv-btn extra-bold nav-link">
                     <img src="{% static 'media/icons/finances.png' %}">
                     Finances
                     <span class="fas fa-caret-right second"></span>
@@ -42,7 +42,7 @@
         
             <!-- 4th button and sub bar  -->
             <li>
-                <a href="#" class="cldk-btn extra-bold nav-link">
+                <a class="cldk-btn extra-bold nav-link">
                     <img src="{% static 'media/icons/settings.png' %}">
                     Settings
                     <span class="fas fa-caret-right third"></span>

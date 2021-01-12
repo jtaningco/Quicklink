@@ -8,13 +8,16 @@ class OrderForm(ModelForm):
     class Meta: 
         model = Order
         fields = [ 
+            'product',
             'quantity',
         ]
         widgets = {
+            'product': forms.HiddenInput(),
             'quantity': forms.fields.NumberInput(attrs={
                 'class':'quantity',
                 'placeholder': '0'}),
         }
         labels = {
+            'product': '',
             'quantity' : '',
         }

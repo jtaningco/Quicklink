@@ -1,0 +1,22 @@
+{% extends 'quicklink/base.html' %}
+
+{% block pagetitle %}Delete Order{% endblock %}
+
+{% block maincontent %}
+
+<div class="empty-products-container">
+    <div class="empty-products-wrapper">
+        <div class="empty-products-content">
+            <div class="empty-products-text">
+                <h1>Are you sure you want to delete Order {{ order.id }}?</h1>
+                <form action="{% url 'orders:delete-order' order.id %}" method="POST">
+                    {% csrf_token %}
+                    <a href="{% url 'orders:order-summary' %}">Cancel</a>
+                    <input type="submit" value="Confirm">
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

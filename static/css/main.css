@@ -151,6 +151,14 @@ a {
   color: var(--primary-main);
 }
 
+.secondary-btn.failure {
+  border: 1px solid var(--failure-main);
+}
+
+.secondary-btn-link.failure {
+  color: var(--failure-main);
+}
+
 .tertiary-btn {
   background: transparent;
   box-shadow: none;
@@ -160,8 +168,17 @@ a {
   color: var(--primary-main);
 }
 
+.tertiary-btn-link.failure {
+  color: var(--failure-main);
+}
+
 .tertiary-btn-link:hover, .tertiary-btn:hover {
   color: var(--primary-light);
+}
+
+.tertiary-btn-link.failure:hover, .tertiary-btn.failure:hover {
+  color: var(--failure-main);
+  opacity: 0.5;
 }
 
 .add-to-basket-btn {
@@ -427,6 +444,10 @@ textarea {
   -webkit-transform: rotate(45deg);
   -ms-transform: rotate(45deg);
   transform: rotate(45deg);
+}
+
+.unclickable {
+  pointer-events: none;
 }
 
 /* STATUS */
