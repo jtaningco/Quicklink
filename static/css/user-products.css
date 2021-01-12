@@ -122,7 +122,7 @@
     align-content: center;
 }
   
-.button {
+.phone-button {
     position: absolute;
     bottom: 2.75%;
     left: 42.5%;
@@ -167,12 +167,12 @@
 }
 
 .screen-content-products-wrapper {
-    width: 100%;
+    width: 95%;
     height: auto;
     padding: 12px 0;
     display: flex;
     flex-wrap: wrap;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
     align-content: center;
 }

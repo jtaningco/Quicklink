@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add Product</title>
+    <title>Edit Product</title>
     <link rel="stylesheet" href="{% static '/css/main.css' %}">
     <link rel="stylesheet" href="{% static '/css/navbar.css' %}">
     <link rel="stylesheet" href="{% static '/css/products.css' %}">
@@ -19,7 +19,7 @@
     <div class="product-header-container">
         <div class="product-header-wrapper">
             <div class="product-header-content">
-                <h3 class="bold">Add Product</h1>
+                <h3 class="bold">{{ product.name }}</h1>
             </div>
             <div class="product-header-btns">   
                 <button class="secondary-btn">
@@ -44,7 +44,7 @@
                     </a>
                 </div>
         
-                <h2 class="bold" style="color: #FF8A00;">Add a new product</h2>
+                <h2 class="bold" style="color: #FF8A00;">Edit Product</h2>
                 
                 {% csrf_token %}
                 {{ form.as_p }}

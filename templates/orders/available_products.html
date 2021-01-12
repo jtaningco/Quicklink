@@ -43,9 +43,9 @@
                                     <div class="screen-content-products-container">
                                         <div class="screen-content-products-wrapper">
                                             {% for product in products %}
-                                            <a href="{% url 'add-order' product.id %}" class='product-card-link'>
+                                            <a href="{% url 'orders:add-order' product.id %}" class='product-card-link'>
                                                 <span class="product-card">
-                                                    <img src="{{ product.image.url }}" alt="" class="product-card-img">
+                                                    <img src="{% static 'product.image.url' %}" alt="" class="product-card-img">
                                                     <h1 class="subtitle bold">{{ product.name }}</h1>
                                                     <p class="overline">PHP {{ product.price }} </p>
                                                 </span>
@@ -56,7 +56,7 @@
                                 </div>
                                 <img src="{% static 'media/prototype/footer.png' %}" alt="">
                             </div>
-                            <div class="button">
+                            <div class="phone-button">
                                 <div class="square"></div>
                             </div>
                         </div>

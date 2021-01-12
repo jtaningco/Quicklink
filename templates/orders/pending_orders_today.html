@@ -5,16 +5,6 @@
 
 {% block maincontent %}
 
-{% if not orders %}
-        <div class="empty-orders-container">
-            <div class="empty-orders-wrapper">
-                <div class="empty-orders-content">
-                    <h1>You have no pending orders</h1>
-                </div>
-            </div>
-        </div>
-
-    {% else %}
     <div class="orders-container">
 
         <div class="orders-header">
@@ -24,10 +14,10 @@
                 </div>
                 <div class="orders-header-btns">
                     <button class="primary-btn active">
-                        <a href="{% url 'pending-orders' %}" class="primary-btn-link">Today</a>
+                        <a href="{% url 'orders:pending-orders' %}" class="primary-btn-link">Today</a>
                     </button>
                     <button class="tertiary-btn">
-                        <a href="{% url 'pending-next-seven-days' %}" class="tertiary-btn-link subtitle bold">Next 7 days</a>
+                        <a href="{% url 'orders:pending-next-seven-days' %}" class="tertiary-btn-link subtitle bold">Next 7 days</a>
                     </button>
                 </div>
             </div>
@@ -42,7 +32,11 @@
                     </form>
                 </div>
                 <div class="orders-total">
-                    <p class="bold">Total Pending: {{ orderCount }}</p>
+                    {% if not orderCount %}
+                        <p class="bold">Total Pending: 0</p>
+                    {% else %}
+                        <p class="bold">Total Pending: {{ orderCount }}</p>
+                    {% endif %}
                 </div>
             </div>
         </div>
@@ -220,6 +214,5 @@
         </div>
 
     </div>
-    {% endif %}
 
 {% endblock %}

@@ -38,62 +38,68 @@
                             <div class="speaker"></div>
                             <div class="screen">
                                 <img src="{% static 'media/prototype/header.png' %}" alt="">
-                                <div class="screen-content">
-                                    <img src="{% static 'media/prototype/mobile-nav.png' %}" alt="">
-                                    <div class="screen-content-order-container">
-                                        <div class="screen-content-order-wrapper">
-                                            <img src="{{ product.image.url }}" class='product-image'>
+                                    <div class="screen-content">
+                                        <form method="post">
+                                        <img src="{% static 'media/prototype/mobile-nav.png' %}" alt="">
+                                        <div class="screen-content-order-container">
+                                            <div class="screen-content-order-wrapper">
+                                                <img src="{% static 'product.image.url' %}" class='product-image'>
 
-                                            <div class="order-product-description">
-                                                <h3 class='bold'>{{ product.name }}</h3>
-                                                <p class='product-description'>{{ product.description }}</p>
-                                                {% if product.stock == "Made to Order" %}
-                                                    <p class='product-stock'>{{ product.stock }}</p>
+                                                <div class="order-product-description">
+                                                    <h3 class='bold'>{{ product.name }}</h3>
+                                                    <p class='product-description'>{{ product.description }}</p>
+                                                    {% if product.stock == "Made to Order" %}
+                                                        <p class='product-stock'>{{ product.stock }}</p>
+                                                    {% else %}
+                                                        <p class='product-stock'>Stocks available: {{ product.stock }}</p>
+                                                    {% endif %}
+                                                    <p class='product-instructions'>Possible allergens: {{ product.instructions }}</p>
+                                                </div>
+                                                
+                                                <div class="order-product-size">
+                                                    <h2 class='subtitle bold'>Size/Type</h2>
+                                                    <div class="order-product-size-input">
+                                                        <label class="radio-mobile">
+                                                            <input type="radio">
+                                                            <span class="radio-select-mobile"></span>
+                                                        </label>
+                                                        <label for="size" class='subtitle product-size'>{{ product.size }} (Php {{ product.price }})</label>
+                                                    </div>
+                                                </div>
+                                                
+                                                {% if not product.addon %}
                                                 {% else %}
-                                                    <p class='product-stock'>Stocks available: {{ product.stock }}</p>
+                                                    <div class="order-product-addons">
+                                                        <h2 class='subtitle bold'>Add-Ons</h2>
+                                                        <div class="order-product-addons-input">
+                                                            <label class="checkbox-mobile">
+                                                                <input type="checkbox">
+                                                                <span class="checkmark-mobile"></span>
+                                                            </label>
+                                                            <label for="addon" class='subtitle product-addon'>{{ product.addon }} (+ Php {{ product.addon_price }})</label>
+                                                        </div>
+                                                    </div>
                                                 {% endif %}
-                                                <p class='product-instructions'>Possible allergens: {{ product.instructions }}</p>
-                                            </div>
-                                            
-                                            <div class="order-product-size">
-                                                <h2 class='subtitle bold'>Size/Type</h2>
-                                                <div class="order-product-size-input">
-                                                    <label class="radio-mobile">
-                                                        <input type="radio">
-                                                        <span class="radio-select-mobile"></span>
-                                                    </label>
-                                                    <label for="size" class='subtitle product-size'>{{ product.size }} (Php {{ product.price }})</label>
-                                                </div>
-                                            </div>
-                                            
-                                            <div class="order-product-addons">
-                                                <h2 class='subtitle bold'>Add-Ons</h2>
-                                                <div class="order-product-addons-input">
-                                                    <label class="checkbox-mobile">
-                                                        <input type="checkbox">
-                                                        <span class="checkmark-mobile"></span>
-                                                    </label>
-                                                    <label for="addon" class='subtitle product-addon'>{{ product.addon }} (+ Php {{ product.addon_price }})</label>
-                                                </div>
-                                            </div>
+                                                
 
-                                            <div class="order-product-instructions">
-                                                <h2 class='subtitle bold'>Special Instructions</h2>
-                                                <textarea class="mobile-large-input default subtitle" 
-                                                    placeholder="Leave us a note! (Optional)"
-                                                    style="color:#000;"></textarea>
+                                                <div class="order-product-instructions">
+                                                    <h2 class='subtitle bold'>Special Instructions</h2>
+                                                    <textarea class="mobile-large-input default subtitle" 
+                                                        placeholder="Leave us a note! (Optional)"
+                                                        style="color:#000;"></textarea>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="order-products-footer">
-                                    {% csrf_token %}
-                                    {{ form.as_p }}
-                                    <input type="submit" value="Add Product" class="add-to-basket-btn subtitle bold">
-                                </div>
+                                    <div class="order-products-footer">
+                                        {% csrf_token %}
+                                        {{ form.as_p }}
+                                        <input type="submit" value="Add Product" class="add-to-basket-btn subtitle bold">
+                                        </form>
+                                    </div>
                                 <img src="{% static 'media/prototype/footer.png' %}" alt="">
                             </div>
-                            <div class="button">
+                            <div class="phone-button">
                                 <div class="square"></div>
                             </div>
                         </div>

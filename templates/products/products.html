@@ -10,13 +10,13 @@
                 <div class="empty-products-content">
                     <div class="empty-products-header">
                         <div class="add-product-btn">
-                            <a href="{% url 'add-product' %}" class="add-product-link">Add Product</a>
+                            <a href="{% url 'products:add-product' %}" class="add-product-link">Add Product</a>
                         </div>
                     </div>
                     <div class="empty-products-text">
                         <h1>You have no products yet!</h1>
                         <div class="add-product-btn">
-                            <a href="{% url 'add-product' %}" class="add-product-link">Add Product</a>
+                            <a href="{% url 'products:add-product' %}" class="add-product-link">Add Product</a>
                         </div>
                     </div>
                 </div>
@@ -29,14 +29,16 @@
             <div class="products-header">
                 <div class="products-header-wrapper">
                     <div class="products-search-bar">
-                        <input class="searchbar body" type="text" placeholder="Search">
+                        <form action="{% url 'products:products' %}">
+                            <input class="searchbar body" type="search" placeholder="Search" name="search">
+                        </form>
                     </div>
                     <div class="products-header-btns">
                         <button class="secondary-btn">
-                            <a href="" class="secondary-btn-link">Preview Menu</a>
+                            <a href="{% url 'orders:products-list' %}" class="secondary-btn-link">Preview Menu</a>
                         </button>
                         <button class="primary-btn">
-                            <a href="{% url 'add-product' %}" class="primary-btn-link">Add Product</a>
+                            <a href="{% url 'products:add-product' %}" class="primary-btn-link">Add Product</a>
                         </button>
                     </div>
                 </div>
@@ -74,8 +76,11 @@
                                             </div>
                                         </div>
                                     </td>
-                                    <td class="product-table-cell"><a href="{% url 'update-product' product.id %}" class="subtitle tertiary-btn-link">
+                                    <td class="product-table-cell"><a href="{% url 'products:update-product' product.id %}" class="subtitle tertiary-btn-link">
                                         Edit Product</a>
+                                        <br>
+                                        <a href="{% url 'products:delete-product' product.id %}" class="subtitle tertiary-btn-link failure">
+                                        Delete Product</a>
                                     </td>
                                 </tr>
                             {% else %}
@@ -95,8 +100,12 @@
                                         </div>
                                     </div>
                                 </td>
-                                <td class="product-table-cell"><a href="{% url 'update-product' product.id %}" class="subtitle tertiary-btn-link">
+                                <td class="product-table-cell">
+                                    <a href="{% url 'products:update-product' product.id %}" class="subtitle tertiary-btn-link">
                                     Edit Product</a>
+                                    <br>
+                                    <a href="{% url 'products:delete-product' product.id %}" class="subtitle tertiary-btn-link failure">
+                                        Delete Product</a>
                                 </td>
                             </tr>
                             {% endif %}

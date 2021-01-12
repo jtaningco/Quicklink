@@ -24,10 +24,10 @@
                 </div>
                 <div class="orders-header-btns">
                     <button class="tertiary-btn">
-                        <a href="{% url 'pending-today' %}" class="tertiary-btn-link subtitle bold">Today</a>
+                        <a href="{% url 'orders:pending-today' %}" class="tertiary-btn-link subtitle bold">Today</a>
                     </button>
                     <button class="tertiary-btn">
-                        <a href="{% url 'pending-next-seven-days' %}" class="tertiary-btn-link subtitle bold">Next 7 days</a>
+                        <a href="{% url 'orders:pending-next-seven-days' %}" class="tertiary-btn-link subtitle bold">Next 7 days</a>
                     </button>
                 </div>
             </div>
@@ -42,7 +42,11 @@
                     </form>
                 </div>
                 <div class="orders-total">
-                    <p class="bold">Total Pending: {{ orderCount }}</p>
+                    {% if OrderCount == 0 %}
+                        <p class="bold">Total Pending: 0</p>
+                    {% else %}
+                        <p class="bold">Total Pending: {{ orderCount }}</p>
+                    {% endif %}
                 </div>
             </div>
         </div>
@@ -122,7 +126,7 @@
                                 <td class="order-table-cell subtitle">
                                     <!-- Insert if statement on add-ons are checked here -->
                                     <label class="checkbox">
-                                        <input type="checkbox" checked>
+                                        <input type="checkbox">
                                         <span class="checkmark"></span>
                                     </label>
                                 </td>
@@ -202,7 +206,7 @@
                                 <td class="order-table-cell subtitle">
                                     <!-- Insert if statement on add-ons are checked here -->
                                     <label class="checkbox">
-                                        <input type="checkbox" checked>
+                                        <input type="checkbox">
                                         <span class="checkmark"></span>
                                     </label>
                                 </td>

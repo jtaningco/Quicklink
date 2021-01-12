@@ -23,14 +23,16 @@
                     <h1 class="extra-bold">Order Summary</h1>
                 </div>
                 <div class="orders-header-btns">
-                    <div class="orders-search-bar">
-                        <input class="searchbar body" type="text" placeholder="Search">
-                    </div>
-                    <button class="primary-btn">
-                        <a href="/" class="primary-btn-link">Filter
-                        <img src="{% static 'media/icons/filter.png' %}">
-                        </a>
-                    </button>
+                    <form action="{% url 'orders:order-summary' %}">
+                        <div class="orders-search-bar">
+                            <input class="searchbar body" type="search" placeholder="Search" name="search">
+                        </div>
+                        <button class="primary-btn" type='submit'>
+                            <a class="primary-btn-link">Filter
+                            <img src="{% static 'media/icons/filter.png' %}">
+                            </a>
+                        </button>
+                    </form>
                 </div>
             </div>
         </div>
@@ -228,7 +230,7 @@
 
                                 <td class="order-table-cell subtitle">{{ order.delivery_date|date:"d-m-Y" }}</td>
                                 <td class="order-table-cell subtitle">
-                                    <a href="" class="tertiary-btn-link bold">Edit 
+                                    <a href="{% url 'orders:delete-order' order.id %}" class="tertiary-btn-link bold">Edit 
                                         <img src="{% static 'media/icons/note.png' %}">
                                     </a>
                                 </td>

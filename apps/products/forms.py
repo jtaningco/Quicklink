@@ -26,7 +26,7 @@ class ProductForm(ModelForm):
                 'class':'input default subtitle',
                 'placeholder': 'Ex. Chocolate Chip Cookies'}),
             
-            'description': Textarea(attrs={
+            'description': forms.fields.TextInput(attrs={
                 'class':'large-input default subtitle',
                 'placeholder': 'Describe your product for your customers to see!'}),
 
@@ -50,7 +50,7 @@ class ProductForm(ModelForm):
                 'class':'small-input default subtitle',
                 'placeholder': 'Php'}),
             
-            'instructions': Textarea(attrs={
+            'instructions': forms.fields.TextInput(attrs={
                 'class':'large-input default subtitle',
                 'placeholder': 'List them down here!'}),
         }

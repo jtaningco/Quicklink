@@ -8,11 +8,20 @@ from django.contrib import messages
 from apps.products.models import Product
 from apps.accounts.models import User
 from .forms import ProductForm
+from django.db.models import Q
 
 # Create your views here.
 def products(request):
-    products = Product.objects.all()
-    return render(request, 'products/products.html', {'products':products})
+    search_query = request.GET.get('search', '')
+
+    if search_query:
+        products = Product.objects.filter(Q(name__icontains=search_query) |
+            Q(stock__icontains=search_query))
+    else:
+        products = Product.objects.all()
+
+    context = {'products':products, }
+    return render(request, 'products/products.html', context)
 
 def productDetails(request, product_pk):
     product = Product.objects.get(id=product_pk)
@@ -21,9 +30,8 @@ def productDetails(request, product_pk):
 def addProduct(request):
     form = ProductForm()
     if request.method == 'POST':
-        form = ProductForm(request.POST)
+        form = ProductForm(request.POST, label_suffix='')
         if form.is_valid():
-            print('PRINTING POST: ', request.POST)
             form.save()
             return redirect('/shop/products')
 
@@ -38,7 +46,16 @@ def updateProduct(request, product_pk):
         form = ProductForm(request.POST, instance=product)
         if form.is_valid():
             form.save()
-            redirect('products/products.html')
+            return redirect('/shop/products')
 
-    context = {'form':form}
-    return render(request, 'products/product_form.html', context)
+    context = {'form':form, 'product':product}
+    return render(request, 'products/edit_product.html', context)
+
+def deleteProduct(request, product_pk):
+    product = Product.objects.get(id=product_pk)
+    if request.method == "POST":
+        product.delete()
+        return redirect('/shop/products/')
+
+    context = {'product':product}
+    return render(request, 'products/delete_product.html', context)

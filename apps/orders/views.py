@@ -4,11 +4,23 @@ from apps.orders.models import Order
 from .forms import OrderForm
 from .filters import PendingOrderFilter
 from django.utils.timezone import datetime, timedelta
+from django.db.models import Q
 
 # Create your views here.
 def orders(request):
-    orders = Order.objects.all()
-    return render(request, 'orders/order_summary.html', {'orders':orders})
+    search_query = request.GET.get('search', '')
+
+    if search_query:
+        orders = Order.objects.filter(Q(order_status__icontains=search_query) |
+            Q(payment_status__icontains=search_query) |
+            Q(order_date__icontains=search_query) |
+            Q(delivery_date__icontains=search_query) |
+            Q(id__icontains=search_query))
+    else:
+        orders = Order.objects.all()
+
+    context = {'orders':orders }
+    return render(request, 'orders/order_summary.html', context)
 
 def pendingOrders(request):
     orders = Order.objects.filter(order_status="Pending")
@@ -50,12 +62,21 @@ def viewProducts(request):
 
 def addOrder(request, pk):
     product = Product.objects.get(id=pk)
-    form = OrderForm()
+    form = OrderForm(initial={'product': product})
     if request.method == 'POST':
         form = OrderForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('/')
+            return redirect('/shop/orders/')
 
     context = {'form':form, 'product':product}
     return render(request, 'orders/order_form.html', context)
+
+def deleteOrder(request, order_pk):
+    order = Order.objects.get(id=order_pk)
+    if request.method == "POST":
+        order.delete()
+        return redirect('/shop/orders/')
+
+    context = {'order':order}
+    return render(request, 'orders/delete_order.html', context)

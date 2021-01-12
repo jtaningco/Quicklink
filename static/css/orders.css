@@ -59,6 +59,12 @@
     align-content: center;
 }
 
+.orders-header-btns form {
+    width: auto;
+    display: flex;
+    flex-flow: row wrap;
+}
+
 .orders-search-bar {
     margin: 0 24px;
 }
