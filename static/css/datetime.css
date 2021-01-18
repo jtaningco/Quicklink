@@ -13,18 +13,34 @@
     z-index: 998;
 }
 
-.header-content {
+.header-wrapper {
     height: 100%;
-    width: 100%;
+    width: 90%;
     display: flex;
-    justify-content: center;
+    justify-content: flex-end;
     align-items: center;
     align-content: center;
 }
 
+.user-information {
+    flex-basis: 45%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    align-content: center;
+    color: black;
+    font-family: 'Overpass', sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 16px;
+}
+
+.user-information p {
+    margin-right: -12px;
+}
+
 .datetime {
-    width: 90%;
-    height: 100%;
+    flex-basis: 45%;
     display: flex;
     justify-content: flex-end;
     align-items: center;
