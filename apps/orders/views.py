@@ -6,11 +6,11 @@ from .filters import PendingOrderFilter
 from django.utils.timezone import datetime, timedelta
 from django.db.models import Q
 from django.contrib.auth.decorators import login_required
-from apps.accounts.decorators import allowed_users, admin_only
+from apps.accounts.decorators import merchants_only
 
 # Create your views here.
 @login_required(login_url='accounts:login')
-@allowed_users(allowed_roles=['admin'])
+@merchants_only
 def orders(request):
     search_query = request.GET.get('search', '')
 
@@ -27,7 +27,7 @@ def orders(request):
     return render(request, 'orders/order_summary.html', context)
 
 @login_required(login_url='accounts:login')
-@allowed_users(allowed_roles=['admin'])
+@merchants_only
 def pendingOrders(request):
     orders = Order.objects.filter(order_status="Pending")
     orderCount = Order.objects.filter(order_status="Pending").count()
@@ -39,7 +39,7 @@ def pendingOrders(request):
     return render(request, 'orders/pending_orders.html', context)
 
 @login_required(login_url='accounts:login')
-@allowed_users(allowed_roles=['admin'])
+@merchants_only
 def pendingToday(request):
     today = datetime.now()
     tomorrow = datetime.now() + timedelta(hours=24)
@@ -53,7 +53,7 @@ def pendingToday(request):
     return render(request, 'orders/pending_orders_today.html', context)
 
 @login_required(login_url='accounts:login')
-@allowed_users(allowed_roles=['admin'])
+@merchants_only
 def pendingNextSevenDays(request):
     today = datetime.today()
     next_seven_days = datetime.today() + timedelta(days=7)
@@ -67,13 +67,13 @@ def pendingNextSevenDays(request):
     return render(request, 'orders/pending_orders_week.html', context)
 
 @login_required(login_url='accounts:login')
-@allowed_users(allowed_roles=['admin, customer'])
+@merchants_only
 def viewProducts(request):
     products = Product.objects.all()
     return render(request, 'orders/available_products.html', {'products':products})
 
 @login_required(login_url='accounts:login')
-@allowed_users(allowed_roles=['admin, customer'])
+@merchants_only
 def addOrder(request, pk):
     product = Product.objects.get(id=pk)
     form = OrderForm(initial={'product': product})
@@ -87,7 +87,7 @@ def addOrder(request, pk):
     return render(request, 'orders/order_form.html', context)
 
 @login_required(login_url='accounts:login')
-@allowed_users(allowed_roles=['admin'])
+@merchants_only
 def deleteOrder(request, order_pk):
     order = Order.objects.get(id=order_pk)
     if request.method == "POST":

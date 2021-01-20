@@ -1,0 +1,50 @@
+{% extends 'quicklink/base.html' %}
+{% load static %}
+
+{% block pagetitle %}Merchant Registration{% endblock %}
+
+{% block maincontent %}
+
+<form action="" method="post">
+
+    <div class="registration-container">
+        <div class="registration-wrapper">
+
+            <h1>Merchant Registration</h1>
+
+            {% csrf_token %}
+
+            <div class="registration-content">
+                <p>Username</p>
+                {{form.username}}
+            </div>
+
+            <div class="registration-content">
+                <p>Email</p>
+                {{form.email}}
+            </div>
+
+            <div class="registration-content">
+                <p>Password</p>
+                {{form.password}}
+            </div>
+
+            <div class="registration-content">
+                <p>Confirm Password</p>
+                {{form.password2}}
+            </div>
+
+            {{ form.errors }}
+
+            <input type="submit" name="Create User" style="margin: 24px 0;" class="preview-btn">
+
+            <div class="registration-content">
+                <p class="subtitle">Already have an account?</p>
+                <a class="tertiary-btn-link" href="{% url 'accounts:merchant-login' %}">Login Here</a>
+            </div>
+
+        </div>
+    </div>
+</form>
+
+{% endblock %}

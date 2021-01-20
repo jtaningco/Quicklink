@@ -4,7 +4,11 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    path('register/', views.registerPage, name='register'),
-    path('login/', views.loginPage, name='login'),
-    path('logout/', views.logoutUser, name='logout')
+    path('merchant/register/', views.registerMerchant, name='merchant-register'),
+    path('merchant/login/', views.loginMerchant, name='merchant-login'),
+    path('merchant/logout/', views.logoutMerchant, name='merchant-logout'),
+    path('customer/register/', views.registerCustomer, name='customer-register'),
+    path('customer/login/', views.loginCustomer, name='customer-login'),
+    path('customer/logout/', views.logoutCustomer, name='customer-logout'),
+    path('customer/landing/', views.landingCustomer, name='customer-landing'),
 ]
