@@ -30,6 +30,14 @@ html {
   align-content: center;
 }
 
+.home-container img {
+  transition: all 0.3s ease-in-out;
+}
+
+.home-container img:hover {
+  transform: scale(1.05);
+}
+
 .home-container p {
   position: absolute;
   bottom: 56px;
@@ -44,10 +52,11 @@ html {
 
 @media screen and (min-width: 1440px) {
   .home {
-    background: url('../static/background/home.jpg'), linear-gradient(107.56deg, rgba(254, 217, 164, 1), rgba(171, 185, 255, 1));
+    background: url('../static/background/home.png'), linear-gradient(107.56deg, rgba(254, 217, 164, 1), rgba(171, 185, 255, 1));
     background-blend-mode: overlay;
     background-size: 105% 100%;
     background-position: center;
+    background-repeat: no-repeat;
   }
 
   .home-container img {
@@ -58,10 +67,11 @@ html {
 
 @media screen and (min-width: 1068px) and (max-width: 1339px) {
   .home {
-    background: url('../static/background/home.jpg'), linear-gradient(107.56deg, rgba(254, 217, 164, 1), rgba(171, 185, 255, 1));
+    background: url('../static/background/home.png'), linear-gradient(107.56deg, rgba(254, 217, 164, 1), rgba(171, 185, 255, 1));
     background-blend-mode: overlay;
     background-size: 150% 100%;
     background-position: center;
+    background-repeat: no-repeat;
   }
 
   .home-container img {
@@ -90,10 +100,11 @@ html {
   }
 
   .home {
-    background: url('../static/background/home.jpg'), linear-gradient(107.56deg, rgba(254, 217, 164, 1), rgba(171, 185, 255, 1));
+    background: url('../static/background/home.png'), linear-gradient(107.56deg, rgba(254, 217, 164, 1), rgba(171, 185, 255, 1));
     background-blend-mode: overlay;
     background-size: 200% 150%;
     background-position: center top;
+    background-repeat: no-repeat;
   }
 
   .home-container img {
@@ -104,10 +115,11 @@ html {
 
 @media screen and (min-width: 320px) and (max-width: 767px) {
   .home {
-    background: url('../static/background/home.jpg'), linear-gradient(107.56deg, rgba(254, 217, 164, 1), rgba(171, 185, 255, 1));
+    background: url('../static/background/home.png'), linear-gradient(107.56deg, rgba(254, 217, 164, 1), rgba(171, 185, 255, 1));
     background-blend-mode: overlay;
     background-size: 300% 100%;
     background-position: center;
+    background-repeat: no-repeat;
   }
 
   .home-container img {
