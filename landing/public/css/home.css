@@ -1,0 +1,140 @@
+html {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+.landing {
+  width: 100vw;
+  height: 100vh;
+}
+
+.home {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+}
+
+.home-container {
+  position: absolute;
+  animation: loading 2s forwards;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+}
+
+.home-container p {
+  position: absolute;
+  bottom: 56px;
+  font-family: 'Overpass', sans-serif;
+  line-height: 32px;
+  font-size: 20px;
+  color: #A3A3A3;
+  opacity: 0;
+  animation: display 1s forwards;
+  animation-delay: 2s;
+}
+
+@media screen and (min-width: 1440px) {
+  .home {
+    background: url('../static/background/home.jpg'), linear-gradient(107.56deg, rgba(254, 217, 164, 1), rgba(171, 185, 255, 1));
+    background-blend-mode: overlay;
+    background-size: 105% 100%;
+    background-position: center;
+  }
+
+  .home-container img {
+    width: 304px;
+    height: 312px;
+  }
+}
+
+@media screen and (min-width: 1068px) and (max-width: 1339px) {
+  .home {
+    background: url('../static/background/home.jpg'), linear-gradient(107.56deg, rgba(254, 217, 164, 1), rgba(171, 185, 255, 1));
+    background-blend-mode: overlay;
+    background-size: 150% 100%;
+    background-position: center;
+  }
+
+  .home-container img {
+    width: 304px;
+    height: 312px;
+  }
+}
+
+@media screen and (min-width: 768px) and (max-width: 1067px) {
+  .home {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    align-content: center;
+  }
+  
+  .home-container {
+    width: 100%;
+    height: 80%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+  }
+
+  .home {
+    background: url('../static/background/home.jpg'), linear-gradient(107.56deg, rgba(254, 217, 164, 1), rgba(171, 185, 255, 1));
+    background-blend-mode: overlay;
+    background-size: 200% 150%;
+    background-position: center top;
+  }
+
+  .home-container img {
+    width: 304px;
+    height: 312px;
+  }
+}
+
+@media screen and (min-width: 320px) and (max-width: 767px) {
+  .home {
+    background: url('../static/background/home.jpg'), linear-gradient(107.56deg, rgba(254, 217, 164, 1), rgba(171, 185, 255, 1));
+    background-blend-mode: overlay;
+    background-size: 300% 100%;
+    background-position: center;
+  }
+
+  .home-container img {
+    width: 151px;
+    height: 156px;
+  }
+
+  .home-container p {
+    bottom: 7.5%;
+  }
+}
+
+@keyframes loading {
+  from {
+    bottom: -100%;
+  }
+  to {
+    bottom: 50%;
+    transform: translateY(50%);
+  }
+}
+
+@keyframes display {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
