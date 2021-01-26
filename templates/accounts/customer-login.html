@@ -1,0 +1,41 @@
+{% extends 'quicklink/base.html' %}
+{% load static %}
+
+{% block pagetitle %}Customer Login{% endblock %}
+
+{% block maincontent %}
+
+<form action="" method="post">
+
+    <div class="registration-container">
+        <div class="registration-wrapper">
+
+            <h1>Customer Login</h1>
+            {% csrf_token %}
+            
+            <div class="registration-content">
+                <p>Username</p>
+                <input type="text" name="username" class="input" placeholder="Username">
+            </div>
+
+            <div class="registration-content">
+                <p>Password</p>
+                <input type="password" name="password" class="input" placeholder="Password">
+            </div>
+
+            <input type="submit" name="Create User" style="margin: 24px 0;" class="preview-btn">
+
+            {% for message in messages %}
+                <p class="subtitle">{{message}}</p>
+            {% endfor %}
+
+            <div class="registration-content">
+                <p class="subtitle">Don't have an account?</p>
+                <a class="tertiary-btn-link" href="{% url 'accounts:customer-register' %}">Sign Up Here</a>
+            </div>
+
+        </div>
+    </div>
+</form>
+
+{% endblock %}

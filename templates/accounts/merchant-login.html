@@ -1,7 +1,7 @@
 {% extends 'quicklink/base.html' %}
 {% load static %}
 
-{% block pagetitle %}User Login{% endblock %}
+{% block pagetitle %}Merchant Login{% endblock %}
 
 {% block maincontent %}
 
@@ -10,7 +10,7 @@
     <div class="registration-container">
         <div class="registration-wrapper">
 
-            <h1>User Login</h1>
+            <h1>Merchant Login</h1>
 
             {% csrf_token %}
             
@@ -24,7 +24,7 @@
                 <input type="password" name="password" class="input" placeholder="Password">
             </div>
 
-            <input type="submit" name="Create User" style="margin: 24px 0; ">
+            <input type="submit" name="Create User" style="margin: 24px 0;" class="preview-btn">
 
             {% for message in messages %}
                 <p class="subtitle">{{message}}</p>
@@ -32,7 +32,7 @@
 
             <div class="registration-content">
                 <p class="subtitle">Don't have an account?</p>
-                <a class="tertiary-btn-link" href="{% url 'accounts:register' %}">Sign Up Here</a>
+                <a class="tertiary-btn-link" href="{% url 'accounts:merchant-register' %}">Sign Up Here</a>
             </div>
 
         </div>

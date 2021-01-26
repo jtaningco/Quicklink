@@ -27,6 +27,7 @@ class Product(models.Model):
             ('3','3')]
             
     # tags = models.ManyToManyField(Tag)
+    # user = models.ForeignKey(User, on_delete=models.CASCADE)
     name = models.CharField(max_length=55, null=True, blank=False)
     description = models.CharField(max_length=100, null=True, blank=False)
 
