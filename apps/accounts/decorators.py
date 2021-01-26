@@ -1,25 +1,37 @@
 from django.http import HttpResponse
 from django.shortcuts import redirect
 
-def unauthenticated_user(view_func):
+def unauthenticated_merchant(view_func):
     def wrapper_func(request, *args, **kwargs):
         if request.user.is_authenticated:
-            if request.user.role == "MERCHANT":
-                return redirect('products:products')
-            else:
-                return redirect('accounts:customer-landing')
+            return redirect('products:products')
         else:        
             return view_func(request, *args, **kwargs)
 
     return wrapper_func
 
-def merchants_only(view_func):
+def unauthenticated_customer(view_func):
     def wrapper_func(request, *args, **kwargs):
-        role = request.user.role
-        if role == 'CUSTOMER':
+        if request.user.is_authenticated:
             return redirect('accounts:customer-landing')
-
-        if role == 'MERCHANT':
+        else:        
             return view_func(request, *args, **kwargs)
 
+    return wrapper_func
+
+def allowed_users(allowed_role):
+    def decorator(view_func):
+        def wrapper_func(request, *args, **kwargs):
+            role = None
+
+            if not request.user.role:
+                role = None
+            else:
+                role = request.user.role
+            
+            if role == allowed_role:
+                return view_func(request, *args, **kwargs)
+            else:
+                return HttpResponse('You are not authorized to view this page.')
         return wrapper_func
+    return decorator

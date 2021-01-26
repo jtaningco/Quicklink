@@ -8,6 +8,7 @@ from django.urls import reverse
 
 class User(AbstractUser):
     class Types(models.TextChoices):
+        ADMIN = "ADMIN", "Admin"
         MERCHANT = "MERCHANT", "Merchant"
         CUSTOMER = "CUSTOMER", "Customer"
 
@@ -22,7 +23,7 @@ class User(AbstractUser):
         error_messages={"unique": _("A user with that username already exists."),},
         )
 
-    role = models.CharField(_('Role'), max_length=50, choices=Types.choices, default=Types.MERCHANT, null=True)
+    role = models.CharField(_('Role'), max_length=50, choices=Types.choices, default=Types.ADMIN, null=True)
     email = models.EmailField(max_length=150, null=True)
     password = models.CharField(max_length=150, null=True)
     date_created = models.DateTimeField(auto_now_add=True, null=True)
@@ -45,6 +46,12 @@ class MerchantInformation(models.Model):
     )
     last_name = models.CharField(_("last name"), null=True, max_length=150)
     mobile_number = models.CharField(_("mobile number"), max_length=15, null=True)
+
+    def __str__(self):
+        if not (self.first_name) and (self.last_name):
+            return self.username
+        else:
+            return self.first_name + " " + self.last_name
 
 class Merchant(User):
     base_type = User.Types.MERCHANT

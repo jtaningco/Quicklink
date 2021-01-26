@@ -1,5 +1,5 @@
 # from django.forms.models import inlineformset_factory
-from apps.accounts.decorators import merchants_only
+from apps.accounts.decorators import allowed_users
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
@@ -14,27 +14,29 @@ from django.db.models import Q
 
 # Create your views here.
 @login_required(login_url='accounts:login')
-@merchants_only
+@allowed_users(allowed_role=User.Types.MERCHANT)
 def products(request):
+    user = request.user
     search_query = request.GET.get('search', '')
 
     if search_query:
         products = Product.objects.filter(Q(name__icontains=search_query) |
             Q(stock__icontains=search_query))
     else:
-        products = Product.objects.all()
+        products = user.Product.objects.all()
 
     context = {'products':products, }
     return render(request, 'products/products.html', context)
 
 @login_required(login_url='accounts:login')
-@merchants_only
+@allowed_users(allowed_role=User.Types.MERCHANT)
 def productDetails(request, product_pk):
-    product = Product.objects.get(id=product_pk)
+    user = request.user
+    product = user.Product.objects.get(id=product_pk)
     return render(request, 'products/product_modal.html', {'product':product})
 
 @login_required(login_url='accounts:login')
-@merchants_only
+@allowed_users(allowed_role=User.Types.MERCHANT)
 def addProduct(request):
     form = ProductForm()
     if request.method == 'POST':
@@ -47,7 +49,7 @@ def addProduct(request):
     return render(request, 'products/product_form.html', context)
 
 @login_required(login_url='accounts:login')
-@merchants_only
+@allowed_users(allowed_role=User.Types.MERCHANT)
 def updateProduct(request, product_pk):
     product = Product.objects.get(id=product_pk)
     form = ProductForm(instance=product)
@@ -62,7 +64,7 @@ def updateProduct(request, product_pk):
     return render(request, 'products/edit_product.html', context)
 
 @login_required(login_url='accounts:login')
-@merchants_only
+@allowed_users(allowed_role=User.Types.MERCHANT)
 def deleteProduct(request, product_pk):
     product = Product.objects.get(id=product_pk)
     if request.method == "POST":

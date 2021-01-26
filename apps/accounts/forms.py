@@ -15,7 +15,8 @@ class MerchantForm(ModelForm):
         required_fields = ['username', 'email', 'password', 'password2']
 
         widgets = {
-            'role': forms.RadioSelect(),
+            'role': forms.HiddenInput(attrs={
+                'value':User.Types.MERCHANT}),
             'username': forms.fields.TextInput(attrs={
                 'class':'input',
                 'placeholder': 'Username'}),
@@ -43,7 +44,8 @@ class CustomerForm(ModelForm):
         required_fields = ['username', 'email', 'password', 'password2']
 
         widgets = {
-            'role': forms.RadioSelect(),
+            'role': forms.HiddenInput(attrs={
+                'value':User.Types.CUSTOMER}),
             'username': forms.fields.TextInput(attrs={
                 'class':'input',
                 'placeholder': 'Username'}),
@@ -56,5 +58,5 @@ class CustomerForm(ModelForm):
         }
 
         def __init__(self, *args, **kwargs):
-            super(MerchantForm, self).__init__(*args, **kwargs)
+            super(CustomerForm, self).__init__(*args, **kwargs)
             self.fields['role'].initial = User.Types.CUSTOMER
