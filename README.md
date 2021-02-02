@@ -30,23 +30,29 @@ Quicklink is a full-stack stand-alone web application for our class, **ITMGT45: 
                         foo.html
                 models.py
                 views.py
-                forms.py
+                urls.py
         config/                     # site settings
             .env.example
-            settings.py
+            settings/
+               base.py              # for shared settings
+               dev.py               # for development settings
+               test.py              # for testing settings
+               staging.py           # for staging settings
+               production.py        # for production settings
+            asgi.py
             wsgi.py
             urls.py
         docs/                       # documentation
+        requirements/               # pip requirements files per environment
+            base.txt
+            local.txt
+            production.txt
         static/                     # site-specific static files
             css/
                 vendor/
             js/
                 vendor/
             images/
-        requirements/               # pip requirements files per environment
-            base.txt
-            local.txt
-            production.txt
         templates/                  # site-specific templates
         fabfile.py
         manage.py
