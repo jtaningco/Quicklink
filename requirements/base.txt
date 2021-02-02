@@ -3,3 +3,4 @@ Pillow==8.1.0
 django-filter==2.4.0
 django-crispy-forms==1.10.0
 django-credit-cards==0.4.1
+django-environ==0.4.5
