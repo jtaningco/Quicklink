@@ -157,12 +157,22 @@ a {
   color: var(--primary-main);
 }
 
+.secondary-btn-link:hover {
+  font-weight: 700;
+  color: #fff;
+}
+
 .secondary-btn.failure {
   border: 1px solid var(--failure-main);
 }
 
 .secondary-btn-link.failure {
   color: var(--failure-main);
+}
+
+.secondary-btn:hover {
+  background: var(--primary-main);
+  box-shadow: var(--regular-box-shadow);
 }
 
 .tertiary-btn {

@@ -39,7 +39,11 @@ html {
   .primary-white-btn {
     background: #fff;
     box-shadow: var(--regular-box-shadow);
+  }
 
+  .primary-white-btn:hover {
+    background: #dcdcdc;
+    box-shadow: var(--regular-box-shadow);
   }
   
   .primary-white-btn-link {
