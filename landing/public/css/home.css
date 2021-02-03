@@ -21,6 +21,10 @@ html {
   .navLogo {
     max-height: 48px;
   }
+
+  .logoLink {
+    padding-left: 0px;
+  }
   
   .navLinks {
     margin-left: 120px;
@@ -100,7 +104,7 @@ html {
     flex-direction: column;
     align-items: flex-start;
     justify-content: start;
-    margin-left: 56px;
+    margin-left: 120px;
     max-width: 400px;
   }
   
@@ -120,7 +124,8 @@ html {
   }
   
   .heroImage {
-    max-width: 60%;
+    max-width: 50%;
+    margin-right: 24px;
   }
   
   .vp1 {
@@ -327,6 +332,7 @@ html {
   .footerNavs h3 {
     color: #fff;
     font-weight: 700;
+    margin-bottom: 8px;
   }
 
  .footerLink {
@@ -358,20 +364,24 @@ html {
 @media (min-width: 1440px) {
 
   .navLinks {
-    margin-left: 200px;
+    margin-left: 240px;
   }
 
   .navButton {
-    margin-right: 200px;
+    margin-right: 240px;
   }
 
   .heroText {
-    margin-left: 120px;
+    margin-left: 240px;
     max-width: 400px;
   }
 
+  .heroImage {
+    margin-right: 40px;
+  }
+
   .vp1 {
-    margin: 80px 200px 160px 200px;
+    margin: 80px 240px 160px 240px;
   }
 
   .circleBack1 {
@@ -388,14 +398,19 @@ html {
   .vp2 {
     display: flex;
     flex-direction: row;
-    margin: 160px 200px;
+    margin: 160px 240px;
     align-items: center;
+  }
+
+  .vp2Image {
+    max-width: 25%;
+    margin-right: 64px;
   }
   
   .customers {
     display: flex;
     flex-direction: column;
-    margin: 160px 200px;
+    margin: 160px 240px;
     justify-content: center;
     align-items: center;
   }
@@ -421,14 +436,14 @@ html {
   }
 
   .footerContent {
-    margin: 0px 200px;
+    margin: 0px 240px;
     display: flex;
     flex-direction: row;
     align-items: center;
   }
 
   .footerInquiries {
-    margin-left: 200px;
+    margin-left: 240px;
     margin-top: 64px;
   }
 
