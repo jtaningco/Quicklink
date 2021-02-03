@@ -2,151 +2,248 @@ html {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-  overflow: hidden;
+  background-color: #F8F9FF;
+  /* overflow: hidden; */
 }
 
-.landing {
+
+.navLanding {
+  height: 80px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  background-color: transparent;
+  position: absolute;
+  width: 100vw;
+}
+
+.navLogo {
+  max-height: 48px;
+}
+
+.navLinks {
+  margin-left: 120px;
+}
+
+.navOptions {
+  padding: 0px 40px;
+  color: #fff;
+  font-weight: 700;
+}
+
+.navButton {
+  margin-right: 120px;
+}
+
+.primary-white-btn {
+  background: #fff;
+}
+
+.primary-white-btn-link {
+  font-weight: 700;
+  color: var(--primary-main);
+}
+
+.hero {
   width: 100vw;
   height: 100vh;
+  background-image: url("../static/background/hero.png");
+  background-size: 100% 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
 }
 
-.home {
-  width: 100%;
-  height: 100%;
+.heroText {
   display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: start;
+  margin-left: 56px;
+  max-width: 400px;
+}
+
+.heroHead {
+  font-size: 32px;
+  line-height: 48px;
+  color: #fff;
+  font-weight: 700;
+}
+
+.heroBody {
+  font-size: 16px;
+  line-height: 26px;
+  color: #fff;
+  margin-top: 16px;
+  margin-bottom: 32px;
+}
+
+.heroImage {
+  max-width: 60%;
+}
+
+.vp1 {
+  display: flex;
+  flex-direction: column;
+  margin: 80px 120px 160px 120px;
+}
+
+.textArea {
+  display: flex;
+  flex-direction: row;
+}
+
+.line {
+  width: 4px;
+  height: auto;
+  background-color: var(--secondary-main);
+  margin-right: 16px;
+}
+
+.vpText {
+  display: flex;
+  flex-direction: column;
+  max-width: 75%;
+}
+
+.vpText h1{
+  font-weight: 700;
+}
+
+.vpText p{
+  margin-top: 8px;
+  color: var(--muted-default);
+}
+
+.vp1Image {
+  margin-top: 40px;
+}
+
+.circleBack1 {
+  max-width: 296px;
+  position: absolute;
+  z-index: -1;
+  top: 1464px;
+}
+
+.circleBack2 {
+  max-width: 200px;
+  position: absolute;
+  z-index: -2;
+  top: 1960px;
+  right: 0px;
+}
+
+.vp2 {
+  display: flex;
+  flex-direction: row;
+  margin: 160px 120px;
+  align-items: center;
+}
+
+.vp2Image {
+  max-width: 25%;
+  margin-right: 40px;
+}
+
+.payMethods {
+  margin: 40px 0px;
+  display: flex;
+  flex-direction: column;
+}
+
+.payMethods h3 {
+  font-weight: 700;
+}
+
+.payLogos {
+  display: flex;
+  flex-direction: row;
+  margin-top: 16px;
+}
+
+.payLogos img {
+  margin: 0px 8px;
+  max-height: 40px;
+}
+
+.customers {
+  display: flex;
+  flex-direction: column;
+  margin: 160px 120px;
   justify-content: center;
   align-items: center;
-  align-content: center;
 }
 
-.home-container {
-  position: absolute;
-  animation: loading 2s forwards;
-  width: 100%;
-  height: 100%;
+.customerCards {
   display: flex;
-  justify-content: center;
+  flex-direction: row;
+  justify-content: space-between;
   align-items: center;
-  align-content: center;
+  width: 80%;
 }
 
-.home-container img {
-  transition: all 0.3s ease-in-out;
+.customerCard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 64px;
+  max-width: 296px;
 }
 
-.home-container img:hover {
-  transform: scale(1.05);
+.customerText {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 30px 0px;
 }
 
-.home-container p {
+.customerText h3 {
+  font-weight: 700;
+  text-align: center;
+}
+
+.customerText p {
+  text-align: center;
+  margin-top: 8px;
+}
+
+.vertLine {
+  width: 1px;
+  height: auto;
+  background-color: var(--secondary-main);
+  margin: 0px 24px;
+}
+
+.comparative {
+  margin: 160px 120px;
+}
+
+.compTable {
+  max-width: 100%;
+}
+
+.compCircle {
   position: absolute;
-  bottom: 56px;
-  font-family: 'Overpass', sans-serif;
-  line-height: 32px;
-  font-size: 20px;
-  color: #A3A3A3;
-  opacity: 0;
-  animation: display 1s forwards;
-  animation-delay: 2s;
+  max-width: 280px;
+  top: 2880px;
+  z-index: -2;
 }
 
-@media screen and (min-width: 1440px) {
-  .home {
-    background: url('../static/background/home.png'), linear-gradient(107.56deg, rgba(254, 217, 164, 1), rgba(171, 185, 255, 1));
-    background-blend-mode: overlay;
-    background-size: 105% 100%;
-    background-position: center;
-    background-repeat: no-repeat;
-  }
-
-  .home-container img {
-    width: 304px;
-    height: 312px;
-  }
+.CTA {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin: 160px 120px;
+  /* background: #fff; */
 }
 
-@media screen and (min-width: 1068px) and (max-width: 1339px) {
-  .home {
-    background: url('../static/background/home.png'), linear-gradient(107.56deg, rgba(254, 217, 164, 1), rgba(171, 185, 255, 1));
-    background-blend-mode: overlay;
-    background-size: 150% 100%;
-    background-position: center;
-    background-repeat: no-repeat;
-  }
-
-  .home-container img {
-    width: 304px;
-    height: 312px;
-  }
+.CTA h1 {
+  font-weight: 700;
 }
 
-@media screen and (min-width: 768px) and (max-width: 1067px) {
-  .home {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    align-content: center;
-  }
-  
-  .home-container {
-    width: 100%;
-    height: 80%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    align-content: center;
-  }
-
-  .home {
-    background: url('../static/background/home.png'), linear-gradient(107.56deg, rgba(254, 217, 164, 1), rgba(171, 185, 255, 1));
-    background-blend-mode: overlay;
-    background-size: 200% 150%;
-    background-position: center top;
-    background-repeat: no-repeat;
-  }
-
-  .home-container img {
-    width: 304px;
-    height: 312px;
-  }
-}
-
-@media screen and (min-width: 320px) and (max-width: 767px) {
-  .home {
-    background: url('../static/background/home.png'), linear-gradient(107.56deg, rgba(254, 217, 164, 1), rgba(171, 185, 255, 1));
-    background-blend-mode: overlay;
-    background-size: 300% 100%;
-    background-position: center;
-    background-repeat: no-repeat;
-  }
-
-  .home-container img {
-    width: 151px;
-    height: 156px;
-  }
-
-  .home-container p {
-    bottom: 7.5%;
-  }
-}
-
-@keyframes loading {
-  from {
-    bottom: -100%;
-  }
-  to {
-    bottom: 50%;
-    transform: translateY(50%);
-  }
-}
-
-@keyframes display {
-  0% {
-    opacity: 0;
-  }
-  100% {
-    opacity: 1;
-  }
+.CTA button {
+  margin-top: 24px;
 }
