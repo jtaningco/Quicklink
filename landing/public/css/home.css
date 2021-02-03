@@ -6,244 +6,311 @@ html {
   /* overflow: hidden; */
 }
 
+@media (min-width: 1068px) {
+  .navLanding {
+    height: 80px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    background-color: transparent;
+    position: absolute;
+    width: 100vw;
+  }
+  
+  .navLogo {
+    max-height: 48px;
+  }
+  
+  .navLinks {
+    margin-left: 120px;
+  }
+  
+  .navOptions {
+    padding: 0px 40px;
+    color: #fff;
+    font-weight: 700;
+  }
+  
+  .navButton {
+    margin-right: 120px;
+  }
+  
+  .primary-white-btn {
+    background: #fff;
+    box-shadow: var(--regular-box-shadow);
 
-.navLanding {
-  height: 80px;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  background-color: transparent;
-  position: absolute;
-  width: 100vw;
-}
+  }
+  
+  .primary-white-btn-link {
+    font-weight: 700;
+    color: var(--primary-main);
+  }
+  
+  .hero {
+    width: 100vw;
+    height: 100vh;
+    background-image: url("../static/background/hero.png");
+    background-size: 100% 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .heroText {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: start;
+    margin-left: 56px;
+    max-width: 400px;
+  }
+  
+  .heroHead {
+    font-size: 32px;
+    line-height: 48px;
+    color: #fff;
+    font-weight: 700;
+  }
+  
+  .heroBody {
+    font-size: 16px;
+    line-height: 26px;
+    color: #fff;
+    margin-top: 16px;
+    margin-bottom: 32px;
+  }
+  
+  .heroImage {
+    max-width: 60%;
+  }
+  
+  .vp1 {
+    display: flex;
+    flex-direction: column;
+    margin: 80px 120px 160px 120px;
+  }
+  
+  .textArea {
+    display: flex;
+    flex-direction: row;
+  }
+  
+  .line {
+    width: 4px;
+    height: auto;
+    background-color: var(--secondary-main);
+    margin-right: 16px;
+  }
+  
+  .vpText {
+    display: flex;
+    flex-direction: column;
+    max-width: 75%;
+  }
+  
+  .vpText h1{
+    font-weight: 700;
+  }
+  
+  .vpText p{
+    margin-top: 8px;
+    color: var(--muted-default);
+  }
+  
+  .vp1Image {
+    margin-top: 40px;
+  }
+  
+  .circleBack1 {
+    max-width: 296px;
+    position: absolute;
+    z-index: -1;
+    top: 1464px;
+  }
+  
+  .circleBack2 {
+    max-width: 200px;
+    position: absolute;
+    z-index: -2;
+    top: 1960px;
+    right: 0px;
+  }
+  
+  .vp2 {
+    display: flex;
+    flex-direction: row;
+    margin: 160px 120px;
+    align-items: center;
+  }
+  
+  .vp2Image {
+    max-width: 25%;
+    margin-right: 40px;
+  }
+  
+  .payMethods {
+    margin: 40px 0px;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .payMethods h3 {
+    font-weight: 700;
+  }
+  
+  .payLogos {
+    display: flex;
+    flex-direction: row;
+    margin-top: 16px;
+  }
+  
+  .payLogos img {
+    margin: 0px 8px;
+    max-height: 40px;
+  }
+  
+  .customers {
+    display: flex;
+    flex-direction: column;
+    margin: 160px 120px;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .customerCards {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 80%;
+  }
+  
+  .customerCard {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 64px;
+    max-width: 296px;
+  }
+  
+  .customerText {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 30px 0px;
+  }
+  
+  .customerText h3 {
+    font-weight: 700;
+    text-align: center;
+  }
+  
+  .customerText p {
+    text-align: center;
+    margin: 8px 0px 32px 0px;
+  }
+  
+  .vertLine {
+    width: 1px;
+    height: auto;
+    background-color: var(--secondary-main);
+    margin: 0px 24px;
+  }
+  
+  .comparative {
+    margin: 160px 120px;
+  }
+  
+  .compTable {
+    max-width: 100%;
+  }
+  
+  .compCircle {
+    position: absolute;
+    max-width: 280px;
+    top: 2880px;
+    z-index: -2;
+  }
 
-.navLogo {
-  max-height: 48px;
-}
+  .CTA {
+    background-color: #fff;
+    /* padding: 8px 0px; */
+  }
+  
+  .textCTA {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 40px 0px;
+    margin: 160px 120px;
+    /* background: #fff; */
+  }
+  
+  .textCTA h1 {
+    font-weight: 700;
+    max-width: 90%;
+  }
+  
+  .textCTA button {
+    margin-top: 24px;
+  }
 
-.navLinks {
-  margin-left: 120px;
-}
+  .mainFooter {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    /* margin-top: 80px; */
+    background-color: var(--primary-main);
+    height: 320px;
+  }
 
-.navOptions {
-  padding: 0px 40px;
-  color: #fff;
-  font-weight: 700;
-}
+  .footerLogo {
+    max-width: 80px;
+  }
 
-.navButton {
-  margin-right: 120px;
-}
+  .footerContent {
+    margin: 0px 120px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
 
-.primary-white-btn {
-  background: #fff;
-}
+  .footerNavs {
+    display: flex;
+    flex-direction: row;
+    margin-left: 40px;
+  }
 
-.primary-white-btn-link {
-  font-weight: 700;
-  color: var(--primary-main);
-}
+  .footerNavs h3 {
+    color: #fff;
+    font-weight: 700;
+  }
 
-.hero {
-  width: 100vw;
-  height: 100vh;
-  background-image: url("../static/background/hero.png");
-  background-size: 100% 100%;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-}
+ .footerLink {
+   color: #fff;
+   margin-top: 8px;
+   padding: 0px;
+   font-weight: 400;
+ }
 
-.heroText {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: start;
-  margin-left: 56px;
-  max-width: 400px;
-}
+  .footerColumn {
+    width: 160px;
+    margin-left: 40px;
+    display: flex;
+    flex-direction: column;
+  }
 
-.heroHead {
-  font-size: 32px;
-  line-height: 48px;
-  color: #fff;
-  font-weight: 700;
-}
+  .footerInquiries {
+    margin-left: 120px;
+    margin-top: 64px;
+  }
 
-.heroBody {
-  font-size: 16px;
-  line-height: 26px;
-  color: #fff;
-  margin-top: 16px;
-  margin-bottom: 32px;
-}
+  .footerInquiries p {
+    color: #fff;
+    font-weight: 700;
+  }
 
-.heroImage {
-  max-width: 60%;
-}
-
-.vp1 {
-  display: flex;
-  flex-direction: column;
-  margin: 80px 120px 160px 120px;
-}
-
-.textArea {
-  display: flex;
-  flex-direction: row;
-}
-
-.line {
-  width: 4px;
-  height: auto;
-  background-color: var(--secondary-main);
-  margin-right: 16px;
-}
-
-.vpText {
-  display: flex;
-  flex-direction: column;
-  max-width: 75%;
-}
-
-.vpText h1{
-  font-weight: 700;
-}
-
-.vpText p{
-  margin-top: 8px;
-  color: var(--muted-default);
-}
-
-.vp1Image {
-  margin-top: 40px;
-}
-
-.circleBack1 {
-  max-width: 296px;
-  position: absolute;
-  z-index: -1;
-  top: 1464px;
-}
-
-.circleBack2 {
-  max-width: 200px;
-  position: absolute;
-  z-index: -2;
-  top: 1960px;
-  right: 0px;
-}
-
-.vp2 {
-  display: flex;
-  flex-direction: row;
-  margin: 160px 120px;
-  align-items: center;
-}
-
-.vp2Image {
-  max-width: 25%;
-  margin-right: 40px;
-}
-
-.payMethods {
-  margin: 40px 0px;
-  display: flex;
-  flex-direction: column;
-}
-
-.payMethods h3 {
-  font-weight: 700;
-}
-
-.payLogos {
-  display: flex;
-  flex-direction: row;
-  margin-top: 16px;
-}
-
-.payLogos img {
-  margin: 0px 8px;
-  max-height: 40px;
-}
-
-.customers {
-  display: flex;
-  flex-direction: column;
-  margin: 160px 120px;
-  justify-content: center;
-  align-items: center;
-}
-
-.customerCards {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  width: 80%;
-}
-
-.customerCard {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-top: 64px;
-  max-width: 296px;
-}
-
-.customerText {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin: 30px 0px;
-}
-
-.customerText h3 {
-  font-weight: 700;
-  text-align: center;
-}
-
-.customerText p {
-  text-align: center;
-  margin-top: 8px;
-}
-
-.vertLine {
-  width: 1px;
-  height: auto;
-  background-color: var(--secondary-main);
-  margin: 0px 24px;
-}
-
-.comparative {
-  margin: 160px 120px;
-}
-
-.compTable {
-  max-width: 100%;
-}
-
-.compCircle {
-  position: absolute;
-  max-width: 280px;
-  top: 2880px;
-  z-index: -2;
-}
-
-.CTA {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  margin: 160px 120px;
-  /* background: #fff; */
-}
-
-.CTA h1 {
-  font-weight: 700;
-}
-
-.CTA button {
-  margin-top: 24px;
 }

@@ -102,7 +102,6 @@ button {
   align-content: center;
   width: auto;
   height: auto;
-  box-shadow: var(--regular-box-shadow);
   border-radius: 4px;
   border: none;
 }
@@ -118,14 +117,20 @@ a {
 
 .primary-btn {
   background: var(--primary-main);
+  box-shadow: var(--regular-box-shadow);
+
 }
 
 .primary-btn:hover {
   background: var(--primary-light); 
+  box-shadow: var(--regular-box-shadow);
+
 }
 
 .primary-btn.active {
   background: var(--primary-pressed);
+  box-shadow: var(--regular-box-shadow);
+
 }
 
 .primary-btn.disabled {
@@ -144,7 +149,7 @@ a {
 
 .secondary-btn {
   border: 1px solid var(--primary-main);
-  background: #fff;
+  background-color: transparent;
 }
 
 .secondary-btn-link {
