@@ -371,6 +371,14 @@ html {
     margin-right: 240px;
   }
 
+  .heroCircle2 {
+    position: absolute;
+    top: 136px;
+    left: 744px;
+    z-index: -5;
+    max-width: 160px;
+  }
+
   .heroText {
     margin-left: 240px;
     max-width: 400px;
