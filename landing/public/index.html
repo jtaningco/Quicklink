@@ -17,6 +17,8 @@
   <link rel="stylesheet" href="css/main.css">
   <link rel="stylesheet" href="css/home.css">
 
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 
 
 </head>
@@ -43,16 +45,16 @@
 
   <section class = "hero">
     <img class = "heroBG" src = "static/background/heroBG.png">
-    <div class = "heroText">
+    <div class = "heroText" data-aos = "fade-right" data-aos-delay = "300">
       <h1 class = "heroHead">Making your life easier, one order at a time.</h1>
       <p class = "heroBody">Quicklink automates order and financial processes, management, and documentation for businesses like yours to increase efficiency and sales.</p>
       <button class = "primary-white-btn"><a class = "primary-white-btn-link">Join Early Access</a></button>
     </div>
-
-    <img class = "heroImage" src="./static/mockups/mockups.png">
+    
+    <img class = "heroImage" src="./static/mockups/mockups.png" data-aos = "fade-left" data-aos-delay = "300">
   </section>
 
-  <section class = "vp1">
+  <section class = "vp1" data-aos = "fade-up">
     <div class = "textArea">
       <div class = "line"></div>
       <div class = "vpText">
@@ -70,11 +72,11 @@
   <img class = "circleBack2" src = "static/background/vp2Circle2.png">
 
   <section class = "customers">
-    <h1 class = "bold">So, who are we for?</h1>
+    <h1 class = "bold" data-aos = "fade-up">So, who are we for?</h1>
 
     <div class = "customerCards">
 
-      <div class = "customerCard">
+      <div class = "customerCard" data-aos = "fade-right">
         <img src = "static/mockups/customers1.svg">
 
         <div class = "customerText">
@@ -87,7 +89,7 @@
 
       <!-- <div class = "vertLine"></div> -->
 
-      <div class = "customerCard">
+      <div class = "customerCard" data-aos = "fade-left">
         <img src = "static/mockups/customers2.svg">
 
         <div class = "customerText">
@@ -102,7 +104,7 @@
   </section>
 
   <section class = "vp2Flex">
-    <div class = "vp2">
+    <div class = "vp2" data-aos = "fade-right">
       <img class = "vp2Image" src = "./static/mockups/vp2.png">
       <div class = "vp2Area">
 
@@ -135,11 +137,11 @@
   <img class = "compCircle" src = "static/background/compCircle.png">
 
 
-  <section class = "comparative">
+  <section class = "comparative" data-aos="fade-up">
     <img class = "compTable" src = "static/mockups/comp table 1.png">
   </section>
 
-  <section class = "CTA">
+  <section class = "CTA" data-aos="fade-up">
     <div class = "textCTA">
       <h1 class = "bold">Grow your small business with us. <br> Click your way to quick and easy transactions. <br>All for free.</h1>
       <button class = "primary-white-btn"><a class = "primary-white-btn-link">Join Early Access</a></button>
@@ -187,6 +189,17 @@
 
     </div>
   </footer>
+
+  <script>    
+    AOS.init({
+    duration: 1200,
+    anchorPlacement: 'center-top',
+    offset: 120,
+    });  
+
+    AOS.refreshHard();
+
+  </script>
 
 </body>
 

@@ -118,12 +118,14 @@ a {
 .primary-btn {
   background: var(--primary-main);
   box-shadow: var(--regular-box-shadow);
+  transition: background 200ms;
 
 }
 
 .primary-btn:hover {
   background: var(--primary-light); 
   box-shadow: var(--regular-box-shadow);
+  transition: background 200ms;
 
 }
 
@@ -141,6 +143,7 @@ a {
   font-weight: 700;
   color: #FFF;
 }
+
 .primary-btn-link.disabled {
   cursor: default;
   pointer-events: none; 
@@ -151,6 +154,7 @@ a {
 .secondary-btn {
   border: 1px solid var(--primary-main);
   background-color: transparent;
+  transition: background 200ms;
 }
 
 .secondary-btn-link {
@@ -161,6 +165,7 @@ a {
 .secondary-btn-link:hover {
   font-weight: 700;
   color: #fff;
+  transition: background 200ms;
 }
 
 .secondary-btn.failure {
