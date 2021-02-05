@@ -49,14 +49,11 @@ html {
 .primary-white-btn {
   background: #fff;
   box-shadow: var(--regular-box-shadow);
-  transition: background 200ms;
-
 }
 
 .primary-white-btn:hover {
   background: #dcdcdc;
   box-shadow: var(--regular-box-shadow);
-  transition: background 200ms;
 }
 
 .primary-white-btn-link {
