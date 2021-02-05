@@ -17,6 +17,8 @@
   <link rel="stylesheet" href="css/main.css">
   <link rel="stylesheet" href="css/home.css">
 
+  <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
 </head>
 
 <body>
@@ -41,13 +43,13 @@
 
   <section class = "hero">
     <img class = "heroBG" src = "static/background/heroBG.png">
-    <div class = "heroText">
+    <div class = "heroText" data-aos = "fade-right">
       <h1 class = "heroHead">Making your life easier, one order at a time.</h1>
       <p class = "heroBody">Quicklink automates order and financial processes, management, and documentation for businesses like yours to increase efficiency and sales.</p>
       <button class = "primary-white-btn"><a class = "primary-white-btn-link">Join Early Access</a></button>
     </div>
 
-    <img class = "heroImage" src="./static/mockups/mockups.png">
+    <img class = "heroImage" src="./static/mockups/mockups.png" data-aos = "fade-left">
   </section>
 
   <section class = "vp1">
@@ -185,6 +187,11 @@
 
     </div>
   </footer>
+
+  <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+  <script>
+    AOS.init();
+  </script>
 
 </body>
 
