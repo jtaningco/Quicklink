@@ -2,7 +2,8 @@ html {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-  background-color: #fff;
+  background-color: #F8F9FF;
+;
   /* overflow: hidden; */
 }
 
@@ -14,7 +15,13 @@ html {
   align-items: center;
   background-color: transparent;
   position: absolute;
+  top: 0;
   width: 100vw;
+}
+
+.navLanding.scrolled {
+  background: linear-gradient(107.56deg, #798CF2 15.42%, #FED9A4 100%);
+  transition: background-color 200ms linear;
 }
 
 .navLogo {
@@ -267,7 +274,7 @@ html {
 
 .vertLine {
   width: 1px;
-  height: auto;
+  height: 100%;
   background-color: var(--secondary-main);
   margin: 0px 24px;
 }
