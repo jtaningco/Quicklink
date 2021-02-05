@@ -17,6 +17,9 @@
   <link rel="stylesheet" href="css/main.css">
   <link rel="stylesheet" href="css/home.css">
   <link rel="stylesheet" href="css/pricing.css">
+
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
 </head>
 
 <body>
@@ -38,7 +41,7 @@
 
 
     <section class = "pricingCards">
-        <div class = "pricingCard">
+        <div class = "pricingCard" data-aos = "fade-up">
             <h2 class = "bold">Standard</h2>
             <p class = "subHeader">Completely FREE for sellers!</p>
 
@@ -69,7 +72,7 @@
 
         </div>
 
-        <div class = "pricingCardDisabled">
+        <div class = "pricingCardDisabled" data-aos = "fade-up" data-aos-delay = "500">
             <h2 class = "bold">Premium</h2>
             <p class = "subHeaderDisabled">Coming soon!</p>
 
@@ -150,6 +153,15 @@
         </div>
       </footer>
 
+   <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+  <script>
+    AOS.init({
+      duration: 1200,
+      anchorPlacement: 'center-top',
+    });
     
+    AOS.refreshHard();
+  </script>
 
 </body>
