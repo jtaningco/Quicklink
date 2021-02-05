@@ -479,3 +479,161 @@ html {
   }
 
 }
+
+@media only screen and (min-width: 1920px) {
+
+  a {
+    font-size: 16px;
+    line-height: 24px;
+  }
+
+  h1 {
+    font-size: 32px;
+    line-height: 48px;
+  }
+
+  p {
+    font-size: 20px;
+    line-height: 32px;
+  }
+
+  .navLinks {
+    margin-left: 400px;
+  }
+
+  .navButton {
+    margin-right: 400px;
+  }
+
+  .heroCircle2 {
+    position: absolute;
+    top: 136px;
+    left: 744px;
+    z-index: -5;
+    max-width: 160px;
+  }
+
+  .heroText {
+    margin-left: 400px;
+    max-width: 600px;
+  }
+
+  .heroHead {
+    font-size: 48px;
+    line-height: 64px;
+    color: #fff;
+    font-weight: 700;
+  }
+  
+  .heroBody {
+    font-size: 24px;
+    line-height: 40px;
+    color: #fff;
+    margin-top: 16px;
+    margin-bottom: 32px;
+  }
+  
+  .heroImage {
+    max-width: 50%;
+    margin-right: 24px;
+  }
+
+  .heroImage {
+    margin-right: 160px;
+  }
+
+  .heroCircle3 {
+    position: absolute;
+    top: 1200px;
+    right: 0px;
+    z-index: -5;
+    max-width: 96px;
+  }
+
+  .vp1 {
+    margin: 80px 600px 160px 600px;
+  }
+
+  .circleBack1 {
+    max-width: 320px;
+    position: absolute;
+    z-index: -1;
+    top: 1520px;
+  }
+
+  .circleBack2 {
+    top: 2200px;
+  }
+
+  .vp2Flex {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 160px 600px;
+  }
+  
+
+  .vp2 {
+    display: flex;
+    flex-direction: row;
+    /* margin: 160px 240px; */
+    align-items: center;
+    justify-content: center;
+  }
+
+  .vp2Image {
+    max-width: 25%;
+    margin-right: 64px;
+  }
+  
+  .customers {
+    display: flex;
+    flex-direction: column;
+    margin: 160px 600px;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .customerCard {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 64px 60px 0px 60px;
+    max-width: 360px;
+  }
+
+  h3 {
+    font-size: 24px;
+    line-height: 32px;
+  }
+
+  .compCircle {
+    position: absolute;
+    max-width: 320px;
+    top: 3200px;
+    z-index: -2;
+  }
+
+  .comparative {
+    margin: 160px 600px;
+  }
+
+  .CTA {
+    margin: 160px 600px; 
+    /* padding: 8px 0px; */
+  }
+
+  .footerContent {
+    margin: 0px 600px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .footerInquiries {
+    margin-left: 600px;
+    margin-top: 64px;
+  }
+
+}
