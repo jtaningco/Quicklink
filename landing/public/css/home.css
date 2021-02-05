@@ -2,366 +2,376 @@ html {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-  background-color: #F8F9FF;
+  background-color: #fff;
   /* overflow: hidden; */
 }
 
-@media (min-width: 1068px) {
-  .navLanding {
-    height: 80px;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    background-color: transparent;
-    position: absolute;
-    width: 100vw;
-  }
-  
-  .navLogo {
-    max-height: 48px;
-  }
-
-  .logoLink {
-    padding-left: 0px;
-  }
-  
-  .navLinks {
-    margin-left: 120px;
-  }
-  
-  .navOptions {
-    padding: 2px 32px 0px 32px;
-    color: #fff;
-    font-weight: 700;
-  }
-  
-  .navButton {
-    margin-right: 120px;
-  }
-  
-  .primary-white-btn {
-    background: #fff;
-    box-shadow: var(--regular-box-shadow);
-  }
-
-  .primary-white-btn:hover {
-    background: #dcdcdc;
-    box-shadow: var(--regular-box-shadow);
-  }
-  
-  .primary-white-btn-link {
-    font-weight: 700;
-    color: var(--primary-main);
-  }
-
-  .heroBG {
-    position: absolute;
-    z-index: -4;
-    mix-blend-mode: multiply;
-    width: 100%;
-    height: auto;
-    max-height: 100vh;
-  }
-
-  .heroCircle1 {
-    position: absolute;
-    top: 8px;
-    z-index: -5;
-    max-width: 80px;
-  }
-
-  .heroCircle2 {
-    position: absolute;
-    top: 136px;
-    left: 472px;
-    z-index: -5;
-    max-width: 160px;
-  }
-
-  .heroCircle3 {
-    position: absolute;
-    top: 584px;
-    right: 0px;
-    z-index: -5;
-    max-width: 96px;
-  }
-  
-  .hero {
-    width: 100vw;
-    height: 100vh;
-    /* background-image: url("../static/background/hero.png"); */
-    /* background-size: 100% 100%; */
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    overflow: hidden;
-  }
-  
-  .heroText {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: start;
-    margin-left: 120px;
-    max-width: 400px;
-  }
-  
-  .heroHead {
-    font-size: 32px;
-    line-height: 48px;
-    color: #fff;
-    font-weight: 700;
-  }
-  
-  .heroBody {
-    font-size: 16px;
-    line-height: 26px;
-    color: #fff;
-    margin-top: 16px;
-    margin-bottom: 32px;
-  }
-  
-  .heroImage {
-    max-width: 50%;
-    margin-right: 24px;
-  }
-  
-  .vp1 {
-    display: flex;
-    flex-direction: column;
-    margin: 80px 120px 160px 120px;
-  }
-  
-  .textArea {
-    display: flex;
-    flex-direction: row;
-  }
-  
-  .line {
-    width: 4px;
-    height: auto;
-    background-color: var(--secondary-main);
-    margin-right: 16px;
-  }
-  
-  .vpText {
-    display: flex;
-    flex-direction: column;
-    max-width: 75%;
-  }
-  
-  .vpText h1{
-    font-weight: 700;
-  }
-  
-  .vpText p{
-    margin-top: 8px;
-    color: var(--muted-default);
-  }
-  
-  .vp1Image {
-    margin-top: 40px;
-  }
-  
-  .circleBack1 {
-    max-width: 296px;
-    position: absolute;
-    z-index: -1;
-    top: 1464px;
-  }
-  
-  .circleBack2 {
-    max-width: 200px;
-    position: absolute;
-    z-index: -2;
-    top: 1960px;
-    right: 0px;
-  }
-  
-  .vp2 {
-    display: flex;
-    flex-direction: row;
-    margin: 160px 120px;
-    align-items: center;
-  }
-  
-  .vp2Image {
-    max-width: 25%;
-    margin-right: 40px;
-  }
-  
-  .payMethods {
-    margin: 40px 0px;
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .payMethods h3 {
-    font-weight: 700;
-  }
-  
-  .payLogos {
-    display: flex;
-    flex-direction: row;
-    margin-top: 16px;
-  }
-  
-  .payLogos img {
-    margin: 0px 8px;
-    max-height: 40px;
-  }
-  
-  .customers {
-    display: flex;
-    flex-direction: column;
-    margin: 160px 120px;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  .customerCards {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-  }
-  
-  .customerCard {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin: 64px 40px 0px 40px;
-    max-width: 296px;
-  }
-  
-  .customerText {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin: 30px 0px;
-  }
-  
-  .customerText h3 {
-    font-weight: 700;
-    text-align: center;
-  }
-  
-  .customerText p {
-    text-align: center;
-    margin: 8px 0px 32px 0px;
-  }
-  
-  .vertLine {
-    width: 1px;
-    height: auto;
-    background-color: var(--secondary-main);
-    margin: 0px 24px;
-  }
-  
-  .comparative {
-    margin: 160px 120px;
-  }
-  
-  .compTable {
-    max-width: 100%;
-  }
-  
-  .compCircle {
-    position: absolute;
-    max-width: 280px;
-    top: 2880px;
-    z-index: -2;
-  }
-
-  .CTA {
-    background-color: #fff;
-    margin: 160px 120px;
-    padding: 40px 24px;
-    border-radius: 4px;
-    box-shadow: var(--regular-box-shadow);
-    /* padding: 8px 0px; */
-  }
-  
-  .textCTA {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    /* padding: 40px 0px; */
-    /* background: #fff; */
-  }
-  
-  .textCTA h1 {
-    font-weight: 700;
-    /* max-width: 90%; */
-  }
-  
-  .textCTA button {
-    margin-top: 24px;
-  }
-
-  .mainFooter {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: center;
-    /* margin-top: 80px; */
-    background-color: var(--primary-main);
-    height: 320px;
-  }
-
-  .footerLogo {
-    max-width: 80px;
-  }
-
-  .footerContent {
-    margin: 0px 120px;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-  }
-
-  .footerNavs {
-    display: flex;
-    flex-direction: row;
-    margin-left: 40px;
-  }
-
-  .footerNavs h3 {
-    color: #fff;
-    font-weight: 700;
-    margin-bottom: 8px;
-  }
-
- .footerLink {
-   color: #fff;
-   margin-top: 8px;
-   padding: 0px;
-   font-weight: 400;
- }
-
-  .footerColumn {
-    width: 160px;
-    margin-left: 40px;
-    display: flex;
-    flex-direction: column;
-  }
-
-  .footerInquiries {
-    margin-left: 120px;
-    margin-top: 64px;
-  }
-
-  .footerInquiries p {
-    color: #fff;
-    font-weight: 700;
-  }
-
+.navLanding {
+  height: 80px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  background-color: transparent;
+  position: absolute;
+  width: 100vw;
 }
 
-@media (min-width: 1440px) {
+.navLogo {
+  max-height: 48px;
+}
+
+.logoLink {
+  padding-left: 0px;
+}
+
+.navLinks {
+  margin-left: 120px;
+}
+
+.navOptions {
+  padding: 2px 32px 0px 32px;
+  color: #fff;
+  font-weight: 700;
+}
+
+.navButton {
+  margin-right: 120px;
+}
+
+.primary-white-btn {
+  background: #fff;
+  box-shadow: var(--regular-box-shadow);
+}
+
+.primary-white-btn:hover {
+  background: #dcdcdc;
+  box-shadow: var(--regular-box-shadow);
+}
+
+.primary-white-btn-link {
+  font-weight: 700;
+  color: var(--primary-main);
+}
+
+.heroBG {
+  position: absolute;
+  z-index: -4;
+  mix-blend-mode: multiply;
+  width: 100%;
+  height: auto;
+  max-height: 100vh;
+}
+
+.heroCircle1 {
+  position: absolute;
+  top: 8px;
+  z-index: -5;
+  max-width: 80px;
+}
+
+.heroCircle2 {
+  position: absolute;
+  top: 136px;
+  left: 472px;
+  z-index: -5;
+  max-width: 160px;
+}
+
+.heroCircle3 {
+  position: absolute;
+  top: 584px;
+  right: 0px;
+  z-index: -5;
+  max-width: 96px;
+}
+
+.hero {
+  width: 100vw;
+  height: 100vh;
+  /* background-image: url("../static/background/hero.png"); */
+  /* background-size: 100% 100%; */
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  overflow: hidden;
+}
+
+.heroText {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: start;
+  margin-left: 120px;
+  max-width: 400px;
+}
+
+.heroHead {
+  font-size: 32px;
+  line-height: 48px;
+  color: #fff;
+  font-weight: 700;
+}
+
+.heroBody {
+  font-size: 16px;
+  line-height: 26px;
+  color: #fff;
+  margin-top: 16px;
+  margin-bottom: 32px;
+}
+
+.heroImage {
+  max-width: 50%;
+  margin-right: 24px;
+}
+
+.vp1 {
+  display: flex;
+  flex-direction: column;
+  margin: 80px 120px 160px 120px;
+}
+
+.textArea {
+  display: flex;
+  flex-direction: row;
+}
+
+.line {
+  width: 4px;
+  height: auto;
+  background-color: var(--secondary-main);
+  margin-right: 16px;
+}
+
+.vpText {
+  display: flex;
+  flex-direction: column;
+  max-width: 75%;
+}
+
+.vpText h1{
+  font-weight: 700;
+}
+
+.vpText p{
+  margin-top: 8px;
+  color: var(--muted-default);
+}
+
+.vp1Image {
+  margin-top: 40px;
+}
+
+.circleBack1 {
+  max-width: 200px;
+  position: absolute;
+  z-index: -1;
+  top: 1480px;
+}
+
+.circleBack2 {
+  max-width: 184px;
+  position: absolute;
+  z-index: -2;
+  top: 2200px;
+  right: 0px;
+}
+
+.vp2Flex {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 160px 120px;
+}
+
+.vp2 {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.vp2Area {
+  max-width: 80%;
+}
+
+.vp2Image {
+  max-width: 25%;
+  margin-right: 40px;
+}
+
+.payMethods {
+  margin: 40px 0px;
+  display: flex;
+  flex-direction: column;
+}
+
+.payMethods h3 {
+  font-weight: 700;
+}
+
+.payLogos {
+  display: flex;
+  flex-direction: row;
+  margin-top: 16px;
+}
+
+.payLogos img {
+  margin: 0px 8px;
+  max-height: 40px;
+}
+
+.customers {
+  display: flex;
+  flex-direction: column;
+  margin: 160px 120px;
+  justify-content: center;
+  align-items: center;
+}
+
+.customerCards {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.customerCard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 64px 60px 0px 60px;
+  max-width: 296px;
+}
+
+.customerText {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 30px 0px;
+}
+
+.customerText h3 {
+  font-weight: 700;
+  text-align: center;
+}
+
+.customerText p {
+  text-align: center;
+  margin: 8px 0px 32px 0px;
+}
+
+.vertLine {
+  width: 1px;
+  height: auto;
+  background-color: var(--secondary-main);
+  margin: 0px 24px;
+}
+
+.comparative {
+  margin: 160px 120px;
+}
+
+.compTable {
+  max-width: 100%;
+}
+
+.compCircle {
+  position: absolute;
+  max-width: 280px;
+  top: 2880px;
+  z-index: -2;
+}
+
+.CTA {
+  background: linear-gradient(99deg, #798CF2 6.85%, #FED9A4 93.18%);
+  margin: 160px 120px;
+  padding: 80px 40px;
+  border-radius: 40px;
+  /* box-shadow: var(--regular-box-shadow); */
+  /* padding: 8px 0px; */
+}
+
+.textCTA {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  /* padding: 40px 0px; */
+  /* background: #fff; */
+}
+
+.textCTA h1 {
+  font-weight: 700;
+  color: #fff;
+  /* max-width: 90%; */
+}
+
+.textCTA button {
+  margin-top: 24px;
+}
+
+.mainFooter {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  /* margin-top: 80px; */
+  background: linear-gradient(180deg, #BAC6FF 0%, #798CF2 100%);
+  height: 320px;
+}
+
+.footerLogo {
+  max-width: 80px;
+}
+
+.footerContent {
+  margin: 0px 120px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.footerNavs {
+  display: flex;
+  flex-direction: row;
+  margin-left: 40px;
+}
+
+.footerNavs h3 {
+  color: #fff;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.footerLink {
+ color: #fff;
+ margin-top: 8px;
+ padding: 0px;
+ font-weight: 400;
+}
+
+.footerColumn {
+  width: 160px;
+  margin-left: 40px;
+  display: flex;
+  flex-direction: column;
+}
+
+.footerInquiries {
+  margin-left: 120px;
+  margin-top: 64px;
+}
+
+.footerInquiries p {
+  color: #fff;
+  font-weight: 700;
+}
+
+@media only screen and (min-width: 1440px) and (max-width: 1920px) {
 
   .navLinks {
     margin-left: 240px;
@@ -393,21 +403,31 @@ html {
   }
 
   .circleBack1 {
-    max-width: 400px;
+    max-width: 320px;
     position: absolute;
     z-index: -1;
-    top: 1600px;
+    top: 1520px;
   }
 
   .circleBack2 {
     top: 2200px;
   }
 
+  .vp2Flex {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 160px 240px;
+  }
+  
+
   .vp2 {
     display: flex;
     flex-direction: row;
-    margin: 160px 240px;
+    /* margin: 160px 240px; */
     align-items: center;
+    justify-content: center;
   }
 
   .vp2Image {
@@ -431,15 +451,11 @@ html {
   }
 
   .comparative {
-    margin: 160px 280px;
+    margin: 160px 240px;
   }
 
   .CTA {
-    background-color: #fff;
-    margin: 160px 280px;
-    padding: 40px 24px;
-    border-radius: 4px;
-    box-shadow: var(--regular-box-shadow);
+    margin: 160px 240px; 
     /* padding: 8px 0px; */
   }
 
