@@ -37,6 +37,7 @@ html {
   z-index: 0;
   opacity: 0;
   transition: all 200ms ease-in-out;
+  box-shadow: var(--regular-box-shadow);
 }
 
 .navOthers {
@@ -53,6 +54,7 @@ html {
   top: 0;
   z-index: 1000;
   transition: all 200ms ease-in-out;
+  box-shadow: var(--regular-box-shadow);
   /* -webkit-transition: background 250ms ease-in-out; */
 }
 
