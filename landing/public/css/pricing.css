@@ -1,17 +1,4 @@
-.navOthers {
-    height: 80px;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    background-color: transparent;
-    position: absolute;
-    width: 100vw;
-    background: linear-gradient(107.56deg, #798CF2 15.42%, #FED9A4 100%);
-    position: fixed;
-    top: 0;
-    z-index: 1000;
-}
+
 
 .pricingCards {
     display: flex;

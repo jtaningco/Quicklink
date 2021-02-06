@@ -14,15 +14,45 @@ html {
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  background-color: transparent;
-  position: absolute;
+  background: transparent;
+  position: fixed;
   top: 0;
   width: 100vw;
+  z-index: 999;
+  transition: all 200ms ease-in-out;
+  /* -webkit-transition: background 250ms ease-in-out; */
 }
 
 .navLanding.scrolled {
+  height: 80px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
   background: linear-gradient(107.56deg, #798CF2 15.42%, #FED9A4 100%);
-  transition: background-color 200ms linear;
+  position: fixed;
+  top: 0;
+  width: 100vw;
+  z-index: 0;
+  opacity: 0;
+  transition: all 200ms ease-in-out;
+}
+
+.navOthers {
+  height: 80px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  background-color: transparent;
+  position: absolute;
+  width: 100vw;
+  background: linear-gradient(107.56deg, #798CF2 15.42%, #FED9A4 100%);
+  position: fixed;
+  top: 0;
+  z-index: 1000;
+  transition: all 200ms ease-in-out;
+  /* -webkit-transition: background 250ms ease-in-out; */
 }
 
 .navLogo {
@@ -317,8 +347,9 @@ html {
 
 .textCTA {
   display: flex;
-  flex-direction: column;
-  align-items: flex-start;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
   /* padding: 40px 0px; */
   /* background: #fff; */
 }
@@ -328,10 +359,10 @@ html {
   color: var(--primary-main);
   /* max-width: 90%; */
 }
-
+/* 
 .textCTA button {
   margin-top: 24px;
-}
+} */
 
 .mainFooter {
   display: flex;
@@ -474,7 +505,7 @@ html {
   }
 
   .CTA {
-    margin: 160px 240px; 
+    margin: 160px 240px;
     /* padding: 8px 0px; */
   }
 

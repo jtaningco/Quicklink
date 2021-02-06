@@ -55,6 +55,8 @@ body {
   --pending-alt: #F8B629;
   --pending-light: #FFF7CF;
 
+  --gradient-default: linear-gradient(107.56deg, #798CF2 15.42%, #FED9A4 100%);
+
   /* BOX SHADOWS */
   --regular-box-shadow: 0px 3px 5px rgba(51, 51, 51, 0.15);
   --navbar-shadow: 4px 0px 10px rgba(0, 0, 0, 0.1);  

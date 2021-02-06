@@ -16,6 +16,7 @@
   <link rel="stylesheet" href="css/normalize.css">
   <link rel="stylesheet" href="css/main.css">
   <link rel="stylesheet" href="css/home.css">
+  <link rel="stylesheet" href="css/pricing.css">
 
   <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 </head>
@@ -23,6 +24,19 @@
 <body>
 
   <nav class = "navLanding">
+    <div class = "navLinks">
+      <a class = "logoLink" href = "index.html"><img class = "navLogo" src = "./static/logos/wideLogo.png"></a>
+      <a class = "navOptions">How It Works</a>
+      <a class = "navOptions" href = "pricing.html">Pricing</a>
+      <a class = "navOptions">FAQs</a>
+    </div>
+
+    <div class = "navButton">
+      <button class = "primary-white-btn"><a class = "primary-white-btn-link">Join Early Access</a></button>
+    </div>
+  </nav>
+
+  <nav id = "navBar" class = "navLanding scrolled">
     <div class = "navLinks">
       <a class = "logoLink" href = "index.html"><img class = "navLogo" src = "./static/logos/wideLogo.png"></a>
       <a class = "navOptions">How It Works</a>
@@ -198,6 +212,49 @@
     });
 
     AOS.refreshHard();
+  </script>
+
+  <script>
+    window.onscroll = function() {myFunction()};
+
+    // function myFunction() {
+    //   if (document.body.scrollTop > 0 || document.documentElement.scrollTop > 0) {
+    //     document.getElementById("navBar").className = "navLanding scrolled";
+    //   } else {
+    //     document.getElementById("navBar").className = "navLanding default";
+    //   }
+    // }
+
+    function myFunction() {
+      if (document.body.scrollTop > 0 || document.documentElement.scrollTop > 0) {
+        document.getElementById("navBar").style.opacity = "1";
+        document.getElementById("navBar").style.zIndex = "999";
+      } else {
+        document.getElementById("navBar").style.opacity = "0";
+        document.getElementById("navBar").style.zIndex = "0";
+      }
+    }
+
+    // function initializeRefresh() {
+      
+
+    // }
+
+  //   $(document).ready(function(){
+  //     $(window).scroll(function(){
+  //       var scroll = $(window).scrollTop();
+  //       if (scroll > 0) {
+  //         $(".navLanding").css("background" , "blue");
+  //       }
+
+  //       else{
+  //         $(".navLanding").css("background" , "transparent");  	
+  //       }
+  //     })
+  // })
+
+    // var nav = document.getElementById('navBar');
+    // nav.classList.toggle("scrolled");
   </script>
 
 </body>
