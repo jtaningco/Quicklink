@@ -9,7 +9,9 @@
   <meta property="og:url" content="www.quicklink.ph" />
   <meta property="og:title" content="Quicklink" />
   <meta property="og:description" content=" Quicklink automates order and financial processes, management, and documentation for small business owners to increase efficiency and return of sales." />
-
+  <meta http-equiv="Cache-control" content="no-cache">
+  <meta http-equiv="Expires" content="-1">
+  
   <title>Quicklink</title>
   <link rel="icon" href="static/logos/logo.png">
 
@@ -19,6 +21,8 @@
   <link rel="stylesheet" href="css/pricing.css">
 
   <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+  
 </head>
 
 <body>
@@ -55,7 +59,7 @@
 
 
   <section class = "hero">
-    <img class = "heroBG" src = "static/background/heroBG.png">
+    <!-- <img class = "heroBG" src = "static/background/heroBG.png"> -->
     <div class = "heroText" data-aos = "fade-right" data-aos-delay: "2000">
       <h1 class = "heroHead">Making your life easier, one order at a time.</h1>
       <p class = "heroBody">Quicklink automates order and financial processes, management, and documentation for businesses like yours to increase efficiency and sales.</p>
@@ -207,11 +211,10 @@
     AOS.init({
 
       duration: 1200,
-      anchorPlacement: 'center-top',
+      // anchorPlacement: 'center-top',
 
     });
 
-    AOS.refreshHard();
   </script>
 
   <script>
@@ -235,26 +238,13 @@
       }
     }
 
-    // function initializeRefresh() {
-      
+    window.onbeforeunload = function () {
+      window.scrollTo(0, 0);
+      window.location.href = window.location.href;
+      // location.reload(true); saaa
+    }
 
-    // }
 
-  //   $(document).ready(function(){
-  //     $(window).scroll(function(){
-  //       var scroll = $(window).scrollTop();
-  //       if (scroll > 0) {
-  //         $(".navLanding").css("background" , "blue");
-  //       }
-
-  //       else{
-  //         $(".navLanding").css("background" , "transparent");  	
-  //       }
-  //     })
-  // })
-
-    // var nav = document.getElementById('navBar');
-    // nav.classList.toggle("scrolled");
   </script>
 
 </body>
