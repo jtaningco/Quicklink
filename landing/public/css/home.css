@@ -424,6 +424,209 @@ html {
   font-weight: 700;
 }
 
+@media only screen and (min-width: 568px) and (max-width: 768px) {
+
+  .navLanding {
+    display: none;
+  }
+
+  .navLanding.scrolled {
+    display: none;
+  }
+
+  .navLinks {
+    margin-left: 16px;
+  }
+
+  .navButton {
+    margin-right: 16px;
+  }
+
+  .hero {
+    flex-direction: column-reverse;
+    justify-content: center;
+    align-items: flex-start;
+  }
+
+  .heroCircle2 {
+    position: absolute;
+    top: 136px;
+    left: 400px;
+    z-index: -5;
+    max-width: 160px;
+  }
+
+  .heroText {
+    margin-left: 24px;
+    /* margin-top: 40px; */
+    max-width: 400px;
+  }
+
+  .heroHead {
+    font-size: 24px;
+    line-height: 32px;
+    color: #fff;
+    font-weight: 700;
+  }
+  
+  .heroBody {
+    font-size: 16px;
+    line-height: 26px;
+    color: #fff;
+    margin-top: 16px;
+    margin-bottom: 32px;
+  }
+
+  .heroCircle3 {
+    display: none;
+  }
+
+  .heroImage {
+    display: none;
+  }
+
+  .vp1 {
+    margin: 80px 40px 160px 40px;
+  }
+
+  .circleBack1 {
+    max-width: 320px;
+    position: absolute;
+    z-index: -1;
+    top: 1520px;
+  }
+
+  .circleBack2 {
+    top: 2400px;
+    max-width: 120px;
+  }
+
+  .vp2Flex {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 160px 24px;
+  }
+  
+
+  .vp2 {
+    display: flex;
+    flex-direction: row;
+    /* margin: 160px 240px; */
+    align-items: center;
+    justify-content: center;
+  }
+
+  .vp2Image {
+    max-width: 25%;
+    margin-right: 40px;
+    display: none;
+  }
+
+  .vp2Area {
+    max-width: 544px;
+  }
+
+  .textArea {
+    max-width: 440px;
+  }
+
+  .payMethods {
+    max-width: 400px;
+  }
+
+  .payMethods h3 {
+    max-width: 400px;
+  }
+
+  .payLogos img {
+    margin: 0px 8px;
+    max-height: 24px;
+    max-width: 400px;
+  }
+
+  .circleBack1 {
+    display: none;
+  }
+  
+  .customers {
+    display: flex;
+    flex-direction: column;
+    margin: 160px 40px;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .customerCard {
+    margin: 64px 24px 0px 24px;
+  }
+
+  .customerCard img {
+    max-width: 120px;
+  }
+
+  .customerCard h3 {
+    font-size: 16px;
+  }
+
+  .customerCard p {
+    font-size: 14px;
+  }
+
+  .compCircle {
+    position: absolute;
+    max-width: 320px;
+    top: 3200px;
+    z-index: -2;
+  }
+
+  .comparative {
+    margin: 160px 24px;
+  }
+
+  .CTA {
+    margin: 160px 24px;
+    /* padding: 8px 0px; */
+  }
+
+  .CTA h1 {
+    font-size: 16px;
+    line-height: 24px;
+    max-width: 50%;
+  }
+
+  .compCircle {
+    display: none;
+  }
+
+  .mainFooter {
+    height: 600px;
+  }
+
+  .footerContent {
+    margin: 0px 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .footerColumn {
+    margin-left: 0px;
+    margin-top: 40px;
+  }
+
+  .footerNavs {
+    flex-direction: column;
+    margin-left: 0px;
+  }
+
+  .footerInquiries {
+    margin-left: 24px;
+    margin-top: 64px;
+  }
+}
+
 @media only screen and (min-width: 768px) and (max-width: 1068px) {
 
   .navLinks {
