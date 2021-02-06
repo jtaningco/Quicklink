@@ -2,8 +2,9 @@ html {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-  background-color: #F8F9FF;
-;
+  background-color: #fff;
+  overflow-x: hidden;
+  overflow-y:auto;
   /* overflow: hidden; */
 }
 
@@ -77,6 +78,7 @@ html {
   width: 100%;
   height: auto;
   max-height: 100vh;
+  opacity: 70%;
 }
 
 .heroCircle1 {
@@ -304,11 +306,12 @@ html {
 }
 
 .CTA {
-  background: linear-gradient(99deg, #798CF2 6.85%, #FED9A4 93.18%);
+  background-image: url("/landing/public/static/background/ctaBG.png");
+  background-size: cover;
   margin: 160px 120px;
   padding: 80px 40px;
   border-radius: 40px;
-  /* box-shadow: var(--regular-box-shadow); */
+  box-shadow: var(--regular-box-shadow);
   /* padding: 8px 0px; */
 }
 
@@ -322,7 +325,7 @@ html {
 
 .textCTA h1 {
   font-weight: 700;
-  color: #fff;
+  color: var(--primary-main);
   /* max-width: 90%; */
 }
 
