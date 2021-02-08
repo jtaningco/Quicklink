@@ -46,7 +46,3 @@ ENV/
 env.bak/
 venv.bak/
 pythonenv*
-
-# Test Uploads
-.static.uploads
-static/uploads
