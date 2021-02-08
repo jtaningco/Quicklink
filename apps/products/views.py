@@ -37,7 +37,7 @@ def productDetails(request, product_pk):
 @login_required(login_url='accounts:login')
 @allowed_users(allowed_role=User.Types.MERCHANT)
 def addProduct(request):
-    form = ProductForm()
+    form = ProductForm(request.user)
     if request.method == 'POST':
         form = ProductForm(request.user, request.POST, label_suffix='')
         if form.is_valid():

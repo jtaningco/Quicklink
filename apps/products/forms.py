@@ -69,6 +69,10 @@ class ProductForm(ModelForm):
             'instructions' : _('Any special instructions, allergens, etc.?')
         }
 
+    def __init__(self, user, *args, **kwargs):
+        super(ProductForm, self).__init__(*args, **kwargs)
+        self.fields['user'].initial = user
+
 # Formset Draft for adding more sizes and prices
 
 # The formset for editing the size and prices that belong to a product
