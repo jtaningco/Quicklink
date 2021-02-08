@@ -31,7 +31,7 @@ class Product(models.Model):
     name = models.CharField(max_length=55, null=True, blank=False)
     description = models.CharField(max_length=100, null=True, blank=False)
 
-    image = models.ImageField(null=True, blank=True, upload_to='media')
+    image = models.ImageField(null=True, blank=True)
 
     stock = models.CharField(max_length=55, choices=CHOICES, null=True, default=CHOICES[0], blank=False)
     
@@ -46,4 +46,4 @@ class Product(models.Model):
     sold = models.IntegerField(null=True, blank=True, default=0)
 
     def __str__(self):
-        return self.user + ": " + self.name
+        return f"{self.user} — {self.name}"
