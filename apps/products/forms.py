@@ -10,6 +10,7 @@ class ProductForm(ModelForm):
     class Meta:
         model = Product
         fields = [
+            'user',
             'name', 
             'description', 
             'image',
@@ -22,6 +23,7 @@ class ProductForm(ModelForm):
         ]
 
         widgets = {
+            'user': forms.HiddenInput(),
             'name': forms.fields.TextInput(attrs={
                 'class':'input default subtitle',
                 'placeholder': 'Ex. Chocolate Chip Cookies'}),

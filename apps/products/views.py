@@ -23,7 +23,7 @@ def products(request):
         products = Product.objects.filter(Q(name__icontains=search_query) |
             Q(stock__icontains=search_query))
     else:
-        products = user.Product.objects.all()
+        products = Product.objects.filter(user=user)
 
     context = {'products':products, }
     return render(request, 'products/products.html', context)
@@ -31,8 +31,7 @@ def products(request):
 @login_required(login_url='accounts:login')
 @allowed_users(allowed_role=User.Types.MERCHANT)
 def productDetails(request, product_pk):
-    user = request.user
-    product = user.Product.objects.get(id=product_pk)
+    product = Product.objects.get(id=product_pk)
     return render(request, 'products/product_modal.html', {'product':product})
 
 @login_required(login_url='accounts:login')
@@ -40,7 +39,7 @@ def productDetails(request, product_pk):
 def addProduct(request):
     form = ProductForm()
     if request.method == 'POST':
-        form = ProductForm(request.POST, label_suffix='')
+        form = ProductForm(request.user, request.POST, label_suffix='')
         if form.is_valid():
             form.save()
             return redirect('/shop/products')
