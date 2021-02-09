@@ -17,12 +17,14 @@ body {
     font-size: 20px;
     font-weight: 700;
     margin-left: 20px;
+    margin-top: 5px;
     color: #2C2C2C;
 }
 
 .product-details {
     list-style: none;
     margin-left: 20px;
+    margin-top: 5px;
     font-size: 12px;
     line-height: 16px;
     color: #2C2C2C;
@@ -40,6 +42,7 @@ body {
 .health-concerns {
     list-style: none;
     font-size: 12px;
+    font-weight: 300px;
     line-height: 16px;
     margin-left: 20px;
     margin-top: 20px;
