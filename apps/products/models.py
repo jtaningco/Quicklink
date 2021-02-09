@@ -27,10 +27,15 @@ class Product(models.Model):
             ('3','3')]
             
     # tags = models.ManyToManyField(Tag)
+
+    # User manipulating the product (request.user — whoever is logged in)
     user = models.ForeignKey(User, null=True, on_delete=models.CASCADE)
+
+    # Product name and description
     name = models.CharField(max_length=55, null=True, blank=False)
     description = models.CharField(max_length=100, null=True, blank=False)
 
+    # Product images
     image = models.ImageField(null=True, blank=True)
 
     stock = models.CharField(max_length=55, choices=CHOICES, null=True, default=CHOICES[0], blank=False)

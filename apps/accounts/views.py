@@ -2,9 +2,10 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponse
+from django.contrib.auth.decorators import login_required
 
-from apps.accounts.models import User
-from .forms import CustomerForm, MerchantForm
+from apps.accounts.models import User, ShopInformation
+from .forms import CustomerForm, MerchantForm, ShopInformationForm
 from .decorators import allowed_users, unauthenticated_customer, unauthenticated_merchant
 
 # Create your views here.
@@ -23,12 +24,50 @@ def registerMerchant(request):
             user.set_password(form.cleaned_data.get("password"))
             user.save()
 
-            username = form.cleaned_data.get('username')
-            messages.success(request, 'Account successfully created for ' + username)
+            messages.success(request, 'Account successfully created')
+            return redirect('accounts:merchant-login')
+    context = {'form':form}
+    return render(request, 'accounts/merchant-register.html', context)
+
+@login_required(login_url='accounts:merchant-login')
+@allowed_users(allowed_role=User.Types.MERCHANT)
+def registerShopInformation(request):
+    user = request.user
+    form = ShopInformationForm()
+    
+    if request.method == 'POST':
+        form = ShopInformationForm(request.POST)
+        if form.is_valid():
+            shop_info = ShopInformation.objects.create(
+                user=user,
+                shop_name=form.cleaned_data.get("shop_name"),
+                shop_contact_number=form.cleaned_data.get("shop_contact_number"),
+                shop_username=form.cleaned_data.get("shop_username"),
+                shop_days_one=form.cleaned_data.get("shop_days_one"),
+                shop_cod=form.cleaned_data.get("shop_cod")
+            )
+            
+            shop_info.shop_address.create(
+                line1=form.cleaned_data.get("line1"),
+                line2=form.cleaned_data.get("line2"),
+                city=form.cleaned_data.get("city"),
+                province=form.cleaned_data.get("province"),
+                postal_code=form.cleaned_data.get("postal_code"),
+            )
+            
+            shop_info.shop_links.create(
+                instagram=form.cleaned_data.get("instagram"),
+                facebook=form.cleaned_data.get("facebook"),
+                twitter=form.cleaned_data.get("twitter"),
+            )
+
+            shop_info.save()
+
+            messages.success(request, 'Profile successfully updated')
             return redirect('accounts:merchant-login')
 
     context = {'form':form}
-    return render(request, 'accounts/merchant-register.html', context)
+    return render(request, 'accounts/add-shop-information.html', context)
 
 @unauthenticated_merchant
 def loginMerchant(request):
@@ -40,9 +79,12 @@ def loginMerchant(request):
 
         if user is not None:
             login(request, user)
-            return redirect('products:products')
+            if not hasattr(user, 'info_shop'):
+                return redirect('accounts:merchant-register-shop')
+            else:
+                return redirect('products:products')
         else:
-            messages.info(request, "Username or password is incorrect.")
+            messages.info(request, "email or password is incorrect.")
     
     context = {}
     return render(request, 'accounts/merchant-login.html', context)

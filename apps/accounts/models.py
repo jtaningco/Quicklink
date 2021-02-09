@@ -13,24 +13,27 @@ class User(AbstractUser):
         MERCHANT = "MERCHANT", "Merchant"
         CUSTOMER = "CUSTOMER", "Customer"
 
-    username = models.CharField(_("name"), 
+    role = models.CharField(_('role'), max_length=50, choices=Types.choices, default=Types.ADMIN, null=True)
+    username = models.CharField(_("username"), 
         max_length=150, 
         null=True, 
         unique=True, 
         help_text=_(
             "Required. 150 characters or fewer. Letters, digits, and @/./+/-/_ only."
         ),
-        validators=[UnicodeUsernameValidator(),],
         error_messages={"unique": _("A user with that username already exists."),},
-        )
-
-    role = models.CharField(_('role'), max_length=50, choices=Types.choices, default=Types.ADMIN, null=True)
-    email = models.EmailField(max_length=150, null=True)
+    )
+    email = models.EmailField(_("email"), 
+        max_length=150, 
+        null=True, 
+        unique=True,
+        error_messages={"unique": _("That email is already being used by another account."),},
+    )
     password = models.CharField(max_length=150, null=True)
     date_created = models.DateTimeField(auto_now_add=True, null=True)
 
     def __str__(self):
-        return self.username
+        return self.email
 
 # INFORMATION
 class Address(models.Model):
@@ -52,11 +55,14 @@ class Address(models.Model):
         SJ = "San Juan", "San Juan City"
         TAG = "Taguig", "Taguig City"
         VAL = "Valenzuela", "Valenzuela City"
+    
+    class Provinces(models.TextChoices):
+        NCR = "NCR/MM", "Metro Manila"
 
     line1 = models.CharField(_("address line1"), null=True, max_length=155)
     line2 = models.CharField(_("address line2"), null=True, max_length=155)
     city = models.CharField(_("address city"), choices=Cities.choices, null=True, max_length=55)
-    province = models.CharField(_("address province"), null=True, max_length=55)
+    province = models.CharField(_("address province"), choices=Provinces.choices, null=True, max_length=55)
     postal_code = models.CharField(_("address postal code"), null=True, max_length=4, validators=[only_int])
 
     def __str__(self):
@@ -107,6 +113,7 @@ class Merchant(User):
 # Days Open for Shop
 class Days(models.Model):
     days = models.CharField(max_length=55, null=True, blank=True)
+    toggle = models.BooleanField(_("shop cash on delivery"), null=True, default=False) 
 
     def __str__(self):
         return self.days
@@ -118,17 +125,25 @@ class ShopLogo(models.Model):
 # Shop Information
 class ShopInformation(models.Model):
     user = models.OneToOneField(
-        User, related_name="merchant_info", on_delete=models.CASCADE
+        User, related_name="info_shop", on_delete=models.CASCADE
     )
     shop_name = models.CharField(_("shop name"), null=True, max_length=25)
     shop_contact_number = models.CharField(_("contact number"), max_length=15, null=True)
-    shop_username = models.CharField(_("shop username"), null=True, max_length=55)
+    shop_username = models.CharField(_("shop username"), 
+        max_length=150, 
+        null=True, 
+        unique=True, 
+        help_text=_(
+            "Required. 150 characters or fewer. Letters, digits, and @/./+/-/_ only."
+        ),
+        error_messages={"unique": _("A user with that username already exists."),},
+    )
     shop_days_open = models.ManyToManyField(Days)
-    shop_address = models.OneToOneField(Address, related_name='shop_address', on_delete=models.CASCADE, null=True)
-    shop_links = models.OneToOneField(SocialMediaLinks, related_name='shop_links', on_delete=models.CASCADE, null=True)
+    shop_address = models.OneToOneField(Address, related_name='address_shop', on_delete=models.CASCADE, null=True)
+    shop_links = models.OneToOneField(SocialMediaLinks, related_name='links_shop', on_delete=models.CASCADE, null=True)
     shop_cod = models.BooleanField(_("shop cash on delivery"), null=True, default=False)
-    shop_logo = models.OneToOneField(ShopLogo, related_name='shop_logo', on_delete=models.CASCADE, null=True)
-    shop_account = models.OneToOneField(BankAccount, related_name='shop_account', on_delete=models.CASCADE, null=True)
+    shop_logo = models.OneToOneField(ShopLogo, related_name='logo_shop', on_delete=models.CASCADE, null=True)
+    shop_account = models.OneToOneField(BankAccount, related_name='account_shop', on_delete=models.CASCADE, null=True)
 
 
 # CUSTOMERS
@@ -139,6 +154,15 @@ class CustomerManager(models.Manager):
 class CustomerInformation(models.Model):
     customer = models.OneToOneField(
         User, related_name="customer_info", on_delete=models.CASCADE
+    )
+    customer_username = models.CharField(_("customer username"), 
+        max_length=150, 
+        null=True, 
+        unique=True, 
+        help_text=_(
+            "Required. 150 characters or fewer. Letters, digits, and @/./+/-/_ only."
+        ),
+        error_messages={"unique": _("A user with that username already exists."),},
     )
     customer_name = models.CharField(_("customer name"), max_length=150, null=True, blank=False)
     customer_mobile_number = models.CharField(_("mobile number"), max_length=15, null=True, blank=False, validators=[only_int])

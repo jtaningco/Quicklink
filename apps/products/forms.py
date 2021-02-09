@@ -14,9 +14,9 @@ class ProductForm(ModelForm):
             'name', 
             'description', 
             'image',
-            'stock',
             'size',
             'price',
+            'stock',
             'addon',
             'addon_price',
             'instructions',
@@ -31,10 +31,6 @@ class ProductForm(ModelForm):
             'description': forms.fields.TextInput(attrs={
                 'class':'large-input default subtitle',
                 'placeholder': 'Describe your product for your customers to see!'}),
-
-            'stock': forms.RadioSelect(attrs={
-                'class':'radio',
-                'empty_label': None }), 
                 
             'size': forms.fields.TextInput(attrs={
                 'class':'small-input default subtitle',
@@ -43,6 +39,10 @@ class ProductForm(ModelForm):
             'price': forms.fields.NumberInput(attrs={
                 'class':'small-input default subtitle',
                 'placeholder': 'Php'}),
+
+            'stock': forms.RadioSelect(attrs={
+                'class':'radio',
+                'empty_label': None }),
             
             'addon': forms.fields.TextInput(attrs={\
                 'class':'small-input default subtitle',
@@ -61,9 +61,9 @@ class ProductForm(ModelForm):
             'name' : _('Name'),
             'description' : _('Description'),
             'image' : _(''),
-            'stock' : _('Stocks'),
             'size' : _('Available Sizes or Servings'),
             'price' : _(''),
+            'stock' : _('Stocks'),
             'addon' : _('Possible Add-Ons'),
             'addon_price' : _(''),
             'instructions' : _('Any special instructions, allergens, etc.?')

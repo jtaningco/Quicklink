@@ -1,5 +1,6 @@
 from django.http import HttpResponse
 from django.shortcuts import redirect
+from apps.accounts.models import ShopInformation
 
 def unauthenticated_merchant(view_func):
     def wrapper_func(request, *args, **kwargs):
