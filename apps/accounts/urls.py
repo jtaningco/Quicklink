@@ -15,3 +15,5 @@ urlpatterns = [
     path('customer/logout/', views.logoutCustomer, name='customer-logout'),
     path('customer/landing/', views.landingCustomer, name='customer-landing'),
 ]
+
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

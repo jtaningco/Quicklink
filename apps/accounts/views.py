@@ -74,7 +74,7 @@ def registerShopInformation(request):
             open_hours.save()
             shop_address.save()
             social_links.save()
-            
+
             messages.success(request, 'Profile successfully updated')
             return redirect('accounts:merchant-register-logo')
 
@@ -84,19 +84,13 @@ def registerShopInformation(request):
 @login_required(login_url='accounts:merchant-login')
 @allowed_users(allowed_role=User.Types.MERCHANT)
 def registerShopLogo(request):
-    user = request.user
-    form = ShopLogoForm()
+    shop = ShopInformation.objects.get(user=request.user)
+    form = ShopLogoForm(initial={'shop': shop})
 
     if request.method == 'POST':
-        form = ShopLogoForm(request.POST)
+        form = ShopLogoForm(request.POST, request.FILES)
         if form.is_valid():
-            shop = ShopInformation.objects.get(user=user)
-            shop_logo=ShopLogo.objects.create(
-                shop=shop,
-                logo=form.cleaned_data.get("logo")
-            )
-            shop_logo.save()
-
+            form.save()
             messages.success(request, 'Logo successfully updated')
             return redirect('accounts:merchant-register-payment')
 

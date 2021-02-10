@@ -70,7 +70,7 @@ class Address(models.Model):
     postal_code = models.CharField(_("address postal code"), null=True, max_length=4, validators=[only_int])
 
     def __str__(self):
-        return f"{self.line1} {self.line2}"
+        return f"{self.line1}, {self.line2}, {self.city}, {self.province}, {self.postal_code}, Philippines"
 
 # Social Media Links
 class SocialMediaLinks(models.Model):
@@ -78,6 +78,9 @@ class SocialMediaLinks(models.Model):
     instagram = models.CharField(_("instagram link"), null=True, max_length=255)
     facebook = models.CharField(_("facebook link"), null=True, max_length=255)
     twitter = models.CharField(_("twitter link"), null=True, max_length=255)
+
+    def __str__(self):
+        return f"Instagram: {self.instagram} - Facebook: {self.facebook} - Twitter: {self.twitter}"
 
 # Bank Account Information
 class BankAccount(models.Model):
@@ -96,7 +99,7 @@ class BankAccount(models.Model):
     cvv = models.CharField(_("card verification value"), null=True, max_length=3)
 
     def __str__(self):
-        return self.account_number
+        return f"{self.cardholder_name} - {self.account_number}"
 
 class Notifications(models.Model):
     sms = models.BooleanField(_('sms notifications'), null=True, default=False)
@@ -138,7 +141,7 @@ class ShopInformation(models.Model):
     shop_cod = models.BooleanField(_("shop cash on delivery"), null=True, default=False)
 
     def __str__(self):
-        return f"{self.shop_name} - {self.shop_username}"
+        return f"{self.shop_username} - {self.shop_name} ({self.shop_contact_number})"
 
 # Available Delivery Schedule
 class OpenHours(models.Model):
@@ -175,19 +178,28 @@ class OpenHours(models.Model):
     to_hour = models.PositiveSmallIntegerField(choices=HOUR_OF_DAY_24, null=True, default=None)
     # always_open = models.BooleanField(_("shop 24/7"), null=True, default=False)
 
-    def get_weekday_from_display(self):
-        return WEEKDAYS[self.day_from]
+    def get_day_from(self):
+        return OpenHours.WEEKDAYS[self.day_from]
 
-    def get_weekday_to_display(self):
-        return WEEKDAYS[self.day_to] 
+    def get_day_to(self):
+        return OpenHours.WEEKDAYS[self.day_to] 
+
+    def get_from_hour(self):
+        return OpenHours.HOUR_OF_DAY_24[self.from_hour]
+
+    def get_to_hour(self):
+        return OpenHours.HOUR_OF_DAY_24[self.to_hour]
 
     def __str__(self):
-        return f"{self.day_from} - {self.day_to}"
+        return f"{self.day_from} ({self.from_hour}) - {self.day_to} ({self.to_hour})"
 
 # Shop Logo
 class ShopLogo(models.Model):
     shop = models.OneToOneField(ShopInformation, related_name='logo_shop', on_delete=models.CASCADE, null=True, blank=True)
-    logo = models.ImageField(null=True, blank=True, upload_to='logos')
+    logo = models.ImageField(null=True, blank=True)
+
+    def __str__(self):
+        return f"URL: {self.logo}"
 
 # CUSTOMERS
 class CustomerManager(models.Manager):

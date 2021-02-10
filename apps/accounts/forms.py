@@ -127,6 +127,10 @@ class ShopLogoForm(ModelForm):
         fields = ['shop', 'logo']
         required_fields = ['shop', 'logo']
 
+        widgets = {
+            'shop': forms.HiddenInput(),
+        }
+
 class ShopAccountForm(ModelForm):
     class Meta:
         model = BankAccount
