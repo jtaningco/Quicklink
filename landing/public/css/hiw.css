@@ -1,0 +1,15 @@
+.hiwHero {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100vh;
+    justify-content: center;
+}
+
+.hiwHero p {
+    margin-top: 8px;
+    margin-bottom: 24px;
+    color: var(--muted-default);
+    width: 360px;
+    text-align: center;
+}
