@@ -1,0 +1,30 @@
+{% extends 'quicklink/base.html' %}
+{% load static %}
+
+{% block pagetitle %}Registration: Shop Information{% endblock %}
+
+{% block maincontent %}
+
+<form action="" method="post">
+
+    <div class="registration-container">
+        <div class="registration-wrapper">
+
+            <h1>Upload a logo</h1>
+            <p>Give your shop a brand!</p>
+
+            {% csrf_token %}
+            {{ form.logo }}
+
+            {{ form.errors }}
+
+            <input type="submit" name="Next" style="margin: 24px 0;" class="preview-btn">
+            <div class="secondary-btn">
+                <a href="{% url 'accounts:merchant-register-shop' %}" class="secondary-btn-link">Back</a>
+            </div>
+
+        </div>
+    </div>
+</form>
+
+{% endblock %}

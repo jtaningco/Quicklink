@@ -5,7 +5,7 @@ from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 
 from apps.accounts.models import User, ShopInformation
-from .forms import CustomerForm, MerchantForm, ShopInformationForm
+from .forms import CustomerForm, MerchantForm, ShopInformationForm, ShopLogoForm
 from .decorators import allowed_users, unauthenticated_customer, unauthenticated_merchant
 
 # Create your views here.
@@ -64,10 +64,54 @@ def registerShopInformation(request):
             shop_info.save()
 
             messages.success(request, 'Profile successfully updated')
-            return redirect('accounts:merchant-login')
+            return redirect('accounts:merchant-register-logo')
 
     context = {'form':form}
     return render(request, 'accounts/add-shop-information.html', context)
+
+@login_required(login_url='accounts:merchant-login')
+@allowed_users(allowed_role=User.Types.MERCHANT)
+def registerShopLogo(request):
+    user = request.user
+    form = ShopLogoForm()
+
+    if request.method == 'POST':
+        form = ShopInformationForm(request.POST)
+        if form.is_valid():
+            shop_info = ShopInformation.objects.get(user=user)
+            shop_info.shop_logo.create(
+                logo=form.cleaned_data.get("logo")
+            )
+            shop_info.save()
+
+            messages.success(request, 'Logo successfully updated')
+            return redirect('accounts:merchant-register-payment')
+
+    context = {'form':form}
+    return render(request, 'accounts/add-shop-information.html', context)
+
+@login_required(login_url='accounts:merchant-login')
+@allowed_users(allowed_role=User.Types.MERCHANT)
+def registerShopAccount(request):
+    user = request.user
+    form = ShopBankAccount()
+
+    if request.method == 'POST':
+        form = ShopBankAccount(request.POST)
+        if form.is_valid():
+            shop_info = ShopInformation.objects.get(user=user)
+            shop_info.shop_account.create(
+                bank_account=form.cleaned_data.get("bank_account"),
+                cardholder_name=form.cleaned_data.get("cardholder_name")
+                account_number=form.cleaned_data.get("account_number")
+            )
+            shop_info.save()
+
+            messages.success(request, 'Bank account details successfully updated')
+            return redirect('products:products')
+
+    context = {'form':form}
+    return render(request, 'accounts/add-shop-account.html', context)
 
 @unauthenticated_merchant
 def loginMerchant(request):

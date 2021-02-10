@@ -1,7 +1,7 @@
 from django import forms
 from django.forms import ModelForm
 from django.contrib.auth.forms import UserCreationForm
-from apps.accounts.models import User, ShopInformation
+from apps.accounts.models import User, ShopInformation, ShopLogo, BankAccount
 
 class MerchantForm(ModelForm):
     password2=forms.CharField(label='Confirm Password', 
@@ -94,6 +94,18 @@ class ShopInformationForm(ModelForm):
                 'class':'input',
                 'placeholder': 'Shop Quicklink Username'}),
         }
+
+class ShopLogoForm(ModelForm):
+    class Meta:
+        model = ShopLogo
+        fields = ['logo']
+        required_fields = ['logo']
+
+class ShopBankAccount(ModelForm):
+    class Meta:
+        model = BankAccount
+        fields = ['bank_name, cardholder_name, account_number']
+        required_fields = ['bank_name, cardholder_name, account_number']
 
 class CustomerForm(ModelForm):
     password2=forms.CharField(label='Confirm Password', 

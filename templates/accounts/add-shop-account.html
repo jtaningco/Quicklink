@@ -1,0 +1,35 @@
+{% extends 'quicklink/base.html' %}
+{% load static %}
+
+{% block pagetitle %}Registration: Shop Information{% endblock %}
+
+{% block maincontent %}
+
+<form action="" method="post">
+
+    <div class="registration-container">
+        <div class="registration-wrapper">
+
+            <h1>Where do you want to receive your money?</h1>
+            <p>This won’t affect the payment options provided for your customers. This is simply where you want us to deposit your revenue to. You can always change this in your settings.</p>
+
+            {% csrf_token %}
+            
+            <div class="registration-content" style="flex-direction: column;">
+                {{form.bank_account}}
+                {{form.cardholder_name}}
+                {{form.account_number}}
+            </div>
+
+            {{ form.errors }}
+
+            <input type="submit" name="Next" style="margin: 24px 0;" class="preview-btn">
+            <div class="secondary-btn">
+                <a href="{% url 'accounts:merchant-register-shop' %}" class="secondary-btn-link">Back</a>
+            </div>
+
+        </div>
+    </div>
+</form>
+
+{% endblock %}

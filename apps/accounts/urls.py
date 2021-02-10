@@ -6,6 +6,8 @@ from . import views
 urlpatterns = [
     path('merchant/register/', views.registerMerchant, name='merchant-register'),
     path('merchant/register/shop', views.registerShopInformation, name='merchant-register-shop'),
+    path('merchant/register/logo', views.registerShopLogo, name='merchant-register-logo'),
+    path('merchant/register/payment', views.registerShopAccount, name='merchant-register-payment'),
     path('merchant/login/', views.loginMerchant, name='merchant-login'),
     path('merchant/logout/', views.logoutMerchant, name='merchant-logout'),
     path('customer/register/', views.registerCustomer, name='customer-register'),
