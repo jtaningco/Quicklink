@@ -31,10 +31,14 @@
 
             <div class="registration-content" style="flex-direction: column;">
                 <p>Shop Delivery Schedule</p>
-                {{form.day_from}}
-                {{form.day_to}}
-                {{form.from_hour}}
-                {{form.to_hour}}
+                <div class="registration-content">
+                    {{form.day_from}}
+                    {{form.day_to}}
+                </div>
+                <div class="registration-content">
+                    {{form.from_hour}}
+                    {{form.to_hour}}
+                </div>
             </div>
 
             <div class="registration-content" style="flex-direction: column;">
@@ -42,8 +46,10 @@
                 {{form.line1}}
                 {{form.line2}}
                 {{form.city}}
-                {{form.province}}
-                {{form.postal_code}}
+                <div class="registration-content">
+                    {{form.province}}
+                    {{form.postal_code}}
+                </div>
             </div>
 
             <div class="registration-content" style="flex-direction: column;">

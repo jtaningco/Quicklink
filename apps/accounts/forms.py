@@ -37,16 +37,24 @@ class MerchantForm(ModelForm):
 class ShopInformationForm(ModelForm):
     # shop_delivery_schedule
     day_from = forms.ChoiceField(label='',
-                                widget=forms.Select,
+                                widget=forms.Select(attrs={
+                                    'class': 'small-input', 
+                                    'placeholder': 'Opening Day'}),
                                 choices=OpenHours.WEEKDAYS)
     day_to = forms.ChoiceField(label='',
-                                widget=forms.Select,
+                                widget=forms.Select(attrs={
+                                    'class': 'small-input', 
+                                    'placeholder': 'Closing Day'}),
                                 choices=OpenHours.WEEKDAYS)
     from_hour = forms.ChoiceField(label='',
-                                widget=forms.Select,
+                                widget=forms.Select(attrs={
+                                    'class': 'small-input', 
+                                    'placeholder': 'Open From'}),
                                 choices=OpenHours.HOUR_OF_DAY_24)
     to_hour = forms.ChoiceField(label='',
-                                widget=forms.Select,
+                                widget=forms.Select(attrs={
+                                    'class': 'small-input', 
+                                    'placeholder': 'Open Until'}),
                                 choices=OpenHours.HOUR_OF_DAY_24)
 
     # shop_address
@@ -59,44 +67,46 @@ class ShopInformationForm(ModelForm):
                         'class': 'input', 
                         'placeholder': 'Address Line 2'}))
     city=forms.ChoiceField(label='', 
-                        widget=forms.Select,
-                        choices=Address.Cities)
+                        widget=forms.Select(attrs={
+                        'class': 'input', 
+                        'placeholder': 'City'}),
+                        choices=Address.CITIES)
     province=forms.ChoiceField(label='', 
-                        widget=forms.Select,
-                        choices=Address.Provinces)
+                        widget=forms.Select(attrs={
+                        'class': 'small-input', 
+                        'placeholder': 'Province'}),
+                        choices=Address.PROVINCES)
     postal_code=forms.CharField(label='', 
                         widget=forms.fields.TextInput(attrs={
-                        'class': 'small input', 
+                        'class': 'small-input', 
                         'placeholder': 'Postal Code'}))
     
     # shop_links
     instagram=forms.URLField(label='',
                         widget=forms.fields.TextInput(attrs={
                         'class': 'input', 
-                        'placeholder': 'Instagram Link'}))
+                        'placeholder': 'Instagram Link'}),
+                        required = False)
     facebook=forms.URLField(label='',
                         widget=forms.fields.TextInput(attrs={
                         'class': 'input', 
-                        'placeholder': 'Facebook Link'}))
+                        'placeholder': 'Facebook Link'}),
+                        required = False)
     twitter=forms.URLField(label='',
                         widget=forms.fields.TextInput(attrs={
                         'class': 'input', 
-                        'placeholder': 'Twitter Link'}))
+                        'placeholder': 'Twitter Link'}),
+                        required = False)
 
     class Meta:
         model = ShopInformation
         fields = ['shop_name', 
                 'shop_contact_number', 
                 'shop_username',
-                'shop_delivery_schedule', 
-                'shop_address',
-                'shop_links',
                 'shop_cod']
         required_fields = ['shop_name', 
                 'shop_contact_number', 
                 'shop_username',
-                'shop_delivery_schedule', 
-                'shop_address',
                 'shop_cod']
 
         widgets = {
@@ -114,13 +124,13 @@ class ShopInformationForm(ModelForm):
 class ShopLogoForm(ModelForm):
     class Meta:
         model = ShopLogo
-        fields = ['logo']
-        required_fields = ['logo']
+        fields = ['shop', 'logo']
+        required_fields = ['shop', 'logo']
 
-class ShopBankAccount(ModelForm):
+class ShopAccountForm(ModelForm):
     class Meta:
         model = BankAccount
-        fields = ['bank_name', 'cardholder_name', 'account_number']
+        fields = ['user','bank_name', 'cardholder_name', 'account_number']
         required_fields = ['bank_name', 'cardholder_name', 'account_number']
 
         widgets = {

@@ -4,8 +4,8 @@ from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 
-from apps.accounts.models import User, ShopInformation
-from .forms import CustomerForm, MerchantForm, ShopInformationForm, ShopLogoForm, ShopBankAccount
+from apps.accounts.models import *
+from .forms import *
 from .decorators import allowed_users, unauthenticated_customer, unauthenticated_merchant
 
 # Create your views here.
@@ -17,9 +17,9 @@ def registerMerchant(request):
         form = MerchantForm(request.POST)
         if form.is_valid():
             user = User.objects.create(
+                role=User.Types.MERCHANT,
                 username=form.cleaned_data.get("username"),
                 email=form.cleaned_data.get("email"),
-                role=form.cleaned_data.get("role"),
             )
             user.set_password(form.cleaned_data.get("password"))
             user.save()
@@ -45,30 +45,36 @@ def registerShopInformation(request):
                 shop_username=form.cleaned_data.get("shop_username"),
                 shop_cod=form.cleaned_data.get("shop_cod"),
             )
-
-            shop_info.shop_delivery_schedule.create(
+            
+            open_hours = OpenHours.objects.create(
+                shop=shop_info,
                 day_from=form.cleaned_data.get("day_from"),
                 day_to=form.cleaned_data.get("day_to"),
                 from_hour=form.cleaned_data.get("from_hour"),
                 to_hour=form.cleaned_data.get("to_hour"),
             )
             
-            shop_info.shop_address.create(
+            shop_address = Address.objects.create(
+                user=user,
                 line1=form.cleaned_data.get("line1"),
                 line2=form.cleaned_data.get("line2"),
                 city=form.cleaned_data.get("city"),
                 province=form.cleaned_data.get("province"),
                 postal_code=form.cleaned_data.get("postal_code"),
             )
-            
-            shop_info.shop_links.create(
+
+            social_links = SocialMediaLinks.objects.create(
+                user=user,
                 instagram=form.cleaned_data.get("instagram"),
                 facebook=form.cleaned_data.get("facebook"),
                 twitter=form.cleaned_data.get("twitter"),
             )
 
             shop_info.save()
-
+            open_hours.save()
+            shop_address.save()
+            social_links.save()
+            
             messages.success(request, 'Profile successfully updated')
             return redirect('accounts:merchant-register-logo')
 
@@ -82,13 +88,14 @@ def registerShopLogo(request):
     form = ShopLogoForm()
 
     if request.method == 'POST':
-        form = ShopInformationForm(request.POST)
+        form = ShopLogoForm(request.POST)
         if form.is_valid():
-            shop_info = ShopInformation.objects.get(user=user)
-            shop_info.shop_logo.create(
+            shop = ShopInformation.objects.get(user=user)
+            shop_logo=ShopLogo.objects.create(
+                shop=shop,
                 logo=form.cleaned_data.get("logo")
             )
-            shop_info.save()
+            shop_logo.save()
 
             messages.success(request, 'Logo successfully updated')
             return redirect('accounts:merchant-register-payment')
@@ -100,18 +107,18 @@ def registerShopLogo(request):
 @allowed_users(allowed_role=User.Types.MERCHANT)
 def registerShopAccount(request):
     user = request.user
-    form = ShopBankAccount()
+    form = ShopAccountForm()
 
     if request.method == 'POST':
-        form = ShopBankAccount(request.POST)
+        form = ShopAccountForm(request.POST)
         if form.is_valid():
-            shop_info = ShopInformation.objects.get(user=user)
-            shop_info.shop_account.create(
-                bank_account=form.cleaned_data.get("bank_account"),
+            bank_info=BankAccount.objects.create(
+                user=user,
+                bank_name=form.cleaned_data.get("bank_name"),
                 cardholder_name=form.cleaned_data.get("cardholder_name"),
                 account_number=form.cleaned_data.get("account_number")
             )
-            shop_info.save()
+            bank_info.save()
 
             messages.success(request, 'Bank account details successfully updated')
             return redirect('products:products')
