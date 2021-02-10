@@ -5,6 +5,7 @@ body {
     font-family: 'Overpass', sans-serif;
     margin: 0;
     padding: 0;
+    background-color: #F8F9FF;
 }
 
 @media screen and (max-width: 567px) {
@@ -57,6 +58,7 @@ body {
     list-style: none;
     color: #6678D9;
     font-size: 20px;
+    /*background-color: #FFF; */
 }
 
 .subtitle {
@@ -131,6 +133,7 @@ div.pass {
 .outline-button {
     font-family: 'Overpass', sans-serif;
     color: #FFAA2D;
+    /*background-color: #FFF; */
     font-size: 14px;
     display: flex;
     flex-direction: row;
