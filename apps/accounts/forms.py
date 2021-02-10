@@ -72,14 +72,14 @@ class ShopInformationForm(ModelForm):
         fields = ['shop_name', 
                 'shop_contact_number', 
                 'shop_username',
-                'shop_days_open', 
+                'shop_delivery_schedule', 
                 'shop_address',
                 'shop_links',
                 'shop_cod']
         required_fields = ['shop_name', 
                 'shop_contact_number', 
                 'shop_username',
-                'shop_days_open', 
+                'shop_delivery_schedule', 
                 'shop_address',
                 'shop_cod']
 
@@ -93,9 +93,6 @@ class ShopInformationForm(ModelForm):
             'shop_username': forms.fields.TextInput(attrs={
                 'class':'input',
                 'placeholder': 'Shop Quicklink Username'}),
-            'shop_days_open': forms.SelectMultiple(attrs={
-                'class':'input',
-                'placeholder': 'No days selected'}),
         }
 
 class CustomerForm(ModelForm):

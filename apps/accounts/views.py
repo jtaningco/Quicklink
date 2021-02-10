@@ -43,7 +43,7 @@ def registerShopInformation(request):
                 shop_name=form.cleaned_data.get("shop_name"),
                 shop_contact_number=form.cleaned_data.get("shop_contact_number"),
                 shop_username=form.cleaned_data.get("shop_username"),
-                shop_days_one=form.cleaned_data.get("shop_days_one"),
+                shop_delivery_schedule=form.cleaned_data.get("shop_delivery_schedule"),
                 shop_cod=form.cleaned_data.get("shop_cod")
             )
             

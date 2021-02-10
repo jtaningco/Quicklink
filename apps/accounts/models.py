@@ -66,7 +66,7 @@ class Address(models.Model):
     postal_code = models.CharField(_("address postal code"), null=True, max_length=4, validators=[only_int])
 
     def __str__(self):
-        return self.line1 + " " + self.line2
+        return f"{self.line1} {self.line2}"
 
 class SocialMediaLinks(models.Model):
     instagram = models.CharField(_("instagram link"), null=True, max_length=255)
@@ -110,17 +110,37 @@ class Merchant(User):
             self.type = User.Types.MERCHANT
         return super().save(*args, **kwargs)
 
-# Days Open for Shop
-class Days(models.Model):
-    days = models.CharField(max_length=55, null=True, blank=True)
-    toggle = models.BooleanField(_("shop cash on delivery"), null=True, default=False) 
+# Available Delivery Schedule
+class OpenHours(models.Model):
+    HOUR_OF_DAY_24 = [(i,i) for i in range(1,25)]
+
+    WEEKDAYS = [
+        (1, _("Monday")),
+        (2, _("Tuesday")),
+        (3, _("Wednesday")),
+        (4, _("Thursday")),
+        (5, _("Friday")),
+        (6, _("Saturday")),
+        (7, _("Sunday")),
+    ]
+
+    day_from = models.PositiveSmallIntegerField(choices=WEEKDAYS, unique=True)
+    day_to = models.PositiveSmallIntegerField(choices=WEEKDAYS)
+    from_hour = models.PositiveSmallIntegerField(choices=HOUR_OF_DAY_24)
+    to_hour = models.PositiveSmallIntegerField(choices=HOUR_OF_DAY_24)
+
+    def get_weekday_from_display(self):
+        return WEEKDAYS[self.day_from]
+
+    def get_weekday_to_display(self):
+        return WEEKDAYS[self.day_to] 
 
     def __str__(self):
-        return self.days
+        return f"{self.day_from} - {self.day_to}"
 
 # Shop Logo
 class ShopLogo(models.Model):
-    logo = models.ImageField(null=True, blank=True, upload_to='media')
+    logo = models.ImageField(null=True, blank=True, upload_to='logos')
 
 # Shop Information
 class ShopInformation(models.Model):
@@ -138,13 +158,12 @@ class ShopInformation(models.Model):
         ),
         error_messages={"unique": _("A user with that username already exists."),},
     )
-    shop_days_open = models.ManyToManyField(Days)
+    shop_delivery_schedule = models.ManyToManyField(OpenHours)
     shop_address = models.OneToOneField(Address, related_name='address_shop', on_delete=models.CASCADE, null=True)
     shop_links = models.OneToOneField(SocialMediaLinks, related_name='links_shop', on_delete=models.CASCADE, null=True)
     shop_cod = models.BooleanField(_("shop cash on delivery"), null=True, default=False)
     shop_logo = models.OneToOneField(ShopLogo, related_name='logo_shop', on_delete=models.CASCADE, null=True)
     shop_account = models.OneToOneField(BankAccount, related_name='account_shop', on_delete=models.CASCADE, null=True)
-
 
 # CUSTOMERS
 class CustomerManager(models.Manager):
