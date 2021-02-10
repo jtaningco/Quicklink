@@ -5,7 +5,7 @@ from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 
 from apps.accounts.models import User, ShopInformation
-from .forms import CustomerForm, MerchantForm, ShopInformationForm, ShopLogoForm
+from .forms import CustomerForm, MerchantForm, ShopInformationForm, ShopLogoForm, ShopBankAccount
 from .decorators import allowed_users, unauthenticated_customer, unauthenticated_merchant
 
 # Create your views here.
@@ -43,8 +43,14 @@ def registerShopInformation(request):
                 shop_name=form.cleaned_data.get("shop_name"),
                 shop_contact_number=form.cleaned_data.get("shop_contact_number"),
                 shop_username=form.cleaned_data.get("shop_username"),
-                shop_delivery_schedule=form.cleaned_data.get("shop_delivery_schedule"),
-                shop_cod=form.cleaned_data.get("shop_cod")
+                shop_cod=form.cleaned_data.get("shop_cod"),
+            )
+
+            shop_info.shop_delivery_schedule.create(
+                day_from=form.cleaned_data.get("day_from"),
+                day_to=form.cleaned_data.get("day_to"),
+                from_hour=form.cleaned_data.get("from_hour"),
+                to_hour=form.cleaned_data.get("to_hour"),
             )
             
             shop_info.shop_address.create(
@@ -88,7 +94,7 @@ def registerShopLogo(request):
             return redirect('accounts:merchant-register-payment')
 
     context = {'form':form}
-    return render(request, 'accounts/add-shop-information.html', context)
+    return render(request, 'accounts/add-shop-logo.html', context)
 
 @login_required(login_url='accounts:merchant-login')
 @allowed_users(allowed_role=User.Types.MERCHANT)
@@ -102,7 +108,7 @@ def registerShopAccount(request):
             shop_info = ShopInformation.objects.get(user=user)
             shop_info.shop_account.create(
                 bank_account=form.cleaned_data.get("bank_account"),
-                cardholder_name=form.cleaned_data.get("cardholder_name")
+                cardholder_name=form.cleaned_data.get("cardholder_name"),
                 account_number=form.cleaned_data.get("account_number")
             )
             shop_info.save()

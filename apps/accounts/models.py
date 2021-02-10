@@ -75,8 +75,8 @@ class SocialMediaLinks(models.Model):
 
 class BankAccount(models.Model):
     class Banks(models.TextChoices):
-        BPI = "BPI", "Bank of the Philippine Islands"
-        BDO = "BDO", "Banco de Oro"
+        BPI = "Bank of the Philippine Islands", "BPI"
+        BDO = "Banco de Oro", "BDO"
         GCASH = "GCash", "GCash"
         GRABPAY = "GrabPay", "GrabPay"
     
@@ -112,7 +112,7 @@ class Merchant(User):
 
 # Available Delivery Schedule
 class OpenHours(models.Model):
-    HOUR_OF_DAY_24 = [(i,i) for i in range(1,25)]
+    HOUR_OF_DAY_24 = [(i,f"{i}:00") for i in range(1,25)]
 
     WEEKDAYS = [
         (1, _("Monday")),
@@ -124,7 +124,7 @@ class OpenHours(models.Model):
         (7, _("Sunday")),
     ]
 
-    day_from = models.PositiveSmallIntegerField(choices=WEEKDAYS, unique=True)
+    day_from = models.PositiveSmallIntegerField(choices=WEEKDAYS)
     day_to = models.PositiveSmallIntegerField(choices=WEEKDAYS)
     from_hour = models.PositiveSmallIntegerField(choices=HOUR_OF_DAY_24)
     to_hour = models.PositiveSmallIntegerField(choices=HOUR_OF_DAY_24)

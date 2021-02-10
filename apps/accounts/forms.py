@@ -1,7 +1,9 @@
 from django import forms
 from django.forms import ModelForm
 from django.contrib.auth.forms import UserCreationForm
-from apps.accounts.models import User, ShopInformation, ShopLogo, BankAccount
+from django.utils.translation import gettext_lazy as _
+
+from apps.accounts.models import User, ShopInformation, ShopLogo, BankAccount, OpenHours, Address
 
 class MerchantForm(ModelForm):
     password2=forms.CharField(label='Confirm Password', 
@@ -33,6 +35,20 @@ class MerchantForm(ModelForm):
             self.fields['role'].initial = User.Types.MERCHANT
 
 class ShopInformationForm(ModelForm):
+    # shop_delivery_schedule
+    day_from = forms.ChoiceField(label='',
+                                widget=forms.Select,
+                                choices=OpenHours.WEEKDAYS)
+    day_to = forms.ChoiceField(label='',
+                                widget=forms.Select,
+                                choices=OpenHours.WEEKDAYS)
+    from_hour = forms.ChoiceField(label='',
+                                widget=forms.Select,
+                                choices=OpenHours.HOUR_OF_DAY_24)
+    to_hour = forms.ChoiceField(label='',
+                                widget=forms.Select,
+                                choices=OpenHours.HOUR_OF_DAY_24)
+
     # shop_address
     line1=forms.CharField(label='', 
                         widget=forms.fields.TextInput(attrs={
@@ -43,11 +59,11 @@ class ShopInformationForm(ModelForm):
                         'class': 'input', 
                         'placeholder': 'Address Line 2'}))
     city=forms.ChoiceField(label='', 
-                        widget=forms.Select(attrs={
-                        'placeholder': 'City'}))
+                        widget=forms.Select,
+                        choices=Address.Cities)
     province=forms.ChoiceField(label='', 
-                        widget=forms.Select(attrs={
-                        'placeholder': 'Province'}))
+                        widget=forms.Select,
+                        choices=Address.Provinces)
     postal_code=forms.CharField(label='', 
                         widget=forms.fields.TextInput(attrs={
                         'class': 'small input', 
@@ -104,8 +120,17 @@ class ShopLogoForm(ModelForm):
 class ShopBankAccount(ModelForm):
     class Meta:
         model = BankAccount
-        fields = ['bank_name, cardholder_name, account_number']
-        required_fields = ['bank_name, cardholder_name, account_number']
+        fields = ['bank_name', 'cardholder_name', 'account_number']
+        required_fields = ['bank_name', 'cardholder_name', 'account_number']
+
+        widgets = {
+            'cardholder_name': forms.fields.TextInput(attrs={
+                'class':'input',
+                'placeholder': 'Cardholder Name'}),
+            'account_number': forms.fields.TextInput(attrs={
+                'class':'input',
+                'placeholder': 'Account Number'}),
+        }
 
 class CustomerForm(ModelForm):
     password2=forms.CharField(label='Confirm Password', 
