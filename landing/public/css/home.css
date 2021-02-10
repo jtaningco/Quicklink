@@ -16,105 +16,36 @@ section {
 
 .navLanding {
   height: 80px;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  background: transparent;
-  position: fixed;
-  top: 0;
-  width: 100vw;
-  z-index: 999;
-  transition: all 200ms ease-in-out;
-  /* -webkit-transition: background 250ms ease-in-out; */
-}
-
-.navLanding.scrolled {
-  height: 80px;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  background: linear-gradient(107.56deg, #798CF2 15.42%, #FED9A4 100%);
-  position: fixed;
-  top: 0;
-  width: 100vw;
-  z-index: 0;
-  opacity: 0;
-  transition: all 200ms ease-in-out;
-  box-shadow: var(--regular-box-shadow);
-}
-
-.navOthers {
-  height: 80px;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  background-color: transparent;
-  position: absolute;
-  width: 100vw;
-  background: linear-gradient(107.56deg, #798CF2 15.42%, #FED9A4 100%);
-  position: fixed;
-  top: 0;
-  z-index: 1000;
-  transition: all 200ms ease-in-out;
-  box-shadow: var(--regular-box-shadow);
-  /* -webkit-transition: background 250ms ease-in-out; */
-}
-
-.mobileNav {
-  display: none;
-  top: 0;
-  height: 80px;
   width: 100%;
-  flex-direction: row;
-  justify-content: space-between;
+  display: flex;
+  justify-content: center;
   align-items: center;
+  align-content: center;
   background: transparent;
   position: fixed;
-}
-
-.mobileNav.scrolled {
-  height: 80px;
-  display: none;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  background: linear-gradient(107.56deg, #798CF2 15.42%, #FED9A4 100%);
-  position: fixed;
   top: 0;
-  width: 100vw;
-  z-index: 0;
-  opacity: 0;
-  transition: all 200ms ease-in-out;
+  z-index: 999;
+}
+
+.navWrapper {
+  height: 100%;
+  width: 100%;
+  padding: 0 10vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+  background-image: transparent;
+  -webkit-transition: background-image 0.3s ease-in-out;
+  transition: background-image 0.3s ease-in-out;
+}
+
+.scrolled {
+  background-image: linear-gradient(107.56deg, #798CF2 15.42%, #FED9A4 100%);
   box-shadow: var(--regular-box-shadow);
 }
 
-.mobileBurger {
-  margin-left: 40px;
-}
-
-.mobileNavLinks {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.openNav {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  z-index: 2000;
-  background: #fff;
-  box-shadow: var(--regular-box-shadow);
-  padding: 40px 0px;
-  z-index: 2000;
-  position: fixed;
-  width: 100vw;
-  top: -100%;
-  opacity: 0;
-}
+.navBurger, .navMobileLogo, .navMobileButton, .mobileHome { display: none; }
 
 .openNav img {
   max-height: 93px;
@@ -140,17 +71,26 @@ section {
 }
 
 .navLinks {
-  margin-left: 120px;
+  flex-basis: 75%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  align-content: center;
 }
 
 .navOptions {
+  width: auto;
   padding: 2px 32px 0px 32px;
   color: #fff;
   font-weight: 700;
 }
 
 .navButton {
-  margin-right: 120px;
+  flex-basis: 25%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  align-content: center;
 }
 
 .primary-white-btn {
@@ -514,500 +454,66 @@ section {
   font-weight: 400;
 }
 
-@media only screen and (max-width: 567px) {
-  .navLanding {
-    display: none;
-  }
-
-  .navLanding.scrolled {
-    display: none;
-  }
+@media screen and (max-width: 768px) {
+  .navWrapper { padding: 0 5vw;}
+  .navLogo { display: none; }
+  .logoLink { display: flex; justify-content: center; align-items: center; align-content: center; padding: 0; margin-bottom: 2rem; }
+  .navMobileLogo { display: flex; width: 160px; height: 160px; }
+  .navMobileButton { display: flex; margin-top: 2rem; }
+  .navButton { flex-basis: 50%; }
 
   .navLinks {
-    margin-left: 16px;
-  }
-
-  .navButton {
-    margin-right: 16px;
-  }
-
-  .hero {
-    flex-direction: column-reverse;
+    display: flex;
+    flex-direction: column;
     justify-content: center;
-    align-items: flex-start;
-  }
-
-  .heroCircle2 {
+    align-items: center;
+    align-content: center;
+    background-color: #FFF;
+    box-shadow: var(--regular-box-shadow);
     position: absolute;
-    top: 136px;
-    left: 200px;
-    z-index: -5;
-    max-width: 80px;
-  }
-
-  .heroText {
-    margin: 0px 16px;
-    /* margin-top: 40px; */
-    max-width: 400px;
-  }
-
-  .heroHead {
-    font-size: 24px;
-    line-height: 32px;
-    color: #fff;
-    font-weight: 700;
+    top: 0;
+    width: 100%;
+    height: 100vh;
+    visibility: hidden;
+    overflow: hidden;
+    opacity: 0;
+    transform: translate(-50%, -25%);
+    transition: all 0.5s ease-in-out;
   }
   
-  .heroBody {
-    font-size: 16px;
-    line-height: 26px;
-    color: #fff;
-    margin-top: 16px;
-    margin-bottom: 32px;
-  }
-
-  .heroCircle3 {
-    display: none;
-  }
-
-  .heroImage {
-    display: none;
-  }
-
-  .vp1 {
-    margin: 80px 16px 80px 16px;
-  }
-
-  .circleBack1 {
-    max-width: 320px;
-    position: absolute;
-    z-index: -1;
-    top: 1520px;
-  }
-
-  .circleBack2 {
-    top: 2400px;
-    max-width: 120px;
-  }
-
-  .vp2Flex {
+  .navbarActive {
+    visibility: visible;
     display: flex;
-    flex-direction: column;
+    opacity: 1;
+    z-index: 999;
+    transform: translate(0%, 0%);
+  }
+
+  .navBurger {
+    display: flex;
+    flex-basis: 50%;
+    justify-content: flex-start;
     align-items: center;
-    justify-content: center;
-    margin: 80px 16px;
+    align-content: center;
+    z-index: 1000;
   }
-  
 
-  .vp2 {
+  .navOptions {
     display: flex;
-    flex-direction: row;
-    /* margin: 160px 240px; */
-    align-items: center;
-    justify-content: center;
-  }
-
-  .vp2Image {
-    max-width: 25%;
-    margin-right: 40px;
-    display: none;
-  }
-
-  .vp2Area {
-    max-width: 544px;
-  }
-
-  .textArea {
-    max-width: 440px;
-  }
-
-  .payMethods {
-    max-width: 400px;
-  }
-
-  .payMethods h3 {
-    max-width: 400px;
-  }
-
-  .payLogos {
-    flex-direction: column;
-  }
-
-  .payLogos img {
-    margin: 0px 8px 24px 0px;
-    max-height: 24px;
-    max-width: 400px;
-  }
-
-  .circleBack1 {
-    display: none;
-  }
-  
-  .customers {
-    display: flex;
-    flex-direction: column;
-    margin: 80px 16px;
     justify-content: center;
     align-items: center;
-  }
-
-  .customerCards {
-    flex-direction: column;
-  }
-
-  .customerCard {
-    margin: 40px 0px 0px 0px;
-  }
-
-  .customerCard {
-    margin: 64px 24px 0px 24px;
-  }
-
-  .customerCard img {
-    max-width: 120px;
-  }
-
-  .customers h1 {
+    align-content: center;
+    width: 100%;
+    height: 10vh;
+    color: var(--muted-light);
     text-align: center;
-  }
-
-  .customerCard h3 {
-    font-size: 16px;
-  }
-
-  .customerCard p {
-    font-size: 14px;
-  }
-
-  .compCircle {
-    position: absolute;
-    max-width: 320px;
-    top: 3200px;
-    z-index: -2;
-  }
-
-  .comparative {
-    margin: 80px 16px;
-  }
-
-  .CTA {
-    margin: 80px 16px;
-    padding: 32px 16px;
-    border-radius: 16px;
-    /* padding: 8px 0px; */
-  }
-
-  .textCTA {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  .CTA h1 {
-    font-size: 16px;
-    line-height: 24px;
-    max-width: 100%;
-  }
-
-  .CTA button {
-    margin-top: 24px;
-  }
-
-  .compCircle {
-    display: none;
-  }
-
-  .circleBack2 {
-    display: none;
-  }
-
-  .mainFooter {
-    height: 680px;
-  }
-
-  .footerContent {
-    margin: 0px 16px;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  .footerColumn {
-    margin-left: 0px;
-    margin-top: 40px;
-  }
-
-  .footerNavs {
-    flex-direction: column;
-    margin-left: 0px;
-  }
-
-  .footerInquiries {
-    margin-left: 16px;
-    margin-top: 64px;
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  .documentLinks {
-    margin-top: 8px;
-    /* margin-bottom: 24px; */
-  }
-
-  .documentLinks p {
-    font-size: 14px;
-  }
-
-  .documentLinks a {
-    padding: 0px 48px 0px 0px;
-  }
-}
-
-@media only screen and (min-width: 568px) and (max-width: 767px) {
-
-  .navLanding {
-    display: none;
-  }
-
-  .navLanding.scrolled {
-    display: none;
-  }
-
-  .navLinks {
-    margin-left: 16px;
-  }
-
-  .navButton {
-    margin-right: 16px;
-  }
-
-  .hero {
-    flex-direction: column-reverse;
-    justify-content: center;
-    align-items: flex-start;
-  }
-
-  .heroCircle2 {
-    position: absolute;
-    top: 136px;
-    left: 400px;
-    z-index: -5;
-    max-width: 160px;
-  }
-
-  .heroText {
-    margin-left: 24px;
-    /* margin-top: 40px; */
-    max-width: 400px;
-  }
-
-  .heroHead {
-    font-size: 24px;
-    line-height: 32px;
-    color: #fff;
+    font-size: 1rem;
+    line-height: 1.5rem;
     font-weight: 700;
   }
-  
-  .heroBody {
-    font-size: 16px;
-    line-height: 26px;
-    color: #fff;
-    margin-top: 16px;
-    margin-bottom: 32px;
-  }
 
-  .heroCircle3 {
-    display: none;
-  }
-
-  .heroImage {
-    display: none;
-  }
-
-  .vp1 {
-    margin: 80px 24px 160px 24px;
-  }
-
-  .circleBack1 {
-    max-width: 320px;
-    position: absolute;
-    z-index: -1;
-    top: 1520px;
-  }
-
-  .circleBack2 {
-    top: 2400px;
-    max-width: 120px;
-  }
-
-  .vp2Flex {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    margin: 160px 24px;
-  }
-  
-
-  .vp2 {
-    display: flex;
-    flex-direction: row;
-    /* margin: 160px 240px; */
-    align-items: center;
-    justify-content: center;
-  }
-
-  .vp2Image {
-    max-width: 25%;
-    margin-right: 40px;
-    display: none;
-  }
-
-  .vp2Area {
-    max-width: 544px;
-  }
-
-  .textArea {
-    max-width: 440px;
-  }
-
-  .payMethods {
-    max-width: 400px;
-  }
-
-  .payMethods h3 {
-    max-width: 400px;
-  }
-
-  .payLogos img {
-    margin: 0px 8px;
-    max-height: 24px;
-    max-width: 400px;
-  }
-
-  .circleBack1 {
-    display: none;
-  }
-  
-  .customers {
-    display: flex;
-    flex-direction: column;
-    margin: 160px 40px;
-    justify-content: center;
-    align-items: center;
-  }
-
-  .customerCards {
-    flex-direction: column;
-  }
-
-  .customerCard {
-    margin: 64px 0px 0px 0px;
-  }
-
-  .customerCard img {
-    max-width: 120px;
-  }
-
-  .customerCard h3 {
-    font-size: 16px;
-  }
-
-  .customerCard p {
-    font-size: 14px;
-  }
-
-  .compCircle {
-    position: absolute;
-    max-width: 320px;
-    top: 3200px;
-    z-index: -2;
-  }
-
-  .comparative {
-    margin: 160px 24px;
-  }
-
-  .CTA {
-    margin: 160px 24px;
-    /* padding: 8px 0px; */
-  }
-
-  .CTA h1 {
-    font-size: 16px;
-    line-height: 24px;
-    max-width: 50%;
-  }
-
-  .compCircle {
-    display: none;
-  }
-
-  .mainFooter {
-    height: 680px;
-  }
-
-  .footerContent {
-    margin: 0px 24px;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  .footerColumn {
-    margin-left: 0px;
-    margin-top: 40px;
-  }
-
-  .footerNavs {
-    flex-direction: column;
-    margin-left: 0px;
-  }
-
-  .footerInquiries {
-    margin-left: 24px;
-    margin-top: 64px;
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  .documentLinks {
-    margin-top: 8px;
-    /* margin-bottom: 24px; */
-  }
-
-  .documentLinks a {
-    padding: 0px 48px 0px 0px;
-  }
-
-  .documentLinks p {
-    font-size: 14px;
-  }
-}
-
-@media only screen and (min-width: 768px) and (max-width: 1067px) {
-
-  .navLanding {
-    display: none;
-  }
-
-  .navLanding.scrolled {
-    display: none;
-  }
-
-  .mobileNav {
-    display: flex;
-  }
-
-  .mobileNav.scrolled {
-    display: flex;
-  }
-
-  .navLinks {
-    margin-left: 40px;
-  }
-
-  .navButton {
-    margin-right: 40px;
+  .navOptions:active {
+    color: var(--primary-main);
   }
 
   .hero {
@@ -1025,7 +531,7 @@ section {
   }
 
   .heroText {
-    margin-left: 80px;
+    margin-left: 10vw;
     margin-top: 40px;
     max-width: 400px;
   }
@@ -1150,264 +656,4 @@ section {
   .documentLinks a {
     padding: 0px 48px 0px 0px;
   }
-
-}
-
-@media only screen and (min-width: 1440px) and (max-width: 1919px) {
-
-  .navLinks {
-    margin-left: 240px;
-  }
-
-  .navButton {
-    margin-right: 240px;
-  }
-
-  .heroCircle2 {
-    position: absolute;
-    top: 136px;
-    left: 744px;
-    z-index: -5;
-    max-width: 160px;
-  }
-
-  .heroText {
-    margin-left: 240px;
-    max-width: 400px;
-  }
-
-  .heroImage {
-    margin-right: 40px;
-  }
-
-  .vp1 {
-    margin: 80px 240px 160px 240px;
-  }
-
-  .circleBack1 {
-    max-width: 320px;
-    position: absolute;
-    z-index: -1;
-    top: 1520px;
-  }
-
-  .circleBack2 {
-    top: 2200px;
-  }
-
-  .vp2Flex {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    margin: 160px 240px;
-  }
-  
-
-  .vp2 {
-    display: flex;
-    flex-direction: row;
-    /* margin: 160px 240px; */
-    align-items: center;
-    justify-content: center;
-  }
-
-  .vp2Image {
-    max-width: 25%;
-    margin-right: 64px;
-  }
-  
-  .customers {
-    display: flex;
-    flex-direction: column;
-    margin: 160px 240px;
-    justify-content: center;
-    align-items: center;
-  }
-
-  .compCircle {
-    position: absolute;
-    max-width: 320px;
-    top: 3200px;
-    z-index: -2;
-  }
-
-  .comparative {
-    margin: 160px 240px;
-  }
-
-  .CTA {
-    margin: 160px 240px;
-    /* padding: 8px 0px; */
-  }
-
-  .footerContent {
-    margin: 0px 240px;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-  }
-
-  .footerInquiries {
-    margin-left: 240px;
-    margin-top: 64px;
-  }
-
-}
-
-@media only screen and (min-width: 1920px) {
-
-  a {
-    font-size: 16px;
-    line-height: 24px;
-  }
-
-  h1 {
-    font-size: 32px;
-    line-height: 48px;
-  }
-
-  p {
-    font-size: 20px;
-    line-height: 32px;
-  }
-
-  .navLinks {
-    margin-left: 400px;
-  }
-
-  .navButton {
-    margin-right: 400px;
-  }
-
-  .heroCircle2 {
-    position: absolute;
-    top: 136px;
-    left: 744px;
-    z-index: -5;
-    max-width: 160px;
-  }
-
-  .heroText {
-    margin-left: 400px;
-    max-width: 600px;
-  }
-
-  .heroHead {
-    font-size: 48px;
-    line-height: 64px;
-    color: #fff;
-    font-weight: 700;
-  }
-  
-  .heroBody {
-    font-size: 24px;
-    line-height: 40px;
-    color: #fff;
-    margin-top: 16px;
-    margin-bottom: 32px;
-  }
-  
-  .heroImage {
-    max-width: 50%;
-    margin-right: 24px;
-  }
-
-  .heroImage {
-    margin-right: 160px;
-  }
-
-  .heroCircle3 {
-    position: absolute;
-    top: 1200px;
-    right: 0px;
-    z-index: -5;
-    max-width: 96px;
-  }
-
-  .vp1 {
-    margin: 80px 600px 160px 600px;
-  }
-
-  .circleBack1 {
-    max-width: 320px;
-    position: absolute;
-    z-index: -1;
-    top: 1520px;
-  }
-
-  .circleBack2 {
-    top: 2200px;
-  }
-
-  .vp2Flex {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    margin: 160px 600px;
-  }
-  
-
-  .vp2 {
-    display: flex;
-    flex-direction: row;
-    /* margin: 160px 240px; */
-    align-items: center;
-    justify-content: center;
-  }
-
-  .vp2Image {
-    max-width: 25%;
-    margin-right: 64px;
-  }
-  
-  .customers {
-    display: flex;
-    flex-direction: column;
-    margin: 160px 600px;
-    justify-content: center;
-    align-items: center;
-  }
-
-  .customerCard {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin: 64px 60px 0px 60px;
-    max-width: 360px;
-  }
-
-  h3 {
-    font-size: 24px;
-    line-height: 32px;
-  }
-
-  .compCircle {
-    position: absolute;
-    max-width: 320px;
-    top: 3200px;
-    z-index: -2;
-  }
-
-  .comparative {
-    margin: 160px 600px;
-  }
-
-  .CTA {
-    margin: 160px 600px; 
-    /* padding: 8px 0px; */
-  }
-
-  .footerContent {
-    margin: 0px 400px;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-  }
-
-  .footerInquiries {
-    margin: 64px 0px 0px 400px;
-  }
-
 }

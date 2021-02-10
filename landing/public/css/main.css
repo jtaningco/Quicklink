@@ -529,13 +529,16 @@ textarea {
   -o-transition: .2s all;
   transition: .2s all;
   -webkit-tap-highlight-color: transparent; }
-  .burger .burger-lines:after {
+  
+.burger .burger-lines:after {
     left: 0;
     top: -1em; }
-  .burger .burger-lines:before {
+  
+.burger .burger-lines:before {
     left: 1em;
     top: 1em; }
-  .burger:after {
+
+.burger:after {
     content: '';
     display: block;
     position: absolute;
@@ -543,10 +546,12 @@ textarea {
     width: 150%;
     top: -25%;
     left: -25%; }
-  .burger .burger-lines {
+
+.burger .burger-lines {
     top: 50%;
     margin-top: -0.125em; }
-    .burger .burger-lines, .burger .burger-lines:after, .burger .burger-lines:before {
+
+.burger .burger-lines, .burger .burger-lines:after, .burger .burger-lines:before {
       pointer-events: none;
       display: block;
       content: '';
@@ -558,12 +563,15 @@ textarea {
       -webkit-transform: rotate(0);
           -ms-transform: rotate(0);
               transform: rotate(0); }
-    .burger .burger-lines:after {
+
+.burger .burger-lines:after {
       left: 0;
       top: -1em; }
-    .burger .burger-lines:before {
+
+.burger .burger-lines:before {
       left: 1em;
       top: 1em; }
+      
 .burger.burger-squeeze .burger-lines, .burger.burger-squeeze .burger-lines:after, .burger.burger-squeeze .burger-lines:before {
   -webkit-transition: .2s top .2s, .1s left, .2s transform, .4s background-color .2s;
   -o-transition: .2s top .2s, .1s left, .2s transform, .4s background-color .2s;
@@ -578,18 +586,20 @@ textarea {
   transition: .2s background-color, .2s top, .2s left, .2s transform .15s; }
 
 .burger.burger-squeeze.open .burger-lines {
-  background-color: transparent; }
+  background-color: open; }
 
 .burger.burger-squeeze.open .burger-lines:before, .burger.burger-squeeze.open .burger-lines:after {
   left: 0.5em;
   top: 0px; }
 
 .burger.burger-squeeze.open .burger-lines:before {
+  background-color: var(--primary-main);
   -webkit-transform: rotate(-45deg);
       -ms-transform: rotate(-45deg);
           transform: rotate(-45deg); }
 
 .burger.burger-squeeze.open .burger-lines:after {
+  background-color: var(--primary-main);
   -webkit-transform: rotate(45deg);
       -ms-transform: rotate(45deg);
           transform: rotate(45deg); }

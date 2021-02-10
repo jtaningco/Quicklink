@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0;">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
   <meta property="og:image" content="static/thumbnail.svg" />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="www.quicklink.ph" />
@@ -15,7 +15,6 @@
   <title>Quicklink</title>
   <link rel="icon" href="static/logos/logo.png">
 
-  <link rel="stylesheet" href="css/normalize.css">
   <link rel="stylesheet" href="css/main.css">
   <link rel="stylesheet" href="css/home.css">
   <link rel="stylesheet" href="css/pricing.css">
@@ -23,75 +22,33 @@
   <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 
   <script src="js/main.js"></script>
-
+  <script src="js/plugins.js"></script>
   
 </head>
 
 <body>
-
-  <nav class = "navLanding">
-    <div class = "navLinks">
-      <a class = "logoLink" href = "index.html"><img class = "navLogo" src = "./static/logos/wideLogo.png"></a>
-      <a class = "navOptions" href = "howitworks.html">How It Works</a>
-      <a class = "navOptions" href = "pricing.html">Pricing</a>
-      <a class = "navOptions" href = "faqs.html">FAQs</a>
-    </div>
-
-    <div class = "navButton">
-      <button class = "primary-white-btn"><a class = "primary-white-btn-link">Join Early Access</a></button>
-    </div>
-  </nav>
-
-  <nav id = "navBar" class = "navLanding scrolled">
-    <div class = "navLinks">
-      <a class = "logoLink" href = "index.html"><img class = "navLogo" src = "./static/logos/wideLogo.png"></a>
-      <a class = "navOptions">How It Works</a>
-      <a class = "navOptions" href = "pricing.html">Pricing</a>
-      <a class = "navOptions" href = "faqs.html">FAQs</a>
-    </div>
-
-    <div class = "navButton">
-      <button class = "primary-white-btn"><a class = "primary-white-btn-link">Join Early Access</a></button>
-    </div>
-  </nav>
-
-  <nav class = "mobileNav">
-    <div class = "mobileBurger">
-      <div class="burger burger-squeeze" style = "font-size: 10px">
-        <div class="burger-lines"></div>
+  <nav class="navLanding">
+    <div class="navWrapper" id="navbar">
+      <div class="navBurger">
+        <div class="burger burger-squeeze" id="navBurger" style="font-size: 10px; margin-left: 40px;">
+          <div class="burger-lines"></div>
+        </div>
+      </div>
+  
+      <div class="navLinks" id="openMobileNav">
+        <a class="logoLink" href="index.html"><img class="navLogo" src="./static/logos/wideLogo.png"><img class="navMobileLogo" src="static/logos/logo.png"></a>
+        <a class="navOptions mobileHome" href="index.html">Home</a>
+        <a class="navOptions" href="howitworks.html">How It Works</a>
+        <a class="navOptions" href="pricing.html">Pricing</a>
+        <a class="navOptions" href="faqs.html">FAQs</a>
+        <button class = "navMobileButton primary-btn"><a class = "primary-btn-link">Join Early Access</a></button>
+      </div>
+  
+      <div class = "navButton">
+        <button class = "primary-white-btn"><a class = "primary-white-btn-link">Join Early Access</a></button>
       </div>
     </div>
-
-    <div class = "navButton">
-      <button class = "primary-white-btn"><a class = "primary-white-btn-link">Join Early Access</a></button>
-    </div>
   </nav>
-
-  <nav id = "mobileNavBar" class = "mobileNav scrolled">
-    <div class = "mobileBurger">
-      <div class="burger burger-squeeze" style = "font-size: 10px">
-        <div class="burger-lines"></div>
-      </div>
-    </div>
-
-    <div class = "navButton">
-      <button class = "primary-white-btn"><a class = "primary-white-btn-link">Join Early Access</a></button>
-    </div>
-  </nav>
-
-  <!-- <div class = "overlay"></div> -->
-
-  <div id = "openMenu" class = "openNav">
-    <img src = "static/logos/logo.png">
-    <div class = "mobileNavLinks">
-      <a class = "mobileNavOptions" href = "index.html">Home</a>
-      <a class = "mobileNavOptions">How It Works</a>
-      <a class = "mobileNavOptions" href = "pricing.html">Pricing</a>
-      <a class = "mobileNavOptions" href = "faqs.html">FAQs</a>
-      <button class = "primary-btn"><a class = "primary-btn-link">Join Early Access</a></button>
-    </div>
-  </div>
-
 
   <img class = "heroCircle1" src = "static/background/heroCircle1.png">
   <img class = "heroCircle2" src = "static/background/heroCircle2.png">
@@ -257,74 +214,9 @@
   </footer>
 
   <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-
   <script>
-    AOS.init({
-
-      duration: 1200,
-      // anchorPlacement: 'center-top',
-
-    });
-
+    AOS.init({ duration: 1200 });
   </script>
-
-  <script>
-    window.onscroll = function() {myFunction()};
-    // window.onscroll = function() {myFunction2()};
-
-
-    // function myFunction() {
-    //   if (document.body.scrollTop > 0 || document.documentElement.scrollTop > 0) {
-    //     document.getElementById("navBar").className = "navLanding scrolled";
-    //   } else {
-    //     document.getElementById("navBar").className = "navLanding default";
-    //   }
-    // }
-
-    function myFunction() {
-      if (document.body.scrollTop > 0 || document.documentElement.scrollTop > 0) {
-        document.getElementById("navBar").style.opacity = "1";
-        document.getElementById("navBar").style.zIndex = "999";
-      } else {
-        document.getElementById("navBar").style.opacity = "0";
-        document.getElementById("navBar").style.zIndex = "0";
-      }
-    }
-
-    function myFunction2() {
-      if (document.body.scrollTop > 0 || document.documentElement.scrollTop > 0) {
-        document.getElementById("mobileNavBar").style.opacity = "1";
-        document.getElementById("mobileNavBar").style.zIndex = "999";
-      } else {
-        document.getElementById("mobileNavBar").style.opacity = "0";
-        document.getElementById("mobileNavBar").style.zIndex = "0";
-      }
-    }
-
-    window.onbeforeunload = function () {
-      window.scrollTo(0, 0);
-      window.location.href = window.location.href;
-      // location.reload(true); saaa
-    }
-
-    let burger = document.getElementsByClassName("burger");
-
-    // function openNavBar() {
-    //   if (burger.clicked == true) {
-    //     document.getElementsByClassName("openNav").style.opacity = "1";
-    //     document.getElementsByClassName("openNav").style.top = "0";
-    //   }
-
-    // }
-
-    burger.addEventListener("click", function(){
-        document.getElementsByClassName("openNav").style.opacity = "1";
-        document.getElementsByClassName("openNav").style.top = "0";
-    });
-
-
-  </script>
-
 </body>
 
 </html>
