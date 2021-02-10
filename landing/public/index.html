@@ -307,9 +307,7 @@
       // location.reload(true); saaa
     }
 
-    // let burger = document.getElementsByClassName("mobileBurger");
-
-    // burger.addEventListener("click", openNavBar);
+    let burger = document.getElementsByClassName("burger");
 
     // function openNavBar() {
     //   if (burger.clicked == true) {
@@ -318,6 +316,11 @@
     //   }
 
     // }
+
+    burger.addEventListener("click", function(){
+        document.getElementsByClassName("openNav").style.opacity = "1";
+        document.getElementsByClassName("openNav").style.top = "0";
+    });
 
 
   </script>
