@@ -12,7 +12,7 @@ body {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    margin-top: 180px;
+    margin-top: 150px;
 }
 
 /* divs */
@@ -92,6 +92,7 @@ body {
     line-height: 32px;
     color: #2C2C2C; 
     padding-top: 20px;
+    font-weight: 700px;
 }
 
 /* text for div.textboxes */
