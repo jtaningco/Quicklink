@@ -39,14 +39,14 @@
         </div>
     </nav>
 
-    <section class = "hiwHero">
+    <section class = "hiwHero" data-aos="fade-down">
         <h1 class = "bold">How You Can Use Quicklink</h1>
         <p>See how online food businesses and customers can get the most out of Quicklink.</p>
         <img src = "static/icons/fi_chevrons-down.svg">
     </section>
-
+<!-- 
     <section class = "hiwMerchants">
-        <h1 class = "bold">Grow your food business.</h1>
+        <h1 class = "bold" data-aos="fade-up">Grow your food business.</h1>
         <div class = "useCases">
             <div class = "useCase-section">
                 <img class = "hiwMockup" src = "static/mockups/hiw-orderForm.png" data-aos = "fade-right">
@@ -67,15 +67,156 @@
             <div class = "useCase-section">
                 <img class = "hiwMockup" src = "static/mockups/hiw-dashboard.png" data-aos = "fade-right">
                 <div class = "useCases-text-section" data-aos = "fade-left">
-                    <h1 class = "bold">Keep track of your orders, revenue, and other data.</h1>
+                    <h1 class = "bold">Keep track of your orders and revenue.</h1>
                     <p>Document all your orders and cash flow whenever you receive an order. We’ll do everything for you, by the way. </p>
                 </div>
             </div>
             
         </div>
+    </section> -->
+
+    <section class = "hiwMerchants">
+        <h1 class = "bold" data-aos="fade-up">Grow your food business.</h1>
+        <div class = "useCases">
+            <div class = "useCase-section">
+                <img id = "merchantMockup" class = "hiwMockup" src = "static/mockups/hiw-orderForm.png">
+                <div class = "useCases-text">
+                    <div class = "useCases-text-section" data-aos="fade-up">
+                        <h1 class = "bold">Create and share order forms.</h1>
+                        <p>Customize your menu and order forms to showcase your products. Launch your online store by sharing a link, and your customers will be placing orders in no time!</p>
+                    </div>
+                    <div class = "useCases-text-section" data-aos="fade-up">
+                        <h1 class = "bold">Receive payments and update customers</h1>
+                        <p>Instantly receive payments with every order and automatically update your customers on their order’s progress! </p>
+                    </div>
+                    <div class = "useCases-text-section" data-aos="fade-up">
+                        <h1 class = "bold">Keep track of your orders and revenue.</h1>
+                        <p>Document all your orders and cash flow whenever you receive an order. We’ll do everything for you, by the way. </p>
+                    </div>
+                </div>
+            </div>
+        </div>
     </section>
 
+    <section class = "hiwCustomers">
+        <h1 class = "bold" data-aos="fade-up">Grow your food business.</h1>
+        <div class = "useCases">
+            <div class = "useCase-section-customers">
+                <img id = "customerMockup" class = "hiwMockup2" src = "static/mockups/hiw-forms.png">
+                <div class = "useCases-text">
+                    <div class = "useCases-text-section-customer" data-aos="fade-up">
+                        <h1 class = "bold">Create and share order forms.</h1>
+                        <p>Customize your menu and order forms to showcase your products. Launch your online store by sharing a link, and your customers will be placing orders in no time!</p>
+                    </div>
+                    <div class = "useCases-text-section-customer" data-aos="fade-up">
+                        <h1 class = "bold">Receive payments and update customers</h1>
+                        <p>Instantly receive payments with every order and automatically update your customers on their order’s progress! </p>
+                    </div>
+                    <div class = "useCases-text-section-customer" data-aos="fade-up">
+                        <h1 class = "bold">Keep track of your orders and revenue.</h1>
+                        <p>Document all your orders and cash flow whenever you receive an order. We’ll do everything for you, by the way. </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class = "mainFooter">
+        <div class = "footerFull">
+    
+          <div class = "footerContent">
+            <img class = "footerLogo" src = "static/logos/shortenedWhite.png">
+    
+            <div class = "footerNavs">
+    
+              <div class = "footerColumn">
+    
+                <h3>How It Works</h3>
+                <a class = "footerLink">For Merchants</a>
+                <a class = "footerLink">For Customers</a>
+    
+              </div>
+    
+              <div class = "footerColumn">
+    
+                <h3>Pricing</h3>
+                <a class = "footerLink">Plans</a>
+                
+              </div>
+    
+              <div class = "footerColumn">
+    
+                <h3>FAQs</h3>
+                <a class = "footerLink">For Merchants</a>
+                <a class = "footerLink">For Customers</a>
+                
+              </div>
+    
+            </div>
+    
+          </div>
+    
+          <div class = "footerInquiries">
+            <p>Got questions? Email us at info@quicklink.ph</p>
+            <div class = "documentLinks">
+              <a><p>Privacy Policy</p></a>
+              <a><p>Terms of Use</p></a>
+            </div>
+          </div>
+    
+        </div>
+      </footer>
+
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+    <script>
+        window.onscroll = function() {
+            myFunction();
+            myFunction2();
+        };
+
+
+        function myFunction() {
+        if (document.documentElement.scrollTop > 700) {
+            document.getElementById("merchantMockup").style.opacity = "0";
+            if (document.documentElement.scrollTop > 900) {
+            document.getElementById("merchantMockup").src = "static/mockups/hiw-revenue.png";
+            document.getElementById("merchantMockup").style.opacity = "1";
+                if (document.documentElement.scrollTop > 1300) {
+                    document.getElementById("merchantMockup").style.opacity = "0";
+                    if (document.documentElement.scrollTop > 1450) {
+                        document.getElementById("merchantMockup").style.opacity = "1";
+                        document.getElementById("merchantMockup").src = "static/mockups/hiw-dashboard.png";
+                    }
+                }
+ 
+        }
+        } else {
+            document.getElementById("merchantMockup").style.opacity = "1";
+            document.getElementById("merchantMockup").src = "static/mockups/hiw-orderForm.png";
+            }
+        }
+
+        function myFunction2() {
+            if (document.documentElement.scrollTop > 2500) {
+                document.getElementById("customerMockup").style.opacity = "0";
+                if (document.documentElement.scrollTop > 2800) {
+                document.getElementById("customerMockup").src = "static/mockups/hiw-basket.png";
+                document.getElementById("customerMockup").style.opacity = "1";
+                if (document.documentElement.scrollTop > 3000) {
+                    document.getElementById("customerMockup").style.opacity = "0";
+                    if (document.documentElement.scrollTop > 3400) {
+                        document.getElementById("customerMockup").style.opacity = "1";
+                        document.getElementById("customerMockup").src = "static/mockups/hiw-receipt.png";
+                    }
+                }
+            }   
+        } else {
+            document.getElementById("customerMockup").style.opacity = "1";
+            document.getElementById("customerMockup").src = "static/mockups/hiw-forms.png";
+            }
+        }
+    </script>
 
     <script>
     AOS.init({

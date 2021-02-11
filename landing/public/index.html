@@ -45,7 +45,7 @@
   <nav id = "navBar" class = "navLanding scrolled">
     <div class = "navLinks">
       <a class = "logoLink" href = "index.html"><img class = "navLogo" src = "./static/logos/wideLogo.png"></a>
-      <a class = "navOptions">How It Works</a>
+      <a class = "navOptions" href = "howitworks.html">How It Works</a>
       <a class = "navOptions" href = "pricing.html">Pricing</a>
       <a class = "navOptions" href = "faqs.html">FAQs</a>
     </div>
@@ -291,15 +291,15 @@
       }
     }
 
-    function myFunction2() {
-      if (document.body.scrollTop > 0 || document.documentElement.scrollTop > 0) {
-        document.getElementById("mobileNavBar").style.opacity = "1";
-        document.getElementById("mobileNavBar").style.zIndex = "999";
-      } else {
-        document.getElementById("mobileNavBar").style.opacity = "0";
-        document.getElementById("mobileNavBar").style.zIndex = "0";
-      }
-    }
+    // function myFunction2() {
+    //   if (document.body.scrollTop > 0 || document.documentElement.scrollTop > 0) {
+    //     document.getElementById("mobileNavBar").style.opacity = "1";
+    //     document.getElementById("mobileNavBar").style.zIndex = "999";
+    //   } else {
+    //     document.getElementById("mobileNavBar").style.opacity = "0";
+    //     document.getElementById("mobileNavBar").style.zIndex = "0";
+    //   }
+    // }
 
     window.onbeforeunload = function () {
       window.scrollTo(0, 0);

@@ -21,6 +21,14 @@
     height: auto;
 }
 
+.hiwCustomers {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: auto;
+    margin-top: 50vh;
+}
+
 .useCases {
     width: 75%;
     display: flex;
@@ -33,22 +41,60 @@
 .useCase-section {
     display: flex;
     flex-direction: row;
-    align-items: center;
-    height: 90vh;
+    align-items: flex-start;
+    height: 188vh;
+    margin-top: 40px;
+}
+
+.useCase-section-customers {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    height: 255vh;
+    margin-top: 40px;
+    margin-bottom: 160px;
 }
 
 .hiwMockup {
     width: 50%;
+    position: sticky;
+    top: 30vh;
+    opacity: 0;
+    transition: opacity 200ms ease-in-out;
+}
+
+.hiwMockup2 {
+    width: 30%;
+    position: sticky;
+    top: 15vh;
+    opacity: 0;
+    transition: opacity 200ms ease-in-out;
 }
 
 .useCases-text-section {
     margin-left: 24px;
+    margin-top: 24px;
 }
 
 .useCases-text-section p {
     margin-top: 8px;
+    height: 60vh;
 }
 
 .useCases-text-section h1 {
+    color: var(--primary-main);
+}
+
+.useCases-text-section-customer {
+    margin-left: 24px;
+    margin-top: 160px;
+}
+
+.useCases-text-section-customer p {
+    margin-top: 8px;
+    height: 60vh;
+}
+
+.useCases-text-section-customer h1 {
     color: var(--primary-main);
 }
