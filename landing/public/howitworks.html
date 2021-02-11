@@ -26,18 +26,28 @@
 </head>
 
 <body>
-    <nav class = "navOthers">
-        <div class = "navLinks">
-            <a class = "logoLink" href = "index.html"><img class = "navLogo" src = "./static/logos/wideLogo.png"></a>
-            <a class = "navOptions">How It Works</a>
-            <a class = "navOptions" href = "pricing.html">Pricing</a>
-            <a class = "navOptions" href = "faqs.html">FAQs</a>
+    <nav class="navLanding">
+        <div class="navWrapper" id="navbar">
+          <div class="navBurger">
+            <div class="burger burger-squeeze" id="navBurger" style="font-size: 10px; margin-left: 40px;">
+              <div class="burger-lines"></div>
+            </div>
           </div>
-    
-        <div class = "navButton">
-          <button class = "primary-white-btn"><a class = "primary-white-btn-link">Join Early Access</a></button>
+      
+          <div class="navLinks" id="openMobileNav">
+            <a class="logoLink" href="index.html"><img class="navLogo" src="./static/logos/wideLogo.png"><img class="navMobileLogo" src="static/logos/logo.png"></a>
+            <a class="navOptions mobileHome" href="index.html">Home</a>
+            <a class="navOptions" href="howitworks.html">How It Works</a>
+            <a class="navOptions" href="pricing.html">Pricing</a>
+            <a class="navOptions" href="faqs.html">FAQs</a>
+            <button class = "navMobileButton primary-btn"><a class = "primary-btn-link">Join Early Access</a></button>
+          </div>
+      
+          <div class = "navButton">
+            <button class = "primary-white-btn"><a class = "primary-white-btn-link">Join Early Access</a></button>
+          </div>
         </div>
-    </nav>
+      </nav>
 
     <section class = "hiwHero" data-aos="fade-down">
         <h1 class = "bold">How You Can Use Quicklink</h1>

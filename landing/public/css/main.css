@@ -519,6 +519,85 @@ textarea {
   z-index: 1;
 }
 
+.navLanding {
+  height: 80px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+  background: transparent;
+  position: fixed;
+  top: 0;
+  z-index: 999;
+}
+
+.navWrapper {
+  height: 100%;
+  width: 100%;
+  padding: 0 10vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+  background-image: transparent;
+  -webkit-transition: background-image 0.3s ease-in-out;
+  transition: background-image 0.3s ease-in-out;
+}
+
+.scrolled {
+  background-image: linear-gradient(107.56deg, #798CF2 15.42%, #FED9A4 100%);
+  box-shadow: var(--regular-box-shadow);
+}
+
+.navBurger, .navMobileLogo, .navMobileButton, .mobileHome { display: none; }
+
+.openNav img {
+  max-height: 93px;
+}
+
+.mobileNavOptions {
+  margin-top: 40px;
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--muted-light);
+}
+
+.mobileNavLinks button {
+  margin-top: 40px;
+}
+
+.navLogo {
+  max-height: 48px;
+}
+
+.logoLink {
+  padding-left: 0px;
+}
+
+.navLinks {
+  flex-basis: 75%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  align-content: center;
+}
+
+.navOptions {
+  width: auto;
+  padding: 2px 32px 0px 32px;
+  color: #fff;
+  font-weight: 700;
+}
+
+.navButton {
+  flex-basis: 25%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  align-content: center;
+}
+
 .burger {
   height: 3em;
   width: 3em;
@@ -529,13 +608,16 @@ textarea {
   -o-transition: .2s all;
   transition: .2s all;
   -webkit-tap-highlight-color: transparent; }
-  .burger .burger-lines:after {
+  
+.burger .burger-lines:after {
     left: 0;
     top: -1em; }
-  .burger .burger-lines:before {
+  
+.burger .burger-lines:before {
     left: 1em;
     top: 1em; }
-  .burger:after {
+
+.burger:after {
     content: '';
     display: block;
     position: absolute;
@@ -543,10 +625,12 @@ textarea {
     width: 150%;
     top: -25%;
     left: -25%; }
-  .burger .burger-lines {
+
+.burger .burger-lines {
     top: 50%;
     margin-top: -0.125em; }
-    .burger .burger-lines, .burger .burger-lines:after, .burger .burger-lines:before {
+
+.burger .burger-lines, .burger .burger-lines:after, .burger .burger-lines:before {
       pointer-events: none;
       display: block;
       content: '';
@@ -558,12 +642,15 @@ textarea {
       -webkit-transform: rotate(0);
           -ms-transform: rotate(0);
               transform: rotate(0); }
-    .burger .burger-lines:after {
+
+.burger .burger-lines:after {
       left: 0;
       top: -1em; }
-    .burger .burger-lines:before {
+
+.burger .burger-lines:before {
       left: 1em;
       top: 1em; }
+      
 .burger.burger-squeeze .burger-lines, .burger.burger-squeeze .burger-lines:after, .burger.burger-squeeze .burger-lines:before {
   -webkit-transition: .2s top .2s, .1s left, .2s transform, .4s background-color .2s;
   -o-transition: .2s top .2s, .1s left, .2s transform, .4s background-color .2s;
@@ -578,22 +665,86 @@ textarea {
   transition: .2s background-color, .2s top, .2s left, .2s transform .15s; }
 
 .burger.burger-squeeze.open .burger-lines {
-  background-color: transparent; }
+  background-color: open; }
 
 .burger.burger-squeeze.open .burger-lines:before, .burger.burger-squeeze.open .burger-lines:after {
   left: 0.5em;
   top: 0px; }
 
 .burger.burger-squeeze.open .burger-lines:before {
+  background-color: var(--primary-main);
   -webkit-transform: rotate(-45deg);
       -ms-transform: rotate(-45deg);
           transform: rotate(-45deg); }
 
 .burger.burger-squeeze.open .burger-lines:after {
+  background-color: var(--primary-main);
   -webkit-transform: rotate(45deg);
       -ms-transform: rotate(45deg);
           transform: rotate(45deg); }
 
+@media screen and (max-width: 768px) {
+  .navWrapper { padding: 0 5vw;}
+  .navLogo { display: none; }
+  .logoLink { display: flex; justify-content: center; align-items: center; align-content: center; padding: 0; margin-bottom: 2rem; }
+  .navMobileLogo { display: flex; width: 160px; height: 160px; }
+  .navMobileButton { display: flex; margin-top: 2rem; }
+  .navButton { flex-basis: 50%; }
+
+  .navLinks {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    background-color: #FFF;
+    box-shadow: var(--regular-box-shadow);
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 100vh;
+    visibility: hidden;
+    overflow: hidden;
+    opacity: 0;
+    transform: translate(-50%, -25%);
+    transition: all 0.5s ease-in-out;
+  }
+  
+  .navbarActive {
+    visibility: visible;
+    display: flex;
+    opacity: 1;
+    z-index: 999;
+    transform: translate(0%, 0%);
+  }
+
+  .navBurger {
+    display: flex;
+    flex-basis: 50%;
+    justify-content: flex-start;
+    align-items: center;
+    align-content: center;
+    z-index: 1000;
+  }
+
+  .navOptions {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    width: 100%;
+    height: 10vh;
+    color: var(--muted-light);
+    text-align: center;
+    font-size: 1rem;
+    line-height: 1.5rem;
+    font-weight: 700;
+  }
+
+  .navOptions:active {
+    color: var(--primary-main);
+  }
+}
 /*
    * Remove text-shadow in selection highlight:
    * https://twitter.com/miketaylr/status/12228805301

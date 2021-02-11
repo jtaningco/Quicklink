@@ -23,18 +23,28 @@
 </head>
 
 <body>
-    <nav class = "navOthers">
-        <div class = "navLinks">
-            <a class = "logoLink" href = "index.html"><img class = "navLogo" src = "./static/logos/wideLogo.png"></a>
-            <a class = "navOptions" href = "howitworks.html">How It Works</a>
-            <a class = "navOptions" href = "pricing.html">Pricing</a>
-            <a class = "navOptions" href = "faqs.html">FAQs</a>
-          </div>
-    
-        <div class = "navButton">
-          <button class = "primary-white-btn"><a class = "primary-white-btn-link">Join Early Access</a></button>
+  <nav class="navLanding">
+    <div class="navWrapper" id="navbar">
+      <div class="navBurger">
+        <div class="burger burger-squeeze" id="navBurger" style="font-size: 10px; margin-left: 40px;">
+          <div class="burger-lines"></div>
         </div>
-    </nav>
+      </div>
+  
+      <div class="navLinks" id="openMobileNav">
+        <a class="logoLink" href="index.html"><img class="navLogo" src="./static/logos/wideLogo.png"><img class="navMobileLogo" src="static/logos/logo.png"></a>
+        <a class="navOptions mobileHome" href="index.html">Home</a>
+        <a class="navOptions" href="howitworks.html">How It Works</a>
+        <a class="navOptions" href="pricing.html">Pricing</a>
+        <a class="navOptions" href="faqs.html">FAQs</a>
+        <button class = "navMobileButton primary-btn"><a class = "primary-btn-link">Join Early Access</a></button>
+      </div>
+  
+      <div class = "navButton">
+        <button class = "primary-white-btn"><a class = "primary-white-btn-link">Join Early Access</a></button>
+      </div>
+    </div>
+  </nav>
 
     <img class = "pricingCircle1" src = "static/background/compCircle.png">
     <img class = "pricingCircle2" src = "static/background/pricingCircle2.png">
