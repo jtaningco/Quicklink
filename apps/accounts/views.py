@@ -63,7 +63,7 @@ def registerShopInformation(request):
                 postal_code=form.cleaned_data.get("postal_code"),
             )
 
-            social_links = SocialMediaLinks.objects.create(
+            social_links = SocialMediaLink.objects.create(
                 user=user,
                 instagram=form.cleaned_data.get("instagram"),
                 facebook=form.cleaned_data.get("facebook"),
@@ -181,6 +181,112 @@ def loginCustomer(request):
     
     context = {}
     return render(request, 'accounts/customer-login.html', context)
+
+@login_required(login_url='accounts:customer-login')
+@allowed_users(allowed_role=User.Types.CUSTOMER)
+def registerCustomerInformation(request):
+    user = request.user
+    form = CustomerInformationForm()
+
+    if request.method == 'POST':
+        form = CustomerInformationForm(request.POST)
+        if form.is_valid():
+            customer_info = CustomerInformation.objects.create(
+                customer = user,
+                customer_name=form.cleaned_data.get("customer_name"),
+                customer_contact_number=form.cleaned_data.get("customer_contact_number"),
+                customer_username=form.cleaned_data.get("customer_username"),
+            )
+
+            social_links = SocialMediaLink.objects.create(
+                user=user,
+                instagram=form.cleaned_data.get("instagram"),
+                facebook=form.cleaned_data.get("facebook"),
+            )
+
+            customer_info.save()
+            social_links.save()
+
+            messages.success(request, 'Profile successfully updated')
+            return redirect('accounts:customer-register-address')
+    
+    context = {'form':form}
+    return render(request, 'accounts/add-customer-information.html', context)
+
+@login_required(login_url='accounts:customer-login')
+@allowed_users(allowed_role=User.Types.CUSTOMER)
+def registerCustomerAddress(request):
+    user = request.user
+    form = CustomerAddressForm()
+
+    if request.method == 'POST':
+        form = CustomerAddressForm(request.POST)
+        if form.is_valid():
+            address = Address.objects.create(
+                user=user,
+                line1=form.cleaned_data.get("line1"),
+                line2=form.cleaned_data.get("line2"),
+                city=form.cleaned_data.get("city"),
+                province=form.cleaned_data.get("province"),
+                postal_code=form.cleaned_data.get("postal_code"),
+            )
+
+            address.save()
+
+            messages.success(request, 'Profile successfully updated')
+            return redirect('accounts:customer-register-payment')
+
+    context = {'form':form}
+    return render(request, 'accounts/add-customer-address.html', context)
+
+@login_required(login_url='accounts:customer-login')
+@allowed_users(allowed_role=User.Types.CUSTOMER)
+def registerCustomerAccount(request):
+    user = request.user
+    form = CustomerAccountForm()
+
+    if request.method == 'POST':
+        form = CustomerAccountForm(request.POST)
+        if form.is_valid():
+            bank_info = BankAccount.objects.create(
+                user=user,
+                bank_name=form.cleaned_data.get("bank_name"),
+                cardholder_name=form.cleaned_data.get("cardholder_name"),
+                account_number=form.cleaned_data.get("account_number"),
+                exp_date=form.cleaned_data.get("exp_date"),
+                cvv=form.cleaned_data.get("cvv"),
+            )
+
+            bank_info.save()
+
+            messages.success(request, 'Profile successfully updated')
+            return redirect('accounts:customer-register-notifications')
+
+    context = {'form':form}
+    return render(request, 'accounts/add-customer-payment.html', context)
+
+@login_required(login_url='accounts:customer-login')
+@allowed_users(allowed_role=User.Types.CUSTOMER)
+def registerCustomerNotifications(request):
+    user = request.user
+    form = NotificationsForm()
+
+    if request.method == 'POST':
+        form = NotificationsForm(request.POST)
+        if form.is_valid():
+            notifications = Notification.objects.create(
+                user=user,
+                sms=form.cleaned_data.get("sms"),
+                email=form.cleaned_data.get("email"),
+            )
+            print(notifications)
+            notifications.save()
+
+            messages.success(request, 'Profile successfully updated')
+            return redirect('accounts:customer-landing')
+
+    context = {'form':form}
+    return render(request, 'accounts/add-customer-notifications.html', context)
 
 def logoutCustomer(request):
     logout(request)

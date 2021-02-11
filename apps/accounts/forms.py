@@ -3,7 +3,7 @@ from django.forms import ModelForm
 from django.contrib.auth.forms import UserCreationForm
 from django.utils.translation import gettext_lazy as _
 
-from apps.accounts.models import User, ShopInformation, ShopLogo, BankAccount, OpenHours, Address
+from apps.accounts.models import *
 
 class MerchantForm(ModelForm):
     password2=forms.CharField(label='Confirm Password', 
@@ -174,3 +174,106 @@ class CustomerForm(ModelForm):
         def __init__(self, *args, **kwargs):
             super(CustomerForm, self).__init__(*args, **kwargs)
             self.fields['role'].initial = User.Types.CUSTOMER
+
+class CustomerInformationForm(ModelForm):
+    # shop_links
+    instagram=forms.URLField(label='',
+                        widget=forms.fields.TextInput(attrs={
+                        'class': 'input', 
+                        'placeholder': 'Instagram Link'}),
+                        required = False)
+    facebook=forms.URLField(label='',
+                        widget=forms.fields.TextInput(attrs={
+                        'class': 'input', 
+                        'placeholder': 'Facebook Link'}),
+                        required = False)
+
+    class Meta:
+        model = CustomerInformation
+        fields = ['customer_name',
+        'customer_contact_number',
+        'customer_username']
+        required_fields = ['customer_name',
+        'customer_contact_number',
+        'customer_username']
+
+        widgets = {
+            'customer_name': forms.fields.TextInput(attrs={
+                'class':'input',
+                'placeholder': 'Name'}),
+            'customer_contact_number': forms.fields.TextInput(attrs={
+                'class':'input',
+                'placeholder': 'Mobile Number'}),
+            'customer_username': forms.fields.TextInput(attrs={
+                'class':'input',
+                'placeholder': 'Username'}),
+        }
+
+class CustomerAddressForm(ModelForm):
+    class Meta:
+        model = Address
+        fields = ["line1",
+                "line2",
+                "city",
+                "province",
+                "postal_code"]
+        required_fields = ["line1",
+                "line2",
+                "city",
+                "province",
+                "postal_code"]
+
+        widgets = {
+            'line1': forms.fields.TextInput(attrs={
+                'class':'input',
+                'placeholder': 'Address Line 1'}),
+            'line2': forms.fields.TextInput(attrs={
+                    'class':'input',
+                    'placeholder': 'Address Line 2'}),
+            'city': forms.Select(attrs={
+                    'class':'input',
+                    'placeholder': 'City'}),
+            'province': forms.Select(attrs={
+                    'class':'small-input',
+                    'placeholder': 'Province'}),
+            'postal_code': forms.fields.TextInput(attrs={
+                    'class':'small-input',
+                    'placeholder': 'Postal Code'}),
+        }
+
+        choices = {
+            'city': Address.CITIES,
+            'province': Address.PROVINCES
+        }
+
+class CustomerAccountForm(ModelForm):
+    class Meta:
+        model = BankAccount
+        fields = ["bank_name",
+                "cardholder_name",
+                "account_number",
+                "exp_date",
+                "cvv"]
+        widgets = {
+            'cardholder_name': forms.fields.TextInput(attrs={
+                'class':'input',
+                'placeholder': 'Ex. Juan Dela Cruz'}),
+            'account_number': forms.fields.TextInput(attrs={
+                    'class':'input',
+                    'placeholder': 'Ex. 1234 5678 9876 5432'}),
+            'exp_date': forms.fields.TextInput(attrs={
+                    'class':'small-input',
+                    'placeholder': 'MM/YY'}),
+            'cvv': forms.PasswordInput(attrs={
+                    'class':'small-input',
+                    'placeholder': '***'}),
+        }
+
+class NotificationsForm(ModelForm):
+    class Meta:
+        model = Notification
+        fields = ['sms', 'email']
+        widgets = {
+            'sms':forms.CheckboxInput(),
+            'email':forms.CheckboxInput()
+        }

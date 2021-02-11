@@ -73,7 +73,7 @@ class Address(models.Model):
         return f"{self.line1}, {self.line2}, {self.city}, {self.province}, {self.postal_code}, Philippines"
 
 # Social Media Links
-class SocialMediaLinks(models.Model):
+class SocialMediaLink(models.Model):
     user = models.OneToOneField(User, related_name='user_links', on_delete=models.CASCADE, null=True, blank=True)
     instagram = models.CharField(_("instagram link"), null=True, max_length=255)
     facebook = models.CharField(_("facebook link"), null=True, max_length=255)
@@ -95,15 +95,51 @@ class BankAccount(models.Model):
     bank_name = models.CharField(_("bank name"), choices=BANKS, null=True, max_length=55)
     cardholder_name = models.CharField(_("cardholder name"), null=True, max_length=155)
     account_number = models.CharField(_("account number"), null=True, max_length=55)
-    exp_date = models.CharField(_("expiration date"), null=True, max_length=4, validators=[exp_date])
+    exp_date = models.CharField(_("expiration date"), null=True, max_length=5, validators=[exp_date])
     cvv = models.CharField(_("card verification value"), null=True, max_length=3)
+
+    def get_first_four(self):
+        first_four_list = []
+        for i in range(len(account_number)):
+            if i >= 4:
+                first_four_list.append(i)
+        first_four = ' '.join([str(i) for i in first_four_list])
+        return f"{self.first_four}"
+
+    def get_second_four(self):
+        second_four_list = []
+        for i in range(len(account_number)):
+            if i < 4 and i >= 8:
+                second_four_list.append(i)
+        second_four = ' '.join([str(i) for i in second_four_list])
+        return f"{self.second_four}"
+
+    def get_third_four(self):
+        third_four_list = []
+        for i in range(len(account_number)):
+            if i < 4 and i >= 8:
+                third_four_list.append(i)
+        third_four = ' '.join([str(i) for i in third_four_list])
+        return f"{self.third_four}"
+
+    def get_last_four(self):
+        last_four_list = []
+        for i in range(len(account_number)):
+            if i < 4 and i >= 8:
+                last_four_list.append(i)
+        last_four = ' '.join([str(i) for i in last_four_list])
+        return f"{self.last_four}"
 
     def __str__(self):
         return f"{self.cardholder_name} - {self.account_number}"
 
-class Notifications(models.Model):
+class Notification(models.Model):
+    user = models.OneToOneField(User, related_name='customer_notifications', on_delete=models.CASCADE, null=True, blank=True)
     sms = models.BooleanField(_('sms notifications'), null=True, default=False)
     email = models.BooleanField(_('email notifications'), null=True, default=False)
+
+    def __str__(self):
+        return f"SMS: {self.sms} | Email: {self.email}"
 
 # MERCHANT
 class MerchantManager(models.Manager):
@@ -208,8 +244,10 @@ class CustomerManager(models.Manager):
 
 class CustomerInformation(models.Model):
     customer = models.OneToOneField(
-        User, related_name="customer_info", on_delete=models.CASCADE
+        User, related_name="info_customer", on_delete=models.CASCADE
     )
+    customer_name = models.CharField(_("customer name"), max_length=150, null=True, blank=False)
+    customer_contact_number = models.CharField(_("mobile number"), max_length=15, null=True, blank=False, validators=[only_int])
     customer_username = models.CharField(_("customer username"), 
         max_length=150, 
         null=True, 
@@ -219,11 +257,9 @@ class CustomerInformation(models.Model):
         ),
         error_messages={"unique": _("A user with that username already exists."),},
     )
-    customer_name = models.CharField(_("customer name"), max_length=150, null=True, blank=False)
-    customer_mobile_number = models.CharField(_("mobile number"), max_length=15, null=True, blank=False, validators=[only_int])
-    customer_links = models.OneToOneField(SocialMediaLinks, related_name='customer_links', on_delete=models.CASCADE, null=True)
-    customer_address = models.OneToOneField(Address, related_name='customer_address', on_delete=models.CASCADE, null=True)
-    customer_notifications = models.OneToOneField(Notifications, related_name='customer_notifs', on_delete=models.CASCADE, null=True)
+
+    def __str__(self):
+        return f"{self.customer_username} - {self.customer_name} ({self.customer_contact_number})"
 
 class Customer(User):
     base_type = User.Types.CUSTOMER
