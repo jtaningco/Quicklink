@@ -7,17 +7,19 @@
     <link rel="stylesheet" href="styles.css">
     <title>Order Form</title>
 </head>
+
 <body>
-    <div class="order-form">
-        <img src="Rectangle 43.png" alt="">
-    </div>
-    <div class="product-description">
+    <div class="container">
+        <div class="display-picture">
+        <img src="Rectangle 43.png">
+        </div>
+        <div class="product-description">
         <li class="product-name">Raisin Cookies</li>
         <li class="product-details">Our raisin cookies are made out of raisins and love and sweat.</li>
         <li class="availability-of-product">Made to Order</li>
         <li class="health-concerns">Possible Allergens: Raisin, Flour</li>
-    </div>
-    <div class="order-details">
+        </div>
+        <div class="order-details">
         <li class="size">Size/Type<span style="color: #F35252"> *</span></li>
         <li class="radio">
         <input type="radio"  value="1 dozen">
@@ -25,8 +27,8 @@
         <li class="radio">
         <input type="radio"  value="6 pieces">
         <label for="radio">Half Dozen (PHP 220)</label><br></li>
-    </div>
-    <div class="add-ons">
+        </div>
+        <div class="add-ons">
         <li class="label">Add-Ons</li>
         <div class="add-on-items">
             <li><label class="container">
@@ -46,20 +48,21 @@
                 <span class="checkmark">Chocolate Chips</span></li>
             <li class="add-on-price">+ PHP 50.00</li>
         </div>
-    </div>
-    <div class="special-box">
+        </div>
+        <div class="special-box">
         <li class="special-instructions">Special Instructions</li>
         <textarea id="text-box" name="text-box" rows="5" cols="32"
             placeholder=" Leave us a note! (Optional)"></textarea>
            
-    </div>
-    <div class="integer">
+        </div>
+        <div class="integer">
         <label for="quantity">-</label>
         <input type="number" id="quantity" name="quantity" min="1" max="9">
         <label for="quantity">+</label>
-    </div>
-    <div class="sticky">
+        </div>
+        <div class="sticky">
         <button class="button">Add to Basket - PHP 200</button>
+        </div>
     </div>
 </body>
 </html>
