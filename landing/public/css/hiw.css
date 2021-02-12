@@ -110,6 +110,7 @@
     color: var(--primary-main);
     font-size: 20px;
     line-height: 32px;
+    text-align: left;
 }
 
 .useCases-text-section-customer {
