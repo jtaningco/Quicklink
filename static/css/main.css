@@ -213,11 +213,11 @@ a {
 }
 
 /* INPUTS */
-input {
+input, textarea {
   outline: none;
 }
 
-input:focus {
+*:focus, input:focus, textarea:focus {
   outline: none;
 }
 

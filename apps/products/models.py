@@ -11,10 +11,19 @@ class Tag(models.Model):
         return self.name
 
 class Product(models.Model):
-    CHOICES=[('Made to Order','Made to Order'),
-            ('1','1'),
-            ('2','2'),
-            ('3','3')]
+    STOCKS = [
+        ('Made to Order','Made to Order'),
+        ('1','1'),
+        ('2','2'),
+        ('3','3')
+    ]
+
+    ORDERS = [
+        ('No Limit','No Limit'),
+        ('1','1'),
+        ('2','2'),
+        ('3','3')
+    ]
             
     # tags = models.ManyToManyField(Tag)
 
@@ -22,14 +31,14 @@ class Product(models.Model):
     user = models.ForeignKey(User, null=True, on_delete=models.CASCADE)
 
     # Product name and description
-    name = models.CharField(max_length=55, null=True, blank=False)
+    name = models.CharField(max_length=30, null=True, blank=False)
     description = models.CharField(max_length=100, null=True, blank=False)
 
     # Product images
     image = models.ImageField(null=True, blank=True)
 
-    stock = models.CharField(max_length=55, choices=CHOICES, null=True, default=CHOICES[0], blank=False)
-    orders = models.CharField(max_length=55, choices=CHOICES, null=True, default=CHOICES[0], blank=False)
+    stock = models.CharField(max_length=55, choices=STOCKS, null=True, default=STOCKS[0], blank=False)
+    orders = models.CharField(max_length=55, choices=ORDERS, null=True, default=ORDERS[0], blank=False)
 
     instructions = models.CharField(max_length=100, null=True, blank=True)
     
@@ -42,10 +51,10 @@ class Product(models.Model):
 class Size(models.Model):
     product = models.ForeignKey(Product, null=True, on_delete=models.CASCADE)
     size = models.CharField(max_length=80, null=True, blank=False)
-    price = models.IntegerField(null=True, blank=False)
+    price_size = models.IntegerField(null=True, blank=False)
 
 # Class Addon for implementation of inline formsets
 class Addon(models.Model):
     product = models.ForeignKey(Product, null=True, on_delete=models.CASCADE)
     addon = models.CharField(max_length=80, null=True, blank=False)
-    price = models.IntegerField(null=True, blank=False)
+    price_addon = models.IntegerField(null=True, blank=False)
