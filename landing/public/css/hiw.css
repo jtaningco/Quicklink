@@ -21,12 +21,20 @@
     height: auto;
 }
 
+.hiwMerchants h1 {
+    text-align: center;
+}
+
 .hiwCustomers {
     display: flex;
     flex-direction: column;
     align-items: center;
     height: auto;
     margin-top: 160px;
+}
+
+.hiwCustomers h1 {
+    text-align: center;
 }
 
 .useCases {
@@ -90,7 +98,7 @@
 
 .useCases-text-section {
     margin-left: 24px;
-    max-width: 50%;
+    max-width: 496px;
 }
 
 .useCases-text-section p {
@@ -100,6 +108,8 @@
 
 .useCases-text-section h1 {
     color: var(--primary-main);
+    font-size: 20px;
+    line-height: 32px;
 }
 
 .useCases-text-section-customer {
@@ -115,18 +125,145 @@
 .useCases-text-section-customer h1 {
     color: var(--primary-main);
 }
-/* 
-@media screen and (max-width: 567px) {
 
+@media screen and (max-width: 567px) {
+    .hiwHero h1 {
+        font-size: 20px;
+    }
+
+    .hiwHero {
+        margin: 0px 16px;
+    }
+
+    .useCases {
+        width: auto;
+        margin: 0px 16px;
+    }
+
+    .useCase-section {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: auto;
+        margin-top: 80px;
+    }
+
+    .useCases-text-section {
+        margin-left: 0px;
+        max-width: 80%;
+        margin-top: 24px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .useCases-text-section h1, p {
+        text-align: center;
+    }
+    
+
+    .useCase-section-customers {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: auto;
+    }
+
+    .hiwMockup {
+        width: 60%;
+    }
+
+    .hiwMockup2 {
+        width: 50%;
+    }
 }
 
 @media screen and (min-width: 568px) and (max-width: 767px) {
+
+    .hiwHero h1 {
+        font-size: 20px;
+    }
+
+    .useCases {
+        width: auto;
+        margin: 0px 24px;
+    }
+
+    .useCase-section {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: auto;
+        margin-top: 80px;
+    }
+
+    .useCases-text-section {
+        margin-left: 0px;
+        max-width: 80%;
+        margin-top: 24px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .useCases-text-section h1, p {
+        text-align: center;
+    }
+    
+
+    .useCase-section-customers {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: auto;
+    }
     
 }
 
 @media screen and (min-width: 768px) and (max-width: 1067px) {
     
-} */
+
+    .useCases {
+        width: auto;
+        margin: 0px 40px;
+    }
+
+    .useCase-section {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 70vh;
+        margin-top: 80px;
+    }
+
+    .useCases-text-section {
+        margin-left: 0px;
+        max-width: 80%;
+        margin-top: 24px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .useCases-text-section h1, p {
+        text-align: center;
+    }
+    
+
+    .useCase-section-customers {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: auto;
+    }
+    
+}
 
 @media screen and (min-width: 1440px) and (max-width: 1919px) {
 
@@ -138,4 +275,10 @@
 
 @media screen and (min-width: 1920px) {
 
+    .hiwMockup {
+        width: 40%;
+    }
+    .hiwMockup2 {
+        width: 20%;
+    }
 }
