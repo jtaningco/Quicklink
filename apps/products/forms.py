@@ -2,7 +2,7 @@ from django import forms
 from django.forms import ModelForm, inlineformset_factory
 from django.forms.models import BaseInlineFormSet
 from django.forms.widgets import Textarea
-from apps.products.models import Product
+from apps.products.models import *
 from django.utils.translation import ugettext_lazy as _
 
 # Initial Product Form
@@ -10,20 +10,15 @@ class ProductForm(ModelForm):
     class Meta:
         model = Product
         fields = [
-            'user',
             'name', 
             'description', 
             'image',
-            'size',
-            'price',
             'stock',
-            'addon',
-            'addon_price',
+            'orders',
             'instructions',
         ]
 
         widgets = {
-            'user': forms.HiddenInput(),
             'name': forms.fields.TextInput(attrs={
                 'class':'input default subtitle',
                 'placeholder': 'Ex. Chocolate Chip Cookies'}),
@@ -32,25 +27,29 @@ class ProductForm(ModelForm):
                 'class':'large-input default subtitle',
                 'placeholder': 'Describe your product for your customers to see!'}),
                 
-            'size': forms.fields.TextInput(attrs={
-                'class':'small-input default subtitle',
-                'placeholder': 'Ex. 1 Dozen'}),
+            # 'size': forms.fields.TextInput(attrs={
+            #     'class':'small-input default subtitle',
+            #     'placeholder': 'Ex. 1 Dozen'}),
 
-            'price': forms.fields.NumberInput(attrs={
-                'class':'small-input default subtitle',
-                'placeholder': 'Php'}),
+            # 'price': forms.fields.NumberInput(attrs={
+            #     'class':'small-input default subtitle',
+            #     'placeholder': 'Php'}),
 
             'stock': forms.RadioSelect(attrs={
                 'class':'radio',
                 'empty_label': None }),
-            
-            'addon': forms.fields.TextInput(attrs={\
-                'class':'small-input default subtitle',
-                'placeholder': 'Additional Chocolate Chip'}),
 
-            'addon_price': forms.fields.NumberInput(attrs={
-                'class':'small-input default subtitle',
-                'placeholder': 'Php'}),
+            'orders': forms.RadioSelect(attrs={
+                'class':'radio',
+                'empty_label': None }),
+            
+            # 'addon': forms.fields.TextInput(attrs={\
+            #     'class':'small-input default subtitle',
+            #     'placeholder': 'Additional Chocolate Chip'}),
+
+            # 'addon_price': forms.fields.NumberInput(attrs={
+            #     'class':'small-input default subtitle',
+            #     'placeholder': 'Php'}),
             
             'instructions': forms.fields.TextInput(attrs={
                 'class':'large-input default subtitle',
@@ -61,26 +60,26 @@ class ProductForm(ModelForm):
             'name' : _('Name'),
             'description' : _('Description'),
             'image' : _(''),
-            'size' : _('Available Sizes or Servings'),
-            'price' : _(''),
             'stock' : _('Stocks'),
-            'addon' : _('Possible Add-Ons'),
-            'addon_price' : _(''),
+            'orders' : _('Maximum Orders Taken / Day'),
             'instructions' : _('Any special instructions, allergens, etc.?')
         }
 
-    def __init__(self, user, *args, **kwargs):
-        super(ProductForm, self).__init__(*args, **kwargs)
-        self.fields['user'].initial = user
-
-# Formset Draft for adding more sizes and prices
-
+# FORMSET DRAFTS
 # The formset for editing the size and prices that belong to a product
-# SizeFormset = inlineformset_factory(
-#                     Product, 
-#                     Sizes, 
-#                     fields=('size', 'price'), 
-#                     extra=1)
+SizeFormset = inlineformset_factory(
+                    Product,
+                    Size,
+                    fields=('size', 'price'), 
+                    extra=1
+                )
+
+AddonFormset = inlineformset_factory(
+                    Product,
+                    Addon,
+                    fields=('addon', 'price'), 
+                    extra=1
+                )
 
 # class BaseProductFormset(BaseInlineFormSet):
 #     # The base formset for editing Products belonging to a User, and the
@@ -147,23 +146,3 @@ class ProductForm(ModelForm):
 #                         'stock', 'addon', 'instructions'),
 #                         extra=1, 
 #                     )
-
-# class SizesForm(ModelForm):
-#     class Meta:
-#         model = Size
-#         fields = ['name', 'price']
-
-#         widgets = {
-#             'name': forms.fields.TextInput(attrs={
-#                 'class':'small-input default',
-#                 'placeholder': 'Ex. 1 Dozen'}),
-            
-#             'price': forms.fields.TextInput(attrs={
-#                 'class':'small-input default',
-#                 'placeholder': 'Php'}),
-#         }
-
-#         labels = {
-#             'name' : 'Available Sizes or Servings',
-#             'price' : '',
-#         }

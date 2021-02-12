@@ -10,16 +10,6 @@ class Tag(models.Model):
     def __str__(self):
         return self.name
 
-# Class Size for implementation of inline formsets
-# class Size(models.Model):
-#     name = models.CharField(max_length=80, null=True, blank=False)
-#     price = models.IntegerField(null=True, blank=False)
-
-# Class Addon for implementation of inline formsets
-# class Addon(models.Model):
-#     name = models.CharField(max_length=80, null=True, blank=False)
-#     price = models.IntegerField(null=True, blank=False)
-
 class Product(models.Model):
     CHOICES=[('Made to Order','Made to Order'),
             ('1','1'),
@@ -39,12 +29,7 @@ class Product(models.Model):
     image = models.ImageField(null=True, blank=True)
 
     stock = models.CharField(max_length=55, choices=CHOICES, null=True, default=CHOICES[0], blank=False)
-    
-    size = models.CharField(max_length=80, null=True, blank=False)
-    price = models.IntegerField(null=True, blank=False)
-    
-    addon = models.CharField(max_length=80, null=True, blank=True)
-    addon_price = models.IntegerField(null=True, blank=True)
+    orders = models.CharField(max_length=55, choices=CHOICES, null=True, default=CHOICES[0], blank=False)
 
     instructions = models.CharField(max_length=100, null=True, blank=True)
     
@@ -52,3 +37,15 @@ class Product(models.Model):
 
     def __str__(self):
         return f"{self.user} — {self.name}"
+
+# Class Size for implementation of inline formsets
+class Size(models.Model):
+    product = models.ForeignKey(Product, null=True, on_delete=models.CASCADE)
+    size = models.CharField(max_length=80, null=True, blank=False)
+    price = models.IntegerField(null=True, blank=False)
+
+# Class Addon for implementation of inline formsets
+class Addon(models.Model):
+    product = models.ForeignKey(Product, null=True, on_delete=models.CASCADE)
+    addon = models.CharField(max_length=80, null=True, blank=False)
+    price = models.IntegerField(null=True, blank=False)

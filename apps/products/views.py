@@ -9,7 +9,7 @@ from django.contrib.auth.decorators import login_required
 
 from apps.products.models import Product
 from apps.accounts.models import User
-from .forms import ProductForm
+from .forms import *
 from django.db.models import Q
 
 # Create your views here.
@@ -37,9 +37,13 @@ def productDetails(request, product_pk):
 @login_required(login_url='accounts:merchant-login')
 @allowed_users(allowed_role=User.Types.MERCHANT)
 def addProduct(request):
-    form = ProductForm(request.user)
+    form = ProductForm()
+    sizeFormset = SizeFormset()
+    addonFormset = AddonFormset()
     if request.method == 'POST':
-        form = ProductForm(request.user, request.POST, label_suffix='')
+        form = ProductForm(request.POST)
+        sizeFormset = SizeFormset(request.POST)
+        addonFormset = AddonFormset(request.POST)
         if form.is_valid():
             form.save()
             return redirect('/shop/products')
