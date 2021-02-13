@@ -6,7 +6,6 @@
 }
 
 .faqHeroText {
-    /* height: 100vh; */
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -66,17 +65,16 @@
     justify-content: space-between;
     align-items: center;
     padding: 8px 16px;
-    /* margin: 0px 16px; */
     width: 404px;
     background: #fff;
     box-shadow: var(--regular-box-shadow);
     border-radius: 5px 5px 0px 0px;
-    transition: background 200ms;
+    transition: all 0.1s ease-out;
 }
 
 .faqQuestionActive, .faqQuestion:hover {
     background: rgba(220,220,220,0.5);
-    transition: background 200ms;
+    transition: all 0.1s ease-out;
 }
 
 .faqQuestion p {
@@ -93,15 +91,13 @@
 }
 
 .faqAnswer {
-    /* display: none; */
     height: 0px;
-    /* opacity: 0; */
     overflow: hidden;
     padding: 0px 16px;
     width: 404px;
     background: rgba(169,184,255,0.3);
     border-radius: 0px 0px 5px 5px;
-    transition: all 0.3s ease-out;
+    transition: all 0.1s ease-out;
 }
 
 .faqAnswer p {
@@ -165,7 +161,6 @@
 
 @media screen and (min-width: 568px) and (max-width: 767px) {
     .faqsHero {
-        /* margin-right: 40px; */
         flex-direction: column-reverse;
         align-items: flex-start;
         justify-content: center;
@@ -201,11 +196,7 @@
 }
 
 @media screen and (min-width: 768px) and (max-width: 1067px) {
-
-
-
     .faqsHero {
-        /* margin-right: 40px; */
         flex-direction: column-reverse;
         align-items: flex-start;
         justify-content: center;
@@ -256,14 +247,6 @@
         justify-content: center;
         margin: 40px 240px;
     }
-
-    /* .faqQuestion {
-        width: 464px;
-    }
-
-    .faqAnswer p {
-        width: 432px;
-    } */
 }
 
 @media screen and (min-width: 1920px) {
@@ -286,12 +269,4 @@
     .faqQA {
         width: 404px;
     }
-
-    /* .faqQuestion {
-        width: 464px;
-    }
-
-    .faqAnswer p {
-        width: 432px;
-    } */
 }
