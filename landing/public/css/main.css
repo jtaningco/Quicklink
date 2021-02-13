@@ -63,7 +63,7 @@ body {
 
   /* BOX SHADOWS */
   --regular-box-shadow: 0px 3px 5px rgba(51, 51, 51, 0.15);
-  --navbar-shadow: 4px 0px 10px rgba(0, 0, 0, 0.1);  
+  --navbar-shadow: 0px 3px 5px rgba(121, 140, 242, 0.1);  
 }
 
 
@@ -546,14 +546,14 @@ textarea {
   justify-content: center;
   align-items: center;
   align-content: center;
-  background-image: transparent;
-  -webkit-transition: background-image 0.3s ease-in-out;
-  transition: background-image 0.3s ease-in-out;
+  background-color: transparent;
+  -webkit-transition: background-color 0.3s ease-in-out;
+  transition: background-color 0.3s ease-in-out;
 }
 
-.scrolled {
-  background-image: linear-gradient(107.56deg, #798CF2 15.42%, #FED9A4 100%);
-  box-shadow: var(--regular-box-shadow);
+.navWrapper.scrolled {
+  background-color: #FFF;
+  box-shadow: var(--navbar-shadow);
 }
 
 .navBurger, .navMobileLogo, .navMobileButton, .mobileHome { display: none; }
@@ -573,8 +573,16 @@ textarea {
   margin-top: 40px;
 }
 
-.navLogo {
-  max-height: 48px;
+#navLogo {
+  height: 48px;
+  width: 150px;
+  background-image: url("../static/logos/wideLogo.png");
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+}
+
+#navLogo.scrolled {
+  background-image: url("../static/logos/wideLogo-blue.png");
 }
 
 .logoLink {
@@ -592,8 +600,12 @@ textarea {
 .navOptions {
   width: auto;
   padding: 2px 32px 0px 32px;
-  color: #fff;
+  color: #FFF;
   font-weight: 700;
+}
+
+.navOptions.scrolled {
+  color: #000;
 }
 
 .navButton {
@@ -691,7 +703,7 @@ textarea {
 
 @media screen and (max-width: 768px) {
   .navWrapper { padding: 0 5vw;}
-  .navLogo { display: none; }
+  #navLogo { display: none; }
   .logoLink { display: flex; justify-content: center; align-items: center; align-content: center; padding: 0; margin-bottom: 2rem; }
   .navMobileLogo { display: flex; width: 160px; height: 160px; }
   .navMobileButton { display: flex; margin-top: 2rem; }
