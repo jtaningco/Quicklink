@@ -10,10 +10,6 @@ html {
   /* overflow: hidden; */
 }
 
-section {
-  z-index: 1;
-}
-
 .primary-white-btn {
   background: #fff;
   box-shadow: var(--regular-box-shadow);
@@ -43,7 +39,6 @@ section {
   z-index: -4;
   mix-blend-mode: multiply;
   width: 100%;
-  height: auto;
   max-height: 100vh;
   opacity: 70%;
 }
@@ -78,9 +73,9 @@ section {
   background-blend-mode: multiply;
   background-size: 100% 100%;
   display: flex;
-  flex-direction: row;
   justify-content: space-between;
   align-items: center;
+  align-content: center;
   overflow: hidden;
   z-index: 10;
 }
@@ -117,12 +112,15 @@ section {
 .vp1 {
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
   margin: 80px 120px 160px 120px;
 }
 
 .textArea {
   display: flex;
-  flex-direction: row;
+  margin-bottom: 40px;
 }
 
 .line {
@@ -138,17 +136,9 @@ section {
   max-width: 75%;
 }
 
-.vpText h1{
-  font-weight: 700;
-}
-
 .vpText p{
   margin-top: 8px;
   color: var(--muted-default);
-}
-
-.vp1Image {
-  margin-top: 40px;
 }
 
 .circleBack1 {
@@ -176,7 +166,6 @@ section {
 
 .vp2 {
   display: flex;
-  flex-direction: row;
   align-items: center;
   justify-content: center;
 }
@@ -196,13 +185,8 @@ section {
   flex-direction: column;
 }
 
-.payMethods h3 {
-  font-weight: 700;
-}
-
 .payLogos {
   display: flex;
-  flex-direction: row;
   margin-top: 16px;
 }
 
@@ -320,7 +304,6 @@ section {
 .footerContent {
   margin: 0px 120px;
   display: flex;
-  flex-direction: row;
   align-items: center;
 }
 
@@ -498,7 +481,6 @@ section {
   .footerContent {
     margin: 0px 40px;
     display: flex;
-    flex-direction: row;
     align-items: center;
   }
 

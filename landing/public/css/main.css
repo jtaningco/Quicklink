@@ -21,6 +21,10 @@
     padding: 0;
 }
 
+*:focus {
+  outline: none;
+}
+
 body {
   overflow-x: hidden;
 }
@@ -201,6 +205,8 @@ a {
   color: var(--failure-main);
   opacity: 0.5;
 }
+
+
 
 .add-to-basket-btn {
   width: auto;

@@ -48,7 +48,6 @@
 
 .useCase-section {
     display: flex;
-    flex-direction: row;
     align-items: center;
     justify-content: center;
     height: 85vh;
@@ -56,7 +55,6 @@
 
 .useCase-section-stick {
     display: flex;
-    flex-direction: row;
     align-items: flex-start;
     height: 188vh;
     margin-top: 40px;
