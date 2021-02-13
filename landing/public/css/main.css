@@ -63,7 +63,7 @@ body {
 
   /* BOX SHADOWS */
   --regular-box-shadow: 0px 3px 5px rgba(51, 51, 51, 0.15);
-  --navbar-shadow: 0px 3px 5px rgba(121, 140, 242, 0.1);  
+  --navbar-shadow: 0px 3px 5px rgba(121, 140, 242, 0.15);  
 }
 
 
@@ -579,6 +579,7 @@ textarea {
   background-image: url("../static/logos/wideLogo.png");
   background-repeat: no-repeat;
   background-size: 100% 100%;
+  transition: background-image 0.3s ease-in-out;
 }
 
 #navLogo.scrolled {
@@ -587,6 +588,11 @@ textarea {
 
 .logoLink {
   padding-left: 0px;
+  transition: transform 0.3s ease-in-out;
+}
+
+.logoLink:hover {
+  transform: scale(1.2);
 }
 
 .navLinks {
@@ -599,13 +605,19 @@ textarea {
 
 .navOptions {
   width: auto;
-  padding: 2px 32px 0px 32px;
+  padding: 0px 40px;
   color: #FFF;
+  font-size: 1rem;
   font-weight: 700;
+  transition: all 0.3s ease-in-out;
 }
 
 .navOptions.scrolled {
   color: #000;
+}
+
+.navOptions:hover {
+  color: var(--primary-main);
 }
 
 .navButton {
@@ -615,6 +627,8 @@ textarea {
   align-items: center;
   align-content: center;
 }
+
+#navButton { transition: all 0.3s ease-in-out; }
 
 .burger {
   height: 3em;
@@ -661,6 +675,10 @@ textarea {
           -ms-transform: rotate(0);
               transform: rotate(0); }
 
+.burger.scroll .burger-lines, .burger.scroll .burger-lines:after, .burger.scroll .burger-lines:before {
+  background-color: black;
+}
+
 .burger .burger-lines:after {
       left: 0;
       top: -1em; }
@@ -701,12 +719,17 @@ textarea {
       -ms-transform: rotate(45deg);
           transform: rotate(45deg); }
 
-@media screen and (max-width: 768px) {
+.burger.scroll.burger-squeeze.open .burger-lines {
+  background-color: white;
+}
+  
+@media screen and (max-width: 960px) {
   .navWrapper { padding: 0 5vw;}
   #navLogo { display: none; }
   .logoLink { display: flex; justify-content: center; align-items: center; align-content: center; padding: 0; margin-bottom: 2rem; }
-  .navMobileLogo { display: flex; width: 160px; height: 160px; }
-  .navMobileButton { display: flex; margin-top: 2rem; }
+  .navMobileLogo { display: flex; width: 240px; height: 240px; }
+  .navMobileButton { display: flex; margin-top: 2rem; padding: 8px 16px;}
+  .navMobileButtonLink { font-size: 1.5rem; }
   .navButton { flex-basis: 50%; }
 
   .navLinks {
@@ -719,12 +742,13 @@ textarea {
     box-shadow: var(--regular-box-shadow);
     position: absolute;
     top: 0;
-    width: 100%;
+    left: 0;
+    width: 100vw;
     height: 100vh;
     visibility: hidden;
     overflow: hidden;
     opacity: 0;
-    transform: translate(-50%, -25%);
+    transform: translateY(-50%);
     transition: all 0.5s ease-in-out;
   }
   
@@ -733,7 +757,7 @@ textarea {
     display: flex;
     opacity: 1;
     z-index: 999;
-    transform: translate(0%, 0%);
+    transform: translateY(0%);
   }
 
   .navBurger {
@@ -754,15 +778,27 @@ textarea {
     height: 10vh;
     color: var(--muted-light);
     text-align: center;
-    font-size: 1rem;
-    line-height: 1.5rem;
+    font-size: 1.5rem;
+    line-height: 2.5rem;
     font-weight: 700;
   }
 
-  .navOptions:active {
+  .navOptions.active {
     color: var(--primary-main);
   }
 }
+
+@media screen and (max-width: 576px) {
+  .navMobileLogo { display: flex; width: 160px; height: 160px; }
+  .navMobileButton { display: flex; margin-top: 2rem; padding: 4px 12px;}
+  .navMobileButtonLink { font-size: 1rem; }
+
+  .navOptions {
+    font-size: 1rem;
+    line-height: 1.5rem;
+  }
+}
+
 /*
    * Remove text-shadow in selection highlight:
    * https://twitter.com/miketaylr/status/12228805301

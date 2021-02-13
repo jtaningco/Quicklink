@@ -4,10 +4,12 @@ html {
   padding: 0;
   background-color: #fff;
   overflow-x: hidden;
-  overflow-y:auto;
+  overflow-y: auto;
   overscroll-behavior: none;
-  /* height: auto; */
-  /* overflow: hidden; */
+}
+
+.navBurger {
+  display: none;
 }
 
 .primary-white-btn {
@@ -34,15 +36,6 @@ html {
   color: #fff;
 }
 
-.heroBG {
-  position: absolute;
-  z-index: -4;
-  mix-blend-mode: multiply;
-  width: 100%;
-  max-height: 100vh;
-  opacity: 70%;
-}
-
 .heroCircle1 {
   position: absolute;
   top: 8px;
@@ -67,7 +60,7 @@ html {
 }
 
 .hero {
-  width: 100vw;
+  width: 100%;
   height: 100vh;
   background-image: url("../static/background/heroBG.png");
   background-blend-mode: multiply;
@@ -76,8 +69,8 @@ html {
   justify-content: space-between;
   align-items: center;
   align-content: center;
-  overflow: hidden;
   z-index: 10;
+  padding: 5vh 10vw;
 }
 
 .heroText {
@@ -85,28 +78,25 @@ html {
   flex-direction: column;
   align-items: flex-start;
   justify-content: start;
-  margin-left: 120px;
-  max-width: 400px;
+  max-width: 40vw;
 }
 
 .heroHead {
-  font-size: 32px;
-  line-height: 48px;
-  color: #fff;
+  font-size: 2rem;
+  line-height: 2.5rem;
   font-weight: 700;
+  color: #fff;
 }
 
 .heroBody {
-  font-size: 16px;
-  line-height: 26px;
+  font-size: 1.25rem;
+  line-height: 2rem;
   color: #fff;
-  margin-top: 16px;
-  margin-bottom: 32px;
+  margin: 16px 0 32px 0;
 }
 
 .heroImage {
   max-width: 50%;
-  margin-right: 24px;
 }
 
 .vp1 {
@@ -115,7 +105,7 @@ html {
   justify-content: center;
   align-items: center;
   align-content: center;
-  margin: 80px 120px 160px 120px;
+  margin: 10vh 20vw;
 }
 
 .textArea {
@@ -127,19 +117,21 @@ html {
   width: 4px;
   height: auto;
   background-color: var(--secondary-main);
-  margin-right: 16px;
+  margin-right: 24px;
 }
 
 .vpText {
   display: flex;
   flex-direction: column;
-  max-width: 75%;
+  max-width: 80%;
 }
 
-.vpText p{
+.vpText p {
   margin-top: 8px;
   color: var(--muted-default);
 }
+
+.vp1Image { width: 100%; }
 
 .circleBack1 {
   max-width: 200px;
@@ -161,7 +153,7 @@ html {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  margin: 160px 120px;
+  margin: 15vh 20vw;
 }
 
 .vp2 {
@@ -171,12 +163,12 @@ html {
 }
 
 .vp2Area {
-  max-width: 80%;
+  max-width: 100%;
 }
 
 .vp2Image {
   max-width: 25%;
-  margin-right: 40px;
+  margin-right: 5vw;
 }
 
 .payMethods {
@@ -187,7 +179,7 @@ html {
 
 .payLogos {
   display: flex;
-  margin-top: 16px;
+  margin-top: 8px;
 }
 
 .payLogos img {
@@ -198,14 +190,13 @@ html {
 .customers {
   display: flex;
   flex-direction: column;
-  margin: 160px 120px;
   justify-content: center;
   align-items: center;
+  margin: 40vh 25vw;
 }
 
 .customerCards {
   display: flex;
-  flex-direction: row;
   justify-content: center;
   align-items: center;
   width: 100%;
@@ -244,7 +235,7 @@ html {
 }
 
 .comparative {
-  margin: 160px 120px;
+  margin: 25vh 20vw;
 }
 
 .compTable {
@@ -259,58 +250,83 @@ html {
 }
 
 .CTA {
+  height: 50vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
   background-image: url("/landing/public/static/background/ctaBG.png");
-  background-size: cover;
-  margin: 160px 120px;
-  padding: 80px 40px;
+  background-size: 100% 100%;
+  margin: 0 20vw 25vh 20vw;
+  padding: 10vh 5vw;
   border-radius: 40px;
   box-shadow: var(--regular-box-shadow);
-  /* padding: 8px 0px; */
+}
+
+.CTAWrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+  width: 100%;
+  height: 100%;
 }
 
 .textCTA {
+  flex-basis: 60%;
   display: flex;
-  flex-direction: row;
+  justify-content: flex-start;
   align-items: center;
-  justify-content: space-between;
-  /* padding: 40px 0px; */
-  /* background: #fff; */
+  align-content: center;
+}
+
+.buttonCTA {
+  flex-basis: 40%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  align-content: center;
 }
 
 .textCTA h1 {
+  width: 95%;
+  font-size: 2rem;
+  line-height: 3rem;
   font-weight: 700;
   color: var(--primary-main);
-  /* max-width: 90%; */
 }
-/* 
-.textCTA button {
-  margin-top: 24px;
-} */
 
 .mainFooter {
   display: flex;
-  flex-direction: column;
-  align-items: flex-start;
+  align-items: center;
   justify-content: center;
-  /* margin-top: 80px; */
   background: linear-gradient(180deg, #BAC6FF 0%, #798CF2 100%);
-  height: 320px;
+  height: 50vh;
 }
 
 .footerLogo {
   max-width: 80px;
 }
 
-.footerContent {
-  margin: 0px 120px;
+.footerFull {
+  width: 100%;
+  height: 100%;
   display: flex;
-  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 5vh 10vw;
+}
+
+.footerContent {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
 }
 
 .footerNavs {
   display: flex;
-  flex-direction: row;
-  margin-left: 40px;
+  margin-left: 2.5rem;
 }
 
 .footerNavs h3 {
@@ -327,19 +343,18 @@ html {
 }
 
 .footerColumn {
-  width: 160px;
-  margin-left: 40px;
+  min-width: 160px;
+  margin-left: 3rem;
   display: flex;
   flex-direction: column;
 }
 
 .footerInquiries {
-  margin-left: 120px;
-  margin-top: 64px;
+  width: 100%;
   display: flex;
-  flex-direction: row;
   justify-content: space-between;
   align-items: center;
+  margin-top: 10vh;
 }
 
 .footerInquiries p {
@@ -349,7 +364,6 @@ html {
 
 .documentLinks {
   display: flex;
-  flex-direction: row;
 }
 
 .documentLinks p {
@@ -358,7 +372,250 @@ html {
   font-weight: 400;
 }
 
-@media screen and (max-width: 768px) {
+/* OVER 1920px */
+@media only screen and (min-width: 1921px) {
+  a {
+    font-size: 1.25rem;
+    line-height: 1.75rem;
+  }
+
+  h1 {
+    font-size: 2.5rem;
+    line-height: 3.5rem;
+  }
+
+  h3 {
+    font-size: 2rem;
+    line-height: 3rem;
+  }
+
+  p {
+    font-size: 1.5rem;
+    line-height: 2.5rem;
+  }
+
+  .heroCircle2 {
+    position: absolute;
+    top: 136px;
+    left: 744px;
+    z-index: -5;
+    max-width: 160px;
+  }
+
+  .heroCircle3 {
+    position: absolute;
+    top: 1200px;
+    right: 0px;
+    z-index: -5;
+    max-width: 96px;
+  }
+
+  .heroText { max-width: 75%; }
+
+  .heroHead {
+    font-size: 2.5rem;
+    line-height: 3rem;
+    color: #fff;
+    font-weight: 700;
+  }
+  
+  .heroBody {
+    font-size: 1.5rem;
+    line-height:2.5rem;
+    max-width: 90%;
+    color: #fff;
+  }
+
+  .vp1Image {
+    width: 95%;
+    margin-right: 64px;
+  }
+
+  .circleBack1 {
+    max-width: 320px;
+    position: absolute;
+    z-index: -1;
+    top: 1520px;
+  }
+
+  .circleBack2 {
+    top: 2200px;
+  }
+
+  .vp2 {
+    margin: 25vh 0;
+  }
+
+  .vp2Image {
+    max-width: 25%;
+  }
+  
+  .customers {
+    display: flex;
+    flex-direction: column;
+    margin: 160px 400px;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .customerCard {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 64px 60px 0px 60px;
+    max-width: 360px;
+  }
+
+  .compCircle {
+    position: absolute;
+    max-width: 320px;
+    top: 3200px;
+    z-index: -2;
+  }
+
+  .comparative {
+    margin: 10vh 20vw;
+  }
+
+  .CTA {
+    margin: 25vh 20vw;
+  }
+}
+
+/* 1440px - 1920px */
+@media screen and (min-width: 960px) and (max-width: 1440px) {
+  a {
+    font-size: 1rem;
+    line-height: 1.5rem;
+  }
+
+  h1 {
+    font-size: 2rem;
+    line-height: 3rem;
+  }
+
+  h3 {
+    font-size: 1.25rem;
+    line-height: 2rem;
+  }
+
+  p {
+    font-size: 1rem;
+    line-height: 2rem;
+  }
+
+  .navBurger {
+    display: none;
+  }
+
+  .heroCircle2 {
+    position: absolute;
+    top: 136px;
+    left: 744px;
+    z-index: -5;
+    max-width: 160px;
+  }
+
+  .heroText { max-width: 45vw; }
+
+  .heroHead {
+    max-width: 70%;
+    font-size: 2rem;
+    line-height: 3rem;
+    font-weight: 700;
+    color: #fff;
+  }
+  
+  .heroBody {
+    width: 75%;
+    font-size: 1rem;
+    line-height: 2rem;
+    color: #fff;
+    margin: 8px 0 24px 0;
+  }
+
+  .heroImage {
+    max-width: 55%;
+    margin-right: 40px;
+  }
+
+  .vp1 {
+    margin: 80px 20vw 160px 20vw;
+  }
+
+  .circleBack1 {
+    max-width: 320px;
+    position: absolute;
+    z-index: -1;
+    top: 1520px;
+  }
+
+  .circleBack2 {
+    top: 2200px;
+  }
+
+  .vp2Flex {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 20vh 20vw;
+  }
+  
+  .vp2 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+  }
+
+  .vp2Image {
+    max-width: 25%;
+    margin-right: 64px;
+  }
+
+  .vp2Area {
+    max-width: 100%;
+  }
+  
+  .customers {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 40vh 25vw;
+  }
+
+  .compCircle {
+    position: absolute;
+    max-width: 320px;
+    top: 3200px;
+    z-index: -2;
+  }
+
+  .comparative {
+    margin: 10vh 20vw;
+  }
+
+  .CTA {
+    height: 50vh;
+    margin: 30vh 20vw;
+  }
+
+  .textCTA h1 {
+    font-size: 1.5rem;
+    line-height: 2.5rem;
+  }
+
+  .mainFooter {
+    height: 60vh;
+  }
+}
+
+@media screen and (max-width: 960px) {
+  .navBurger {
+    display: flex;
+  }
 
   .hero {
     flex-direction: column-reverse;
@@ -374,10 +631,14 @@ html {
     max-width: 160px;
   }
 
+  .heroHead {
+    max-width: 70%;
+  }
+
   .heroText {
-    margin-left: 10vw;
+    margin-left: 8vw;
     margin-top: 40px;
-    max-width: 400px;
+    max-width: 80%;
   }
 
   .heroImage {
@@ -387,8 +648,28 @@ html {
   }
 
   .vp1 {
-    margin: 80px 40px 160px 40px;
+    margin: 5vh 15vw;
   }
+
+  .vpText {
+    max-width: 100%;
+  }
+  
+  .textArea {
+    margin-bottom: 1.5rem;
+  }
+  
+  .vpText h1 {
+    font-size: 2rem;
+  }
+
+  .vpText p {
+    margin-top: 8px;
+    color: var(--muted-default);
+    font-size: 1rem;
+  }
+  
+  .vp1Image { width: 100%; }
 
   .circleBack1 {
     max-width: 320px;
@@ -402,47 +683,37 @@ html {
     max-width: 120px;
   }
 
+  .customers {
+    margin: 25vh 20vw;
+  }
+
   .vp2Flex {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    margin: 160px 40px;
+    margin: 10vh 15vw;
   }
-  
 
   .vp2 {
     display: flex;
-    flex-direction: row;
-    /* margin: 160px 240px; */
     align-items: center;
     justify-content: center;
   }
 
   .vp2Image {
-    max-width: 25%;
+    height: 100%;
+    width: 100%;
     margin-right: 40px;
   }
 
-  .vp2Area {
-    max-width: 544px;
-  }
+  .payMethods { margin: 0 0 1.5rem 0; }
 
-  .textArea {
-    max-width: 440px;
-  }
-
-  .payMethods {
-    max-width: 400px;
-  }
-
-  .payMethods h3 {
-    max-width: 400px;
-  }
+  .payLogos { margin-top: 4px; }
 
   .payLogos img {
-    margin: 0px 8px;
-    max-height: 24px;
+    margin: 0px 4px;
+    height: 24px;
     max-width: 400px;
   }
   
@@ -466,17 +737,21 @@ html {
   }
 
   .comparative {
-    margin: 160px 40px;
+    margin: 5vh 15vw;
   }
 
   .CTA {
-    margin: 160px 40px;
-    /* padding: 8px 0px; */
+    height: 20vh;
+    margin: 5vh 15vw;
   }
 
   .CTA h1 {
-    max-width: 50%;
+    font-size: 1rem;
+    line-height: 2rem;
+    max-width: 80%;
   }
+
+  .mainFooter { height: 70vh; }
 
   .footerContent {
     margin: 0px 40px;
@@ -498,5 +773,168 @@ html {
 
   .documentLinks a {
     padding: 0px 48px 0px 0px;
+  }
+
+  .footerContent {
+    margin: 0px 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .footerColumn {
+    margin-left: 0px;
+    margin-top: 40px;
+  }
+
+  .footerNavs {
+    flex-direction: column;
+    margin-left: 0px;
+  }
+
+  .footerInquiries {
+    margin-left: 24px;
+    margin-top: 64px;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .documentLinks {
+    margin-top: 8px;
+  }
+
+  .documentLinks a {
+    padding: 0px 48px 0px 0px;
+  }
+
+  .documentLinks p {
+    font-size: 14px;
+  }
+}
+
+@media screen and (max-width: 576px) {
+  .hero { height: 120vh; padding: 20vh 5vw; justify-content: flex-end; }
+
+  .heroCircle2 {
+    position: absolute;
+    top: 136px;
+    left: 200px;
+    z-index: -5;
+    max-width: 80px;
+    max-width: 160px;
+  }
+
+  .heroCircle3 { display: none; }
+
+  .heroHead { 
+    font-size: 1.75rem; 
+    line-height: 2rem; 
+    max-width: 95%; 
+  }
+
+  .heroText {
+    margin-left: 8vw;
+    font-size: 1.25rem;
+    line-height: 1.75rem;
+    max-width: 100%;
+  }
+
+  .heroImage {
+    margin-left: 5vw;
+    min-width: 80%;
+    height: auto;
+  }
+
+  .customers { margin: 25vh 7.5vw 25vh 7.5vw; }
+  .customerCards { flex-direction: column; }
+
+  .vp1 { margin: 5vh 7.5vw; }
+  .vp2Flex { margin: 5vh 7.5vw; }
+  .vp2 { flex-direction: column; }
+  .payLogos div { margin: 1rem 0; }
+
+  .vp2Image {
+    height: auto;
+    min-width: 50%;
+    margin-bottom: 5vh;
+  }
+
+  .comparative {
+    margin: 5vh 7.5vw;
+  }
+
+  .compTable {
+    height: auto;
+    min-width: 100%;
+  }
+
+  .compCircle { display: none; }
+  .circleBack2 { display: none; }
+
+  .CTA {
+    height: 30vh;
+    margin: 0 7.5vw 5vh 7.5vw;
+    padding: 5vh 2.5vw;
+  }
+
+  .CTAWrapper { flex-direction: column; }
+
+  .textCTA {
+    flex-basis: 60%;
+    justify-content: center;
+    align-items: flex-start;
+  }
+
+  .textCTA h1 { text-align: center; }
+  
+  .buttonCTA {
+    flex-basis: 40%;
+    justify-content: center;
+    align-items: flex-end;
+  }
+
+  .CTA h1 {
+    font-size: 1rem;
+    line-height: 2rem;
+    max-width: 80%;
+  }
+
+  .CTA a { font-size: 1rem; line-height: 1.5rem; }
+
+  .mainFooter { height: 90vh; }
+}
+
+/* IPAD PRO */
+@media screen and (width: 1024px) and (height: 1366px) {
+  .hero {
+    height: 60vh;
+    padding: 15vh 10vw;
+    align-items: flex-start;
+  }
+
+  .vp1 { margin: 5vh 20vw; }
+  .customers { margin: 15vh 20vw; }
+  .vp2Flex { margin: 5vh 20vw; }
+  .comparative { margin: 10vh 20vw; }
+  .CTA { height: 20vh; margin: 10vh 20vw; }
+
+  .payLogos { margin-top: 16px; }
+
+  .payLogos img {
+    margin: 0px 8px;
+    height: 28px;
+    max-width: 400px;
+  }
+
+  .mainFooter {
+    position: relative;
+    height: 75vh;
+  }
+
+  .footerFull { justify-content: flex-start; padding: 2.5vh 10vw; }
+  .footerInquiries { margin-top: 5vh; }
+
+  .documentLinks p {
+    font-size: 14px;
   }
 }

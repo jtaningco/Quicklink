@@ -5,6 +5,7 @@ window.onload = function() {
     burger.addEventListener("click", () => {
         document.getElementById("navBurger").classList.toggle("open");
         document.getElementById("openMobileNav").classList.toggle("navbarActive");
+        document.getElementById("burgerLines").style.backgroundColor("white");
     });
 }
 
@@ -19,6 +20,8 @@ window.onscroll = function() {
 
         document.getElementById("navButton").classList.add("primary-btn");
         document.getElementById("navButton-link").classList.add("primary-btn-link");
+
+        document.getElementById("navBurger").classList.add("scroll");
         
         var navOptions = document.getElementsByClassName("navOptions");
         for(var i = 0, length=navOptions.length; i<length; i++) {
@@ -33,10 +36,16 @@ window.onscroll = function() {
 
         document.getElementById("navButton").classList.remove("primary-btn");
         document.getElementById("navButton-link").classList.remove("primary-btn-link");
+
+        document.getElementById("navBurger").classList.remove("scroll");
         
         var navOptions = document.getElementsByClassName("navOptions");
         for(var i = 0, length=navOptions.length; i<length; i++) {
-            navOptions[i].style.color = "#FFF";
+            if (window.matchMedia("(min-width: 960px)").matches) {
+                navOptions[i].style.color = "#FFF";
+            } else {
+                navOptions[i].style.color = "var(--muted-lighter)";
+            }
         };
     }
 };
