@@ -482,7 +482,7 @@ html {
   }
 }
 
-/* 1440px - 1920px */
+/* 960px - 1440px */
 @media screen and (min-width: 960px) and (max-width: 1440px) {
   a {
     font-size: 1rem;
@@ -906,6 +906,8 @@ html {
 
 /* IPAD PRO */
 @media screen and (width: 1024px) and (height: 1366px) {
+  .navBurger { display: flex; }
+
   .hero {
     height: 60vh;
     padding: 15vh 10vw;
@@ -927,11 +929,10 @@ html {
   }
 
   .mainFooter {
-    position: relative;
-    height: 75vh;
+    height: 25vh;
   }
 
-  .footerFull { justify-content: flex-start; padding: 2.5vh 10vw; }
+  .footerFull { justify-content: flex-start; padding: 5vh 10vw; }
   .footerInquiries { margin-top: 5vh; }
 
   .documentLinks p {
