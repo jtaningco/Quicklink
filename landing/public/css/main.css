@@ -21,6 +21,11 @@
     padding: 0;
 }
 
+/* CURSOR */
+html {
+  cursor: url('../static/logos/html-cursor.png'), auto;
+}
+
 *:focus {
   outline: none;
 }
@@ -131,6 +136,7 @@ a {
   background: var(--primary-light); 
   box-shadow: var(--regular-box-shadow);
   transition: background 200ms;
+  cursor: url('../static/logos/white-cursor.png'), auto;
 }
 
 .primary-btn.active {
@@ -169,6 +175,7 @@ a {
   font-weight: 700;
   color: #fff;
   transition: background 200ms;
+  cursor: url('../static/logos/white-cursor.png'), auto;
 }
 
 .secondary-btn.failure {
@@ -182,6 +189,7 @@ a {
 .secondary-btn:hover {
   background: var(--primary-main);
   box-shadow: var(--regular-box-shadow);
+  cursor: url('../static/logos/white-cursor.png'), auto;
 }
 
 .tertiary-btn {
@@ -199,11 +207,13 @@ a {
 
 .tertiary-btn-link:hover, .tertiary-btn:hover {
   color: var(--primary-light);
+  cursor: url('../static/logos/white-cursor.png'), auto;
 }
 
 .tertiary-btn-link.failure:hover, .tertiary-btn.failure:hover {
   color: var(--failure-main);
   opacity: 0.5;
+  cursor: url('../static/logos/white-cursor.png'), auto;
 }
 
 
@@ -547,6 +557,7 @@ textarea {
   align-items: center;
   align-content: center;
   background-color: transparent;
+  cursor: url('../static/logos/white-cursor.png'), auto;
   -webkit-transition: background-color 0.3s ease-in-out;
   transition: background-color 0.3s ease-in-out;
 }
@@ -588,11 +599,13 @@ textarea {
 
 .logoLink {
   padding-left: 0px;
+  backface-visibility: hidden;
   transition: transform 0.3s ease-in-out;
 }
 
 .logoLink:hover {
-  transform: scale(1.2);
+  transform: scale(1.05);
+  cursor: url('../static/logos/white-cursor.png'), auto;
 }
 
 .navLinks {
@@ -609,16 +622,16 @@ textarea {
   color: #FFF;
   font-size: 1rem;
   font-weight: 700;
-  transition: all 0.3s ease-in-out;
+  cursor: url('../static/logos/white-cursor.png'), auto;
+  transition: color 0.3s ease-in-out;
 }
 
-.navOptions.scrolled {
-  color: var(--muted-light);
-}
+.navOptions:hover { color: var(--secondary-light); }
+.navOptions.scrolled { color: var(--muted-light); }
+.navOptions.scrolled:hover { color: var(--primary-main); }
 
-.navOptions:hover {
-  color: var(--primary-main);
-}
+.navOptions:active {color: var(--secondary-light);}
+.navOptions.scrolled:active { color: var(--primary-main); }
 
 .navButton {
   flex-basis: 25%;

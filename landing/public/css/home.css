@@ -16,14 +16,13 @@ html {
   background: #fff;
   box-shadow: var(--regular-box-shadow);
   transition: background 200ms;
-
+  cursor: url('../static/logos/white-cursor.png'), auto;
 }
 
 .primary-white-btn:hover {
   background: var(--primary-main);
   box-shadow: var(--regular-box-shadow);
   transition: background 200ms;
-
 }
 
 .primary-white-btn-link {

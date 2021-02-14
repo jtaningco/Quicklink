@@ -33,6 +33,7 @@
     align-items: center;
     justify-content: center;
     margin: 40px 120px;
+    padding-bottom: 10rem;
 }
 
 .faqCardGrid {
@@ -70,6 +71,7 @@
     box-shadow: var(--regular-box-shadow);
     border-radius: 5px 5px 0px 0px;
     transition: all 0.1s ease-out;
+    cursor: url('../static/logos/white-cursor.png'), auto;
 }
 
 .faqQuestionActive, .faqQuestion:hover {
