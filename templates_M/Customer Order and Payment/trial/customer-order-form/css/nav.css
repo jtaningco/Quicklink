@@ -10,23 +10,82 @@
 /* navbar */
 .nav {
     display: flex;
-    flex-direction: row;
-    justify-content: space-between;
+    justify-content: start;
+    align-items: center;
     background-color: var(--primary-main);
 }
 
-
 /* navbar features */
+.quicklink {
+    display: flex;
+    padding-left: 30px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+#ql-logo {
+    width: 40px;
+    height: 40px;
+}
 
 .quicklink-name {
+    list-style: none;
+    font-family: Overpass;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 24px;
+    line-height: 40px;
+    padding-left: 15px;
     color: #FFF;
+}
+
+.search-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding-left: 20px;
+}
+
+#myInput {
+    background-image: url('../static/u_search.svg');
+    background-repeat: no-repeat;
+    background-position: left center;
+    width: 100%;
+    font-size: 16px;
+    padding: 6px 80px 6px 20px;
+    border: 1px solid #FF8A00;
+    box-sizing: border-box;
+    border-radius: 5px;
+  }
+
+.buttons {
+    position: absolute;
+    float:right;
+    display: flex;
+    right: 0px;
+    padding: 0px 20px 0 20px;
+    
 }
 
 .secondary-btn {
     border: 1px solid var(--primary-main);
-    background: #fff;
+    background-color: var(--primary-main);
+    font-family: Overpass;
+    color: #FFF;
+    font-size: 14px;
+    padding-right: 30px;
+    padding-left: 30px;
+    margin-right: 10px;
+
 }
 
-.primary-btn {
+.register-btn {
+    border: 1px #FFAA2D;
     background-color: #FFAA2D;
-  }
+    font-family: Overpass;
+    color: #FFF;
+    font-size: 14px;
+    padding-right: 30px;
+    padding-left: 30px;
+    margin-left: 10px;
+}
