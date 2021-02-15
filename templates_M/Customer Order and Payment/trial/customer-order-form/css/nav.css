@@ -9,9 +9,14 @@
 
 /* navbar */
 .nav {
+    font-family: 'Overpass', sans-serif;
+    color: #FFF;
     display: flex;
     justify-content: start;
     align-items: center;
+    position: fixed;
+    width: 100vw;
+    z-index: 1000;
     background-color: var(--primary-main);
 }
 
@@ -50,13 +55,15 @@
     background-image: url('../static/u_search.svg');
     background-repeat: no-repeat;
     background-position: left center;
+    font-family: 'Overpass', sans-serif;
+    color: #a3a3a3;
     width: 100%;
     font-size: 16px;
     padding: 6px 80px 6px 20px;
     border: 1px solid #FF8A00;
     box-sizing: border-box;
     border-radius: 5px;
-  }
+}
 
 .buttons {
     position: absolute;
@@ -64,13 +71,12 @@
     display: flex;
     right: 0px;
     padding: 0px 20px 0 20px;
-    
 }
 
 .secondary-btn {
     border: 1px solid var(--primary-main);
     background-color: var(--primary-main);
-    font-family: Overpass;
+    font-family: 'Overpass', sans-serif;
     color: #FFF;
     font-size: 14px;
     padding-right: 30px;
@@ -82,7 +88,7 @@
 .register-btn {
     border: 1px #FFAA2D;
     background-color: #FFAA2D;
-    font-family: Overpass;
+    font-family: 'Overpass', sans-serif;
     color: #FFF;
     font-size: 14px;
     padding-right: 30px;

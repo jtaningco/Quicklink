@@ -16,7 +16,6 @@
             <div class="quicklink">
                 <img src="static/Group.svg" id="ql-logo">
                 <li class="quicklink-name">Quicklink</li>
-                </form>
             </div>
             <div class="search-container">
                     <form action="/action_page.php" method="get">
@@ -34,42 +33,149 @@
         </div>
 
         <div class="container"> <!-- flex row MARGIN-RIRGHT TO NOT INCLUDE THE FIXED DIV-->
-            <div class="sixty-five-percent"> <!-- flex column -->
+            <div class="seventy-percent"> <!-- flex column -->
                 <div class="company"> <!-- flex row flex start-->
                     <img src="static/Ellipse 29.png" alt="company logo" id="company-logo">
                     <div class="company-details"> <!--make this a flex column-->
-                        <div class="company-row">
                             <h1 class="company-name">The Good Batch</h1>
-                            <div class="company-contacts"> <!-- flex column-->
-                                <caption class="contacts"><img src="static/u_phone-alt.svg" id="img">@thegoodbatch</caption>
-                                <caption class="contacts"><img src="static/u_link.svg" id="img">+63 917 123 4567</caption>
-                            </div>
-                            <div class="company-contacts"> <!-- flex column-->
-                                <caption class="contacts"><img src="static/fi_mail.svg" id="img">thegoodbatch@gmail.com</caption>
-                                <caption class="contacts"><img src="static/u_store.svg" id="img">Greenhills, San Juan City</caption>
-                            </div>
-                        </div>  
+                            <div class="company-column">
+                                <div class="company-contacts"> 
+                                    <div class="contacts-row"><caption><img src="static/u_phone-alt.svg" id="img">@thegoodbatch</caption></div>
+                                    <div class="contacts-row"><caption><img src="static/fi_mail.svg" id="img">thegoodbatch@gmail.com</caption></div>
+                                </div>
+                            
+                                <div class="company-contacts"> <!-- flex column-->
+                                    <div class="contacts-row"><caption><img src="static/u_link.svg" id="img">+63 917 123 4567</caption></div>
+                                    <div class="contacts-row"><caption><img src="static/u_store.svg" id="img">Greenhills, San Juan City</caption></div>
+                                </div>
+                            </div>  
                     </div>
                 </div>
+
                 <div class="company-card-block">
-                    <div class="company-cards"> <!-- flex row-->
-                        
+                    <div class="company-cards"> <!-- flex wrap-->
+                        <div class="cards">
+                            <img src="./static/Rectangle 38.png" id="product-img">
+                            <h3 class="product-name">Chocolate Chip Cookies</h3>
+                            <p class="product-price">PHP 140 - 500</p>
+                        </div>
+                        <div class="cards">
+                            <img src="./static/Rectangle 38.png" id="product-img">
+                            <h3 class="product-name">Raisin Cookies</h3>
+                            <p class="product-price">PHP 140 - 500</p>
+                        </div>
+                        <div class="cards">
+                            <img src="./static/Rectangle 38.png" id="product-img">
+                            <h3 class="product-name">Chocolate Chip Cookies</h3>
+                            <p class="product-price">PHP 140 - 500</p>
+                        </div>
+                        <div class="cards">
+                            <img src="./static/Rectangle 38.png" id="product-img">
+                            <h3 class="product-name">Raisin Cookies</h3>
+                            <p class="product-price">PHP 140 - 500</p>
+                        </div>      
+                        <div class="cards">
+                            <img src="./static/Rectangle 38.png" id="product-img">
+                            <h3 class="product-name">Chocolate Chip Cookies</h3>
+                            <p class="product-price">PHP 140 - 500</p>
+                        </div>
+                        <div class="cards">
+                            <img src="./static/Rectangle 38.png" id="product-img">
+                            <h3 class="product-name">Raisin Cookies</h3>
+                            <p class="product-price">PHP 140 - 500</p>
+                        </div>                                             
                     </div>
                 </div>
             </div>
+        
 
             <div class="basket-receipt"> <!-- flex column-->
                 <div class="receipt-header">
-
+                    <div class="group">
+                        <img src="static/u_shopping-basket.svg" id="basket-img">
+                        <h2 class="basket-header-title">My Basket</h2>
+                    </div>
+                    <subtitle class="hide-details"><span style="color: #798CF2">Hide Details</span></subtitle>
                 </div>
                 <div class="receipt-body">
+                    <div class="display-order">
+                        <div class="space">
+                            <p class="basket-product-name">Chocolate Chip Cookies</p>
+                                <div class="basket-price-div">
+                                <p class="basket-php">PHP</p>
+                                <p class="basket-product-price">2,220.00</p>
+                                </div>
+                        </div>
+                        <p class="basket-subtitle">Half Dozen</p>
+                        <br>
+                        <div class="space">
+                            <p class="basket-additional-order">Milk</p>
+                            <div class="basket-additional-price-div">
+                                <p class="basket-additional-php">+ PHP</p>
+                                <p class="basket-additional-price">30.00</p>
+                            </div>                            
+                        </div>
+                        <div class="space">
+                            <p class="basket-additional-order">Additional Raisins</p>
+                            <div class="basket-additional-price-div">
+                                <p class="basket-additional-php">+ PHP</p>
+                                <p class="basket-additional-price">20.00</p>
+                            </div>                            
+                        </div>                        
+                        <div class="basket-notes">
+                            Notes: Lorem ipsum Carole Baskin what day is it? Zoom call schadenfreude ventilator baby Yoda home haircut toilet paper.
+                        </div>
+                        <div class="basket-buttons">
+                            <H1>ADD THE +/- THING</H1>
+                            <button class="edit-btn">Edit</button>
+                        </div>
+                    </div>
+
+                    <div class="display-order">
+                        <div class="space">
+                            <p class="basket-product-name">Chocolate Chip Cookies</p>
+                                <div class="basket-price-div">
+                                <p class="basket-php">PHP</p>
+                                <p class="basket-product-price">2,220.00</p>
+                                </div>
+                        </div>
+                        <p class="basket-subtitle">Half Dozen</p>
+                        <br>
+                        <div class="basket-buttons">
+                            <H1>ADD THE +/- THING</H1>
+                            <button class="edit-btn">Edit</button>
+                        </div>
+                    </div>
 
                 </div>
                 <div class="receipt-end">
-
+                    <div class="basket-space">
+                        <p class="basket-subtotal">Subtotal</p>
+                        <div class="basket-subtotal-price-div">
+                            <p class="basket-subtotal-php">PHP</p>
+                            <p class="basket-subtotal-price">30.00</p>
+                        </div>                            
+                    </div>
+                    <div class="basket-space">
+                        <p class="basket-subtotal">Subtotal</p>
+                        <div class="basket-subtotal-price-div">
+                            <p class="basket-subtotal-php">PHP</p>
+                            <p class="basket-subtotal-price">30.00</p>
+                        </div>                            
+                    </div>
+                    <div class="basket-space">
+                        <p class="basket-total">Total</p>
+                        <div class="basket-total-price-div">
+                            <p class="basket-total-php">PHP</p>
+                            <p class="basket-total-price">30,000.00</p>
+                        </div>                            
+                    </div>
+                    <button class="button">Proceed to Check Out</button>
                 </div>
             </div>
         </div>
     </div>
 </body>
 </html>
+
+
