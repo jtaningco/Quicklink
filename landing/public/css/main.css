@@ -627,8 +627,8 @@ textarea {
 .navOptions.scrolled { color: var(--muted-light); }
 .navOptions.scrolled:hover { color: var(--primary-main); }
 
-.navOptions:active {color: var(--secondary-light);}
-.navOptions.scrolled:active { color: var(--primary-main); }
+.navOptions.active {color: var(--secondary-light);}
+.navOptions.scrolled.active { color: var(--primary-main); }
 
 .navButton {
   flex-basis: 25%;
