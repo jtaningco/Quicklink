@@ -1,0 +1,274 @@
+.faqsHero {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.faqHeroText {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    width: 40%;
+    margin-left: 120px;
+}
+
+.faqHeroImage {
+    margin-right: 40px;
+    max-width: 30%;
+}
+
+.faqsHero h3 {
+    color: var(--muted-light);
+    margin: 16px 0px;
+}
+
+.faqChevron {
+    width: 24px;
+}
+
+.faqSection {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 40px 120px;
+    padding-bottom: 10rem;
+}
+
+.faqCardGrid {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    margin-top: 16px;
+}
+
+.faqCardRow {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin: 16px 0px;
+}
+
+.faqQA {
+    width: 404px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0px 16px;
+}
+
+
+.faqQuestion {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 16px;
+    width: 404px;
+    background: #fff;
+    box-shadow: var(--regular-box-shadow);
+    border-radius: 5px 5px 0px 0px;
+    transition: all 0.1s ease-out;
+    cursor: url('../static/logos/white-cursor.png'), auto;
+}
+
+.faqQuestionActive, .faqQuestion:hover {
+    background: rgba(220,220,220,0.5);
+    transition: all 0.1s ease-out;
+}
+
+.faqQuestion p {
+    width: 332px;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    color: #575757;
+    font-weight: 700;
+}
+
+.cardChevron {
+    transform: scaleY(1);
+}
+
+.faqAnswer {
+    height: 0px;
+    overflow: hidden;
+    padding: 0px 16px;
+    width: 404px;
+    background: rgba(169,184,255,0.3);
+    border-radius: 0px 0px 5px 5px;
+    transition: all 0.1s ease-out;
+}
+
+.faqAnswer p {
+    width: auto;
+    color: #2c2c2c;
+}
+
+@media screen and (max-width: 567px) {
+    .faqsHero {
+        flex-direction: column-reverse;
+        align-items: flex-start;
+        justify-content: center;
+    }
+
+    .faqHeroText {
+        margin: 0px 16px;
+        width: 60%;
+    }
+
+    .faqHeroImage {
+        display: none;
+    }
+
+    .faqSection {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        margin: 40px 16px;
+    }
+
+    .faqCardRow {
+        flex-direction: column;
+        align-items: center;
+        margin-top: 0px;
+        margin-bottom: 0px;
+    }
+
+    .faqQA {
+        margin: 16px 0px;
+        width: 232px;
+    }
+
+    .faqQuestion {
+        width: 232px;
+    }
+
+    .faqQuestion p {
+        width: 232px;
+        height: 80px;
+        display: flex;
+        align-items: center;
+        color: #575757;
+        font-weight: 700;
+    }
+
+    .faqAnswer {
+        width: 232px;
+    }
+}
+
+@media screen and (min-width: 568px) and (max-width: 767px) {
+    .faqsHero {
+        flex-direction: column-reverse;
+        align-items: flex-start;
+        justify-content: center;
+    }
+
+    .faqHeroText {
+        margin: 0px 40px;
+        width: 60%;
+    }
+
+    .faqHeroImage {
+        display: none;
+    }
+
+    .faqSection {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        margin: 40px 40px;
+    }
+
+    .faqCardRow {
+        flex-direction: column;
+        align-items: center;
+        margin-top: 0px;
+        margin-bottom: 0px;
+    }
+
+    .faqQA {
+        margin: 16px 0px;
+    }
+}
+
+@media screen and (min-width: 768px) and (max-width: 1067px) {
+    .faqsHero {
+        flex-direction: column-reverse;
+        align-items: flex-start;
+        justify-content: center;
+    }
+
+    .faqHeroText {
+        margin: 0px 40px;
+        width: 60%;
+    }
+
+    .faqHeroImage {
+        display: none;
+    }
+
+    .faqSection {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        margin: 40px 40px;
+    }
+
+    .faqCardRow {
+        flex-direction: column;
+        align-items: center;
+        margin-top: 0px;
+        margin-bottom: 0px;
+    }
+
+    .faqQA {
+        margin: 16px 0px;
+    }
+}
+
+@media screen and (min-width: 1440px) and (max-width: 1919px) {
+    .faqHeroText {
+        margin-left: 240px;
+    }
+
+    .faqsHero {
+        margin-right: 120px;
+    }
+
+    .faqSection {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        margin: 40px 240px;
+    }
+}
+
+@media screen and (min-width: 1920px) {
+    .faqHeroText {
+        margin-left: 400px;
+    }
+
+    .faqsHero {
+        margin-right: 360px;
+    }
+
+    .faqSection {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        margin: 40px 400px;
+    }
+
+    .faqQA {
+        width: 404px;
+    }
+}

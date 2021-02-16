@@ -181,6 +181,25 @@ a {
   opacity: 0.5;
 }
 
+.preview-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+  width: auto;
+  height: 40px;
+  box-shadow: var(--regular-box-shadow);
+  border-radius: 4px;
+  border: none;
+  background: var(--primary-main);
+  font-family: 'Overpass', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  padding: 8px 24px;
+  text-decoration: none;
+  color: #FFF;
+}
+
 .add-to-basket-btn {
   width: auto;
   height: 40px;
@@ -194,11 +213,11 @@ a {
 }
 
 /* INPUTS */
-input {
+input, textarea {
   outline: none;
 }
 
-input:focus {
+*:focus, input:focus, textarea:focus {
   outline: none;
 }
 

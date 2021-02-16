@@ -1,0 +1,38 @@
+.registration-container {
+    width: 100vw;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    background: var(--bg-color);
+}
+
+.registration-wrapper {
+    height: 100%;
+    width: 90%;
+    padding: 40px 40px 0 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+}
+
+.registration-wrapper h1 { margin-bottom: 16px; }
+
+.registration-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+}
+
+.registration-content input {
+    margin: 12px;
+}
+
+.registration-content a {
+    margin: 4px;
+}

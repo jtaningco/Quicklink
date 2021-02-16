@@ -5,8 +5,13 @@ from .forms import OrderForm
 from .filters import PendingOrderFilter
 from django.utils.timezone import datetime, timedelta
 from django.db.models import Q
+from django.contrib.auth.decorators import login_required
+from apps.accounts.decorators import allowed_users
+from apps.accounts.models import User
 
 # Create your views here.
+@login_required(login_url='accounts:login')
+@allowed_users(allowed_role=User.Types.MERCHANT)
 def orders(request):
     search_query = request.GET.get('search', '')
 
@@ -22,6 +27,8 @@ def orders(request):
     context = {'orders':orders }
     return render(request, 'orders/order_summary.html', context)
 
+@login_required(login_url='accounts:login')
+@allowed_users(allowed_role=User.Types.MERCHANT)
 def pendingOrders(request):
     orders = Order.objects.filter(order_status="Pending")
     orderCount = Order.objects.filter(order_status="Pending").count()
@@ -32,6 +39,8 @@ def pendingOrders(request):
     context = {'orders':orders, 'productFilter':productFilter, 'orderCount':orderCount}
     return render(request, 'orders/pending_orders.html', context)
 
+@login_required(login_url='accounts:login')
+@allowed_users(allowed_role=User.Types.MERCHANT)
 def pendingToday(request):
     today = datetime.now()
     tomorrow = datetime.now() + timedelta(hours=24)
@@ -44,6 +53,8 @@ def pendingToday(request):
     context = {'orders':orders, 'productFilter':productFilter}
     return render(request, 'orders/pending_orders_today.html', context)
 
+@login_required(login_url='accounts:login')
+@allowed_users(allowed_role=User.Types.MERCHANT)
 def pendingNextSevenDays(request):
     today = datetime.today()
     next_seven_days = datetime.today() + timedelta(days=7)
@@ -56,10 +67,14 @@ def pendingNextSevenDays(request):
     context = {'orders':orders, 'productFilter':productFilter}
     return render(request, 'orders/pending_orders_week.html', context)
 
+@login_required(login_url='accounts:login')
+@allowed_users(allowed_role=User.Types.MERCHANT)
 def viewProducts(request):
     products = Product.objects.all()
     return render(request, 'orders/available_products.html', {'products':products})
 
+@login_required(login_url='accounts:login')
+@allowed_users(allowed_role=User.Types.MERCHANT)
 def addOrder(request, pk):
     product = Product.objects.get(id=pk)
     form = OrderForm(initial={'product': product})
@@ -72,6 +87,8 @@ def addOrder(request, pk):
     context = {'form':form, 'product':product}
     return render(request, 'orders/order_form.html', context)
 
+@login_required(login_url='accounts:login')
+@allowed_users(allowed_role=User.Types.MERCHANT)
 def deleteOrder(request, order_pk):
     order = Order.objects.get(id=order_pk)
     if request.method == "POST":

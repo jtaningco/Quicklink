@@ -47,7 +47,74 @@
                 <h2 class="bold" style="color: #FF8A00;">Add a new product</h2>
                 
                 {% csrf_token %}
-                {{ form.as_p }}
+                
+                <div class="product-form-content">
+                    <div class="product-form-label">
+                        <p>Name</p><span style="color: var(--failure-main);">*</span>
+                    </div>
+                    {{ form.name }}
+                </div>
+
+                <div class="product-form-content">
+                    <div class="product-form-label">
+                        <p>Description</p><span style="color: var(--failure-main);">*</span>
+                    </div>
+                    {{ form.description }}
+                </div>
+
+                <div class="product-form-images">
+                    {{ form.image }}
+                </div>
+
+                <div class="product-form-content">
+                    <div class="product-form-label">
+                        <p>Available Sizes or Servings</p><span style="color: var(--failure-main);">*</span>
+                    </div>
+                    {{ sizeFormset.management_form }}
+                    {% for size in sizeFormset %}
+                    <div class="product-form-formset">
+                        {{ size }}
+                    </div>
+                    {% endfor %}
+                </div>
+
+                <div class="product-form-content">
+                    <div class="product-form-label">
+                        <p>Stocks</p><span style="color: var(--failure-main);">*</span>
+                    </div>
+                    {{ form.stock }}
+                </div>
+
+                <div class="product-form-content">
+                    <div class="product-form-label">
+                        <p>Maximum Orders Taken / Day</p><span style="color: var(--failure-main);">*</span>
+                    </div>
+                    {{ form.orders }}
+                </div>
+
+                <div class="product-form-content">
+                    <p>Available Delivery Dates</p><span style="color: var(--failure-main);">*</span>
+                </div>
+
+                <div class="product-form-content">
+                    <div class="product-form-label">
+                        <p>Possible Add-Ons</p><span style="color: var(--failure-main);">*</span>
+                    </div>
+                    {{ addonFormset.management_form }}
+                    {% for addon in addonFormset %}
+                    <div class="product-form-formset">
+                        {{ addon }}
+                    </div>
+                    {% endfor %}
+                </div>
+
+                <div class="product-form-content">
+                    <div class="product-form-label">
+                        <p>Any special instructions, allergens, etc.?</p><span style="color: var(--failure-main);">*</span>
+                    </div>
+                    {{ form.instructions }}
+                </div>
+                
             </div>
         </div>
     </main>
