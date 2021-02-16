@@ -148,6 +148,7 @@ a {
 .primary-btn-link {
   font-weight: 700;
   color: #FFF;
+  cursor: url('../static/logos/blue-cursor.png'), auto;
 }
 .primary-btn-link.disabled {
   cursor: default;
