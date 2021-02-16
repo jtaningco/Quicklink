@@ -16,7 +16,7 @@ html {
   background: #fff;
   box-shadow: var(--regular-box-shadow);
   transition: background 200ms;
-  cursor: url('../static/logos/white-cursor.png'), auto;
+  cursor: url('../static/logos/blue-cursor.png'), auto;
 }
 
 .primary-white-btn:hover {

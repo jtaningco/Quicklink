@@ -30,10 +30,6 @@ html {
   outline: none;
 }
 
-body {
-  overflow-x: hidden;
-}
-
 :root {
   /* COLORS */
   --primary-main: #798CF2;
@@ -136,7 +132,7 @@ a {
   background: var(--primary-light); 
   box-shadow: var(--regular-box-shadow);
   transition: background 200ms;
-  cursor: url('../static/logos/white-cursor.png'), auto;
+  cursor: url('../static/logos/blue-cursor.png'), auto;
 }
 
 .primary-btn.active {
@@ -175,7 +171,7 @@ a {
   font-weight: 700;
   color: #fff;
   transition: background 200ms;
-  cursor: url('../static/logos/white-cursor.png'), auto;
+  cursor: url('../static/logos/blue-cursor.png'), auto;
 }
 
 .secondary-btn.failure {
@@ -189,7 +185,7 @@ a {
 .secondary-btn:hover {
   background: var(--primary-main);
   box-shadow: var(--regular-box-shadow);
-  cursor: url('../static/logos/white-cursor.png'), auto;
+  cursor: url('../static/logos/blue-cursor.png'), auto;
 }
 
 .tertiary-btn {
@@ -207,13 +203,13 @@ a {
 
 .tertiary-btn-link:hover, .tertiary-btn:hover {
   color: var(--primary-light);
-  cursor: url('../static/logos/white-cursor.png'), auto;
+  cursor: url('../static/logos/blue-cursor.png'), auto;
 }
 
 .tertiary-btn-link.failure:hover, .tertiary-btn.failure:hover {
   color: var(--failure-main);
   opacity: 0.5;
-  cursor: url('../static/logos/white-cursor.png'), auto;
+  cursor: url('../static/logos/blue-cursor.png'), auto;
 }
 
 
@@ -557,7 +553,7 @@ textarea {
   align-items: center;
   align-content: center;
   background-color: transparent;
-  cursor: url('../static/logos/white-cursor.png'), auto;
+  cursor: url('../static/logos/blue-cursor.png'), auto;
   -webkit-transition: background-color 0.3s ease-in-out;
   transition: background-color 0.3s ease-in-out;
 }
@@ -605,7 +601,7 @@ textarea {
 
 .logoLink:hover {
   transform: scale(1.05);
-  cursor: url('../static/logos/white-cursor.png'), auto;
+  cursor: url('../static/logos/blue-cursor.png'), auto;
 }
 
 .navLinks {
@@ -622,7 +618,7 @@ textarea {
   color: #FFF;
   font-size: 1rem;
   font-weight: 700;
-  cursor: url('../static/logos/white-cursor.png'), auto;
+  cursor: url('../static/logos/blue-cursor.png'), auto;
   transition: color 0.3s ease-in-out;
 }
 
