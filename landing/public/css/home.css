@@ -260,7 +260,7 @@ html {
   justify-content: center;
   align-items: center;
   align-content: center;
-  background-image: url("/landing/public/static/background/ctaBG.png");
+  background-image: url("../static/background/ctaBG.png");
   background-size: 100% 100%;
   margin: 25vh 20vw;
   padding: 10vh 5vw;
@@ -526,7 +526,7 @@ html {
 }
 
 /* 960px - 1440px */
-@media screen and (min-width: 1024px) and (max-width: 1440px) {
+@media screen and (min-width: 960px) and (max-width: 1440px) {
   a {
     font-size: 1rem;
     line-height: 1.5rem;
@@ -753,7 +753,6 @@ html {
     display: flex;
     align-items: center;
     justify-content: center;
-    margin: 5vh 15vw;
   }
 
   .vp2Image {
