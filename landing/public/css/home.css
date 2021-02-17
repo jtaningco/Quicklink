@@ -671,6 +671,7 @@ html {
   }
 
   .hero {
+    height: 110vh;
     flex-direction: column-reverse;
     justify-content: center;
     align-items: flex-start;
