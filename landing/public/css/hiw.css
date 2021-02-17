@@ -157,6 +157,10 @@
 }
 
 @media screen and (max-width: 567px) {
+    .hiwHero {
+        height: 75vh;
+    }
+
     .hiwHero h1 {
         font-size: 20px;
     }
@@ -215,6 +219,9 @@
 }
 
 @media screen and (min-width: 568px) and (max-width: 767px) {
+    .hiwHero {
+        height: 75vh;
+    }
 
     .hiwHero h1 {
         font-size: 20px;
@@ -259,7 +266,9 @@
 }
 
 @media screen and (min-width: 768px) and (max-width: 1067px) {
-    
+    .hiwHero {
+        height: 75vh;
+    }
 
     .useCases {
         width: auto;
@@ -314,5 +323,12 @@
     }
     .hiwMockup2 {
         width: 20%;
+    }
+}
+
+/* IPAD PRO */
+@media screen and (width: 1024px) and (height: 1366px) {
+    .hiwHero {
+        height: 50vh;
     }
 }
