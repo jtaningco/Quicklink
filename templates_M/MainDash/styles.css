@@ -1,0 +1,106 @@
+@import url('https://fonts.googleapis.com/css2?family=Overpass:wght@400;600;700;800&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    background-color: #F8F9FF;
+    font-family: 'Overpass', sans-serif;
+}
+p.MainHeader {
+  color: #FF8A00;
+  font-size: 24px;
+  font-weight: 700;
+  margin-left: 245px;
+  margin-top: 74px;
+}
+p.MainCardHeader {
+  text-align: left;
+  margin-left:25px;
+  margin-bottom: 1px;
+  font-size: 20px;
+  font-weight: 600;
+  color: #FF8A00;
+  background-color: #FFFFFF;
+}
+p.MainCardContent {
+  font-family: Overpass;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 28px;
+  line-height: 40px;
+  background-color: #FFFFFF;
+  text-align: left;
+  margin-left:25px;
+  margin-bottom: 5px;
+  /* Muted / Dark */
+  color: #2C2C2C;
+}
+p.MainSubhead {
+  background-color: #FFFFFF;
+  /* Muted / Light */
+  color: #757575;
+  font-size: 12px;
+  text-align: left;
+  margin-left:25px;
+  margin-bottom: 5px;
+}
+.span style{
+  background-color: #FFFFFF;
+}
+p.MainBottomText {
+  font-size: 12px;
+  text-align: right;
+  color: #798CF2;
+  background-color: #FFFFFF;
+}
+
+@media(min-width:100px){
+    .container-1{
+      display:flex;
+      margin-left: 232px;
+      margin-top: 15px;
+    }
+    .container-2{
+      display:flex;
+      margin-left: 232px;
+      margin-top: 15px;
+    }
+
+.container-1 div, .container-2 div {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  padding: 12px;
+  background-color: #FFFFFF;
+  margin-right: 15px;
+}
+  .box-1{
+    flex:1;
+    order:1;
+    background-color: #FFFFFF;
+  }
+
+  .box-2{
+    flex:1;
+    order:2;
+    background-color: #FFFFFF;
+  }
+
+  .box-3{
+    flex:1;
+    order: 3;
+    background-color: #FFFFFF;
+
+  }
+
+  .box-4{
+    flex:1;
+    order:1;
+    background-color: #FFFFFF;
+  }
+
+  .box-5{
+    flex:1;
+    order:2;
+    background-color: #FFFFFF;
+  }
+
+}

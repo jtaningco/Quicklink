@@ -8,7 +8,7 @@
     <title>Test</title>
     <link rel="stylesheet" href="{% static '/css/main.css' %}">
     <link rel="stylesheet" href="{% static '/css/navbar.css' %}">
-    <link rel="stylesheet" href="{% static '/css/user-products.css' %}">
+    <link rel="stylesheet" href="{% static '/css/customer-products.css' %}">
     <link rel="stylesheet" href="{% static '/css/datetime.css' %}">
     <script src="{% static '/js/datetime.js' %}"></script>
     <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
@@ -45,7 +45,7 @@
                                             {% for product in products %}
                                             <a href="{% url 'orders:add-order' product.id %}" class='product-card-link'>
                                                 <span class="product-card">
-                                                    <img src="{% static 'product.image.url' %}" alt="" class="product-card-img">
+                                                    <img src="{{ product.image.url }}" alt="" class="product-card-img">
                                                     <h1 class="subtitle bold">{{ product.name }}</h1>
                                                     <p class="overline">PHP {{ product.price }} </p>
                                                 </span>

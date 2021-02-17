@@ -1,0 +1,252 @@
+@import url('https://fonts.googleapis.com/css2?family=Overpass:wght@400;600;700;800&display=swap%27%27');
+
+.earlyAccessForm {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    padding: 15vh 7.5vw;
+    background: var(--bg-color);
+}
+
+.container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+/* INSTRUCTIONS */
+.instructionsWrapper {
+    flex-basis: 45%;
+    min-height: inherit;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    align-content: center;
+    z-index: 2;
+}
+
+.sticky {
+    position: sticky;
+    width: 80%;
+    height: auto;
+    top: 20vh;
+}
+
+.instructionsHeader {
+    font-size: 2rem;
+    line-height: 3rem;
+    margin-bottom: 1rem;
+}
+
+.list {
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    align-content: center;
+    padding: 0.5rem 0;
+}
+
+.check {
+    margin-right: 1rem;
+}
+
+.instructionsEnding {
+    font-size: 1.5rem;
+    line-height: 2.5rem;
+    margin-top: 1rem;
+}
+
+/* FORM */
+.formContainer {
+    flex-basis: 55%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-end;
+    align-content: center;
+    z-index: 2;
+}
+
+.formWrapper {
+    display: flex;
+    flex-direction: column;
+    background-color: #FFF;
+    padding: 6vh 3vw;
+    width: 95%;
+    box-shadow: 0px 3px 5px rgba(51, 51, 51, 0.15);
+    border-radius: 5px;
+}
+
+.formContext {
+    margin-bottom: 1rem;
+}
+
+/* FORM INFO */
+.formTitle {
+    color: #798CF2;
+    margin-bottom: 1rem;
+}
+
+.formItem {
+    width: 100%;
+    margin: 1.5rem 0;
+}
+
+.formItem label {
+    margin-bottom: 0.5rem;
+}
+
+.formItem input:focus {
+    border: 1px solid var(--primary-main);
+    box-sizing: border-box;
+    border-radius: 5px;
+}
+
+.textarea {
+    width: 100%;
+    height: 120px;
+    padding: 16px;
+    resize: vertical;
+    border: 1px solid var(--muted-lighter);
+    border-radius: 5px;
+}
+
+.textarea:focus {
+    border: 1px solid var(--primary-main);
+    box-sizing: border-box;
+    border-radius: 5px;
+}
+
+.primary-btn-link {
+    border: none;
+    background: transparent;
+}
+
+.submitForm {
+    width: 100%;
+    padding: 8px 24px;
+    margin: 5vh 0 4vh 0;
+}
+
+.submitFormLink {
+    font-size: 1rem;
+}
+
+/* image positions */
+#big-circle {
+    position: fixed;
+    bottom: -40vh;
+    left: -7.5vw;
+    max-width: 40%;
+    z-index: 1;
+}
+
+#small-circle {
+    position: fixed;
+    bottom: -10vh;
+    right: -5vw;
+    max-width: 20%;
+    z-index: 1;
+}
+
+
+/*textbox with info */
+input[type=text], select {
+    width: 100%;
+    padding: 10px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    font-family: 'Overpass', sans-serif;
+    border: 1px solid #a3a3a3;
+    font-size:14px;
+    color: #2c2c2c;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+
+@media screen and (max-width: 960px) {
+    .earlyAccessForm {
+        padding: 10vh 5vw;
+    }
+    
+    .container {
+        flex-direction: column;
+        justify-content: center;
+    }
+    
+    /* INSTRUCTIONS */
+    .instructionsWrapper {
+        width: 100%;
+        min-height: auto;
+        z-index: 2;
+        top: 0;
+        left: 0;
+    }
+    
+    .sticky {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-start;
+        align-content: center;
+        width: 100%;
+        padding: 5vh 5vw;
+        top: 0;
+        left: 0;
+    }
+    
+    .instructionsHeader {
+        width: 80%;
+        font-size: 1.5rem;
+        line-height: 2.5rem;
+        margin-bottom: 1rem;
+    }
+    
+    .list {
+        padding: 0.25rem 0;
+    }
+
+    .list p {
+        font-size: 1rem;
+    }
+    
+    .check {
+        margin-right: 1rem;
+    }
+    
+    .instructionsEnding {
+        width: 80%;
+        font-size: 1.25rem;
+        line-height: 2rem;
+        margin-top: 1rem;
+    }
+    
+    /* FORM */
+    .formWrapper {
+        padding: 6vh 5vw;
+        width: 100%;
+    }
+    
+    /* image positions */
+    #big-circle {
+        position: fixed;
+        bottom: 10vh;
+        left: -7.5vw;
+    }
+    
+    #small-circle {
+        position: fixed;
+        bottom: 20vh;
+        right: -5vw;
+    }
+}

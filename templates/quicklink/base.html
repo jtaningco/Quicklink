@@ -10,18 +10,31 @@
     <link rel="stylesheet" href="{% static '/css/navbar.css' %}">
     <link rel="stylesheet" href="{% static '/css/products.css' %}">
     <link rel="stylesheet" href="{% static '/css/orders.css' %}">
-    <link rel="stylesheet" href="{% static '/css/user-products.css' %}">
+    <link rel="stylesheet" href="{% static '/css/customer-products.css' %}">
     <link rel="stylesheet" href="{% static '/css/datetime.css' %}">
+    <link rel="stylesheet" href="{% static '/css/user.css' %}">
     <script src="{% static '/js/datetime.js' %}"></script>
     <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
     <script src="https://kit.fontawesome.com/a076d05399.js"></script>
 </head>
 <body onload="realtimeClock()">
-    <div class="header-container">
-        <div class="header-content">
-            <div class="datetime" id="datetime"></div>
+    {% if request.user.is_anonymous == True %}
+        <div class="header-container">
+            <div class="header-wrapper">
+                <div class="datetime" id="datetime"></div>
+            </div>
         </div>
-    </div>
+    {% else %}
+        <div class="header-container">
+            <div class="header-wrapper">
+                <div class="user-information">
+                    <p class="subtitle">Hello, <span class="bold">{{ request.user }}</span></p>
+                    <a href="{% url 'accounts:merchant-logout' %}" class='tertiary-btn-link'>Logout</a>
+                </div>
+                <div class="datetime" id="datetime"></div>
+            </div>
+        </div>
+    {% endif %}
 
     {% include 'quicklink/navbar.html' %}
     
