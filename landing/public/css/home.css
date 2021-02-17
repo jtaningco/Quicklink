@@ -182,8 +182,13 @@ html {
   margin-top: 8px;
 }
 
+.payLogos div {
+  display: flex;
+  flex-wrap: wrap;
+}
+
 .payLogos img {
-  margin: 0px 8px;
+  margin: 1vh 8px;
   max-height: 40px;
 }
 
@@ -481,7 +486,7 @@ html {
   }
 
   .vp2 {
-    margin: 25vh 0;
+    margin: 15vh 0;
   }
 
   .vp2Image {
@@ -491,8 +496,8 @@ html {
   .customers {
     display: flex;
     flex-direction: column;
-    margin: 160px 400px;
-    justify-content: center;
+    margin: 25vh 25vw;
+    justify-content: space-between;
     align-items: center;
   }
 
@@ -500,8 +505,8 @@ html {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin: 64px 60px 0px 60px;
-    max-width: 360px;
+    max-width: 440px;
+    margin: 5vh 5vw;
   }
 
   .compCircle {
@@ -521,7 +526,7 @@ html {
 }
 
 /* 960px - 1440px */
-@media screen and (min-width: 960px) and (max-width: 1440px) {
+@media screen and (min-width: 1024px) and (max-width: 1440px) {
   a {
     font-size: 1rem;
     line-height: 1.5rem;
@@ -581,6 +586,10 @@ html {
     margin: 80px 20vw 160px 20vw;
   }
 
+  .vpText {
+    max-width: 80%;
+  }
+
   .circleBack1 {
     max-width: 320px;
     position: absolute;
@@ -597,7 +606,7 @@ html {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    margin: 20vh 20vw;
+    margin: 80px 20vw 160px 20vw;
   }
   
   .vp2 {
@@ -608,7 +617,7 @@ html {
   }
 
   .vp2Image {
-    max-width: 25%;
+    max-width: 40%;
     margin-right: 64px;
   }
 
@@ -621,7 +630,7 @@ html {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin: 40vh 15vw;
+    margin: 40vh 10vw;
   }
 
   .compCircle {
@@ -744,6 +753,7 @@ html {
     display: flex;
     align-items: center;
     justify-content: center;
+    margin: 5vh 15vw;
   }
 
   .vp2Image {
@@ -906,14 +916,14 @@ html {
   }
 
   .vp2Flex { margin: 5vh 7.5vw; }
-  .vp2 { flex-direction: column; }
+  .vp2 { flex-direction: column; align-items: flex-start; }
   .payMethod { margin: 2.5vh 0 0 0; }
   .payLogos div { margin: 1em 0; }
 
   .vp2Image {
     height: auto;
     min-width: 50%;
-    margin-bottom: 5vh;
+    margin: 0 0 5vh 5vw;
   }
 
   .comparative {

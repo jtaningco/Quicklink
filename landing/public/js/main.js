@@ -41,7 +41,7 @@ window.onscroll = function() {
         
         var navOptions = document.getElementsByClassName("navOptions");
         for(var i = 0, length=navOptions.length; i<length; i++) {
-            if (window.matchMedia("(min-width: 960px)").matches) {
+            if (window.matchMedia("(min-width: 1025px)").matches) {
                 navOptions[i].style.color = "#FFF";
             } else {
                 navOptions[i].style.color = "var(--muted-lighter)";

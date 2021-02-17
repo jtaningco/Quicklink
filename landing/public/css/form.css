@@ -36,7 +36,6 @@
     width: 80%;
     height: auto;
     top: 20vh;
-    left: 20vh;
 }
 
 .instructionsHeader {
@@ -243,19 +242,11 @@ input[type=text], select {
         position: fixed;
         bottom: 10vh;
         left: -7.5vw;
-        animation-name: bigCircleMobile;
-        animation-duration: 45s;
-        animation-direction: alternate reverse;
-        animation-iteration-count: infinite;
     }
     
     #small-circle {
         position: fixed;
         bottom: 20vh;
         right: -5vw;
-        animation-name: smallCircleMobile;
-        animation-duration: 30s;
-        animation-direction: alternate;
-        animation-iteration-count: infinite;
     }
 }
