@@ -158,15 +158,12 @@
 
 @media screen and (max-width: 567px) {
     .hiwHero {
-        height: 75vh;
+        height: 100vh;
+        margin: 0 16px;
     }
 
     .hiwHero h1 {
         font-size: 20px;
-    }
-
-    .hiwHero {
-        margin: 0px 16px;
     }
 
     .useCases {
@@ -185,7 +182,7 @@
 
     .useCases-text-section {
         margin-left: 0px;
-        max-width: 80%;
+        max-width: 100%;
         margin-top: 24px;
         display: flex;
         flex-direction: column;
@@ -220,7 +217,7 @@
 
 @media screen and (min-width: 568px) and (max-width: 767px) {
     .hiwHero {
-        height: 75vh;
+        height: 100vh;
     }
 
     .hiwHero h1 {
@@ -267,7 +264,7 @@
 
 @media screen and (min-width: 768px) and (max-width: 1067px) {
     .hiwHero {
-        height: 75vh;
+        height: 100vh;
     }
 
     .useCases {
@@ -329,6 +326,6 @@
 /* IPAD PRO */
 @media screen and (width: 1024px) and (height: 1366px) {
     .hiwHero {
-        height: 50vh;
+        height: 100vh;
     }
 }

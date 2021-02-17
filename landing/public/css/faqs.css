@@ -1,5 +1,11 @@
 html { scroll-behavior: smooth; }
 
+img, img:focus {
+    border: 0;
+    text-decoration: none;
+    outline: none;
+}
+
 .faqsHero {
     height: 100vh;
     display: flex;
@@ -12,7 +18,7 @@ html { scroll-behavior: smooth; }
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    width: 40%;
+    width: 50%;
 }
 
 .faqHeroImage {
@@ -20,6 +26,7 @@ html { scroll-behavior: smooth; }
 }
 
 .faqsHero h3 {
+    width: 80%;
     color: var(--muted-light);
     margin: 16px 0px;
 }
@@ -108,6 +115,7 @@ html { scroll-behavior: smooth; }
 }
 
 .faqQuestion p {
+    font-size: 1rem;
     width: 332px;
     height: 80px;
     display: flex;
@@ -136,11 +144,12 @@ html { scroll-behavior: smooth; }
 }
 
 .faqAnswer p {
+    font-size: 1rem;
     width: auto;
     color: #2c2c2c;
 }
 
-@media screen and (max-width: 576px) {
+@media screen and (max-width: 567px) {
     .faqsHero {
         flex-direction: column-reverse;
         align-items: center;
@@ -149,7 +158,17 @@ html { scroll-behavior: smooth; }
 
     .faqHeroText {
         margin: 0px 16px;
-        width: 60%;
+        width: 100%;
+    }
+
+    .faqHeroText h1 {
+        font-size: 1.5rem;
+        line-height: 2.5rem;
+    }
+
+    .faqHeroText h3 {
+        font-size: 1rem;
+        line-height: 2rem;
     }
 
     .faqHeroImage {
@@ -181,6 +200,7 @@ html { scroll-behavior: smooth; }
     }
 
     .faqQuestion p {
+        font-size: 1rem;
         width: 232px;
         height: 80px;
         display: flex;
@@ -191,6 +211,10 @@ html { scroll-behavior: smooth; }
 
     .faqAnswer {
         width: 232px;
+    }
+
+    .faqAnswer p {
+        font-size: 0.8rem;
     }
 }
 
@@ -230,7 +254,7 @@ html { scroll-behavior: smooth; }
     }
 }
 
-@media screen and (min-width: 768px) and (max-width: 1067px) {
+@media screen and (min-width: 768px) and (max-width: 1023px) {
     .faqsHero {
         flex-direction: column-reverse;
         align-items: flex-start;
@@ -277,23 +301,19 @@ html { scroll-behavior: smooth; }
 }
 
 @media screen and (min-width: 1920px) {
-    .faqHeroText {
-        margin-left: 400px;
-    }
-
     .faqsHero {
-        margin-right: 360px;
+        padding: 5vh 20vw;
     }
 
     .faqSection {
         display: flex;
         flex-direction: column;
-        align-items: center;
+        align-items: space-between;
         justify-content: center;
-        margin: 40px 400px;
+        padding: 10vh 10vw;
     }
 
     .faqQA {
-        width: 404px;
+        width: 20vw;
     }
 }

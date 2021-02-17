@@ -148,10 +148,6 @@
     left: -7.5vw;
     max-width: 40%;
     z-index: 1;
-    animation-name: bigCircle;
-    animation-duration: 30s;
-    animation-direction: alternate;
-    animation-iteration-count: infinite;
 }
 
 #small-circle {
@@ -160,10 +156,6 @@
     right: -5vw;
     max-width: 20%;
     z-index: 1;
-    animation-name: smallCircle;
-    animation-duration: 45s;
-    animation-direction: alternate;
-    animation-iteration-count: infinite;
 }
 
 
@@ -265,51 +257,5 @@ input[type=text], select {
         animation-duration: 30s;
         animation-direction: alternate;
         animation-iteration-count: infinite;
-    }
-}
-
-@keyframes bigCircle {
-    0% {
-        transform: translateX(0%);
-    }
-    100% {
-        transform: translateX(50%);
-    }
-}
-
-@keyframes bigCircleMobile {
-    0% {
-        transform: translateX(0%);
-    }
-
-    50% {
-        transform: translateX(15%) translateY(25%);
-    }
-
-    100% {
-        transform: translateX(0%) translateY(50%);
-    }
-}
-
-@keyframes smallCircle {
-    0% {
-        transform: translateY(0%);
-    }
-    100% {
-        transform: translateY(-75%);
-    }
-}
-
-@keyframes smallCircleMobile {
-    0% {
-        transform: translateX(0%);
-    }
-
-    50% {
-        transform: translateX(-15%) translateY(-35%);
-    }
-
-    100% {
-        transform: translateX(0%) translateY(-70%);
     }
 }

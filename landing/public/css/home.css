@@ -192,7 +192,7 @@ html {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin: 40vh 25vw;
+  margin: 40vh 20vw;
 }
 
 .customerCards {
@@ -371,7 +371,6 @@ html {
 .footerEmail {
   display: inline-block;
   position: relative;
-  padding: 8px 4px;
 }
 
 .footerEmail:after {    
@@ -402,8 +401,7 @@ html {
 
 .documentLinks p {
   color: #fff;
-  font-size: 16px;
-  line-height: 24px;
+  font-size: 1rem;
   font-weight: 400;
   transition: color 0.3s ease;
 }
@@ -722,6 +720,7 @@ html {
     position: absolute;
     z-index: -1;
     top: 1520px;
+    left: -280px;
   }
 
   .circleBack2 {
@@ -783,12 +782,12 @@ html {
   }
 
   .comparative {
-    margin: 5vh 15vw;
+    margin: 25vh 15vw;
   }
 
   .CTA {
     height: 20vh;
-    margin: 5vh 15vw;
+    margin: 10vh 15vw;
   }
 
   .CTA h1 {
@@ -860,6 +859,112 @@ html {
 
 @media screen and (max-width: 576px) {
   .hero { height: 120vh; padding: 20vh 5vw; justify-content: flex-end; }
+
+  .heroCircle2 {
+    position: absolute;
+    top: 136px;
+    left: 200px;
+    z-index: -5;
+    max-width: 80px;
+    max-width: 160px;
+  }
+
+  .heroCircle3 { display: none; }
+
+  .heroHead { 
+    font-size: 1.5rem; 
+    line-height: 2rem; 
+    max-width: 95%; 
+  }
+
+  .heroBody {
+    margin-left: 0;
+    font-size: 1rem;
+    line-height: 1.5rem;
+    max-width: 100%;
+  }
+
+  .heroImage {
+    margin-left: 0;
+    min-width: 100%;
+    height: auto;
+  }
+
+  .customers { margin: 25vh 7.5vw 25vh 7.5vw; }
+  .customerCards { flex-direction: column; }
+
+  .vp1 { margin: 5vh 7.5vw; }
+  
+  .vpText h1 {
+    font-size: 1.5rem;
+    line-height: 2rem;
+  }
+
+  .vpText p {
+    color: var(--muted-default);
+    font-size: 1rem;
+  }
+
+  .vp2Flex { margin: 5vh 7.5vw; }
+  .vp2 { flex-direction: column; }
+  .payLogos div { margin: 1rem 0; }
+
+  .vp2Image {
+    height: auto;
+    min-width: 50%;
+    margin-bottom: 5vh;
+  }
+
+  .comparative {
+    margin: 5vh 7.5vw;
+  }
+
+  .compTable {
+    height: auto;
+    min-width: 100%;
+  }
+
+  .compCircle { display: none; }
+  .circleBack2 { display: none; }
+
+  .CTA {
+    height: auto;
+    margin: 5vh 7.5vw;
+    padding: 5vh 2.5vw;
+  }
+
+  .CTAWrapper { flex-direction: column; }
+
+  .textCTA {
+    flex-basis: 50%;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 0.5vh 2.5vw;
+  }
+
+  .textCTA h1 { text-align: center; }
+  
+  .buttonCTA {
+    flex-basis: 50%;
+    padding: 0.5vh 2.5vw;
+    justify-content: center;
+    align-items: flex-end;
+  }
+
+  .CTA h1 {
+    font-size: 1rem;
+    line-height: 2rem;
+    max-width: 80%;
+  }
+
+  .CTA a { font-size: 1rem; line-height: 1.5rem; }
+
+  .mainFooter { height: auto; }
+  .footerFull { padding: 5vh 5vw; }
+}
+
+@media screen and (max-width: 320px) {
+  .hero { height: auto; padding: 25vh 5vw; justify-content: flex-end; }
 
   .heroCircle2 {
     position: absolute;
