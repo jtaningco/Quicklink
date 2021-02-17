@@ -26,7 +26,9 @@
     <!-- EmailJS -->
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/emailjs-com@2/dist/email.min.js"></script>
     <script type="text/javascript">
-        emailjs.init('user_1xwNoD1h4pRrRQRCyHR8E')
+        (function() {
+            emailjs.init('user_1xwNoD1h4pRrRQRCyHR8E');
+        })();
     </script>
     <script src="js/form.js"></script>
 
@@ -97,6 +99,8 @@
                         <p class="body">Filling out this form will help us prepare for your use of Quicklink's early access program! Expect an email within 2-5 days from a team member.</p>
                     </div>
                     <form method="POST" id="my-form">
+                        <input type="hidden" name="accessToken" value="88ee4f50e38d7d8a035a948d1b390ffb">
+
                         <div class="formItem">
                             <label class="body bold">What's your name?<span style="color: #F35252">*</span></label>
                             <input class="form-field" type="text" placeholder="Name" name="name" required>
@@ -143,9 +147,9 @@
                         </div>
 
                         <!-- ReCaptcha -->
-                        <!-- <div class="formItem">
+                        <div class="formItem">
                             <div class="g-recaptcha" data-sitekey="6LfySloaAAAAACZEAph0oFmuXhc2-LNrjUUAdB3v"></div>
-                        </div> -->
+                        </div>
         
                         <button type="submit" formmethod="POST" class="primary-btn disabled submitForm" id="confirmButton">
                             <p id="confirm" class="primary-btn-link disabled submitFormLink">Request for Early Access</p>

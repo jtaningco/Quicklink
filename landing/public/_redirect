@@ -4,5 +4,5 @@
 # for the rest
 /faqs/*        /faqs.html     200
 /how-it-works/*        /how-it-works.html     200
-/early-access/*      /early-access.php   200
+/early-access/*      /early-access.html   200
 /pricing/*      /pricing.html   200
