@@ -26,6 +26,7 @@ html {
 }
 
 .primary-white-btn-link {
+  cursor: url('../static/logos/blue-cursor.png'), auto;
   font-weight: 700;
   color: var(--primary-main);
 }

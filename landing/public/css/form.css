@@ -161,7 +161,7 @@
     max-width: 40%;
     z-index: 1;
     animation-name: bigCircle;
-    animation-duration: 20s;
+    animation-duration: 30s;
     animation-direction: alternate;
     animation-iteration-count: infinite;
 }
@@ -172,9 +172,9 @@
     right: -5vw;
     max-width: 20%;
     z-index: 1;
-    animation-name: enlarge;
-    animation-duration: 10s;
-    animation-direction: alternate reverse;
+    animation-name: smallCircle;
+    animation-duration: 45s;
+    animation-direction: alternate;
     animation-iteration-count: infinite;
 }
 
@@ -668,9 +668,18 @@ input[type=text], select {
 
 @keyframes bigCircle {
     0% {
-        transform: translateY(0%) translateX(0%);
+        transform: translateX(0%);
     }
     100% {
-        transform: translateY(20%) translateX(20%);
+        transform: translateX(-25%);
+    }
+}
+
+@keyframes smallCircle {
+    0% {
+        transform: translateY(0%);
+    }
+    100% {
+        transform: translateY(-75%);
     }
 }

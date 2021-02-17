@@ -142,6 +142,7 @@ a {
 }
 
 .primary-btn.disabled {
+  cursor: not-allowed;
   background: var(--muted-lightest);
 }
 
@@ -151,7 +152,7 @@ a {
   cursor: url('../static/logos/blue-cursor.png'), auto;
 }
 .primary-btn-link.disabled {
-  cursor: default;
+  cursor: not-allowed;
   pointer-events: none; 
   color: var(--muted-lighter);
   font-weight: 700;
@@ -587,7 +588,12 @@ textarea {
   background-image: url("../static/logos/wideLogo.png");
   background-repeat: no-repeat;
   background-size: 100% 100%;
-  transition: background-image 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
+  cursor: url('../static/logos/blue-cursor.png'), auto;
+}
+
+#navLogo:hover {
+  transform: scale(1.05);
 }
 
 #navLogo.scrolled {
@@ -596,12 +602,6 @@ textarea {
 
 .logoLink {
   padding-left: 0px;
-  backface-visibility: hidden;
-  transition: transform 0.3s ease-in-out;
-}
-
-.logoLink:hover {
-  transform: scale(1.05);
   cursor: url('../static/logos/blue-cursor.png'), auto;
 }
 
