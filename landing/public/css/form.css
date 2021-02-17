@@ -160,10 +160,6 @@
     left: -7.5vw;
     max-width: 40%;
     z-index: 1;
-    animation-name: bigCircle;
-    animation-duration: 30s;
-    animation-direction: alternate;
-    animation-iteration-count: infinite;
 }
 
 #small-circle {
@@ -172,10 +168,6 @@
     right: -5vw;
     max-width: 20%;
     z-index: 1;
-    animation-name: smallCircle;
-    animation-duration: 45s;
-    animation-direction: alternate;
-    animation-iteration-count: infinite;
 }
 
 
@@ -664,22 +656,4 @@ input[type=text], select {
         border-radius: 4px;
         box-sizing: border-box;
     }     
-}
-
-@keyframes bigCircle {
-    0% {
-        transform: translateX(0%);
-    }
-    100% {
-        transform: translateX(-25%);
-    }
-}
-
-@keyframes smallCircle {
-    0% {
-        transform: translateY(0%);
-    }
-    100% {
-        transform: translateY(-75%);
-    }
 }

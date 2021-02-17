@@ -589,6 +589,7 @@ textarea {
   background-repeat: no-repeat;
   background-size: 100% 100%;
   transition: all 0.3s ease-in-out;
+  image-rendering: crisp-edges;
   cursor: url('../static/logos/blue-cursor.png'), auto;
 }
 
@@ -597,6 +598,7 @@ textarea {
 }
 
 #navLogo.scrolled {
+  image-rendering: crisp-edges;
   background-image: url("../static/logos/wideLogo-blue.png");
 }
 
@@ -807,6 +809,19 @@ textarea {
   .navOptions {
     font-size: 1rem;
     line-height: 1.5rem;
+  }
+}
+
+@media screen and (max-width: 320px) {
+  .navBurger { flex-basis: 25%; }
+  .navButton { flex-basis: 75%; }
+
+  .primary-white-btn-link {
+    font-size: 0.8rem;
+  }
+
+  .primary-btn-link {
+    font-size: 0.8rem;
   }
 }
 
