@@ -339,6 +339,12 @@ html {
  margin-top: 8px;
  padding: 0px;
  font-weight: 400;
+ cursor: url('../static/logos/blue-cursor.png'), auto;
+ transition: color 0.3s ease;
+}
+
+.footerLink:hover {
+  color: var(--secondary-light);
 }
 
 .footerColumn {
@@ -361,14 +367,48 @@ html {
   font-weight: 700;
 }
 
+.footerEmail {
+  display: inline-block;
+  position: relative;
+  padding: 8px 4px;
+}
+
+.footerEmail:after {    
+  background: none repeat scroll 0 0 transparent;
+  bottom: 0;
+  content: "";
+  display: block;
+  height: 2px;
+  left: 50%;
+  position: absolute;
+  background: var(--primary-light);
+  transition: width 0.3s ease 0s, left 0.3s ease 0s;
+  width: 0;
+}
+
+.footerEmail:hover:after { 
+  width: 100%; 
+  left: 0; 
+}
+
 .documentLinks {
   display: flex;
 }
 
+.documentLinks a {
+  cursor: url('../static/logos/blue-cursor.png'), auto;
+}
+
 .documentLinks p {
+  color: #fff;
   font-size: 16px;
   line-height: 24px;
   font-weight: 400;
+  transition: color 0.3s ease;
+}
+
+.documentLinks p:hover {
+  color: var(--secondary-light);
 }
 
 /* OVER 1920px */

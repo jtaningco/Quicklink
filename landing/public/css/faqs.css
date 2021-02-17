@@ -1,3 +1,5 @@
+html { scroll-behavior: smooth; }
+
 .faqsHero {
     height: 100vh;
     display: flex;
@@ -21,6 +23,14 @@
 .faqsHero h3 {
     color: var(--muted-light);
     margin: 16px 0px;
+}
+
+.faqChevronLink {
+    width: 100%;
+    padding: 0;
+    display: flex;
+    justify-content: flex-start;
+    cursor: url('../static/logos/blue-cursor.png'), auto;
 }
 
 .faqChevron {
@@ -71,7 +81,7 @@
     box-shadow: var(--regular-box-shadow);
     border-radius: 5px 5px 0px 0px;
     transition: all 0.1s ease-out;
-    cursor: url('../static/logos/white-cursor.png'), auto;
+    cursor: url('../static/logos/blue-cursor.png'), auto;
 }
 
 .faqQuestionActive, .faqQuestion:hover {
@@ -90,6 +100,7 @@
 
 .cardChevron {
     transform: scaleY(1);
+    transition: all 0.3s ease;
 }
 
 .faqAnswer {
