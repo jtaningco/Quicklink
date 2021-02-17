@@ -14,6 +14,37 @@
     text-align: center;
 }
 
+.hiwChevronLink {
+    width: 100%;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    cursor: url('../static/logos/blue-cursor.png'), auto;
+}
+
+.hiwChevron {
+    width: 24px;
+    animation: blink 3s infinite;
+    transition: transform 0.3s ease;
+}
+
+.hiwChevron:hover {
+    animation: none;
+    transform: translateY(10%);
+}
+
+@keyframes blink {
+    0% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.5;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
 .hiwMerchants {
     display: flex;
     flex-direction: column;

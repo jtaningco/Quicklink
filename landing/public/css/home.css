@@ -250,7 +250,7 @@ html {
 }
 
 .CTA {
-  height: 50vh;
+  height: auto;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -559,7 +559,7 @@ html {
   .heroText { max-width: 45vw; }
 
   .heroHead {
-    max-width: 70%;
+    max-width: 80%;
     font-size: 2rem;
     line-height: 3rem;
     font-weight: 700;
@@ -567,7 +567,7 @@ html {
   }
   
   .heroBody {
-    width: 75%;
+    width: 90%;
     font-size: 1rem;
     line-height: 2rem;
     color: #fff;
@@ -575,7 +575,7 @@ html {
   }
 
   .heroImage {
-    max-width: 55%;
+    max-width: 50%;
     margin-right: 40px;
   }
 
@@ -623,7 +623,7 @@ html {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin: 40vh 25vw;
+    margin: 40vh 15vw;
   }
 
   .compCircle {
@@ -638,8 +638,8 @@ html {
   }
 
   .CTA {
-    height: 50vh;
-    margin: 30vh 20vw;
+    margin: 25vh 20vw;
+    padding: 10vh 5vw;
   }
 
   .textCTA h1 {
@@ -648,7 +648,7 @@ html {
   }
 
   .mainFooter {
-    height: 60vh;
+    height: auto;
   }
 }
 
@@ -867,21 +867,21 @@ html {
   .heroCircle3 { display: none; }
 
   .heroHead { 
-    font-size: 1.75rem; 
+    font-size: 1.5rem; 
     line-height: 2rem; 
     max-width: 95%; 
   }
 
-  .heroText {
-    margin-left: 8vw;
-    font-size: 1.25rem;
-    line-height: 1.75rem;
+  .heroBody {
+    margin-left: 0;
+    font-size: 1rem;
+    line-height: 1.5rem;
     max-width: 100%;
   }
 
   .heroImage {
-    margin-left: 5vw;
-    min-width: 80%;
+    margin-left: 0;
+    min-width: 100%;
     height: auto;
   }
 
@@ -889,6 +889,17 @@ html {
   .customerCards { flex-direction: column; }
 
   .vp1 { margin: 5vh 7.5vw; }
+  
+  .vpText h1 {
+    font-size: 1.5rem;
+    line-height: 2rem;
+  }
+
+  .vpText p {
+    color: var(--muted-default);
+    font-size: 1rem;
+  }
+
   .vp2Flex { margin: 5vh 7.5vw; }
   .vp2 { flex-direction: column; }
   .payLogos div { margin: 1rem 0; }
@@ -913,7 +924,7 @@ html {
 
   .CTA {
     height: 30vh;
-    margin: 0 7.5vw 5vh 7.5vw;
+    margin: 5vh 7.5vw;
     padding: 5vh 2.5vw;
   }
 
@@ -941,7 +952,8 @@ html {
 
   .CTA a { font-size: 1rem; line-height: 1.5rem; }
 
-  .mainFooter { height: 90vh; }
+  .mainFooter { height: auto; }
+  .footerFull { padding: 5vh 5vw; }
 }
 
 /* IPAD PRO */
@@ -949,16 +961,26 @@ html {
   .navBurger { display: flex; }
 
   .hero {
-    height: 60vh;
+    height: 80vh;
     padding: 15vh 10vw;
-    align-items: flex-start;
+    align-items: center;
+    flex-direction: column-reverse;
   }
 
-  .vp1 { margin: 5vh 20vw; }
-  .customers { margin: 15vh 20vw; }
-  .vp2Flex { margin: 5vh 20vw; }
-  .comparative { margin: 10vh 20vw; }
-  .CTA { height: 20vh; margin: 10vh 20vw; }
+  .heroText { max-width: 100%; }
+  .heroImage { max-width: 90%; }
+
+  .vp1 { margin: 5vh 10vw; }
+  .customers { margin: 15vh 10vw; }
+  .vp2Flex { margin: 5vh 10vw; }
+  .comparative { margin: 10vh 10vw; }
+  .CTA { height: 20vh; margin: 10vh 10vw; }
+
+  .vp2Image {
+    height: auto;
+    min-width: 40%;
+    margin-bottom: 5vh;
+  }
 
   .payLogos { margin-top: 16px; }
 

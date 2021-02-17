@@ -5,6 +5,7 @@ html { scroll-behavior: smooth; }
     display: flex;
     align-items: center;
     justify-content: space-between;
+    padding: 5vh 10vw;
 }
 
 .faqHeroText {
@@ -12,11 +13,9 @@ html { scroll-behavior: smooth; }
     flex-direction: column;
     justify-content: flex-start;
     width: 40%;
-    margin-left: 120px;
 }
 
 .faqHeroImage {
-    margin-right: 40px;
     max-width: 30%;
 }
 
@@ -35,6 +34,25 @@ html { scroll-behavior: smooth; }
 
 .faqChevron {
     width: 24px;
+    animation: blink 3s infinite;
+    transition: transform 0.3s ease;
+}
+
+.faqChevron:hover {
+    animation: none;
+    transform: translateY(10%);
+}
+
+@keyframes blink {
+    0% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.5;
+    }
+    100% {
+        opacity: 1;
+    }
 }
 
 .faqSection {
@@ -103,6 +121,10 @@ html { scroll-behavior: smooth; }
     transition: all 0.3s ease;
 }
 
+.faqQuestion:hover > .cardChevron {
+    transform: translateY(-15%);
+}
+
 .faqAnswer {
     height: 0px;
     overflow: hidden;
@@ -118,10 +140,10 @@ html { scroll-behavior: smooth; }
     color: #2c2c2c;
 }
 
-@media screen and (max-width: 567px) {
+@media screen and (max-width: 576px) {
     .faqsHero {
         flex-direction: column-reverse;
-        align-items: flex-start;
+        align-items: center;
         justify-content: center;
     }
 
@@ -245,14 +267,6 @@ html { scroll-behavior: smooth; }
 }
 
 @media screen and (min-width: 1440px) and (max-width: 1919px) {
-    .faqHeroText {
-        margin-left: 240px;
-    }
-
-    .faqsHero {
-        margin-right: 120px;
-    }
-
     .faqSection {
         display: flex;
         flex-direction: column;
