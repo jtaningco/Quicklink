@@ -28,8 +28,9 @@
     <script type="text/javascript">
         emailjs.init('user_1xwNoD1h4pRrRQRCyHR8E')
     </script>
-    
     <script src="js/form.js"></script>
+
+    <!-- Local Scripts -->
     <script src="js/nav.js"></script>
 </head>
 <body>
