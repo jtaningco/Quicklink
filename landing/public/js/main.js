@@ -25,7 +25,7 @@ window.onscroll = function() {
         
         var navOptions = document.getElementsByClassName("navOptions");
         for(var i = 0, length=navOptions.length; i<length; i++) {
-            navOptions[i].style.color = "var(--muted-lighter)";
+            navOptions[i].classList.add("scrolled");
         };
     } else {
         document.getElementById("navbar").classList.remove("scrolled");
@@ -42,9 +42,9 @@ window.onscroll = function() {
         var navOptions = document.getElementsByClassName("navOptions");
         for(var i = 0, length=navOptions.length; i<length; i++) {
             if (window.matchMedia("(min-width: 1025px)").matches) {
-                navOptions[i].style.color = "#FFF";
+                navOptions[i].classList.remove("scrolled");
             } else {
-                navOptions[i].style.color = "var(--muted-lighter)";
+                navOptions[i].classList.add("scrolled");;
             }
         };
     }
