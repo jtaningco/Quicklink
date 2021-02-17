@@ -1,6 +1,6 @@
 {
-  "name": " ",
-  "version": "0.0.1",
+  "name": "Quicklink",
+  "version": "2",
   "description": "",
   "keywords": "",
   "license": "",
@@ -14,6 +14,6 @@
   "devDependencies": {
     "parcel-bundler": "^1.12.4"
   },
-  "public": true,
+  "cleanUrls": true,
   "trailingSlash": true
 }
