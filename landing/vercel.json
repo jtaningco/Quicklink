@@ -1,9 +1,6 @@
 {
     "name": "Quicklink",
     "version": 2,
-    "builds": [
-        { "src": "*.html", "use": "@vercel/static" }
-    ],
     "github": {
         "enabled": true
     },
