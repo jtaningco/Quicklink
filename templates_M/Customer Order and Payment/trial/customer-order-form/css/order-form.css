@@ -18,11 +18,12 @@
     flex-direction: column;
     margin: 88px 0px 5px 48px;
     background-color: #FFF;
-    width: 70%;
+    max-width: 75%;
 }
 
 
 /* --for the company top portion-- */
+
 .company {
     display: flex;
     align-items: center;
@@ -58,6 +59,10 @@
 }
 
 /*company logo */
+
+.circular-logo {
+    border-radius: 50%;
+}
 #company-logo {
     padding: 0px 20px 0px 0px;
 }
@@ -84,6 +89,7 @@
 .company-card-block {
     display: flex;
     margin-top: 16px;
+    justify-content: center;
 }
 
 .company-cards {
@@ -137,6 +143,7 @@
     position: fixed;
     right:0px;
     width: 35%;
+    max-width: 320px;
     height: 100vh;
     background-color: var(--bg-color);
     filter: drop-shadow(-4px 0px 10px rgba(0, 0, 0, 0.1));
@@ -220,14 +227,14 @@
     font-size: 10px;
     line-height: 20px;
     padding-right:4px;
-    color: #FF8A00;
+    color: var(--secondary-alt);
 }
 
 .basket-product-price {
     font-weight: 600;
     font-size: 14px;
     line-height: 22px;
-    color: #FF8A00;
+    color: var(--secondary-alt);
 }
 
 .basket-subtitle {
@@ -293,7 +300,7 @@
     align-items:center;
     align-content:center;
     bottom: 0;
-    padding: 12px;
+    padding: 16px;
     font-size: 20px;
     background-color: #FFF;
     filter: drop-shadow(0px 3px 5px rgba(51, 51, 51, 0.15)); 
@@ -311,7 +318,7 @@
     display: flex;
     justify-content: space-between;
     width: 100%;
-    padding: 8px 4px 8px 4px;
+    padding: 0px 4px 8px 4px;
 }
 /*text */
 .basket-subtotal {
@@ -347,6 +354,7 @@
     font-style: normal;
     font-weight: normal;
     font-size: 16px;
+    padding-top:8px;
     align-items:baseline;
     color: #2C2C2C;
 }
@@ -356,6 +364,7 @@
     font-style: normal;
     font-weight: bold;
     font-size: 16px;
+    padding-top:8px;
     align-items:baseline;
     color: #2C2C2C;
     margin-right: 4px;
@@ -366,6 +375,7 @@
     font-style: normal;
     font-weight: bold;
     font-size: 16px;
+    padding-top:8px;
     align-items:baseline;
     color: #2C2C2C;
 }
@@ -377,7 +387,9 @@
     display: flex;
     flex-direction: row;
     justify-content: center;
-    padding: 8px 40px;
+    padding: 12px 40px;
+    margin-top:8px;
+    margin-bottom: 8px;
     width: 100%; /* double check with josh */
     background-color: var(--secondary-main);
     box-shadow: 0px 3px 5px rgba(51, 51, 51, 0.15);
