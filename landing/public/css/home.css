@@ -78,10 +78,11 @@ html {
   flex-direction: column;
   align-items: flex-start;
   justify-content: start;
-  max-width: 40vw;
+  max-width: 45vw;
 }
 
 .heroHead {
+  width: 100%;
   font-size: 2rem;
   line-height: 2.5rem;
   font-weight: 700;
@@ -96,7 +97,7 @@ html {
 }
 
 .heroImage {
-  max-width: 50%;
+  max-width: 45%;
 }
 
 .vp1 {

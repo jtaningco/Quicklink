@@ -617,7 +617,7 @@ textarea {
 
 .navOptions {
   width: auto;
-  padding: 0px 40px;
+  padding: 4px 40px 0 40px;
   color: #FFF;
   font-size: 1rem;
   font-weight: 700;
