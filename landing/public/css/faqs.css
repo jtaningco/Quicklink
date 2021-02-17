@@ -149,6 +149,12 @@ img, img:focus {
     color: #2c2c2c;
 }
 
+@media screen and (max-width: 320px) {
+    .faqsHero {
+        margin-top: 10vh;
+    }
+}
+
 @media screen and (max-width: 567px) {
     .faqsHero {
         flex-direction: column-reverse;

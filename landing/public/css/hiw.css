@@ -73,8 +73,6 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    /* justify-content: center; */
-    /* margin-top: 80px; */
 }
 
 .useCase-section {
@@ -314,12 +312,19 @@
 }
 
 @media screen and (min-width: 1920px) {
-
     .hiwMockup {
         width: 40%;
     }
     .hiwMockup2 {
         width: 20%;
+    }
+    .useCases {
+        width: 85%;
+    }
+
+    .useCases-text-section {
+        margin-left: 24px;
+        max-width: 30vw;
     }
 }
 

@@ -257,7 +257,7 @@ html {
   align-content: center;
   background-image: url("/landing/public/static/background/ctaBG.png");
   background-size: 100% 100%;
-  margin: 0 20vw 25vh 20vw;
+  margin: 25vh 20vw;
   padding: 10vh 5vw;
   border-radius: 40px;
   box-shadow: var(--regular-box-shadow);
@@ -907,7 +907,8 @@ html {
 
   .vp2Flex { margin: 5vh 7.5vw; }
   .vp2 { flex-direction: column; }
-  .payLogos div { margin: 1rem 0; }
+  .payMethod { margin: 2.5vh 0 0 0; }
+  .payLogos div { margin: 1em 0; }
 
   .vp2Image {
     height: auto;
@@ -916,7 +917,7 @@ html {
   }
 
   .comparative {
-    margin: 5vh 7.5vw;
+    margin: 25vh 7.5vw;
   }
 
   .compTable {
@@ -929,8 +930,9 @@ html {
 
   .CTA {
     height: auto;
-    margin: 5vh 7.5vw;
+    margin: 10vh 7.5vw;
     padding: 5vh 2.5vw;
+    border-radius: 20px;
   }
 
   .CTAWrapper { flex-direction: column; }
@@ -1013,7 +1015,8 @@ html {
 
   .vp2Flex { margin: 5vh 7.5vw; }
   .vp2 { flex-direction: column; }
-  .payLogos div { margin: 1rem 0; }
+  .payLogos { flex-direction: column; align-items: flex-start; }
+  .payLogos div { margin: 0.5rem 0; }
 
   .vp2Image {
     height: auto;
@@ -1022,7 +1025,7 @@ html {
   }
 
   .comparative {
-    margin: 5vh 7.5vw;
+    margin: 25vh 7.5vw;
   }
 
   .compTable {
@@ -1034,8 +1037,8 @@ html {
   .circleBack2 { display: none; }
 
   .CTA {
-    height: 30vh;
-    margin: 5vh 7.5vw;
+    height: auto;
+    margin: 10vh 7.5vw;
     padding: 5vh 2.5vw;
   }
 
@@ -1058,12 +1061,13 @@ html {
   .CTA h1 {
     font-size: 1rem;
     line-height: 2rem;
-    max-width: 80%;
+    max-width: 100%;
+    margin-bottom: 8px;
   }
 
   .CTA a { font-size: 1rem; line-height: 1.5rem; }
 
-  .mainFooter { height: auto; }
+  .mainFooter { height: auto; margin-top: 20vh; }
   .footerFull { padding: 5vh 5vw; }
 }
 
