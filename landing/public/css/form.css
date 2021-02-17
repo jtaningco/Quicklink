@@ -39,18 +39,6 @@
     left: 20vh;
 }
 
-.stickyWrapper {
-    position: sticky;
-    top: 20vh;
-    left: 20vh;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-self: flex-start;
-}
-
 .instructionsHeader {
     font-size: 2rem;
     line-height: 3rem;
@@ -186,474 +174,88 @@ input[type=text], select {
 }
 
 
-@media screen and (max-width: 768px) {
-    .container {
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        margin-top: 80px;
+@media screen and (max-width: 960px) {
+    .earlyAccessForm {
+        padding: 10vh 5vw;
     }
-        
-    /* divs */
-    .wrapper {
+    
+    .container {
+        flex-direction: column;
+        justify-content: center;
+    }
+    
+    /* INSTRUCTIONS */
+    .instructionsWrapper {
+        width: 100%;
+        min-height: auto;
+        z-index: 2;
+        top: 0;
+        left: 0;
+    }
+    
+    .sticky {
+        position: relative;
         display: flex;
         flex-direction: column;
         justify-content: center;
-        align-items: center;
-        align-self: center;
+        align-items: flex-start;
+        align-content: center;
+        width: 100%;
+        padding: 5vh 5vw;
+        top: 0;
+        left: 0;
+    }
+    
+    .instructionsHeader {
+        width: 80%;
+        font-size: 1.5rem;
+        line-height: 2.5rem;
+        margin-bottom: 1rem;
+    }
+    
+    .list {
+        padding: 0.25rem 0;
+    }
+
+    .list p {
+        font-size: 1rem;
+    }
+    
+    .check {
+        margin-right: 1rem;
+    }
+    
+    .instructionsEnding {
+        width: 80%;
+        font-size: 1.25rem;
+        line-height: 2rem;
+        margin-top: 1rem;
+    }
+    
+    /* FORM */
+    .formWrapper {
+        padding: 6vh 5vw;
         width: 100%;
     }
-    .fixed {
-        position: static; 
-        top: 15vh;
-        background-color: transparent;
-        list-style: none;
-        margin: 70px 40px 80px 40px;
-        max-width: 500px;
-        width: 100%;
-    }
-        
-    .textboxes {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        align-self: center;
-        background-color: #FFF;
-        padding: 20px 20px 20px 20px;
-        margin: 0px 40px 25px 40px;
-        width: auto;
-        box-shadow: 0px 3px 5px rgba(51, 51, 51, 0.15);
-        border-radius: 5px;
-    }
-        
-    .request-btn {
-        font-family: 'Overpass', sans-serif;
-        color: #A3A3A3;
-        font-size: 14px;
-        font-weight: 700;
-        display: flex;
-        flex-direction: row;
-        justify-content: center;
-        padding: 6px 40px;
-        margin-top: 40px;
-        margin-bottom: 10px;
-        background: #DCDCDC;
-        box-shadow: 0px 3px 5px rgba(51, 51, 51, 0.15);
-        border-radius: 4px;
-        border-color: transparent;
-    }
-
-    /* text for div.fixed */
-    .title {
-        font-family: 'Overpass', sans-serif;
-        font-weight: bold;
-        align-self: center;
-        font-size: 20px;
-        line-height: 32px;
-        color: #2C2C2C;
-        padding-bottom: 20px;
-    }
-        
-    .list {
-        font-family: 'Overpass', sans-serif;
-        color: #2C2C2C; 
-        font-size: 16px;
-        font-weight: 300;
-        line-height: 26px;
-        padding-bottom: 10px;
-    }
-        
-    #check {
-        padding: 10px 10px 0 0;
-    }
-        
-    .ending-title {
-        font-family: 'Overpass', sans-serif;
-        font-size: 20px;
-        line-height: 32px;
-        color: #2C2C2C; 
-        padding-top: 20px;
-    }
-        
-    /* text for div.textboxes */
-    .text-title {
-        list-style: none;
-        font-size: 24px;
-        line-height: 37px;
-        font-weight: 600;
-        color: #798CF2;
-        padding:10px 10px 10px 10px;
-        }
-    .text-information {
-        list-style: none;
-        font-size: 16px;
-        line-height: 26px;
-        color: #2c2c2c;
-        padding:10px 10px 0px 10px;
-    }
-
-    label {
-        line-height: 26px;
-    }
-        
-    /* text for div.request-btn */
-    .btn {
-        font-family: 'Overpass', sans-serif;
-        color: #A3A3A3;
-        font-size: 14px;
-        font-weight: 700;
-        border-color: transparent;
-        background-color: transparent;
-    }
-        
+    
     /* image positions */
     #big-circle {
-        top:1635px;
-        position: absolute;
-        left:0;
-        max-width: 40%;
-        z-index: -2;
-    }
-        
-    #small-circle {
-        top:1716px;
-        position: absolute;
-        right:0;
-        max-width: 20%;
-        z-index: -2;
-    }
-        
-    /*textbox with info */
-    input[type=text], select {
-            width: 100%;
-            padding: 10px 20px;
-            margin: 8px 0;
-            display: inline-block;
-            font-family: 'Overpass', sans-serif;
-            border: 1px solid #a3a3a3;
-            font-size:14px;
-            color: #2c2c2c;
-            border-radius: 4px;
-            box-sizing: border-box;
-    }     
-}
-
-@media screen and (max-width: 568px) {
-
-    .container {
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        margin-top: 80px;
-    }
-        
-    /* divs */
-    .wrapper {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        align-self: center;
-    }
-    .fixed {
-        position: static; 
-        top: 15vh;
-        background-color: transparent;
-        list-style: none;
-        margin: 70px 24px 80px 24px;
-        max-width: 500px;
-        padding: 0px 24px 0px 24px;
-        width: auto;
-    }
-        
-    .textboxes {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        align-self: center;
-        background-color: #FFF;
-        padding: 20px 20px 20px 20px;
-        margin: 0px 40px 25px 40px;
-        width: auto;
-        box-shadow: 0px 3px 5px rgba(51, 51, 51, 0.15);
-        border-radius: 5px;
-    }
-        
-    .request-btn {
-        font-family: 'Overpass', sans-serif;
-        color: #A3A3A3;
-        font-size: 14px;
-        font-weight: 700;
-        display: flex;
-        flex-direction: row;
-        justify-content: center;
-        padding: 6px 40px;
-        margin-top: 40px;
-        margin-bottom: 10px;
-        background: #DCDCDC;
-        box-shadow: 0px 3px 5px rgba(51, 51, 51, 0.15);
-        border-radius: 4px;
-        border-color: transparent;
-    }
-        
-        
-        /* text for div.fixed */
-    .title {
-        font-family: 'Overpass', sans-serif;
-        font-weight: bold;
-        align-self: center;
-        font-size: 20px;
-        line-height: 32px;
-        color: #2C2C2C;
-        padding-bottom: 20px;
-    }
-        
-    .list {
-        font-family: 'Overpass', sans-serif;
-        color: #2C2C2C; 
-        font-size: 16px;
-        font-weight: 300;
-        line-height: 26px;
-        padding-bottom: 10px;
-    }
-        
-    #check {
-        padding: 10px 10px 0 0;
-    }
-        
-    .ending-title {
-        font-family: 'Overpass', sans-serif;
-        font-size: 20px;
-        line-height: 32px;
-        color: #2C2C2C; 
-        padding-top: 20px;
-    }
-        
-    /* text for div.textboxes */
-    .text-title {
-        list-style: none;
-        font-size: 24px;
-        line-height: 37px;
-        font-weight: 600;
-        color: #798CF2;
-        padding:10px 10px 10px 10px;
-        }
-    .text-information {
-        list-style: none;
-        font-size: 16px;
-        line-height: 26px;
-        color: #2c2c2c;
-        padding:10px 10px 0px 10px;
-    }
-    .label {
-        list-style: none;
-        font-size: 16px;
-        font-weight: 700;
-        line-height: 26px;
-        color: #2c2c2c;
-        padding-top: 30px;
-    }
-        
-    /* text for div.request-btn */
-    .btn {
-        font-family: 'Overpass', sans-serif;
-        color: #A3A3A3;
-        font-size: 14px;
-        font-weight: 700;
-        border-color: transparent;
-        background-color: transparent;
-    }
-        
-    /* image positions */
-    #big-circle {
-        top:1755px;
-        position: absolute;
-        left:0;
-        max-width: 40%;
-        z-index: -2;
-    }
-        
-    #small-circle {
-        top:1816px;
-        position: absolute;
-        right:0;
-        max-width: 20%;
-        z-index: -2;
-    }   
-        
-    /*textbox with info */
-    input[type=text], select {
-        width: 100%;
-        padding: 10px 20px;
-        margin: 8px 0;
-        display: inline-block;
-        font-family: 'Overpass', sans-serif;
-        border: 1px solid #a3a3a3;
-        font-size:14px;
-        color: #2c2c2c;
-        border-radius: 4px;
-        box-sizing: border-box;
-    }     
-}
-
-@media only screen and (max-width: 567px) {
-
-    .container {
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        margin-top: 80px;
-    }
-        
-    /* divs */
-    .wrapper {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        align-self: center;
-    }
-    .fixed {
-        position: static; 
-        top: 15vh;
-        background-color: transparent;
-        list-style: none;
-        margin: 70px 24px 80px 24px;
-        max-width: 500px;
-        padding: 0px 24px 0px 24px;
-        width: auto;
-    }
-        
-    .textboxes {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        align-self: center;
-        background-color: #FFF;
-        padding: 20px 16px 20px 16px;
-        margin: 0px 16px 25px 16px;
-        width: auto;
-        box-shadow: 0px 3px 5px rgba(51, 51, 51, 0.15);
-        border-radius: 5px;
-    }
-        
-    .request-btn {
-        font-family: 'Overpass', sans-serif;
-        color: #A3A3A3;
-        font-size: 14px;
-        font-weight: 700;
-        display: flex;
-        flex-direction: row;
-        justify-content: center;
-        padding: 6px 40px;
-        margin-top: 40px;
-        margin-bottom: 10px;
-        background: #DCDCDC;
-        box-shadow: 0px 3px 5px rgba(51, 51, 51, 0.15);
-        border-radius: 4px;
-        border-color: transparent;
-    }
-        
-        
-        /* text for div.fixed */
-    .title {
-        font-family: 'Overpass', sans-serif;
-        font-weight: bold;
-        align-self: center;
-        font-size: 20px;
-        line-height: 32px;
-        color: #2C2C2C;
-        padding-bottom: 20px;
-    }
-        
-    .list {
-        font-family: 'Overpass', sans-serif;
-        color: #2C2C2C; 
-        font-size: 16px;
-        font-weight: 300;
-        line-height: 26px;
-        padding-bottom: 10px;
-    }
-        
-    #check {
-        padding: 10px 10px 0 0;
-    }
-        
-    .ending-title {
-        font-family: 'Overpass', sans-serif;
-        font-size: 20px;
-        line-height: 32px;
-        color: #2C2C2C; 
-        padding-top: 20px;
-    }
-        
-    /* text for div.textboxes */
-    .text-title {
-        list-style: none;
-        font-size: 24px;
-        line-height: 37px;
-        font-weight: 600;
-        color: #798CF2;
-        padding:10px 10px 10px 10px;
-        }
-    .text-information {
-        list-style: none;
-        font-size: 16px;
-        line-height: 26px;
-        color: #2c2c2c;
-        padding:10px 10px 0px 10px;
-    }
-    .label {
-        list-style: none;
-        font-size: 16px;
-        font-weight: 700;
-        line-height: 26px;
-        color: #2c2c2c;
-        padding-top: 30px;
-    }
-        
-    /* text for div.request-btn */
-    .btn {
-        font-family: 'Overpass', sans-serif;
-        color: #A3A3A3;
-        font-size: 14px;
-        font-weight: 700;
-        border-color: transparent;
-        background-color: transparent;
-    }
-        
-    /* image positions */
-    #big-circle {
-        top:1655px;
-        position: absolute;
-        left:0;
-        max-width: 40%;
-        z-index: -2;
+        position: fixed;
+        bottom: 10vh;
+        left: -7.5vw;
+        animation-name: bigCircleMobile;
+        animation-duration: 45s;
+        animation-direction: alternate reverse;
+        animation-iteration-count: infinite;
     }
     
     #small-circle {
-        top:1816px;
-        position: absolute;
-        right:0;
-        max-width: 20%;
-        z-index: -2;
+        position: fixed;
+        bottom: 20vh;
+        right: -5vw;
+        animation-name: smallCircleMobile;
+        animation-duration: 30s;
+        animation-direction: alternate;
+        animation-iteration-count: infinite;
     }
-        
-        
-    /*textbox with info */
-    input[type=text], select {
-        width: 100%;
-        padding: 10px 20px;
-        margin: 8px 0;
-        display: inline-block;
-        font-family: 'Overpass', sans-serif;
-        border: 1px solid #a3a3a3;
-        font-size:14px;
-        color: #2c2c2c;
-        border-radius: 4px;
-        box-sizing: border-box;
-    }     
 }
