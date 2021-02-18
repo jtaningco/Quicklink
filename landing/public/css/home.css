@@ -1005,6 +1005,7 @@ body {
 @media screen and (max-width: 496px) {
   html, body {
     width: 100%;
+    overflow-x: hidden;
   }
 
   .hero { height: auto; padding: 25vh 5vw; justify-content: flex-end; }
