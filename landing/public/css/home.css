@@ -184,13 +184,15 @@ body {
 }
 
 .payLogos {
+  width: 100%;
   display: flex;
   margin-top: 8px;
 }
 
 .payLogos div {
+  width: auto;
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
 }
 
 .payLogos img {
@@ -375,7 +377,7 @@ body {
 }
 
 .footerInquiries p {
-  max-width: 60%;
+  width: 60%;
   color: #fff;
   font-weight: 700;
 }
@@ -406,16 +408,17 @@ body {
 .documentLinks {
   max-width: 40%;
   display: flex;
+  justify-content: flex-end;
 }
 
 .documentLinks a {
   cursor: url('../static/logos/blue-cursor.png'), auto;
   color: #fff;
-  font-size: 1rem;
   font-weight: 400;
   transition: color 0.3s ease;
   text-decoration: none;
-  min-width: auto;
+  max-width: 100%;
+  white-space: nowrap;
 }
 
 .documentLinks p:hover {

@@ -147,7 +147,7 @@ html, body {
 /* image positions */
 #big-circle {
     position: fixed;
-    bottom: -40vh;
+    bottom: -60vh;
     left: -7.5vw;
     max-width: 40%;
     z-index: 1;
@@ -174,6 +174,18 @@ input[type=text], select {
     color: #2c2c2c;
     border-radius: 4px;
     box-sizing: border-box;
+}
+
+@media screen and (min-width: 1920px) {
+    #big-circle {
+        bottom: -75vh;
+    }
+}
+
+@media screen and (max-width: 1440px) {
+    #big-circle {
+        bottom: -50vh;
+    }
 }
 
 
@@ -244,7 +256,7 @@ input[type=text], select {
     /* image positions */
     #big-circle {
         position: fixed;
-        bottom: 10vh;
+        bottom: 0vh;
         left: -7.5vw;
     }
     
