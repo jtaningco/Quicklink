@@ -147,6 +147,7 @@
     <script type="text/javascript">
         (function() {
             emailjs.init("user_nhdqPXJHixtsxpGJ3lulM");
+            console.log(emailjs);
         })();
     </script>
 
@@ -156,6 +157,7 @@
             const form = document.getElementById('my-form');
             const btn = document.getElementById('confirmButton');
             const status = document.getElementById('confirm');
+            alert("Form Successfully Loaded!");
 
             function reset() {
                 btn.style.backgroundColor = "var(--muted-lightest)";
