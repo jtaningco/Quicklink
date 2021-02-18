@@ -53,7 +53,7 @@ window.onscroll = function() {
 
 // NAVBAR SCROLL MOBILE
 window.ontouchmove = function() {
-    if (document.body.scrollTop > 5 || document.documentElement.scrollTop > 5) {
+    if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
         document.getElementById("navbar").classList.add("scrolled");
         document.getElementById("navLogo").classList.add("scrolled");
 
