@@ -19,18 +19,6 @@
 
     <!-- JQUERY < 3.0.0 -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    
-    <!-- ReCAPTCHA -->
-    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
-
-    <!-- EmailJS -->
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/emailjs-com@2/dist/email.min.js"></script>
-    <script type="text/javascript">
-        (function() {
-            emailjs.init('user_1xwNoD1h4pRrRQRCyHR8E');
-        })();
-    </script>
-    <script src="js/form.js"></script>
 
     <!-- Local Scripts -->
     <script src="js/nav.js"></script>
@@ -45,11 +33,11 @@
           </div>
       
           <div class="navLinks" id="openMobileNav">
-            <a class="logoLink" href="index.html"><div class="scrolled" id="navLogo"></div><img class="navMobileLogo" src="static/logos/logo.png"></a>
-            <a class="navOptions mobileHome" href="index.html">Home</a>
-            <a class="navOptions scrolled" href="how-it-works.html">How It Works</a>
-            <a class="navOptions scrolled" href="pricing.html">Pricing</a>
-            <a class="navOptions scrolled" href="faqs.html" active>FAQs</a>
+            <a class="logoLink" href="/"><div class="scrolled" id="navLogo"></div><img class="navMobileLogo" src="static/logos/logo.png"></a>
+            <a class="navOptions mobileHome" href="/">Home</a>
+            <a class="navOptions scrolled" href="/how-it-works/">How It Works</a>
+            <a class="navOptions scrolled" href="/pricing/">Pricing</a>
+            <a class="navOptions scrolled" href="/faqs/" active>FAQs</a>
     
             <!-- add link to all early access buttons-->
             <button class = "navMobileButton primary-btn"><a class = "navMobileButtonLink primary-btn-link">Join Early Access</a></button> 
@@ -98,8 +86,8 @@
                         <h2 class="formTitle bold">Be one of our first merchants!</h2>
                         <p class="body">Filling out this form will help us prepare for your use of Quicklink's early access program! Expect an email within 2-5 days from a team member.</p>
                     </div>
-                    <form method="POST" id="my-form">
-                        <input type="hidden" name="accessToken" value="88ee4f50e38d7d8a035a948d1b390ffb">
+                    <form method="POST" enctype="multipart/form-data" id="my-form">
+                        <!-- <input type="hidden" name="accessToken" value="b74d9db7f93bc39675c7fa662e32c8a1"> -->
 
                         <div class="formItem">
                             <label class="body bold">What's your name?<span style="color: #F35252">*</span></label>
@@ -162,6 +150,20 @@
             <img src="./static/background/formEllipse7.png" id="small-circle">
         </div>
     </section>
+
+    <!-- ReCAPTCHA -->
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+
+    <!-- EmailJS -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/emailjs-com@2/dist/email.min.js"></script>
+    <script type="text/javascript">
+        (function() {
+            emailjs.init("user_nhdqPXJHixtsxpGJ3lulM");
+        })();
+    </script>
+
+    <script src="js/form.js"></script>
+
     <script>
         $(".form-field").on("keyup", function () {    	
             canChangeColor();
