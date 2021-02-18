@@ -104,7 +104,7 @@
     }
  
     .pricingCards {
-        margin: 10vw 16px;
+        margin: 160px 24px;
         flex-direction: column;
     }
 
@@ -141,7 +141,7 @@
     }
  
     .pricingCards {
-        margin: 80px 24px;
+        margin: 160px 24px;
         flex-direction: column;
     }
 

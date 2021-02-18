@@ -816,6 +816,8 @@ textarea {
 }
 
 @media screen and (max-width: 576px) {
+  .navLanding { width: 100vw; }
+  .navWrapper { padding: 0 4vw; }
   .navMobileLogo { display: flex; width: 160px; height: 160px; }
   .navMobileButton { display: flex; margin-top: 2rem; padding: 4px 8px;}
   .navMobileButtonLink { font-size: 1rem; }
@@ -824,6 +826,8 @@ textarea {
     font-size: 1rem;
     line-height: 1.5rem;
   }
+
+  .heroCircle2 { display: none; }
 }
 
 @media screen and (max-width: 320px) {
