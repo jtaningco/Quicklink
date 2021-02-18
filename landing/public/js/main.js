@@ -8,8 +8,8 @@ window.onload = function() {
     });
 }
 
-// NAVBAR SCROLL
-window.onscroll = function() {
+// SCROLL EVENT
+function scroll() {
     if (document.body.scrollTop > 0 || document.documentElement.scrollTop > 0) {
         document.getElementById("navbar").classList.add("scrolled");
         document.getElementById("navLogo").classList.add("scrolled");
@@ -49,7 +49,12 @@ window.onscroll = function() {
             }
         };
     }
-};
+}
+
+// NAVBAR SCROLL
+window.onscroll = scroll
+// NAVBAR SCROLL MOBILE
+window.ontouchmove = scroll
 
 // ON RESIZE GET NAV OPTIONS BACK TO WHITE
 window.onresize = function() {
