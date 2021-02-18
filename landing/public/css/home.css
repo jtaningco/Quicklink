@@ -8,6 +8,8 @@ html {
   overscroll-behavior: none;
 }
 
+body { width: 100%; }
+
 .navBurger {
   display: none;
 }
@@ -868,7 +870,7 @@ html {
   }
 }
 
-@media screen and (max-width: 576px) {
+@media screen and (max-width: 768px) {
   .hero { height: 120vh; padding: 20vh 5vw; justify-content: flex-end; }
 
   .heroCircle2 {

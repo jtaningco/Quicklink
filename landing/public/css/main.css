@@ -803,9 +803,20 @@ textarea {
   }
 }
 
+@media screen and (max-width: 960px) {
+  .navMobileLogo { display: flex; width: 200px; height: 200px; }
+  .navMobileButton { display: flex; margin-top: 2rem; padding: 6px 12px;}
+  .navMobileButtonLink { font-size: 1rem; }
+
+  .navOptions {
+    font-size: 1rem;
+    line-height: 1.5rem;
+  }
+}
+
 @media screen and (max-width: 576px) {
   .navMobileLogo { display: flex; width: 160px; height: 160px; }
-  .navMobileButton { display: flex; margin-top: 2rem; padding: 4px 12px;}
+  .navMobileButton { display: flex; margin-top: 2rem; padding: 4px 8px;}
   .navMobileButtonLink { font-size: 1rem; }
 
   .navOptions {
