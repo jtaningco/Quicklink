@@ -2,7 +2,7 @@ window.onload = function() {
     const form = document.getElementById('my-form');
     const btn = document.getElementById('confirmButton');
     const status = document.getElementById('confirm');
-    console.log("success");
+    console.log("form load success");
 
     function reset() {
         btn.style.backgroundColor = "var(--muted-lightest)";
