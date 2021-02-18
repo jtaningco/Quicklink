@@ -1,8 +1,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Overpass:wght@400;600;700;800&display=swap%27%27');
 
+html, body {
+    overflow-y: visible;
+}
+
 .earlyAccessForm {
     width: 100%;
-    height: 100%;
+    height: auto;
     display: flex;
     justify-content: center;
     align-items: center;
