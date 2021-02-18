@@ -810,7 +810,6 @@ body {
   }
 
   .footerContent {
-    margin: 0px 40px;
     display: flex;
     align-items: center;
   }
@@ -980,7 +979,7 @@ body {
     flex-direction: column;
     align-items: flex-start;
     margin-top: 0;
-    padding: 64px 16px;
+    padding: 64px 24px;
   }
 
   .footerInquiries p {

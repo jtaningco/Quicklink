@@ -819,7 +819,7 @@ textarea {
   .navLanding { width: 100vw; }
   .navWrapper { padding: 0 4vw; }
   .navMobileLogo { display: flex; width: 160px; height: 160px; }
-  .navMobileButton { display: flex; margin-top: 2rem; padding: 4px 8px;}
+  .navMobileButton { display: flex; margin-top: 1rem; padding: 4px 8px;}
   .navMobileButtonLink { font-size: 1rem; }
 
   .navOptions {
@@ -834,6 +834,7 @@ textarea {
 @media screen and (max-width: 360px) {
   .navBurger { flex-basis: 25%; }
   .navButton { flex-basis: 75%; }
+  .navMobileLogo { display: flex; width: 120px; height: 120px; }
 
   .primary-white-btn-link {
     font-size: 0.8rem;
@@ -841,6 +842,12 @@ textarea {
 
   .primary-btn-link {
     font-size: 0.8rem;
+  }
+
+  .navOptions {
+    font-size: 0.8rem;
+    line-height: 1.2rem;
+    padding: 0;
   }
 }
 
