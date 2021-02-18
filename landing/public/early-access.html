@@ -19,9 +19,6 @@
 
     <!-- JQUERY < 3.0.0 -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
-    <!-- Local Scripts -->
-    <script src="js/nav.js"></script>
 </head>
 <body>
     <nav class="navLanding">
@@ -39,7 +36,6 @@
             <a class="navOptions scrolled" href="/pricing/">Pricing</a>
             <a class="navOptions scrolled" href="/faqs/" active>FAQs</a>
     
-            <!-- add link to all early access buttons-->
             <button class = "navMobileButton primary-btn"><a class = "navMobileButtonLink primary-btn-link">Join Early Access</a></button> 
           </div>
       
@@ -153,9 +149,10 @@
             emailjs.init("user_nhdqPXJHixtsxpGJ3lulM");
         })();
     </script>
-
     <script src="js/form.js"></script>
 
+    <!-- Local Scripts -->
+    <script src="js/nav.js"></script>
     <script>
         $(".form-field").on("keyup", function () {    	
             canChangeColor();
