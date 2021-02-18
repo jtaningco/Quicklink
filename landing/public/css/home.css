@@ -421,7 +421,7 @@ body {
   white-space: nowrap;
 }
 
-.documentLinks p:hover {
+.documentLinks a:hover {
   color: var(--secondary-light);
 }
 
