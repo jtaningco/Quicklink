@@ -5,7 +5,6 @@ window.onload = function() {
     burger.addEventListener("click", () => {
         document.getElementById("navBurger").classList.toggle("open");
         document.getElementById("openMobileNav").classList.toggle("navbarActive");
-        document.getElementById("burgerLines").style.backgroundColor("white");
     });
 }
 
@@ -41,14 +40,30 @@ window.onscroll = function() {
         
         var navOptions = document.getElementsByClassName("navOptions");
         for(var i = 0, length=navOptions.length; i<length; i++) {
+            // if window is greater than 1024px
             if (window.matchMedia("(min-width: 1025px)").matches) {
+                // then make navoptions white text
                 navOptions[i].classList.remove("scrolled");
             } else {
-                navOptions[i].classList.add("scrolled");;
+                navOptions[i].classList.add("scrolled");
             }
         };
     }
 };
+
+// ON RESIZE GET NAV OPTIONS BACK TO WHITE
+window.onresize = function() {
+    if (document.body.scrollTop === 0 || document.documentElement.scrollTop === 0) {
+        var navOptions = document.getElementsByClassName("navOptions");
+        for(var i = 0, length=navOptions.length; i<length; i++) {
+            if (window.matchMedia("(min-width: 1025px)").matches) {
+                navOptions[i].classList.remove("scrolled");
+            } else {
+                navOptions[i].classList.add("scrolled");
+            }
+        };
+    }
+}
 
 window.onbeforeunload = function () {
     window.scrollTo(0, 0);
