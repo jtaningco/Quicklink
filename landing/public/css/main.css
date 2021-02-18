@@ -143,6 +143,7 @@ a {
 
 .primary-btn.disabled {
   cursor: not-allowed;
+  box-shadow: none;
   background: var(--muted-lightest);
 }
 
