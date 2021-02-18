@@ -20,14 +20,6 @@
     <!-- JQUERY < 3.0.0 -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
-    <!-- ReCAPTCHA -->
-    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
-    <script type="text/javascript">
-        var onloadCallback = function() {
-          console.log("grecaptcha is ready!");
-        };
-    </script>
-
     <!-- Local Scripts -->
     <script src="js/nav.js"></script>
 </head>
@@ -140,11 +132,6 @@
                         <div class="formItem">
                             <label class="body bold">How did you hear about us?<span style="color: #F35252">*</span></label>
                             <input class="form-field" type="text" placeholder="Referral? Facebook? Instagram?" name="find" required>
-                        </div>
-
-                        <!-- ReCaptcha -->
-                        <div class="formItem">
-                            <div class="g-recaptcha" data-sitekey="6LfySloaAAAAACZEAph0oFmuXhc2-LNrjUUAdB3v"></div>
                         </div>
         
                         <button type="submit" formmethod="POST" class="primary-btn disabled submitForm" id="confirmButton">
