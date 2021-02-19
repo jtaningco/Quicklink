@@ -8,6 +8,173 @@
 }
 
 /* navbar */
+
+.nav {
+    font-family: 'Overpass', sans-serif;
+    color: #FFF;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    position: fixed;
+    width: 100vw;
+    margin-top: 0px;
+    z-index: 10;
+    background-color: var(--primary-main);
+}
+
+/* navbar features */
+.quicklink {
+    display: flex;
+    padding-left: 32px;
+    margin-top: 16px;
+    margin-bottom: 16px;
+}
+
+#ql-logo {
+    width: 40px;
+    height: 40px;
+}
+
+.quicklink-name {
+    list-style: none;
+    font-family: Overpass;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 24px;
+    line-height: 40px;
+    padding-left: 16px;
+    color: #FFF;
+}
+
+.search-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding-left: 32px;
+}
+
+#myInput {
+    background-image: url('../static/u_search.svg');
+    background-repeat: no-repeat;
+    background-position: left center;
+    font-family: 'Overpass', sans-serif;
+    color: #a3a3a3;
+    width: 30vw;
+    font-size: 16px;
+    padding: 8px 160px 8px 20px;
+    margin-left: 16px;
+    border: 1px solid #FF8A00;
+    box-sizing: border-box;
+    border-radius: 5px;
+}
+
+.buttons {
+    position: absolute;
+    float:right;
+    display: flex;
+    right: 0px;
+    padding: 0px 20px 0 20px;
+}
+
+.secondary-btn {
+    border: 1px solid var(--primary-main);
+    background-color: var(--primary-main);
+    font-family: 'Overpass', sans-serif;
+    color: #FFF;
+    font-size: 14px;
+    padding-right: 32px;
+    padding-left: 32px;
+    margin-right: 12px;
+}
+
+.register-btn {
+    border: 1px #FFAA2D;
+    background-color: #FFAA2D;
+    font-family: 'Overpass', sans-serif;
+    color: #FFF;
+    font-size: 14px;
+    padding-right: 32px;
+    padding-left: 32px;
+    margin-left: 12px;
+    margin-right: 24px;
+}
+
+/* small nav */
+.small-nav {
+    display: none;
+}
+
+.company-name {
+    list-style: none;
+    font-family: Overpass;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 24px;
+    line-height: 40px;
+    padding-left: 16px;
+    color: #FFF;
+}
+
+.nav {
+    display: flex;
+    padding-left: 32px;
+    margin-top: 0px;
+    margin-bottom: 12px;
+}
+
+.navBurger {
+    display: flex;
+    margin-top: 12px;
+    margin-bottom: 12px;
+}
+
+/* sidebar */
+
+.sidebar{
+    display: none;
+    flex-direction: column;
+}
+
+.sidebar-header{
+    display: flex;
+    background-color: var(--primary-main);
+}
+
+.sidebar-body{
+    display: flex;
+    flex-direction: column;
+    background-color: #FFF;
+}
+
+.sidebar-buttons {
+    display: flex;
+    justify-content: center;
+}
+
+/*sidebar buttons */
+
+.sidebar-signup-button {
+    border: 1px solid var(--primary-main);
+    background-color: var(--primary-main);
+    font-family: 'Overpass', sans-serif;
+    color: #FFF;
+    font-size: 14px;
+    padding: 0 32px 0 32px;
+    margin-right: 4px;
+}
+
+.sidebar-login-button {
+    border: 1px solid var(--primary-main);
+    background-color: transparent;
+    font-family: 'Overpass', sans-serif;
+    color: var(--primary-main);
+    font-size: 14px;
+    padding: 0 32px 0 32px;
+    margin-left: 4px;
+}
+
+@media screen and (min-width: 768px) and (max-width: 1067px) {
+/* navbar */
 .nav {
     font-family: 'Overpass', sans-serif;
     color: #FFF;
@@ -23,7 +190,7 @@
 /* navbar features */
 .quicklink {
     display: flex;
-    padding-left: 30px;
+    padding-left: 10px;
     margin-top: 15px;
     margin-bottom: 15px;
 }
@@ -40,7 +207,164 @@
     font-weight: 600;
     font-size: 24px;
     line-height: 40px;
-    padding-left: 15px;
+    padding-left: 8px;
+    color: #FFF;
+}
+
+.search-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding-left: 12px;
+}
+
+#myInput {
+    background-image: url('../static/u_search.svg');
+    background-repeat: no-repeat;
+    background-position: left center;
+    font-family: 'Overpass', sans-serif;
+    color: #a3a3a3;
+    width: 100%;
+    font-size: 16px;
+    padding: 8px 80px 8px 24px;
+    border: 1px solid #FF8A00;
+    box-sizing: border-box;
+    border-radius: 5px;
+}
+
+.buttons {
+    position: absolute;
+    float:right;
+    display: flex;
+    right: 0px;
+    padding: 0px 0px 0 10px;
+}
+
+.secondary-btn {
+    border: 1px solid var(--primary-main);
+    background-color: var(--primary-main);
+    font-family: 'Overpass', sans-serif;
+    color: #FFF;
+    font-size: 14px;
+    padding-right: 30px;
+    padding-left: 30px;
+    margin-right: 0px;
+
+}
+
+.register-btn {
+    border: 1px #FFAA2D;
+    background-color: #FFAA2D;
+    font-family: 'Overpass', sans-serif;
+    color: #FFF;
+    font-size: 14px;
+    padding-right: 30px;
+    padding-left: 30px;
+    margin-left: 10px;
+}
+
+/* sidebar */
+
+.sidebar{
+    display: none;
+    flex-direction: column;
+}
+
+.sidebar-header{
+    display: flex;
+    background-color: var(--primary-main);
+}
+
+.sidebar-body{
+    display: flex;
+    flex-direction: column;
+    background-color: #FFF;
+}
+
+.sidebar-buttons {
+    display: flex;
+    justify-content: center;
+}
+
+/*sidebar buttons */
+
+.sidebar-signup-button {
+    border: 1px solid var(--primary-main);
+    background-color: var(--primary-main);
+    font-family: 'Overpass', sans-serif;
+    color: #FFF;
+    font-size: 14px;
+    padding: 0 32px 0 32px;
+    margin-right: 4px;
+}
+
+.sidebar-login-button {
+    border: 1px solid var(--primary-main);
+    background-color: transparent;
+    font-family: 'Overpass', sans-serif;
+    color: var(--primary-main);
+    font-size: 14px;
+    padding: 0 32px 0 32px;
+    margin-left: 4px;
+}
+}
+
+@media screen and (min-width: 568px) and (max-width: 767px) {
+
+.large-nav{
+    display:none;
+}
+
+.small-nav {
+    display:flex;
+}
+
+/* navbar */
+.nav {
+    font-family: 'Overpass', sans-serif;
+    color: #FFF;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    position: fixed;
+    width: 100vw;
+    height: 70px;
+    z-index: 1000;
+    background-color: var(--primary-main);
+}
+
+/* navbar features */
+.header {
+    display: flex;
+    padding-left: 32px;
+    margin-top: 12px;
+    margin-bottom: 12px;
+}
+
+#ql-logo {
+    width: 40px;
+    height: 40px;
+}
+
+.quicklink-name {
+    list-style: none;
+    font-family: Overpass;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 24px;
+    line-height: 40px;
+    padding-left: 16px;
+    color: #FFF;
+}
+
+.header-company-name {
+    list-style: none;
+    font-family: Overpass;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 24px;
+    line-height: 40px;
+    padding-left: 24px;
     color: #FFF;
 }
 
@@ -71,27 +395,249 @@
     display: flex;
     right: 0px;
     padding: 0px 20px 0 20px;
+    overflow:hidden;
 }
 
 .secondary-btn {
+    border: none;
+    background-color: transparent;
+    font-family: 'Overpass', sans-serif;
+    color: transparent;
+    font-size: 0px;
+    padding-right: 0px;
+    padding-left: 0px;
+    margin-right: 0px;
+    border: none !important;
+}
+
+.register-btn {
+    border: none;
+    background-color: transparent;
+    font-family: 'Overpass', sans-serif;
+    color: transparent;
+    font-size: 0px;
+    padding-right: 0px;
+    padding-left: 0px;
+    margin-right: 0px;
+    border: none !important;
+}
+
+.mobile-icons {
+    color: #FFF;
+    padding: 8px 8px 8px 8px;
+    background-color: transparent;
+    box-shadow: none;
+}
+
+/* sidebar */
+
+.sidebar{
+    display: none;
+    flex-direction: column;
+}
+
+.sidebar-header{
+    display: flex;
+    background-color: var(--primary-main);
+}
+
+.sidebar-body{
+    display: flex;
+    flex-direction: column;
+    background-color: #FFF;
+}
+
+.sidebar-buttons {
+    display: flex;
+    justify-content: center;
+}
+
+/*sidebar buttons */
+
+.sidebar-signup-button {
     border: 1px solid var(--primary-main);
     background-color: var(--primary-main);
     font-family: 'Overpass', sans-serif;
     color: #FFF;
     font-size: 14px;
-    padding-right: 30px;
-    padding-left: 30px;
-    margin-right: 10px;
+    padding: 0 32px 0 32px;
+    margin-right: 4px;
+}
 
+.sidebar-login-button {
+    border: 1px solid var(--primary-main);
+    background-color: transparent;
+    font-family: 'Overpass', sans-serif;
+    color: var(--primary-main);
+    font-size: 14px;
+    padding: 0 32px 0 32px;
+    margin-left: 4px;
+}
+}
+
+@media screen and (max-width: 567px) {
+.large-nav{
+    display:none;
+}
+
+.small-nav {
+    display:flex;
+}
+
+/* navbar */
+.nav {
+    font-family: 'Overpass', sans-serif;
+    color: #FFF;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    position: fixed;
+    width: 100vw;
+    min-width: 320px;
+    height: 70px;
+    z-index: 1000;
+    background-color: var(--primary-main);
+}
+
+/* navbar features */
+.header {
+    display: flex;
+    padding-left: 32px;
+    margin-top: 12px;
+    margin-bottom: 12px;
+}
+
+#ql-logo {
+    width: 40px;
+    height: 40px;
+}
+
+.quicklink-name {
+    list-style: none;
+    font-family: Overpass;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 24px;
+    line-height: 40px;
+    padding-left: 16px;
+    color: #FFF;
+}
+
+.header-company-name {
+    list-style: none;
+    font-family: Overpass;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 24px;
+    line-height: 40px;
+    padding-left: 24px;
+    color: #FFF;
+}
+
+.search-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding-left: 20px;
+}
+
+#myInput {
+    background-image: url('../static/u_search.svg');
+    background-repeat: no-repeat;
+    background-position: left center;
+    font-family: 'Overpass', sans-serif;
+    color: #a3a3a3;
+    width: 100%;
+    font-size: 16px;
+    padding: 6px 80px 6px 20px;
+    border: 1px solid #FF8A00;
+    box-sizing: border-box;
+    border-radius: 5px;
+}
+
+.buttons {
+    position: absolute;
+    float:right;
+    display: flex;
+    right: 0px;
+    padding: 0px 20px 0 20px;
+    overflow:hidden;
+}
+
+.secondary-btn {
+    border: none;
+    background-color: transparent;
+    font-family: 'Overpass', sans-serif;
+    color: transparent;
+    font-size: 0px;
+    padding-right: 0px;
+    padding-left: 0px;
+    margin-right: 0px;
+    border: none !important;
 }
 
 .register-btn {
-    border: 1px #FFAA2D;
-    background-color: #FFAA2D;
+    border: none;
+    background-color: transparent;
+    font-family: 'Overpass', sans-serif;
+    color: transparent;
+    font-size: 0px;
+    padding-right: 0px;
+    padding-left: 0px;
+    margin-right: 0px;
+    border: none !important;
+}
+
+.mobile-icons {
+    color: #FFF;
+    padding: 8px 8px 8px 8px;
+    background-color: transparent;
+    box-shadow: none;
+}
+
+/* sidebar */
+
+.sidebar{
+    display: none;
+    flex-direction: column;
+}
+
+.sidebar-header{
+    display: flex;
+    background-color: var(--primary-main);
+}
+
+.sidebar-body{
+    display: flex;
+    flex-direction: column;
+    background-color: #FFF;
+}
+
+.sidebar-buttons {
+    display: flex;
+    justify-content: center;
+}
+
+/*sidebar buttons */
+
+.sidebar-signup-button {
+    border: 1px solid var(--primary-main);
+    background-color: var(--primary-main);
     font-family: 'Overpass', sans-serif;
     color: #FFF;
     font-size: 14px;
-    padding-right: 30px;
-    padding-left: 30px;
-    margin-left: 10px;
+    padding: 0 32px 0 32px;
+    margin-right: 4px;
+}
+
+.sidebar-login-button {
+    border: 1px solid var(--primary-main);
+    background-color: transparent;
+    font-family: 'Overpass', sans-serif;
+    color: var(--primary-main);
+    font-size: 14px;
+    padding: 0 32px 0 32px;
+    margin-left: 4px;
+}
+
 }

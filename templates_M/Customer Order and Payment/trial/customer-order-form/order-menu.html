@@ -6,25 +6,69 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/nav.css">
     <link rel="stylesheet" href="css/main.css">
-    <link rel="stylesheet" href="css/order-form.css">    
+    <link rel="stylesheet" href="css/order-form.css">  
+    <script scr="https://code.jquery.com/jquery-3.5.1.min.js"></script> <!-- not used -->
+
+    <link href="jquery.nice-number.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha384-nvAa0+6Qg9clwYCGGPpDQLVpLNn0fRaROjHqs13t4Ggj3Ez50XnGQqc/r8MhnRDZ" crossorigin="anonymous"></script>
+    <script src="jquery.nice-number.js"></script>
+    
     <title>Order Form & Payment</title>
 </head>
 
 <body>
     <div class="wrapper">
-        <div class="nav">
-            <div class="quicklink">
-                <img src="static/ql-img.svg" id="ql-logo">
-                <li class="quicklink-name">Quicklink</li>
-            </div>
-            <div class="search-container">
-                    <form action="/action_page.php" method="get">
-                        <input placeholder="Search" type="text" id="myInput">  
-                    </form>          
+        <div class="large-nav">
+            <div class="nav">
+                    <div class="quicklink">
+                        <img src="static/ql-img.svg" id="ql-logo">
+                        <h2 class="quicklink-name">Quicklink</h2>
                     </div>
-            <div class="buttons">    
-                <button class="secondary-btn">Sign In</button>
-                <button class="register-btn">Register</button>
+                    <div class="search-container">
+                            <form action="/action_page.php" method="get">
+                                <input placeholder="Search" type="text" id="myInput">  
+                            </form>          
+                            </div>
+                    <div class="buttons">    
+                        <button class="secondary-btn">Sign In</button>
+                        <button class="register-btn">Register</button>
+                    </div>
+            </div>
+        </div>
+        <div class="small-nav">
+            <div class="nav">
+                    <div class="navBurger">
+                        <img src="static/fi_menu.svg"> <!-- burger -->  
+                    </div>
+                    <div class="sidebar">
+                        <div class="sidebar-header">
+                            <img src="static/ql-img.svg" id="ql-logo">
+                            <h2 class="quicklink-name">Quicklink</h2>
+                        </div>
+                        <div class="sidebar-body">
+                            <div class="company-contacts"> <!-- company comlumn -->
+                                <div class="contacts-row"><caption><img src="static/phone.svg" id="img">@thegoodbatch</caption></div>
+                                <div class="contacts-row"><caption><img src="static/mail.svg" id="img">thegoodbatch@gmail.com</caption></div>
+                                <div class="contacts-row"><caption><img src="static/link.svg" id="img">+63 917 123 4567</caption></div>
+                                <div class="contacts-row"><caption><img src="static/store.svg" id="img">Greenhills, San Juan City</caption></div>
+                            </div>
+                            <div class="sidebar-buttons">
+                                <button class="sidebar-signup-button">
+                                    Sign Up
+                                </button>
+                                <button class="sidebar-login-button">
+                                    Log In
+                                </button>                                
+                            </div>
+                        </div>
+                    </div>
+                    <h2 class="header-company-name">The Good Batch</h2>
+                
+                    <div class="buttons">    
+                        <button class="mobile-icons"><img src="static/white-search.svg"></button> <!--white search img-->
+                        <button class="mobile-icons"><img src="static/white-basket.svg"></button> <!--white basket img-->
+                    </div>
+
             </div>
         </div>
 
@@ -35,7 +79,7 @@
                     <img src="static/company-circular-logo.png" alt="company logo" id="company-logo">
                     </div>
                     <div class="company-details"> <!--make this a flex column-->
-                            <h1 class="company-name">The Good Batch</h1>
+                            <h1 class="large-company-name">The Good Batch</h1>
                             <div class="company-column">
                                 <div class="company-contacts"> 
                                     <div class="contacts-row"><caption><img src="static/phone.svg" id="img">@thegoodbatch</caption></div>
@@ -90,7 +134,7 @@
             <div class="basket-receipt"> <!-- flex column-->
                 <div class="receipt-header">
                     <div class="group">
-                        <img src="static/u_shopping-basket.svg" id="basket-img">
+                        <img src="static/yellow-basket.svg" id="basket-img">
                         <h2 class="basket-header-title">My Basket</h2>
                     </div>
                     <subtitle class="hide-details"><span style="color: #798CF2">Hide Details</span></subtitle>
@@ -124,7 +168,22 @@
                             Notes: Lorem ipsum Carole Baskin what day is it? Zoom call schadenfreude ventilator baby Yoda home haircut toilet paper.
                         </div>
                         <div class="basket-buttons">
-                            <H1>ADD THE +/- THING</H1>
+
+                            <div class="nice-number">
+                                  <button>-</button>
+                                  <input type="number" value="100" style="width: 4ch;">
+                                  <button>+</button>
+                            </div>
+                                
+
+                            <!--
+                            <div class="spinner">
+                                <div class="prev"><img src="static/purple-minus-btn.svg"></div>
+                                <input type="number" name="number-spinner" min="1">
+                                <div class="next"><img src="static/purple-plus-btn.svg"></div>
+                            </div>
+                            -->
+
                             <button class="edit-btn">Edit</button>
                         </div>
                     </div>
@@ -140,7 +199,12 @@
                         <p class="basket-subtitle">Half Dozen</p>
                         <br>
                         <div class="basket-buttons">
-                            <H1>ADD THE +/- THING</H1>
+                            <div class="spinner">
+                                <div class="prev">-</div>
+                                <div class="next">+</div>
+                                <input type="number" name="number-spinner" value="1">
+                            </div>
+                            
                             <button class="edit-btn">Edit</button>
                         </div>
                     </div>
@@ -174,6 +238,15 @@
         </div>
     </div>
 </body>
-</html>
 
+<script type="text/javascript">
+$(function() {
+
+    $('input[type="number"]').niceNumber();
+});
+
+
+</script>
+
+</html>
 
