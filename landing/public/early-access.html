@@ -156,11 +156,13 @@
             const form = document.getElementById('my-form');
             const btn = document.getElementById('confirmButton');
             const status = document.getElementById('confirm');
+            console.log("Form successfully loaded.");
 
             function reset() {
+                form.reset();
                 btn.style.backgroundColor = "var(--muted-lightest)";
                 status.style.color = "var(--muted-lighter)";
-                status.innerHTML = "Request for Order Access";
+                status.innerHTML = "Request for Early Access";
             }
 
             form.addEventListener('submit', function(event) {
@@ -175,7 +177,6 @@
 
                 emailjs.sendForm(serviceID, templateID, this, userID)
                     .then(function() {
-                        form.reset();
                         btn.style.backgroundColor = "var(--success-alt)";
                         status.innerHTML = "Request sent! We’ll get back to you soon.";
                         setTimeout(reset, 5000);
