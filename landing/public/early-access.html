@@ -11,7 +11,7 @@
     <meta http-equiv="Expires" content="-1">
 
     <title>Quicklink: Early Access Form</title>
-    <link rel="icon" href="./static/logos/logo.png">
+    <link rel="icon" type="image/x-icon" href="./static/logos/favicon.ico">
     
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/home.css">
@@ -97,7 +97,7 @@
 
                         <div class="formItem">
                             <label class="body bold">How about your mobile number?<span style="color: #F35252">*</span></label>
-                            <input class="form-field" type="text" placeholder="Mobile Number" name="number" required>
+                            <input class="form-field" type="text" placeholder="Mobile Number" name="number" maxlength="18" required>
                         </div>
 
                         <div class="formItem">
@@ -147,7 +147,6 @@
     <script type="text/javascript">
         (function() {
             emailjs.init("user_nhdqPXJHixtsxpGJ3lulM");
-            console.log(emailjs);
         })();
     </script>
 
@@ -157,7 +156,6 @@
             const form = document.getElementById('my-form');
             const btn = document.getElementById('confirmButton');
             const status = document.getElementById('confirm');
-            alert("Form Successfully Loaded!");
 
             function reset() {
                 btn.style.backgroundColor = "var(--muted-lightest)";
