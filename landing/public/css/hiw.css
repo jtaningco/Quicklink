@@ -175,7 +175,7 @@
         align-items: center;
         justify-content: center;
         height: auto;
-        margin-top: 80px;
+        margin-top: 25vh;
     }
 
     .useCases-text-section {
@@ -202,6 +202,7 @@
         align-items: center;
         justify-content: center;
         height: auto;
+        margin-top: 10vh;
     }
 
     .hiwMockup {
@@ -232,8 +233,7 @@
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        height: auto;
-        margin-top: 80px;
+        height: 50vh;
     }
 
     .useCases-text-section {
@@ -256,6 +256,7 @@
         align-items: center;
         justify-content: center;
         height: auto;
+        margin-top: 15vh;
     }
     
 }
@@ -275,7 +276,7 @@
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        height: 70vh;
+        max-height: 100vh;
         margin-top: 80px;
     }
 
