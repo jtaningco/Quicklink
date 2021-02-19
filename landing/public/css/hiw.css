@@ -175,7 +175,7 @@
         align-items: center;
         justify-content: center;
         height: auto;
-        margin-top: 25vh;
+        margin: 20vh 0;
     }
 
     .useCases-text-section {
@@ -202,7 +202,7 @@
         align-items: center;
         justify-content: center;
         height: auto;
-        margin-top: 10vh;
+        margin: 15vh 0;
     }
 
     .hiwMockup {

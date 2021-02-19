@@ -198,16 +198,16 @@ img, img:focus {
 
     .faqQA {
         margin: 16px 0px;
-        width: 232px;
+        width: 80%;
     }
 
     .faqQuestion {
-        width: 232px;
+        width: 100%;
     }
 
     .faqQuestion p {
         font-size: 1rem;
-        width: 232px;
+        width: 100%;
         height: 80px;
         display: flex;
         align-items: center;
@@ -216,7 +216,7 @@ img, img:focus {
     }
 
     .faqAnswer {
-        width: 232px;
+        width: 100%;
     }
 
     .faqAnswer p {

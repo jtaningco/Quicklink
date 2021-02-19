@@ -1011,7 +1011,7 @@ body {
     overflow-x: hidden;
   }
 
-  .hero { height: auto; padding: 25vh 5vw; justify-content: flex-end; }
+  .hero { height: auto; padding: 20vh 5vw; justify-content: flex-end; }
 
   .heroCircle1 { display: none; }
   .heroCircle2 { display: none; }
@@ -1053,7 +1053,7 @@ body {
 
   .vp2Flex { margin: 5vh 7.5vw; }
   .vp2 { flex-direction: column; }
-  .payLogos { flex-direction: column; align-items: flex-start; }
+  .payLogos { flex-wrap: wrap; align-items: flex-start; }
   .payLogos div { margin: 0.5rem 0; }
 
   .vp2Image {
@@ -1063,7 +1063,7 @@ body {
   }
 
   .comparative {
-    margin: 25vh 7.5vw;
+    margin: 15vh 7.5vw;
   }
 
   .compTable {
@@ -1077,7 +1077,7 @@ body {
 
   .CTA {
     height: auto;
-    margin: 10vh 7.5vw;
+    margin: 5vh 7.5vw;
     padding: 5vh 2.5vw;
   }
 
@@ -1106,7 +1106,7 @@ body {
 
   .CTA a { font-size: 1rem; line-height: 1.5rem; }
 
-  .mainFooter { margin-top: 20vh; }
+  .mainFooter { margin-top: 15vh; }
   .footerFull { padding: 7.5vh 5vw; }
   .documentLinks {
     width: 100%;
