@@ -149,6 +149,18 @@ img, img:focus {
     color: #2c2c2c;
 }
 
+.learnMore {
+    color: #2c2c2c;
+    padding: 0;
+    text-decoration: none;
+    transition: color 0.3s ease-in-out;
+    cursor: url(../static/logos/blue-cursor.png), auto;
+}
+
+.learnMore:hover {
+    color: var(--primary-alt);
+}
+
 @media screen and (max-width: 320px) {
     .faqsHero {
         margin-top: 10vh;
