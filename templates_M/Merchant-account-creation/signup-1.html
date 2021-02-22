@@ -9,18 +9,49 @@
     <title>Sign Up</title>
 </head>
 <body>
-    <div class="wrapper">
-        <div class="signup-card">
-            <div class="signup-card-header">
-                <img src="assets/ql-logo.svg">
-                <h2 class="signup-card-header-text">
+    <div class="cardContainer">
+        <div class="cardWrapper">
+            <div class="cardContainerHeader">
+                <img src="assets/ql-logo.svg" id="ql-logo">
+                <h2 class="cardHeaderText">
                     Sign up for Quicklink!
                 </h2>
-                <p class="signup-card-header-body">
+                <p class="cardHeaderBody">
                     One click closer to quick and easy transactions
                 </p>
+            </div>
+        
+        <div class="cardBody">
+            <subtitle class="signup-card-questions">
+                Email
+            </subtitle>
+            <input type="text" placeholder="Email Address">
+            <subtitle class="signup-card-questions">
+                Password
+            </subtitle>
+            <input type="text" placeholder="Password">
+            <subtitle class="signup-card-questions">
+                Confirm Password
+            </subtitle>
+            <input type="text" placeholder="Confirm Password">
+        </div>
+
+            
+        <!-- checkbox portion -->
+        <div class="cardEnd">
+            <div class="checkbox-row">
+                <div class="button-wrapper">
+                    <div class="button r" id="button-1">
+                      <input type="checkbox" name="switch" class="switch" id="switch">
+                    </div>
+                </div> 
+                <div class="checkboxText">
+                    I agree to the <a href="#" class="clickableLink">Terms of Use</a> and <a href="#" class="clickableLink">Privacy Policy</a>
+                </div> 
 
             </div>
+              
+        </div>
         </div>
     </div>
 </body>
