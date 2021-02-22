@@ -41,6 +41,9 @@
         a.appendChild(r);
     })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
   </script>
+
+  <!-- ImageKit.io CDN -->
+  <script type="text/javascript" src="https://unpkg.com/imagekit-javascript/dist/imagekit.min.js"></script>
 </head>
 
 <body>
@@ -72,6 +75,16 @@
       logged_out_greeting="Hey! Got any questions? Leave us a message and we’ll get back to you shortly."
       greeting_dialog_display="hide">
   </div>
+
+  <!-- Initialize ImageKit -->
+  <script>
+    var imagekit = new ImageKit({
+      publicKey : "public_3RkLUeikcm1IqOMKDnObY1elTC8=",
+      urlEndpoint : "https://ik.imagekit.io/ripzjge77zz",
+      authenticationEndpoint : "http://www.quicklink.ph/auth",
+    });
+  </script>
+  <script src="./js/images.js"></script>
   
   <nav class="navLanding">
     <div class="navWrapper scrolled" id="navbar">
@@ -82,7 +95,7 @@
       </div>
   
       <div class="navLinks" id="openMobileNav">
-        <a class="logoLink" href="/"><div class="scrolled" id="navLogo"></div><img class="navMobileLogo" src="static/logos/logo.png"></a>
+        <a class="logoLink" href="/"><div class="scrolled" id="navLogo"></div><img class="navMobileLogo" src="https://ik.imagekit.io/ripzjge77zz/Quicklink/logos/logo_R3lv7-vXf.png"></a>
         <a class="navOptions mobileHome" href="/">Home</a>
         <a class="navOptions scrolled active" href="/how-it-works/">How It Works</a>
         <a class="navOptions scrolled" href="/pricing/">Pricing</a>
@@ -100,7 +113,7 @@
   <section class = "hiwHero" data-aos="fade-down">
       <h1 class = "bold">How You Can Use Quicklink</h1>
       <p>See how online food businesses and customers can get the most out of Quicklink.</p>
-      <a href="#merchantSection" class="hiwChevronLink"><img src = "static/icons/fi_chevrons-down.svg" class="hiwChevron"></a>
+      <a href="#merchantSection" class="hiwChevronLink"><img src = "https://ik.imagekit.io/ripzjge77zz/Quicklink/icons/fi_chevrons-down_li87Me3pnC.svg" class="hiwChevron"></a>
   </section>
 
 
@@ -108,7 +121,7 @@
       <h1 class = "bold" data-aos="fade-up">Grow your food business.</h1>
       <div class = "useCases">
         <div class = "useCase-section">
-          <img class = "hiwMockup" src = "static/mockups/hiw-orderForm.png" data-aos = "fade-right">
+          <img class = "hiwMockup" src="https://ik.imagekit.io/ripzjge77zz/Quicklink/mockups/hiw-orderForm_k4M7EPk-g8dj.png" data-aos = "fade-right">
           <div class = "useCases-text-section" data-aos = "fade-left">
             <h1 class = "bold">Create and share order forms.</h1>
             <p>Customize your order forms (no need to code!) to showcase your products, then launch your online store by sharing a link. Your customers will be placing orders in no time!</p>
@@ -116,7 +129,7 @@
         </div>
 
         <div class = "useCase-section">
-          <img class = "hiwMockup" src = "static/mockups/hiw-revenue.png" data-aos = "fade-right">
+          <img class = "hiwMockup" src = "https://ik.imagekit.io/ripzjge77zz/Quicklink/mockups/hiw-revenue_DeuJXgy3JZ.png" data-aos = "fade-right">
           <div class = "useCases-text-section" data-aos = "fade-left">
             <h1 class = "bold">Receive payments and update customers</h1>
             <p>Easily receive payments and get notified with every order through the form. Quicklink will regularly update your customers on their order’s status!</p>
@@ -124,7 +137,7 @@
         </div>
 
         <div class = "useCase-section">
-          <img class = "hiwMockup" src = "static/mockups/hiw-dashboard.png" data-aos = "fade-right">
+          <img class = "hiwMockup" src = "https://ik.imagekit.io/ripzjge77zz/Quicklink/mockups/hiw-dashboard_yFfFooDvO-.png" data-aos = "fade-right">
           <div class = "useCases-text-section" data-aos = "fade-left">
             <h1 class = "bold">Keep track of your orders and revenue.</h1>
             <p>Have your order and financial history automatically documented whenever you receive an order. You can leave it all to us!</p>
@@ -138,7 +151,7 @@
         <div class = "useCases">
 
             <div class = "useCase-section-customers">
-                <img class = "hiwMockup2" src = "static/mockups/hiw-forms.png" data-aos = "fade-right">
+                <img class = "hiwMockup2" src = "https://ik.imagekit.io/ripzjge77zz/Quicklink/mockups/hiw-forms_3N-wMrjQ3.png" data-aos = "fade-right">
                 <div class = "useCases-text-section" data-aos = "fade-left">
                     <h1 class = "bold">Auto-fill your forms.</h1>
                     <p>We’ll remember your contact details and addresses so you don’t need to type it again the next time you order from a shop through Quicklink.</p>
@@ -146,7 +159,7 @@
             </div>
 
             <div class = "useCase-section-customers">
-                <img class = "hiwMockup2" src = "static/mockups/hiw-basket.png" data-aos = "fade-right">
+                <img class = "hiwMockup2" src = "https://ik.imagekit.io/ripzjge77zz/Quicklink/mockups/hiw-basket_H8J834tCM9jV.png" data-aos = "fade-right">
                 <div class = "useCases-text-section" data-aos = "fade-left">
                     <h1 class = "bold">Pay instantly with ease.</h1>
                     <p>No need to open a different app and forward a screenshot for proof. Pay in Quicklink as you order, all in one go.</p>
@@ -154,7 +167,7 @@
             </div>
 
             <div class = "useCase-section-customers">
-                <img class = "hiwMockup2" src = "static/mockups/hiw-receipt.png" data-aos = "fade-right">
+                <img class = "hiwMockup2" src = "https://ik.imagekit.io/ripzjge77zz/Quicklink/mockups/hiw-receipt_8__8BgIVz.png" data-aos = "fade-right">
                 <div class = "useCases-text-section" data-aos = "fade-left">
                     <h1 class = "bold">Get notified on your orders.</h1>
                     <p>Get real-time updates on the status of your cravings via email and your receipt link, whichever you prefer!</p>
@@ -178,7 +191,7 @@
     <footer class = "mainFooter">
       <div class = "footerFull">
         <div class = "footerContent">
-          <img class = "footerLogo" src = "static/logos/shortenedWhite.png">
+          <img class = "footerLogo" data-src="https://ik.imagekit.io/ripzjge77zz/Quicklink/logos/shortenedWhite_M5B2Zk5Xukv.png">
           <div class = "footerNavs">
             <div class = "footerColumn">
               <h3>How It Works</h3>

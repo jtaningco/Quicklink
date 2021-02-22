@@ -23,7 +23,7 @@
 
 /* CURSOR */
 html {
-  cursor: url('../static/logos/html-cursor.png'), auto;
+  cursor: url('https://ik.imagekit.io/ripzjge77zz/Quicklink/logos/html-cursor_Zd2smt9wKG.png'), auto;
 }
 
 *:focus {
@@ -132,7 +132,7 @@ a {
   background: var(--primary-light); 
   box-shadow: var(--regular-box-shadow);
   transition: background 200ms;
-  cursor: url('../static/logos/blue-cursor.png'), auto;
+  cursor: url('https://ik.imagekit.io/ripzjge77zz/Quicklink/logos/blue-cursor_bZvNd_QTTm.png'), auto;
 }
 
 .primary-btn.active {
@@ -150,7 +150,7 @@ a {
 .primary-btn-link {
   font-weight: 700;
   color: #FFF;
-  cursor: url('../static/logos/blue-cursor.png'), auto;
+  cursor: url('https://ik.imagekit.io/ripzjge77zz/Quicklink/logos/blue-cursor_bZvNd_QTTm.png'), auto;
 }
 .primary-btn-link.disabled {
   cursor: not-allowed;
@@ -174,7 +174,7 @@ a {
   font-weight: 700;
   color: #fff;
   transition: background 200ms;
-  cursor: url('../static/logos/blue-cursor.png'), auto;
+  cursor: url('https://ik.imagekit.io/ripzjge77zz/Quicklink/logos/blue-cursor_bZvNd_QTTm.png'), auto;
 }
 
 .secondary-btn.failure {
@@ -188,7 +188,7 @@ a {
 .secondary-btn:hover {
   background: var(--primary-main);
   box-shadow: var(--regular-box-shadow);
-  cursor: url('../static/logos/blue-cursor.png'), auto;
+  cursor: url('https://ik.imagekit.io/ripzjge77zz/Quicklink/logos/blue-cursor_bZvNd_QTTm.png'), auto;
 }
 
 .tertiary-btn {
@@ -206,13 +206,13 @@ a {
 
 .tertiary-btn-link:hover, .tertiary-btn:hover {
   color: var(--primary-light);
-  cursor: url('../static/logos/blue-cursor.png'), auto;
+  cursor: url('https://ik.imagekit.io/ripzjge77zz/Quicklink/logos/blue-cursor_bZvNd_QTTm.png'), auto;
 }
 
 .tertiary-btn-link.failure:hover, .tertiary-btn.failure:hover {
   color: var(--failure-main);
   opacity: 0.5;
-  cursor: url('../static/logos/blue-cursor.png'), auto;
+  cursor: url('https://ik.imagekit.io/ripzjge77zz/Quicklink/logos/blue-cursor_bZvNd_QTTm.png'), auto;
 }
 
 
@@ -556,7 +556,7 @@ textarea {
   align-items: center;
   align-content: center;
   background-color: transparent;
-  cursor: url('../static/logos/blue-cursor.png'), auto;
+  cursor: url('https://ik.imagekit.io/ripzjge77zz/Quicklink/logos/blue-cursor_bZvNd_QTTm.png'), auto;
   -webkit-transition: background-color 0.3s ease-in-out;
   transition: background-color 0.3s ease-in-out;
 }
@@ -586,12 +586,12 @@ textarea {
 #navLogo {
   height: 48px;
   width: 150px;
-  background-image: url("../static/logos/wideLogo.png");
+  background-image: url("https://ik.imagekit.io/ripzjge77zz/Quicklink/logos/wideLogo_1Yghxi0YHk7.png");
   background-repeat: no-repeat;
   background-size: 100% 100%;
   transition: all 0.3s ease-in-out;
   image-rendering: crisp-edges;
-  cursor: url('../static/logos/blue-cursor.png'), auto;
+  cursor: url('https://ik.imagekit.io/ripzjge77zz/Quicklink/logos/blue-cursor_bZvNd_QTTm.png'), auto;
 }
 
 #navLogo:hover {
@@ -600,12 +600,12 @@ textarea {
 
 #navLogo.scrolled {
   image-rendering: crisp-edges;
-  background-image: url("../static/logos/wideLogo-blue.png");
+  background-image: url("https://ik.imagekit.io/ripzjge77zz/Quicklink/logos/wideLogo-blue_m7XTK4rEcG.png");
 }
 
 .logoLink {
   padding-left: 0px;
-  cursor: url('../static/logos/blue-cursor.png'), auto;
+  cursor: url('https://ik.imagekit.io/ripzjge77zz/Quicklink/logos/blue-cursor_bZvNd_QTTm.png'), auto;
 }
 
 .navLinks {
@@ -622,7 +622,7 @@ textarea {
   color: #FFF;
   font-size: 1rem;
   font-weight: 700;
-  cursor: url('../static/logos/blue-cursor.png'), auto;
+  cursor: url('https://ik.imagekit.io/ripzjge77zz/Quicklink/logos/blue-cursor_bZvNd_QTTm.png'), auto;
   transition: color 0.3s ease-in-out;
 }
 

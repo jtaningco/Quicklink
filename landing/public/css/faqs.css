@@ -36,7 +36,7 @@ img, img:focus {
     padding: 0;
     display: flex;
     justify-content: flex-start;
-    cursor: url('../static/logos/blue-cursor.png'), auto;
+    cursor: url('https://ik.imagekit.io/ripzjge77zz/Quicklink/logos/blue-cursor_bZvNd_QTTm.png'), auto;
 }
 
 .faqChevron {
@@ -106,7 +106,7 @@ img, img:focus {
     box-shadow: var(--regular-box-shadow);
     border-radius: 5px 5px 0px 0px;
     transition: all 0.1s ease-out;
-    cursor: url('../static/logos/blue-cursor.png'), auto;
+    cursor: url('https://ik.imagekit.io/ripzjge77zz/Quicklink/logos/blue-cursor_bZvNd_QTTm.png'), auto;
 }
 
 .faqQuestionActive, .faqQuestion:hover {
@@ -154,7 +154,7 @@ img, img:focus {
     padding: 0;
     text-decoration: none;
     transition: color 0.3s ease-in-out;
-    cursor: url(../static/logos/blue-cursor.png), auto;
+    cursor: url('https://ik.imagekit.io/ripzjge77zz/Quicklink/logos/blue-cursor_bZvNd_QTTm.png'), auto;
 }
 
 .learnMore:hover {

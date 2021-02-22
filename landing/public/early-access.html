@@ -41,6 +41,9 @@
             a.appendChild(r);
         })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
     </script>
+
+    <!-- ImageKit.io CDN -->
+    <script type="text/javascript" src="https://unpkg.com/imagekit-javascript/dist/imagekit.min.js"></script>
 </head>
 <body>
     <!-- Load Facebook SDK for JavaScript -->
@@ -72,6 +75,16 @@
         greeting_dialog_display="hide">
     </div>
 
+    <!-- Initialize ImageKit -->
+    <script>
+        var imagekit = new ImageKit({
+        publicKey : "public_3RkLUeikcm1IqOMKDnObY1elTC8=",
+        urlEndpoint : "https://ik.imagekit.io/ripzjge77zz",
+        authenticationEndpoint : "http://www.quicklink.ph/auth",
+        });
+    </script>
+    <script src="./js/images.js"></script>
+
     <nav class="navLanding">
         <div class="navWrapper scrolled" id="navbar">
           <div class="navBurger">
@@ -81,7 +94,7 @@
           </div>
       
           <div class="navLinks" id="openMobileNav">
-            <a class="logoLink" href="/"><div class="scrolled" id="navLogo"></div><img class="navMobileLogo" src="static/logos/logo.png"></a>
+            <a class="logoLink" href="/"><div class="scrolled" id="navLogo"></div><img class="navMobileLogo" src="https://ik.imagekit.io/ripzjge77zz/Quicklink/logos/logo_R3lv7-vXf.png"></a>
             <a class="navOptions mobileHome" href="/">Home</a>
             <a class="navOptions scrolled" href="/how-it-works/">How It Works</a>
             <a class="navOptions scrolled" href="/pricing/">Pricing</a>
@@ -188,8 +201,8 @@
                 </div>
             </div>
 
-            <img src="./static/background/formEllipse6.png" id="big-circle">
-            <img src="./static/background/formEllipse7.png" id="small-circle">
+            <img src="https://ik.imagekit.io/ripzjge77zz/Quicklink/background/formEllipse6_utrpozKcC.png" id="big-circle">
+            <img src="https://ik.imagekit.io/ripzjge77zz/Quicklink/background/formEllipse7_LOX03tEFWz.png" id="small-circle">
         </div>
     </section>
 

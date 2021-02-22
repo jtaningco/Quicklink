@@ -39,6 +39,9 @@
         a.appendChild(r);
     })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
   </script>
+
+  <!-- ImageKit.io CDN -->
+  <script type="text/javascript" src="https://unpkg.com/imagekit-javascript/dist/imagekit.min.js"></script>
 </head>
 
 <body>
@@ -69,6 +72,16 @@
       logged_in_greeting="Hey! Got any questions? Leave us a message and we’ll get back to you shortly."
       logged_out_greeting="Hey! Got any questions? Leave us a message and we’ll get back to you shortly.">
   </div>
+
+  <!-- Initialize ImageKit -->
+  <script>
+    var imagekit = new ImageKit({
+      publicKey : "public_3RkLUeikcm1IqOMKDnObY1elTC8=",
+      urlEndpoint : "https://ik.imagekit.io/ripzjge77zz",
+      authenticationEndpoint : "http://www.quicklink.ph/auth",
+    });
+  </script>
+  <script src="./js/images.js"></script>
   
   <nav class="navLanding">
     <div class="navWrapper scrolled" id="navbar">
@@ -79,7 +92,7 @@
       </div>
   
       <div class="navLinks" id="openMobileNav">
-        <a class="logoLink" href="/"><div class="scrolled" id="navLogo"></div><img class="navMobileLogo" src="static/logos/logo.png"></a>
+        <a class="logoLink" href="/"><div class="scrolled" id="navLogo"></div><img class="navMobileLogo" src="https://ik.imagekit.io/ripzjge77zz/Quicklink/logos/logo_R3lv7-vXf.png"></a>
         <a class="navOptions mobileHome" href="/">Home</a>
         <a class="navOptions scrolled" href="/how-it-works/">How It Works</a>
         <a class="navOptions scrolled" href="/pricing/">Pricing</a>
@@ -98,7 +111,7 @@
         <div class = "faqHeroText">
             <h1 class = "bold">Need more help understanding what Quicklink does for you?</h1>
             <h3>Here are some of the frequently asked questions about our platform.</h3>
-            <a href="#faqs" class="faqChevronLink"><img class="faqChevron" src="static/icons/fi_chevrons-down.svg"></a>
+            <a href="#faqs" class="faqChevronLink"><img class="faqChevron" src="https://ik.imagekit.io/ripzjge77zz/Quicklink/icons/fi_chevrons-down_li87Me3pnC.svg"></a>
         </div>
 
         <img class = "faqHeroImage" src = "static/mockups/faqIllustration.png">
@@ -112,7 +125,7 @@
                 <div class = "faqQA">
                     <div class = "faqQuestion">
                         <p>What is Quicklink?</p>
-                        <img class = "cardChevron" src = "static/icons/fi_chevron-down.svg">
+                        <img class = "cardChevron" src = "https://ik.imagekit.io/ripzjge77zz/Quicklink/icons/fi_chevron-down_S9YXLQKn44CY.svg">
                     </div>
                     
                     <div class = "faqAnswer">
@@ -123,7 +136,7 @@
                 <div class = "faqQA">
                     <div class = "faqQuestion">
                         <p>What do I get from using Quicklink?</p>
-                        <img class = "cardChevron" src = "static/icons/fi_chevron-down.svg">
+                        <img class = "cardChevron" src="https://ik.imagekit.io/ripzjge77zz/Quicklink/icons/fi_chevron-down_S9YXLQKn44CY.svg">
                     </div>
                                         
                     <div class = "faqAnswer">
@@ -137,7 +150,7 @@
               <div class = "faqQA">
                   <div class = "faqQuestion">
                       <p>How can this help my customers?</p>
-                      <img class = "cardChevron" src = "static/icons/fi_chevron-down.svg">
+                      <img class = "cardChevron" src="https://ik.imagekit.io/ripzjge77zz/Quicklink/icons/fi_chevron-down_S9YXLQKn44CY.svg">
                   </div>
                   
                   <div class = "faqAnswer">
@@ -148,7 +161,7 @@
               <div class = "faqQA">
                   <div class = "faqQuestion">
                       <p>How much does it cost?</p>
-                      <img class = "cardChevron" src = "static/icons/fi_chevron-down.svg">
+                      <img class = "cardChevron" src="https://ik.imagekit.io/ripzjge77zz/Quicklink/icons/fi_chevron-down_S9YXLQKn44CY.svg">
                   </div>
                                       
                   <div class = "faqAnswer">
@@ -161,7 +174,7 @@
               <div class = "faqQA">
                   <div class = "faqQuestion">
                       <p>Who can use Quicklink?</p>
-                      <img class = "cardChevron" src = "static/icons/fi_chevron-down.svg">
+                      <img class = "cardChevron" src="https://ik.imagekit.io/ripzjge77zz/Quicklink/icons/fi_chevron-down_S9YXLQKn44CY.svg">
                   </div>
                   
                   <div class = "faqAnswer">
@@ -172,7 +185,7 @@
               <div class = "faqQA">
                   <div class = "faqQuestion">
                       <p>What payment methods can I use as a shop customer?</p>
-                      <img class = "cardChevron" src = "static/icons/fi_chevron-down.svg">
+                      <img class = "cardChevron" src="https://ik.imagekit.io/ripzjge77zz/Quicklink/icons/fi_chevron-down_S9YXLQKn44CY.svg">
                   </div>
                                       
                   <div class = "faqAnswer">
@@ -185,7 +198,7 @@
               <div class = "faqQA">
                   <div class = "faqQuestion">
                       <p>What do I get from the early access program?</p>
-                      <img class = "cardChevron" src = "static/icons/fi_chevron-down.svg">
+                      <img class = "cardChevron" src="https://ik.imagekit.io/ripzjge77zz/Quicklink/icons/fi_chevron-down_S9YXLQKn44CY.svg">
                   </div>
                   
                   <div class = "faqAnswer">
@@ -196,7 +209,7 @@
               <div class = "faqQA">
                   <div class = "faqQuestion">
                       <p>How do I apply for early access?</p>
-                      <img class = "cardChevron" src = "static/icons/fi_chevron-down.svg">
+                      <img class = "cardChevron" src="https://ik.imagekit.io/ripzjge77zz/Quicklink/icons/fi_chevron-down_S9YXLQKn44CY.svg">
                   </div>
                                       
                   <div class = "faqAnswer">
@@ -214,7 +227,7 @@
               <div class = "faqQA">
                   <div class = "faqQuestion">
                       <p>How does Quicklink automate order and financial processes?</p>
-                      <img class = "cardChevron" src = "static/icons/fi_chevron-down.svg">
+                      <img class = "cardChevron" src="https://ik.imagekit.io/ripzjge77zz/Quicklink/icons/fi_chevron-down_S9YXLQKn44CY.svg">
                   </div>
                   
                   <div class = "faqAnswer">
@@ -225,7 +238,7 @@
               <div class = "faqQA">
                   <div class = "faqQuestion">
                       <p>How much time does Quicklink save?</p>
-                      <img class = "cardChevron" src = "static/icons/fi_chevron-down.svg">
+                      <img class = "cardChevron" src="https://ik.imagekit.io/ripzjge77zz/Quicklink/icons/fi_chevron-down_S9YXLQKn44CY.svg">
                   </div>
                                       
                   <div class = "faqAnswer">
@@ -238,7 +251,7 @@
             <div class = "faqQA">
                 <div class = "faqQuestion">
                     <p>How does Quicklink make a shop customer's life easier?</p>
-                    <img class = "cardChevron" src = "static/icons/fi_chevron-down.svg">
+                    <img class = "cardChevron" src="https://ik.imagekit.io/ripzjge77zz/Quicklink/icons/fi_chevron-down_S9YXLQKn44CY.svg">
                 </div>
                 
                 <div class = "faqAnswer">
@@ -249,7 +262,7 @@
             <div class = "faqQA">
                 <div class = "faqQuestion">
                     <p>Do I need to be tech-savvy to use Quicklink?</p>
-                    <img class = "cardChevron" src = "static/icons/fi_chevron-down.svg">
+                    <img class = "cardChevron" src="https://ik.imagekit.io/ripzjge77zz/Quicklink/icons/fi_chevron-down_S9YXLQKn44CY.svg">
                 </div>
                                     
                 <div class = "faqAnswer">
@@ -263,7 +276,7 @@
     <footer class = "mainFooter">
       <div class = "footerFull">
         <div class = "footerContent">
-          <img class = "footerLogo" src = "static/logos/shortenedWhite.png">
+          <img class = "footerLogo" data-src="https://ik.imagekit.io/ripzjge77zz/Quicklink/logos/shortenedWhite_M5B2Zk5Xukv.png">
           <div class = "footerNavs">
             <div class = "footerColumn">
               <h3>How It Works</h3>

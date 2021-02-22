@@ -39,6 +39,9 @@
         a.appendChild(r);
     })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
   </script>
+
+  <!-- ImageKit.io CDN -->
+  <script type="text/javascript" src="https://unpkg.com/imagekit-javascript/dist/imagekit.min.js"></script>
 </head>
 
 <body>
@@ -71,6 +74,16 @@
       greeting_dialog_display="hide">
   </div>
 
+  <!-- Initialize ImageKit -->
+  <script>
+    var imagekit = new ImageKit({
+      publicKey : "public_3RkLUeikcm1IqOMKDnObY1elTC8=",
+      urlEndpoint : "https://ik.imagekit.io/ripzjge77zz",
+      authenticationEndpoint : "http://www.quicklink.ph/auth",
+    });
+  </script>
+  <script src="./js/images.js"></script>
+
   <nav class="navLanding">
     <div class="navWrapper scrolled" id="navbar">
       <div class="navBurger">
@@ -80,7 +93,7 @@
       </div>
   
       <div class="navLinks" id="openMobileNav">
-        <a class="logoLink" href="/"><div class="scrolled" id="navLogo"></div><img class="navMobileLogo" src="static/logos/logo.png"></a>
+        <a class="logoLink" href="/"><div class="scrolled" id="navLogo"></div><img class="navMobileLogo" src="https://ik.imagekit.io/ripzjge77zz/Quicklink/logos/logo_R3lv7-vXf.png"></a>
         <a class="navOptions mobileHome" href="/">Home</a>
         <a class="navOptions scrolled" href="/how-it-works/">How It Works</a>
         <a class="navOptions scrolled active" href="/pricing/" active>Pricing</a>
@@ -94,8 +107,8 @@
     </div>
   </nav>
 
-    <img class = "pricingCircle1" src = "static/background/compCircle.png">
-    <img class = "pricingCircle2" src = "static/background/pricingCircle2.png">
+    <img class = "pricingCircle1" src = "https://ik.imagekit.io/ripzjge77zz/Quicklink/background/compCircle_sG5vEZMGU3.png">
+    <img class = "pricingCircle2" src = "https://ik.imagekit.io/ripzjge77zz/Quicklink/background/pricingCircle2_zFy_CRBI_e.png">
 
 
     <section class = "pricingCards">
@@ -105,23 +118,23 @@
 
             <div class = "pricingFeatures">
                 <div class = "pricingFeature">
-                    <img src = "static/icons/u_check-circle.svg">
+                    <img src="https://ik.imagekit.io/ripzjge77zz/Quicklink/icons/u_check-circle_l3Dpru53U0Vq.svg">
                     <p class = "subtitle"> Use our point of sale (POS) system </p>
                 </div>
                 <div class = "pricingFeature">
-                    <img src = "static/icons/u_check-circle.svg">
+                    <img src="https://ik.imagekit.io/ripzjge77zz/Quicklink/icons/u_check-circle_l3Dpru53U0Vq.svg">
                     <p class = "subtitle"> See your order summary and documentation </p>
                 </div>
                 <div class = "pricingFeature">
-                    <img src = "static/icons/u_check-circle.svg">
+                    <img src="https://ik.imagekit.io/ripzjge77zz/Quicklink/icons/u_check-circle_l3Dpru53U0Vq.svg">
                     <p class = "subtitle"> Create menus and order forms (max. 6 products) </p>
                 </div>
                 <div class = "pricingFeature">
-                    <img src = "static/icons/u_check-circle.svg">
+                    <img src="https://ik.imagekit.io/ripzjge77zz/Quicklink/icons/u_check-circle_l3Dpru53U0Vq.svg">
                     <p class = "subtitle"> Get access to revenue reports </p>
                 </div>
                 <div class = "pricingFeature">
-                    <img src = "static/icons/u_check-circle.svg">
+                    <img src="https://ik.imagekit.io/ripzjge77zz/Quicklink/icons/u_check-circle_l3Dpru53U0Vq.svg">
                     <p class = "subtitle"> Send notification updates to your customers </p>
                 </div>
             </div>
@@ -136,23 +149,23 @@
 
             <div class = "pricingFeatures">
                 <div class = "pricingFeature disabled">
-                    <img src = "static/icons/u_check-circle-gray.svg">
+                    <img src="https://ik.imagekit.io/ripzjge77zz/Quicklink/icons/u_check-circle-gray_08QDsBV9tuv.svg">
                     <p class = "subtitle"> Customize the branding of your order forms </p>
                 </div>
                 <div class = "pricingFeature disabled">
-                    <img src = "static/icons/u_check-circle-gray.svg">
+                    <img src="https://ik.imagekit.io/ripzjge77zz/Quicklink/icons/u_check-circle-gray_08QDsBV9tuv.svg">
                     <p class = "subtitle"> Personalize your order form link </p>
                 </div>
                 <div class = "pricingFeature disabled">
-                    <img src = "static/icons/u_check-circle-gray.svg">
+                    <img src="https://ik.imagekit.io/ripzjge77zz/Quicklink/icons/u_check-circle-gray_08QDsBV9tuv.svg">
                     <p class = "subtitle"> Add as many products as you want! </p>
                 </div>
                 <div class = "pricingFeature disabled">
-                    <img src = "static/icons/u_check-circle-gray.svg">
+                    <img src="https://ik.imagekit.io/ripzjge77zz/Quicklink/icons/u_check-circle-gray_08QDsBV9tuv.svg">
                     <p class = "subtitle"> Get access to data analytics </p>
                 </div>
                 <div class = "pricingFeature disabled">
-                    <img src = "static/icons/u_check-circle-gray.svg">
+                    <img src="https://ik.imagekit.io/ripzjge77zz/Quicklink/icons/u_check-circle-gray_08QDsBV9tuv.svg">
                     <p class = "subtitle">Compute for your net profit!</p>
                 </div>
             </div>
@@ -176,7 +189,7 @@
     <footer class = "mainFooter">
       <div class = "footerFull">
         <div class = "footerContent">
-          <img class = "footerLogo" src = "static/logos/shortenedWhite.png">
+          <img class = "footerLogo" src="https://ik.imagekit.io/ripzjge77zz/Quicklink/logos/shortenedWhite_M5B2Zk5Xukv.png">
           <div class = "footerNavs">
             <div class = "footerColumn">
               <h3>How It Works</h3>
