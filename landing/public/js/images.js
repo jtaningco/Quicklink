@@ -1,5 +1,5 @@
 // LAZY LOADING IMAGES
-document.addEventListener("DOMContentLoaded", function() {
+window.onload = function() {
     var lazyloadImages = document.querySelectorAll("img.lazy");    
     var lazyloadThrottleTimeout;
     
@@ -18,6 +18,7 @@ document.addEventListener("DOMContentLoaded", function() {
           });
           if(lazyloadImages.length == 0) { 
             document.removeEventListener("scroll", lazyload);
+            document.addEventListener("ontouchmove", lazyload);
             window.removeEventListener("resize", lazyload);
             window.removeEventListener("orientationChange", lazyload);
           }
@@ -25,7 +26,7 @@ document.addEventListener("DOMContentLoaded", function() {
     }
     
     document.addEventListener("scroll", lazyload);
-    window.addEventListener("ontouchmove", lazyload);
+    document.addEventListener("ontouchmove", lazyload);
     window.addEventListener("resize", lazyload);
     window.addEventListener("orientationChange", lazyload);
-});
+};
