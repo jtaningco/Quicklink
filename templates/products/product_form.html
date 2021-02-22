@@ -11,8 +11,12 @@
     <link rel="stylesheet" href="{% static '/css/products.css' %}">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.1/css/all.css" integrity="sha384-vp86vTRFVJgpjF9jiIGPEEqYqlDwgyBgEF109VFjmqGmIY/Y4HV4d3Gp2irVfcrp" crossorigin="anonymous">
     <script src="{% static '/js/addproduct.js' %}"></script>
-    <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+
+    <!-- FONT AWESOME KIT -->
     <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+
+    <!-- JQUERY < 3.0.0 -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 <body>
     <form id="product-form" action="" method="POST">
@@ -72,10 +76,21 @@
                     </div>
                     {{ sizeFormset.management_form }}
                     {% for size in sizeFormset %}
-                    <div class="product-form-formset">
+
+                    <!-- The form-TOTAL_FORMS input contains the value of the total number of forms being submitted. If it doesn't match the actual number of forms Django receives when the forms are submitted, an error will be raised. -->
+                    <input type="hidden" name="form-TOTAL_FORMS" value="1" id="id_form-TOTAL_SIZES">
+                    <input type="hidden" name="form-INITIAL_FORMS" value="1" id="id_form-INITIAL_SIZES">
+                    <input type="hidden" name="form-MIN_NUM_FORMS" value="0" id="id_form-MIN_NUM_SIZES">
+                    <input type="hidden" name="form-MAX_NUM_FORMS" value="10" id="id_form-MAX_NUM_SIZES">
+                    
+                    <div class="product-form-formset" id="size-formset">
                         {{ size }}
+                        <button type="button" id="remove-size" class="tertiary-btn tertiary-btn-link">Remove</button>
                     </div>
                     {% endfor %}
+                    <div>
+                        <button type="button" id="add-size" class="tertiary-btn tertiary-btn-link bold">Add Option</button>
+                    </div>
                 </div>
 
                 <div class="product-form-content">

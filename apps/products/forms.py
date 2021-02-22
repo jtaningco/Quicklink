@@ -61,6 +61,7 @@ class ProductForm(ModelForm):
 SizeFormset = inlineformset_factory(
                     Product,
                     Size,
+                    can_delete=False,
                     fields=('size', 'price_size'),
                     widgets={
                         'size': forms.fields.TextInput(attrs={
@@ -81,6 +82,7 @@ SizeFormset = inlineformset_factory(
 AddonFormset = inlineformset_factory(
                     Product,
                     Addon,
+                    can_delete=False,
                     fields=('addon', 'price_addon'),
                     widgets={
                         'addon': forms.fields.TextInput(attrs={
