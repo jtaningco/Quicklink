@@ -81,7 +81,6 @@ body {
     color: hsl(0, 0%, 17%);
     padding: 30px 0 6px 0;
 }
-
 input[type=text], select {
     width: 100%;
     padding: 8px 16px;
