@@ -1,9 +1,4 @@
 {
-    "routes": [
-        { "src": "/", "dest": "/index.html" },
-        { "src": "/how-it-works/", "dest": "/how-it-works.html" },
-        { "src": "/faqs/", "dest": "/faqs.html" },
-        { "src": "/pricing/", "dest": "/pricing.html"},
-        { "src": "/early-access/", "dest": "/early-access.html" }
-    ]
+    "cleanUrls": true,
+    "trailingSlash": true
 }
