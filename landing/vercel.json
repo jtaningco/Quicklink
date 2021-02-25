@@ -1,9 +1,9 @@
 {
     "routes": [
-        { "src": "/", "dest": "/index.html" },
-        { "src": "/how-it-works/", "dest": "/how-it-works.html" },
-        { "src": "/faqs/", "dest": "/faqs.html" },
-        { "src": "/pricing/", "dest": "/pricing.html" },
-        { "src": "/early-access/", "dest": "/early-access.html" }
+        { "src": "/", "dest": "/index.html", "status": 308 },
+        { "src": "/how-it-works/", "dest": "/how-it-works.html", "status": 308 },
+        { "src": "/faqs/", "dest": "/faqs.html", "status": 308 },
+        { "src": "/pricing/", "dest": "/pricing.html", "status": 308 },
+        { "src": "/early-access/", "dest": "/early-access.html", "status": 308 }
     ]
 }
