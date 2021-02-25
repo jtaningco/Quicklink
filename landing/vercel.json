@@ -8,4 +8,5 @@
         { "src": "/pricing/", "dest": "/pricing.html", "status": 308 },
         { "src": "/early-access/", "dest": "/early-access.html", "status": 308 }
     ]
+    
 }
