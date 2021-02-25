@@ -10,7 +10,6 @@
     <link rel="stylesheet" href="{% static '/css/navbar.css' %}">
     <link rel="stylesheet" href="{% static '/css/products.css' %}">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.1/css/all.css" integrity="sha384-vp86vTRFVJgpjF9jiIGPEEqYqlDwgyBgEF109VFjmqGmIY/Y4HV4d3Gp2irVfcrp" crossorigin="anonymous">
-    <script src="{% static '/js/addproduct.js' %}"></script>
 
     <!-- FONT AWESOME KIT -->
     <script src="https://kit.fontawesome.com/a076d05399.js"></script>
@@ -78,19 +77,17 @@
                     {% for size in sizeFormset %}
 
                     <!-- The form-TOTAL_FORMS input contains the value of the total number of forms being submitted. If it doesn't match the actual number of forms Django receives when the forms are submitted, an error will be raised. -->
-                    <input type="hidden" name="form-TOTAL_FORMS" value="1" id="id_form-TOTAL_SIZES">
-                    <input type="hidden" name="form-INITIAL_FORMS" value="1" id="id_form-INITIAL_SIZES">
-                    <input type="hidden" name="form-MIN_NUM_FORMS" value="0" id="id_form-MIN_NUM_SIZES">
-                    <input type="hidden" name="form-MAX_NUM_FORMS" value="10" id="id_form-MAX_NUM_SIZES">
+                    <input type="hidden" name="sizeForm-TOTAL_FORMS" value="0" id="sizeForm-TOTAL_SIZES">
+                    <input type="hidden" name="sizeForm-INITIAL_FORMS" value="0" id="sizeForm-INITIAL_SIZES">
+                    <input type="hidden" name="sizeForm-MIN_NUM_FORMS" value="-1" id="sizeForm-MIN_NUM_SIZES">
+                    <input type="hidden" name="sizeForm-MAX_NUM_FORMS" value="10" id="sizeForm-MAX_NUM_SIZES">
                     
-                    <div class="product-form-formset" id="size-formset">
+                    <div class="product-form-formset size-formset">
                         {{ size }}
-                        <button type="button" id="remove-size" class="tertiary-btn tertiary-btn-link">Remove</button>
+                        <button type="button" id="remove-size" class="tertiary-btn tertiary-btn-link delete-size-form">Remove</button>
                     </div>
                     {% endfor %}
-                    <div>
-                        <button type="button" id="add-size" class="tertiary-btn tertiary-btn-link bold">Add Option</button>
-                    </div>
+                    <button type="button" id="add-size" class="tertiary-btn tertiary-btn-link bold">Add Option</button>
                 </div>
 
                 <div class="product-form-content">
@@ -134,5 +131,7 @@
         </div>
     </main>
     </form>
+
+    <script src="{% static '/js/addproducts.js' %}"></script>
 </body>
 </html>
