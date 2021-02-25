@@ -1,6 +1,4 @@
 {
-    "cleanUrls": true,
-    "trailingSlash": true,
     "routes": [
         { "src": "/", "dest": "/index.html", "status": 308 },
         { "src": "/how-it-works/", "dest": "/how-it-works.html", "status": 308 },
@@ -8,5 +6,4 @@
         { "src": "/pricing/", "dest": "/pricing.html", "status": 308 },
         { "src": "/early-access/", "dest": "/early-access.html", "status": 308 }
     ]
-    
 }
