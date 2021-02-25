@@ -3,10 +3,78 @@
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-    background-color: #F8F9FF;
     font-family: 'Overpass', sans-serif;
 }
+body {
+  background-color: var(--bg-color);
+}
+.container {
+  width: 100vw;
+  height: 100vh;
+}
+.wrapper {
+  width: 100%;
+  height: 100%;
+  margin-left: 200px;
+}
 
+.financePageHeader {
+  color: var(--secondary-alt);
+  font-size: 28px;
+  font-weight: bold;
+  padding-top: 72px;
+  padding-bottom: 28px;
+}
+.mainCards {
+  display: flex;
+  justify-content: space-between;
+}
+.cards {
+  width: 100%;
+  margin-right: 24px;
+  background-color: #FFF;
+  padding: 20px 0px 16px 20px;
+  margin-right: 20px;
+  box-shadow: 0px 3px 5px rgba(51, 51, 51, 0.15);
+  border-radius: 5px;
+}
+.cardHeader {
+  color: var(--secondary-alt);
+  font-size: 20px;
+  font-weight: 600;
+}
+.totalValue {
+  font-weight: 700;
+  font-size: 28px;
+  padding: 4px 0 8px 0;
+}
+
+.cardSubheader {
+  font-size: 14px;
+  color: var(--muted-default);
+}
+.paymentMethodTable {
+  width: 100%;
+  height: 80%;
+  margin-top:40px;
+  background-color: #FFF;
+}
+.tableHeader {
+  display: flex;
+  justify-content: space-between;
+  border-color: var(--muted-lightest);
+  border-top: 2px;
+  border-bottom: 2px;
+}
+.tableHeaderText {
+  font-family: Overpass;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 10px;
+  color: var(--muted-dark);
+  padding: 24px 40px;
+}
+/*
 @media(min-width:468px){
     .container-1{
       display:flex;
@@ -41,7 +109,7 @@ p.financesHeader {
   font-size: 28px;
   line-height: 40px;
     /* identical to box height, or 143% */
-  }
+  /*
 .financesCardHeader {
   text-align: left;
   margin-left:25px;
@@ -52,7 +120,7 @@ p.financesHeader {
   background-color: #FFFFFF;
 }
 .financesLargeText {
-/* H1 / Extra Bold */
+/* H1 / Extra Bold */ /*
   font-family: Overpass;
   font-style: normal;
   font-weight: 700;
@@ -63,12 +131,12 @@ p.financesHeader {
   margin-left:25px;
   margin-bottom: 10px;
 /* Muted / Dark */
-  color: #2C2C2C;
+ /* color: #2C2C2C;
 }
 
 .financesSmallerText {
   background-color: #FFFFFF;
-  /* Muted / Light */
+  /* Muted / Light *//*
   color: #757575;
   font-size: 14px;
   text-align: left;
@@ -121,7 +189,7 @@ p.financesHeader {
 }
 /* CSS for the table  */
 
-p.financeTableHeader{
+/*p.financeTableHeader{
   flex: right;
 //styleName: Overline / Bold;
 font-family: Overpass;
