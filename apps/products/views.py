@@ -46,35 +46,56 @@ def addProduct(request):
         form = ProductForm(request.POST)
         sizeFormset = SizeFormset(request.POST)
         addonFormset = AddonFormset(request.POST)
-        if form.is_valid() and sizeFormset.is_valid() and addonFormset.is_valid():
+
+        if form.is_valid():
             product = Product.objects.create(
                 user=user,
                 name=form.cleaned_data.get('name'),
                 description=form.cleaned_data.get('description'),
+                days=form.cleaned_data.get('days'),
+                week=form.cleaned_data.get('week'),
                 image=form.cleaned_data.get('image'),
-                stock=form.cleaned_data.get('stock'),
-                orders=form.cleaned_data.get('orders'),
                 instructions=form.cleaned_data.get('instructions'),
             )
+
+            # Insert if radio is checked for stock
+            if 'made-to-order' in request.POST:
+                product.stock = "Made to Order"
+            elif 'stocks-input-select' in request.POST:
+                product.stock = form.cleaned_data.get('stock')
+
+            # Insert if radio is checked for order
+            if 'no-order-limits' in request.POST:
+                product.orders = "No Limit"
+            elif 'orders-input-select' in request.POST:
+                product.orders = form.cleaned_data.get('orders')
+            
+            # Save Product
             product.save()
-            
-            for form in sizeFormset:
-                size = Size.objects.create(
-                    product=product,
-                    size=form.cleaned_data.get('size'),
-                    price_size=form.cleaned_data.get('price_size')
-                )
-                size.save()
-            
-            for form in addonFormset:
-                addon = Addon.objects.create(
-                    product=product,
-                    addon=form.cleaned_data.get('addon'),
-                    price_addon=form.cleaned_data.get('price_addon')
-                )
-                addon.save()
-            
             return redirect('/shop/products')
+
+            # Save Formsets
+            if sizeFormset.is_valid() and addonFormset.is_valid():
+                for sizeForm in sizeFormset:
+                    size = Size.objects.create(
+                        product=product,
+                        size=sizeForm.cleaned_data.get('size'),
+                        price_size=sizeForm.cleaned_data.get('price_size')
+                    )
+                    size.save()
+
+                    addonInputs = form.cleaned_data.get('addonForm-TOTAL_FORMS')
+                    if int(addonInputs) >= 1:
+                        for addonForm in addonFormset:
+                            addon = Addon.objects.create(
+                                product=product,
+                                addon=addonForm.cleaned_data.get('addon'),
+                                price_addon=addonForm.cleaned_data.get('price_addon')
+                            )
+                            addon.save()
+                            return redirect('/shop/products')
+                    else:
+                            return redirect('/shop/products')
 
     context = {'form':form, 'sizeFormset':sizeFormset, 'addonFormset':addonFormset}
     return render(request, 'products/product_form.html', context)

@@ -3,48 +3,220 @@ const mainForm = document.getElementById("product-form");
 
 // Size Formset Variables
 const sizeForm = document.getElementsByClassName("size-formset");
-const stockForm = document.getElementById("stock-form");
 const addSizeFormBtn = document.getElementById("add-size");
-console.log("sizeForm: ", sizeForm)
-console.log("addSizeFormBtn: ", addSizeFormBtn)
 
 const totalSizeForms = document.querySelector("#sizeForm-TOTAL_SIZES");
-console.log("totalSizeForms: ", totalSizeForms);
+const maxSizeForms = document.querySelector("#sizeForm-MAX_NUM_SIZES");
+const minSizeForms = document.querySelector("#sizeForm-MIN_NUM_SIZES");
 
-let sizeFormCount = sizeForm.length - 1;
-console.log("sizeFormCount: ", sizeFormCount);
+let sizeFormCount = sizeForm.length;
 
 // Add Size Formset
-addSizeFormBtn.addEventListener("click", function(event) {
-    event.preventDefault();
-
-    // Clone a New Form
-    const newSizeForm = sizeForm[0].cloneNode(true);
+function addSize(selector, type) {
+    var newSizeForm = $(selector).clone(true);
     
-    // Create / Update Form Count
-    const formRegex = RegExp(`form-(\\d){1}-`, 'g');
+    newSizeForm.find(':input').each(function() {
+        var name = $(this).attr('name').replace('-' + (sizeFormCount-1) + '-', '-' + sizeFormCount + '-');
+        var id = 'id_' + name;
+        $(this).attr({'name': name, 'id': id}).val('').removeAttr('checked');
+    });
+
+    newSizeForm.find('label').each(function() {
+        var newFor = $(this).attr('for').replace('-' + (sizeFormCount-1) + '-', '-' + sizeFormCount + '-');
+        $(this).attr('for', newFor);
+    });
+
     sizeFormCount++;
-    console.log(sizeFormCount);
+    totalSizeForms.setAttribute('value', sizeFormCount);
+    $('#id_' + type + '-TOTAL_FORMS').val(sizeFormCount);
+    $(selector).after(newSizeForm);
+}
 
-    // Update Form Count Value from the HTML Form
-    newSizeForm.innerHTML = newSizeForm.innerHTML.replace(formRegex, `form-${sizeFormCount}-`);
-    console.log(newSizeForm);
-    
-    // Insert New Form before the Submit button
-    sizeForm.insertBefore(newSizeForm, stockForm);
+$('#add-size').click(function() {
+    var max = parseInt($(maxSizeForms).attr('value'));
 
-    // Update Form Count Value from the HTML Form
-    totalSizeForms.setAttribute('value', `${sizeFormCount}`);
-    console.log(totalSizeForms);
-});
+    if (sizeFormCount < max) {
+        addSize('.size-formset:last', 'size_set')
+    } else {
+        alert("You can't have more than 10 available sizes or servings.");
+    }
+})
 
 
 // Deleting Element from Size Formset
 mainForm.addEventListener("click", function (event) {
     if (event.target.classList.contains("delete-size-form")) {
-        event.preventDefault();
-        event.target.parentElement.remove();
-        sizeFormCount--;
-        totalSizeForms.setAttribute('value', `${formCount + 1}`);
+        var min = parseInt($(minSizeForms).attr('value'));
+
+        if (sizeFormCount > min) {
+            event.preventDefault();
+            event.target.parentElement.remove();
+            sizeFormCount--;
+            totalSizeForms.setAttribute('value', `${sizeFormCount}`);
+        } else {
+            alert("You can't have less than 1 available size or serving.");
+        }
     }
 });
+
+// Addon Formset Variables
+const addonForm = document.getElementsByClassName("addon-formset");
+const addAddonFormBtn = document.getElementById("add-addon");
+
+const totalAddonForms = document.querySelector("#addonForm-TOTAL_SIZES");
+const maxAddonForms = document.querySelector("#addonForm-MAX_NUM_SIZES");
+const minAddonForms = document.querySelector("#addonForm-MIN_NUM_SIZES");
+
+let addonFormCount = addonForm.length;
+
+// Add Addon Formset
+function addAddon(selector, type) {
+    var newAddonForm = $(selector).clone(true);
+    
+    newAddonForm.find(':input').each(function() {
+        var name = $(this).attr('name').replace('-' + (addonFormCount-1) + '-', '-' + addonFormCount + '-');
+        var id = 'id_' + name;
+        $(this).attr({'name': name, 'id': id}).val('').removeAttr('checked');
+    });
+
+    newAddonForm.find('label').each(function() {
+        var newFor = $(this).attr('for').replace('-' + (addonFormCount-1) + '-', '-' + addonFormCount + '-');
+        $(this).attr('for', newFor);
+    });
+
+    addonFormCount++;
+    totalAddonForms.setAttribute('value', addonFormCount);
+    $('#id_' + type + '-TOTAL_FORMS').val(addonFormCount);
+    $(selector).after(newAddonForm);
+}
+
+$('#add-addon').click(function() {
+    var max = parseInt($(maxAddonForms).attr('value'));
+
+    if (addonFormCount < max) {
+        addAddon('.addon-formset:last', 'addon_set')
+    } else {
+        alert("You can't have more than 10 available addons.");
+    }
+})
+
+// Deleting Element from Addon Formset
+mainForm.addEventListener("click", function (event) {
+    if (event.target.classList.contains("delete-addon-form")) {
+        var min = parseInt($(minAddonForms).attr('value'));
+
+        if (addonFormCount > min) {
+            event.preventDefault();
+            event.target.parentElement.remove();
+            addonFormCount--;
+            totalAddonForms.setAttribute('value', `${addonFormCount}`);
+        } else {
+            alert("Leave this blank if you don't offer addons.")
+        }
+    }
+});
+
+// Stocks Variables
+const madeToOrderRadio = document.getElementById('made-to-order');
+const stocksInputRadio = document.getElementById('stocks-input-select');
+const stocksInput = document.getElementById('stocks-input');
+
+// Clicking on Made to Order Radio
+$('#made-to-order').click(function() {
+    stocksInputRadio.checked = false;
+
+    if ($('#stocks-input-select').is(':checked')) { 
+        stocksInput.disabled = false;
+        stocksInput.classList.remove('disabled');
+        stocksInput.classList.add('default');
+    } else {
+        stocksInput.disabled = true;
+        stocksInput.classList.remove('default');
+        stocksInput.classList.add('disabled');
+    }
+})
+
+// Click on Input Radio
+$('#stocks-input-select').click(function() {
+    madeToOrderRadio.checked = false;
+
+    if ($('#stocks-input-select').is(':checked')) { 
+        stocksInput.disabled = false;
+        stocksInput.classList.remove('disabled');
+        stocksInput.classList.add('default');
+    } else {
+        stocksInput.disabled = true;
+        stocksInput.classList.remove('default');
+        stocksInput.classList.add('disabled');
+    }
+ });
+
+// Days Variables
+const openDaysRadio = document.getElementById('open-days');
+const openDaysInput = document.getElementById('id_days');
+
+$('#open-days').click(function() {
+    if ($('#open-days').is(':checked')) { 
+        openDaysInput.disabled = false;
+        openDaysInput.classList.remove('disabled');
+        openDaysInput.classList.add('default');
+    } else {
+        openDaysInput.disabled = true;
+        openDaysInput.classList.remove('default');
+        openDaysInput.classList.add('disabled');
+    }
+});
+
+// Weeks Variables
+const weeklyDeliveryRadio = document.getElementById('weekly-deliveries');
+const weeklyDeliveryInput = document.getElementById('id_week');
+
+$('#weekly-deliveries').click(function() {
+    if ($('#weekly-deliveries').is(':checked')) { 
+        weeklyDeliveryInput.disabled = false;
+        weeklyDeliveryInput.classList.remove('disabled');
+        weeklyDeliveryInput.classList.add('default');
+    } else {
+        weeklyDeliveryInput.disabled = true;
+        weeklyDeliveryInput.classList.remove('default');
+        weeklyDeliveryInput.classList.add('disabled');
+    }
+});
+
+// Maximum Orders Variables
+const noLimitsRadio = document.getElementById('no-order-limits');
+const maxOrdersRadio = document.getElementById('orders-input-select');
+const maxOrdersInput = document.getElementById('id_orders');
+
+// Clicking on No Order Limits Radio
+$('#no-order-limits').click(function() {
+    maxOrdersRadio.checked = false;
+
+    if ($('#orders-input-select').is(':checked')) { 
+        maxOrdersInput.disabled = false;
+    } else {
+        maxOrdersInput.disabled = true;
+    }
+})
+
+// Click on Input Radio
+$('#orders-input-select').click(function() {
+    noLimitsRadio.checked = false;
+
+    if ($('#orders-input-select').is(':checked')) { 
+        maxOrdersInput.disabled = false;
+        maxOrdersInput.classList.add('default');
+        maxOrdersInput.classList.remove('disabled');
+    } else {
+        maxOrdersInput.disabled = true;
+        maxOrdersInput.classList.remove('default');
+        maxOrdersInput.classList.add('disabled');
+    }
+ });
+
+window.onload = function() {
+    stocksInput.disabled = true;
+    openDaysInput.disabled = true;
+    weeklyDeliveryInput.disabled = true;
+    maxOrdersInput.disabled = true;
+}

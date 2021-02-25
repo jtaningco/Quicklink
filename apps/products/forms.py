@@ -14,6 +14,8 @@ class ProductForm(ModelForm):
             'description', 
             'image',
             'stock',
+            'days',
+            'week',
             'orders',
             'instructions',
         ]
@@ -26,32 +28,24 @@ class ProductForm(ModelForm):
             'description': forms.Textarea(attrs={
                 'class':'large-input default subtitle',
                 'placeholder': 'Describe your product for your customers to see!'}),
-                
-            # 'size': forms.fields.TextInput(attrs={
-            #     'class':'small-input default subtitle',
-            #     'placeholder': 'Ex. 1 Dozen'}),
 
-            # 'price': forms.fields.NumberInput(attrs={
-            #     'class':'small-input default subtitle',
-            #     'placeholder': 'Php'}),
+            'stock': forms.fields.TextInput(attrs={
+                'class':'small-input default subtitle',
+                'placeholder': '1'}),
 
-            'stock': forms.RadioSelect(attrs={
-                'class':'radio',
-                'empty_label': None }),
+            'days': forms.fields.NumberInput(attrs={
+                'class':'smallest-input disabled subtitle',
+                'placeholder': '0'}),
 
-            'orders': forms.RadioSelect(attrs={
-                'class':'radio',
-                'empty_label': None }),
+            'week': forms.fields.TextInput(attrs={
+                'class':'input default subtitle',
+                'placeholder': 'Saturdays'}),
+
+            'orders': forms.fields.NumberInput(attrs={
+                'class':'smallest-input disabled subtitle',
+                'placeholder': '0'}),
             
-            # 'addon': forms.fields.TextInput(attrs={\
-            #     'class':'small-input default subtitle',
-            #     'placeholder': 'Additional Chocolate Chip'}),
-
-            # 'addon_price': forms.fields.NumberInput(attrs={
-            #     'class':'small-input default subtitle',
-            #     'placeholder': 'Php'}),
-            
-            'instructions': forms.fields.TextInput(attrs={
+            'instructions': forms.Textarea(attrs={
                 'class':'large-input default subtitle',
                 'placeholder': 'List them down here!'}),
         }
@@ -76,7 +70,7 @@ SizeFormset = inlineformset_factory(
                         'size':'',
                         'price_size':'',
                     },
-                    extra=1
+                    extra=2
                 )
 
 AddonFormset = inlineformset_factory(

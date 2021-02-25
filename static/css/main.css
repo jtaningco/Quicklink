@@ -225,6 +225,12 @@ textarea {
   color:#000;
 }
 
+.smallest-input {
+  width: 80px;
+  height: 40px;
+  padding: 0 16px;
+}
+
 .small-input {
   width: 272px;
   height: 40px;
@@ -251,26 +257,34 @@ textarea {
   border-radius: 5px;
 }
 
-.input.default, .small-input.default, .large-input.default {
+.input.default, .small-input.default, .large-input.default, .smallest-input.default {
   resize: vertical;
   border: 1px solid var(--muted-lighter);
   border-radius: 5px;
 }
 
-.input.focused, .small-input.focused, .large-input.focused {
+.input.focused, .small-input.focused, .large-input.focused, .smallest-input.focused {
   border: 1px solid var(--primary-main);
   box-sizing: border-box;
   border-radius: 5px;
 }
 
-.input.filled, .small-input.filled, .large-input.filled {
+.input.filled, .small-input.filled, .large-input.filled, .smallest-input.filled {
   border: 1px solid var(--muted-lighter);
   box-sizing: border-box;
   border-radius: 5px;
 }
 
-.input.error, .small-input.error, .large-input.error {
+.input.error, .small-input.error, .large-input.error, .smallest-input.error {
   border: 1px solid var(--failure-main);
+  box-sizing: border-box;
+  border-radius: 5px;
+}
+
+.input.disabled, .small-input.disabled, .large-input.disabled, .smallest-input.disabled {
+  color: var(--muted-light);
+  background-color: #F8F8F8;
+  border: 1px solid var(--muted-lighter);
   box-sizing: border-box;
   border-radius: 5px;
 }

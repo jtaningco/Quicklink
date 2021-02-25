@@ -421,3 +421,36 @@
     font-weight: 700;
     color: var(--muted-lighter);
 }
+
+.product-form-stocks {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    align-content: center;
+}
+
+.radio-select-row {
+    margin: 1rem 0 0.5rem 0;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    align-content: center;
+}
+
+.radio-label, #stocks-input-disabled, #stocks-input, #id_orders {
+    margin-left: 1rem;
+}
+
+#id_days, #id_week {
+    margin: 0 0.5rem;
+}
+
+#stocks-input-disabled {
+    padding: 1rem;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    align-content: center;
+}
+

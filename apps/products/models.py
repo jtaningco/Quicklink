@@ -11,20 +11,6 @@ class Tag(models.Model):
         return self.name
 
 class Product(models.Model):
-    STOCKS = [
-        ('Made to Order','Made to Order'),
-        ('1','1'),
-        ('2','2'),
-        ('3','3')
-    ]
-
-    ORDERS = [
-        ('No Limit','No Limit'),
-        ('1','1'),
-        ('2','2'),
-        ('3','3')
-    ]
-            
     # tags = models.ManyToManyField(Tag)
 
     # User manipulating the product (request.user — whoever is logged in)
@@ -37,8 +23,12 @@ class Product(models.Model):
     # Product images
     image = models.ImageField(null=True, blank=True)
 
-    stock = models.CharField(max_length=55, choices=STOCKS, null=True, default=STOCKS[0], blank=False)
-    orders = models.CharField(max_length=55, choices=ORDERS, null=True, default=ORDERS[0], blank=False)
+    stock = models.CharField(max_length=15, null=True, blank=False)
+
+    days = models.IntegerField(null=True, blank=True, default=0)
+    week = models.CharField(max_length=55, null=True)
+
+    orders = models.CharField(max_length=55, null=True, blank=False)
 
     instructions = models.CharField(max_length=100, null=True, blank=True)
     
