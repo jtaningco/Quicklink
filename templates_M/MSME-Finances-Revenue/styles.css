@@ -100,10 +100,30 @@ body {
   font-style: normal;
   padding: 24px 24px 24px 0px;
 }
-
 tr:nth-child(odd){
-  background-color: #4C8BF5;
-  color: #fff;
+  background-color: var(--primary-light);
+}
+.bottomPageNumber {
+  display: flex;
+  justify-content: center;
+  margin-top: 72px;
+}
+.pageNumberButton {
+  display: flex;
+  background: transparent;
+  justify-content: center;
+  padding: 0px;
+}
+#arrow {
+  padding: 0px 8px 0px 8px;
+}
+.buttonText {
+  color: var(--primary-main);
+  font-size: 16px;
+}
+.pageNumber {
+  padding-left: 56px;
+  padding-right: 56px;
 }
 /*
 @media(min-width:468px){
