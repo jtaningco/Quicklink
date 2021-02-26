@@ -100,6 +100,11 @@ body {
   font-style: normal;
   padding: 24px 24px 24px 0px;
 }
+
+tr:nth-child(odd){
+  background-color: #4C8BF5;
+  color: #fff;
+}
 /*
 @media(min-width:468px){
     .container-1{
