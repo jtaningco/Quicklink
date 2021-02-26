@@ -17,7 +17,6 @@ body {
   height: 100%;
   margin-left: 200px;
 }
-
 .financePageHeader {
   color: var(--secondary-alt);
   font-size: 28px;
@@ -27,7 +26,7 @@ body {
 .mainCards {
   display: flex;
   justify-content: space-between;
-  margin-right: 16px;
+  margin-right: 24px;
 }
 .cards {
   width: 100%;
@@ -100,13 +99,40 @@ body {
   font-style: normal;
   padding: 24px 24px 24px 0px;
 }
-tr:nth-child(odd){
+.paymentTable tr:nth-child(even) {
   background-color: var(--primary-light);
+} 
+.paymentTable tr:nth-child(odd) {
+  background-color: #FFF;
+} 
+.pagination {
+  display: flex;
+  justify-content: center;
+  padding-top:64px;
 }
+.pagination a {
+  color: black;
+  float: left;
+  padding: 8px 16px;
+  text-decoration: none;
+}
+.pagination a.active {
+  background-color: #4CAF50;
+  color: white;
+  border-radius: 5px;
+}
+.pagination a:hover:not(.active) {
+  background-color: #ddd;
+  border-radius: 5px;
+}
+/*
+
+
 .bottomPageNumber {
   display: flex;
   justify-content: center;
-  margin-top: 72px;
+  margin-top: 64px;
+  padding-bottom: 24px;
 }
 .pageNumberButton {
   display: flex;
@@ -122,10 +148,12 @@ tr:nth-child(odd){
   font-size: 16px;
 }
 .pageNumber {
+  color: var(--muted-light);
   padding-left: 56px;
   padding-right: 56px;
 }
-/*
+
+
 @media(min-width:468px){
     .container-1{
       display:flex;
