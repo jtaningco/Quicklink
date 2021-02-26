@@ -1,0 +1,105 @@
+@import url('https://fonts.googleapis.com/css2?family=Overpass:wght@400;600;700;800&display=swap');
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Overpass', sans-serif;
+}
+body {
+  background-color: var(--bg-color);
+}
+.container {
+  width: 100vw;
+  height: 100vh;
+}
+.wrapper {
+  width: 100%;
+  height: 100%;
+  margin-left: 200px;
+}
+.financePageHeader {
+  color: var(--secondary-alt);
+  font-size: 28px;
+  font-weight: bold;
+  padding: 72px 0px 28px 32px;
+}
+.mainCards {
+  display: flex;
+  justify-content: space-between;
+  margin-right: 24px;
+}
+.cards {
+  width: 100%;
+  margin-left: 32px;
+  background-color: #FFF;
+  padding: 20px 0px 16px 20px;
+  box-shadow: 0px 3px 5px rgba(51, 51, 51, 0.15);
+  border-radius: 5px;
+}
+.cardHeader {
+  color: var(--secondary-alt);
+  font-size: 20px;
+  font-weight: 600;
+}
+.totalValue {
+  font-weight: 700;
+  font-size: 28px;
+  padding: 4px 0 8px 0;
+}
+.cardSubheader {
+  font-size: 14px;
+  color: var(--muted-default);
+}
+.paymentMethodTable {
+  width: 100%;
+  height: 80%;
+  margin-top:40px;
+  background-color: #FFF;
+}
+.tableHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.tableHeaderText {
+  font-family: Overpass;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 12px;
+  color: var(--muted-dark);
+  padding: 24px 24px;
+}
+.emptyState {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: transparent;
+}
+#emptystateIllustration {
+    width:325px;
+    height:271px;
+    padding-top: 32px;
+}
+.emptyStateHeader {
+    color: var(--primary-alt);
+    font-size: 24px;
+    font-weight: bold;
+    padding-top: 32px;
+}
+.primaryButtonWhole {
+    display: flex;
+    padding-top: 32px;
+}
+.primary-btn {
+    font-size: 14px;
+    color: #fff;
+    background-color: var(--primary-main);
+    padding: 12px 24px;
+    margin-bottom: 48px;
+    box-shadow: 0px 3px 5px rgba(51, 51, 51, 0.15);
+    border-radius: 4px;
+}
+#whiteArrow {
+    padding-left: 4px;
+}
