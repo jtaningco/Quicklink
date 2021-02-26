@@ -43,8 +43,14 @@ class Size(models.Model):
     size = models.CharField(max_length=80, null=True, blank=False)
     price_size = models.IntegerField(null=True, blank=False)
 
+    def __str__(self):
+        return f"{self.product} — {self.size}"
+
 # Class Addon for implementation of inline formsets
 class Addon(models.Model):
     product = models.ForeignKey(Product, null=True, on_delete=models.CASCADE)
     addon = models.CharField(max_length=80, null=True, blank=False)
     price_addon = models.IntegerField(null=True, blank=False)
+
+    def __str__(self):
+        return f"{self.product} — {self.addon}"
