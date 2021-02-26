@@ -438,12 +438,16 @@
     align-content: center;
 }
 
-.radio-label, #stocks-input-disabled, #stocks-input, #id_orders {
+.radio-label, #stocks-input-disabled, #stocks-input, #id_orders, #id_stock {
     margin-left: 1rem;
 }
 
-#id_days, #id_week {
+#id_days, #id_week, #id_time {
     margin: 0 0.5rem;
+}
+
+#id_name, #id_description, #id_instructions, #id_schedule {
+    margin: 0.5rem 0;
 }
 
 #stocks-input-disabled {

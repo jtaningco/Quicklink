@@ -67,27 +67,34 @@ const totalAddonForms = document.querySelector("#addonForm-TOTAL_SIZES");
 const maxAddonForms = document.querySelector("#addonForm-MAX_NUM_SIZES");
 const minAddonForms = document.querySelector("#addonForm-MIN_NUM_SIZES");
 
-let addonFormCount = addonForm.length;
+let addonFormCount = addonForm.length-1;
 
 // Add Addon Formset
 function addAddon(selector, type) {
-    var newAddonForm = $(selector).clone(true);
-    
-    newAddonForm.find(':input').each(function() {
-        var name = $(this).attr('name').replace('-' + (addonFormCount-1) + '-', '-' + addonFormCount + '-');
-        var id = 'id_' + name;
-        $(this).attr({'name': name, 'id': id}).val('').removeAttr('checked');
-    });
-
-    newAddonForm.find('label').each(function() {
-        var newFor = $(this).attr('for').replace('-' + (addonFormCount-1) + '-', '-' + addonFormCount + '-');
-        $(this).attr('for', newFor);
-    });
-
-    addonFormCount++;
-    totalAddonForms.setAttribute('value', addonFormCount);
-    $('#id_' + type + '-TOTAL_FORMS').val(addonFormCount);
-    $(selector).after(newAddonForm);
+    if (addonFormCount >= 1) {
+        var newAddonForm = $(selector).clone(true);
+            
+        newAddonForm.find(':input').each(function() {
+            var name = $(this).attr('name').replace('-' + (addonFormCount-1) + '-', '-' + addonFormCount + '-');
+            var id = 'id_' + name;
+            $(this).attr({'name': name, 'id': id}).val('').removeAttr('checked');
+        });
+        
+        newAddonForm.find('label').each(function() {
+            var newFor = $(this).attr('for').replace('-' + (addonFormCount-1) + '-', '-' + addonFormCount + '-');
+            $(this).attr('for', newFor);
+        });
+        
+        addonFormCount++;
+        totalAddonForms.setAttribute('value', addonFormCount);
+        $('#id_' + type + '-TOTAL_FORMS').val(addonFormCount);
+        $(selector).after(newAddonForm);
+    } else {
+        $('.addon-formset').find(':input').each(function() {
+            $(this).css('display', 'flex');
+        });
+        addonFormCount++;
+    }
 }
 
 $('#add-addon').click(function() {
@@ -111,7 +118,10 @@ mainForm.addEventListener("click", function (event) {
             addonFormCount--;
             totalAddonForms.setAttribute('value', `${addonFormCount}`);
         } else {
-            alert("Leave this blank if you don't offer addons.")
+            $('.addon-formset').find(':input').each(function() {
+                $(this).css('display', 'none');
+            });
+            addonFormCount--;
         }
     }
 });
@@ -119,7 +129,7 @@ mainForm.addEventListener("click", function (event) {
 // Stocks Variables
 const madeToOrderRadio = document.getElementById('made-to-order');
 const stocksInputRadio = document.getElementById('stocks-input-select');
-const stocksInput = document.getElementById('stocks-input');
+const stocksInput = document.getElementById('id_stock');
 
 // Clicking on Made to Order Radio
 $('#made-to-order').click(function() {
@@ -167,19 +177,19 @@ $('#open-days').click(function() {
     }
 });
 
-// Weeks Variables
-const weeklyDeliveryRadio = document.getElementById('weekly-deliveries');
-const weeklyDeliveryInput = document.getElementById('id_week');
+// Time Variables
+const cutoffTimeRadio = document.getElementById('cutoff-time');
+const cutoffTimeInput = document.getElementById('id_time');
 
-$('#weekly-deliveries').click(function() {
-    if ($('#weekly-deliveries').is(':checked')) { 
-        weeklyDeliveryInput.disabled = false;
-        weeklyDeliveryInput.classList.remove('disabled');
-        weeklyDeliveryInput.classList.add('default');
+$('#cutoff-time').click(function() {
+    if ($('#cutoff-time').is(':checked')) { 
+        cutoffTimeInput.disabled = false;
+        cutoffTimeInput.classList.remove('disabled');
+        cutoffTimeInput.classList.add('default');
     } else {
-        weeklyDeliveryInput.disabled = true;
-        weeklyDeliveryInput.classList.remove('default');
-        weeklyDeliveryInput.classList.add('disabled');
+        cutoffTimeInput.disabled = true;
+        cutoffTimeInput.classList.remove('default');
+        cutoffTimeInput.classList.add('disabled');
     }
 });
 
@@ -217,6 +227,9 @@ $('#orders-input-select').click(function() {
 window.onload = function() {
     stocksInput.disabled = true;
     openDaysInput.disabled = true;
-    weeklyDeliveryInput.disabled = true;
     maxOrdersInput.disabled = true;
+
+    $('.addon-formset').find(':input').each(function() {
+        $(this).css('display', 'none');
+    });
 }

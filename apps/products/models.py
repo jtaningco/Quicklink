@@ -23,12 +23,17 @@ class Product(models.Model):
     # Product images
     image = models.ImageField(null=True, blank=True)
 
-    stock = models.CharField(max_length=15, null=True, blank=False)
+    # Stocks available
+    stock = models.CharField(max_length=15, null=True, blank=True)
 
-    days = models.IntegerField(null=True, blank=True, default=0)
-    week = models.CharField(max_length=55, null=True)
+    # Available delivery schedules
+    schedule = models.CharField(max_length=55, null=True)
 
-    orders = models.CharField(max_length=55, null=True, blank=False)
+    # Order cut-off
+    days = models.IntegerField(null=True, blank=False, default=0)
+    time = models.CharField(max_length=10, null=True, blank=False)
+
+    orders = models.CharField(max_length=55, null=True, blank=True)
 
     instructions = models.CharField(max_length=100, null=True, blank=True)
     
@@ -43,6 +48,13 @@ class Size(models.Model):
     size = models.CharField(max_length=80, null=True, blank=False)
     price_size = models.IntegerField(null=True, blank=False)
 
+    def size_to_json(self):
+        return {
+            "product": self.product,
+            "size": self.size,
+            "price_size": self.price_size,
+        }
+
     def __str__(self):
         return f"{self.product} — {self.size}"
 
@@ -51,6 +63,13 @@ class Addon(models.Model):
     product = models.ForeignKey(Product, null=True, on_delete=models.CASCADE)
     addon = models.CharField(max_length=80, null=True, blank=False)
     price_addon = models.IntegerField(null=True, blank=False)
+
+    def addon_to_json(self):
+        return {
+            "product": self.product,
+            "addon": self.addon,
+            "price_addon": self.price_addon,
+        }
 
     def __str__(self):
         return f"{self.product} — {self.addon}"
