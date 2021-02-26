@@ -93,7 +93,7 @@ body {
     flex-direction: column;
     width: 100%;
 }
-.signup-card-questions {
+.signupCardQuestions {
     font-family: Overpass;
     font-style: normal;
     font-weight: normal;
@@ -106,7 +106,7 @@ body {
 input[type=text], select {
     width: 100%;
     padding: 8px 16px;
-    margin-bottom: 24px;
+    margin-bottom: 16px;
     display: inline-block;
     font-family: 'Overpass', sans-serif;
     border: 1px solid var(--muted-lighter);
@@ -130,6 +130,7 @@ input[type=custom-text], select {
 .customTextbox {
     display: flex;
     justify-content: space-between;
+    
 }
 .primary-btn {
     display: flex;
@@ -149,6 +150,24 @@ input[type=custom-text], select {
     font-size: 14px;
     padding: 8px;
     color: #fff;
+    background-color: transparent;
+    box-shadow: none;
+}
+.custom-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;    
+    padding-bottom: 16px;
+    background-color: transparent;
+}
+.btn {
+    font-family: 'Overpass', sans-serif;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    padding: 8px;
+    color:var(--muted-lighter);
     background-color: transparent;
     box-shadow: none;
 }
