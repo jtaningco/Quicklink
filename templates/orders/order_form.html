@@ -58,26 +58,33 @@
                                                 
                                                 <div class="order-product-size">
                                                     <h2 class='subtitle bold'>Size/Type</h2>
-                                                    <div class="order-product-size-input">
-                                                        <label class="radio-mobile">
-                                                            <input type="radio">
-                                                            <span class="radio-select-mobile"></span>
-                                                        </label>
-                                                        <label for="size" class='subtitle product-size'>{{ product.size }} (Php {{ product.price }})</label>
-                                                    </div>
+                                                    {% for size in sizes %}
+                                                        <div class="order-product-size-input">
+                                                            <label class="radio-mobile">
+                                                                <input type="radio">
+                                                                <span class="radio-select-mobile"></span>
+                                                            </label>
+                                                            <label for="size" class='subtitle product-size'>{{ size.size }} (PHP {{ size.price_size }})</label>
+                                                        </div>
+                                                    {% endfor %}
                                                 </div>
                                                 
-                                                {% if not product.addon %}
+                                                {% if not addons %}
                                                 {% else %}
                                                     <div class="order-product-addons">
                                                         <h2 class='subtitle bold'>Add-Ons</h2>
-                                                        <div class="order-product-addons-input">
-                                                            <label class="checkbox-mobile">
-                                                                <input type="checkbox">
-                                                                <span class="checkmark-mobile"></span>
-                                                            </label>
-                                                            <label for="addon" class='subtitle product-addon'>{{ product.addon }} (+ Php {{ product.addon_price }})</label>
-                                                        </div>
+                                                        {% for addon in addons %}
+                                                            <div class="order-product-addon">
+                                                                <div class="order-product-addons-input">
+                                                                    <label class="checkbox-mobile">
+                                                                        <input type="checkbox">
+                                                                        <span class="checkmark-mobile"></span>
+                                                                    </label>
+                                                                    <label for="addon" class='subtitle product-addon'>{{ addon.addon }}</label>
+                                                                </div>
+                                                                <span class="addon-price">+ PHP {{ addon.price_addon }}.00</span>
+                                                            </div>
+                                                        {% endfor %}
                                                     </div>
                                                 {% endif %}
                                                 

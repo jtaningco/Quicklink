@@ -38,4 +38,4 @@ class Order(models.Model):
         return self.product.name
 
     def total(self):
-        return self.quantity * self.product.price
+        return self.quantity * self.size.price_size

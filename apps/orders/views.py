@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from apps.products.models import Product
+from apps.products.models import Product, Size, Addon
 from apps.orders.models import Order
 from .forms import OrderForm
 from .filters import PendingOrderFilter
@@ -71,20 +71,28 @@ def pendingNextSevenDays(request):
 @allowed_users(allowed_role=User.Types.MERCHANT)
 def viewProducts(request):
     products = Product.objects.all()
-    return render(request, 'orders/available_products.html', {'products':products})
+    context = {'products':products}
+    return render(request, 'orders/available_products.html', context)
 
 @login_required(login_url='accounts:login')
 @allowed_users(allowed_role=User.Types.MERCHANT)
 def addOrder(request, pk):
     product = Product.objects.get(id=pk)
+    sizes = Size.objects.filter(product=product)
+    addons = Addon.objects.filter(product=product)
     form = OrderForm(initial={'product': product})
     if request.method == 'POST':
         form = OrderForm(request.POST)
         if form.is_valid():
             form.save()
+            product.sold = product.sold + 1
+            if product.stock == 'Made to Order':
+                pass
+            else:
+                product.stock = str(int(product.stock) - 1)
             return redirect('/shop/orders/')
 
-    context = {'form':form, 'product':product}
+    context = {'form':form, 'product':product, 'sizes':sizes, 'addons':addons}
     return render(request, 'orders/order_form.html', context)
 
 @login_required(login_url='accounts:login')

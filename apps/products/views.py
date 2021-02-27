@@ -77,9 +77,6 @@ def addProduct(request):
             # Save Product
             product.save()
 
-            print("SizeFormset: ", SizeFormset(request.POST, instance=product), "\n")
-            print("AddonFormset: ", AddonFormset(request.POST, instance=product), "\n")
-
             sizeFormset = SizeFormset(request.POST, instance=product)
             addonFormset = AddonFormset(request.POST, instance=product)
             
@@ -100,6 +97,11 @@ def addProduct(request):
                         return redirect('/shop/products')
                 else:
                     return redirect('/shop/products')
+    
+            print("Product ID: ", product.id, "\n")
+            print("Product: ", product, "\n")
+            print("Size Formset: ", sizeFormset, "\n")
+            print("Addon Formset: ", addonFormset, "\n")
 
     context = {'form':form, 'sizeFormset':sizeFormset, 'addonFormset':addonFormset}
     return render(request, 'products/product_form.html', context)
@@ -110,13 +112,46 @@ def updateProduct(request, product_pk):
     product = Product.objects.get(id=product_pk)
     form = ProductForm(instance=product)
 
+    sizes = Size.objects.filter(product=product)
+    addons = Addon.objects.filter(product=product)
+    sizeFormset = SizeFormset(instance=sizes)
+    addonFormset = AddonFormset(instance=addons)
+
     if request.method == 'POST':
         form = ProductForm(request.POST, instance=product)
         if form.is_valid():
-            form.save()
-            return redirect('/shop/products')
+            product.name = form.cleaned_data.get('name')
+            product.description = form.cleaned_data.get('description')
+            product.schedule = form.cleaned_data.get('schedule')
+            product.days = form.cleaned_data.get('days')
+            product.time = form.cleaned_data.get('time')
+            product.image = form.cleaned_data.get('image')
+            product.instructions = form.cleaned_data.get('instructions')
+            
+            product.save()
 
-    context = {'form':form, 'product':product}
+            sizeFormset = SizeFormset(request.POST, instance=sizes)
+            addonFormset = AddonFormset(request.POST, instance=addons)
+            
+            # Save Formsets
+            if sizeFormset.is_valid():
+                sizeFormset.save()
+
+            if addonFormset.is_valid():
+                addonInputs = request.POST.get('addonForm-TOTAL_FORMS')
+                if int(addonInputs) > 1:
+                    addonFormset.save()
+                    return redirect('/shop/products')
+                elif int(addonInputs) == 1:
+                    if request.POST.get('addon_set-0-addon') == '':
+                        pass
+                    else:
+                        addonFormset.save()
+                        return redirect('/shop/products')
+                else:
+                    return redirect('/shop/products')
+
+    context = {'form':form, 'product':product, 'sizeFormset':sizeFormset, 'addonFormset':addonFormset}
     return render(request, 'products/edit_product.html', context)
 
 @login_required(login_url='accounts:merchant-login')

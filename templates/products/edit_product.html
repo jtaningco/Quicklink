@@ -10,9 +10,12 @@
     <link rel="stylesheet" href="{% static '/css/navbar.css' %}">
     <link rel="stylesheet" href="{% static '/css/products.css' %}">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.1/css/all.css" integrity="sha384-vp86vTRFVJgpjF9jiIGPEEqYqlDwgyBgEF109VFjmqGmIY/Y4HV4d3Gp2irVfcrp" crossorigin="anonymous">
-    <script src="{% static '/js/addproduct.js' %}"></script>
-    <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+
+    <!-- FONT AWESOME KIT -->
     <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+
+    <!-- JQUERY < 3.0.0 -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 <body>
     <form id="product-form" action="" method="POST">
@@ -47,10 +50,154 @@
                 <h2 class="bold" style="color: #FF8A00;">Edit Product</h2>
                 
                 {% csrf_token %}
-                {{ form.as_p }}
+                
+                <div class="product-form-content">
+                    <div class="product-form-label">
+                        <p>Name</p><span style="color: var(--failure-main);">*</span>
+                    </div>
+                    {{ form.name }}
+                </div>
+
+                <div class="product-form-content">
+                    <div class="product-form-label">
+                        <p>Description</p><span style="color: var(--failure-main);">*</span>
+                    </div>
+                    {{ form.description }}
+                </div>
+
+                <div class="product-form-images">
+                    {{ form.image }}
+                </div>
+
+                <div class="product-form-content">
+                    <div class="product-form-label">
+                        <p>Available Sizes or Servings</p><span style="color: var(--failure-main);">*</span>
+                    </div>
+                    {{ sizeFormset.management_form }}
+
+                    <!-- The form-TOTAL_FORMS input contains the value of the total number of forms being submitted. If it doesn't match the actual number of forms Django receives when the forms are submitted, an error will be raised. -->
+                    <input type="hidden" name="sizeForm-TOTAL_FORMS" value="1" id="sizeForm-TOTAL_SIZES">
+                    <input type="hidden" name="sizeForm-MIN_NUM_FORMS" value="1" id="sizeForm-MIN_NUM_SIZES">
+                    <input type="hidden" name="sizeForm-MAX_NUM_FORMS" value="10" id="sizeForm-MAX_NUM_SIZES">
+                    
+                    {% for size in sizeFormset %}    
+                    <div class="product-form-formset size-formset">
+                        {{ size }}
+                        <button type="button" name="id_size-set-0-remove" id="id_size-set-0-remove" class="tertiary-btn tertiary-btn-link delete-size-form">Remove</button>
+                    </div>
+                    {% endfor %}
+                    <button type="button" id="add-size" class="tertiary-btn tertiary-btn-link bold">Add Option</button>
+                </div>
+
+                <div class="product-form-content">
+                    <div class="product-form-label">
+                        <p>Stocks</p><span style="color: var(--failure-main);">*</span>
+                    </div>
+                    <div class="product-form-stocks">
+                        <div class="radio-select-row">
+                            <input type="radio" name="made-to-order" id="made-to-order" checked> 
+                            <label for="made-to-order" class="radio-label subtitle">Made to Order</label>
+                        </div>
+                        <div class="radio-select-row">
+                            <input type="radio" name="stocks-input-select" id="stocks-input-select">
+                            <label for="stocks-input-select">
+                                {{ form.stock }}
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="product-form-content">
+                    <div class="product-form-label">
+                        <p>Available Delivery Schedules</p><span style="color: var(--failure-main);">*</span>
+                    </div>
+                    {{ form.schedule }}
+                </div>
+
+                <div class="product-form-content">
+                    <div class="product-form-label">
+                        <p>Order Cut-Off</p><span style="color: var(--failure-main);">*</span>
+                    </div>
+                    <div class="product-form-dates">
+                        <div class="radio-select-row">
+                            <input type="radio" name="open-days" id="open-days">
+                            <label for="open-days" class="radio-label subtitle">
+                                {{ form.days }} day(s) before chosen delivery date
+                            </label> 
+                        </div>
+                        <div class="radio-select-row">
+                            <input type="radio" name="cutoff-time" id="cutoff-time">
+                            <label for="cutoff-time" class="radio-label subtitle">
+                                {{ form.time }} everyday
+                            </label> 
+                        </div>
+                    </div>
+                </div>
+
+                <div class="product-form-content">
+                    <div class="product-form-label">
+                        <p>Maximum Orders Taken / Day</p><span style="color: var(--failure-main);">*</span>
+                    </div>
+                    <div class="product-form-stocks">
+                        <div class="radio-select-row">
+                            <input type="radio" name="no-order-limits" id="no-order-limits" checked> 
+                            <label for="no-order-limits" class="radio-label subtitle">No Limit</label>
+                        </div>
+                        <div class="radio-select-row">
+                            <input type="radio" name="orders-input-select" id="orders-input-select">
+                            <label for="orders-input-select">
+                                {{ form.orders }}
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="product-form-content">
+                    <div class="product-form-label">
+                        <p>Possible Add-Ons</p><span style="color: var(--failure-main);">*</span>
+                    </div>
+                    {{ addonFormset.management_form }}
+
+                    <!-- The form-TOTAL_FORMS input contains the value of the total number of forms being submitted. If it doesn't match the actual number of forms Django receives when the forms are submitted, an error will be raised. -->
+                    <input type="hidden" name="addonForm-TOTAL_FORMS" value="1" id="addonForm-TOTAL_SIZES">
+                    <input type="hidden" name="addonForm-MIN_NUM_FORMS" value="1" id="addonForm-MIN_NUM_SIZES">
+                    <input type="hidden" name="addonForm-MAX_NUM_FORMS" value="10" id="addonForm-MAX_NUM_SIZES">
+
+                    {% for addon in addonFormset %}
+                    <div class="product-form-formset addon-formset">
+                        {{ addon }}
+                        <button type="button" name="id_addon-set-0-remove" id="id_addon-set-0-remove" class="tertiary-btn tertiary-btn-link delete-addon-form">Remove</button>
+                    </div>
+                    {% endfor %}
+                    <button type="button" id="add-addon" class="tertiary-btn tertiary-btn-link bold">Add Option</button>
+                </div>
+
+                <div class="product-form-content">
+                    <div class="product-form-label">
+                        <p>Any special instructions, allergens, etc.?</p><span style="color: var(--failure-main);">*</span>
+                    </div>
+                    {{ form.instructions }}
+                </div>
+
+                {% if form.errors %}
+                    {% for field in form %}
+                        {% for error in field.errors %}
+                            <div class="alert alert-danger">
+                                <strong>{{ error|escape }}</strong>
+                            </div>
+                        {% endfor %}
+                    {% endfor %}
+                    {% for error in form.non_field_errors %}
+                        <div class="alert alert-danger">
+                            <italic>{{ error|escape }}</italic>
+                        </div>
+                    {% endfor %}
+                {% endif %}
             </div>
         </div>
     </main>
     </form>
+    
+    <script src="{% static '/js/addproduct.js' %}"></script>
 </body>
 </html>
