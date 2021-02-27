@@ -3,7 +3,8 @@ from django.db.models.deletion import CASCADE
 from django.db.models.fields import IntegerField
 from django.utils.timezone import datetime, timedelta
 
-from apps.products.models import Product
+from apps.accounts.models import User
+from apps.products.models import *
 
 # Create your models here.
 class Order(models.Model):
@@ -20,22 +21,66 @@ class Order(models.Model):
         ('Received', 'Received')
     ]
 
-    # Change user to customer once login authentication has been set
-    # user = models.ForeignKey(User, null=True, on_delete=models.SET_NULL)
-    product = models.ForeignKey(Product, null=True, on_delete=models.CASCADE) 
-    order_date = models.DateTimeField(auto_now_add=True, null=True)
+    # User manipulating the product (request.user — whoever is logged in)
+    user = models.ForeignKey(User, null=True, on_delete=models.CASCADE)
 
-    quantity = models.IntegerField(null=True, default=1)
     # Order quantity is different from product quantity -- sum of all products na kasama
+    order_quantity = models.IntegerField(null=True, default=1)
     
+    # Total fees for the order
     total = models.IntegerField(null=True, default=0)
+
+    # Order status
     order_status = models.CharField(max_length=40, null=True, choices=ORDER_STATUS, default='Pending')
+    
+    # Order payment status
     payment_status = models.CharField(max_length=40, null=True, choices=PAYMENT_STATUS, default='To Receive')
-    delivery_date = models.DateTimeField(null=True, default=datetime.today()+timedelta(days=3))
+    
     notes = models.CharField(max_length=255, null=True, blank=True)
 
     def __str__(self):
         return self.product.name
 
+class ProductOrder(models.Model):
+    # Order cart
+    order = models.ForeignKey(Order, null=True, on_delete=models.CASCADE) 
+
+    # Product ordered
+    product = models.ForeignKey(Product, null=True, on_delete=models.CASCADE)
+
+    # Product size
+    size = models.ForeignKey(Size, null=True, on_delete=models.CASCADE)
+    
+    # Product addons
+    addons = models.ManyToManyField(Addon, null=True)  
+    
+    # Product quantity ordered
+    quantity = models.IntegerField(null=True, default=1)
+
+    # Special instructions per order
+    instructions = models.CharField(max_length=140, null=True, blank=True)
+    
+    # Total product fees (Auto-filled)
+    total = models.IntegerField(null=True, default=0)
+
+    # Date of when the order was published (Auto-filled)
+    order_date = models.DateTimeField(auto_now_add=True, null=True)
+
+    # Date of when the product will be delivered (Auto-filled)
+    delivery_date = models.DateTimeField(null=True, default=datetime.today()+timedelta(days=1))
+    
+
+    def __str__(self):
+        return f"{self.order} - {self.quantity} {self.product}" 
+
     def total(self):
-        return self.quantity * self.size.price_size
+        if addons:
+            addons_total = 0
+            for i in addons:
+                addons_total += i.price_addon
+            return (self.quantity * self.size.price_size)
+        else:    
+            return (self.quantity * self.size.price_size)
+
+    def delivery_date(self):
+        return datetime.today()+timedelta(days=self.product.days)

@@ -114,8 +114,8 @@ def updateProduct(request, product_pk):
 
     sizes = Size.objects.filter(product=product)
     addons = Addon.objects.filter(product=product)
-    sizeFormset = SizeFormset(instance=sizes)
-    addonFormset = AddonFormset(instance=addons)
+    sizeFormset = SizeFormset()
+    addonFormset = AddonFormset()
 
     if request.method == 'POST':
         form = ProductForm(request.POST, instance=product)

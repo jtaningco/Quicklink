@@ -24,7 +24,7 @@ class Product(models.Model):
     image = models.ImageField(null=True, blank=True)
 
     # Stocks available
-    stock = models.CharField(max_length=15, null=True, blank=True)
+    stock = models.CharField(max_length=55, null=True, blank=True, default=0)
 
     # Available delivery schedules
     schedule = models.CharField(max_length=55, null=True)
@@ -33,10 +33,14 @@ class Product(models.Model):
     days = models.IntegerField(null=True, blank=False, default=0)
     time = models.CharField(max_length=10, null=True, blank=False)
 
-    orders = models.CharField(max_length=55, null=True, blank=True)
+    orders = models.CharField(max_length=55, null=True, blank=True, default=0)
 
     instructions = models.CharField(max_length=100, null=True, blank=True)
     
+    # Cheapest and Highest Prices
+    min_price = models.CharField(max_length=100, null=True, blank=True)
+    max_price = models.CharField(max_length=100, null=True, blank=True)
+
     sold = models.IntegerField(null=True, blank=True, default=0)
 
     def __str__(self):

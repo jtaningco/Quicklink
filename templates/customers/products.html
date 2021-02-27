@@ -1,0 +1,26 @@
+{% extends 'quicklink/customers.html' %}
+
+{% block pagetitle %}{{ shop.shop_name | title }}{% endblock %}
+
+{% block maincontent %}
+
+    <div>
+        <h1>{{ shop.shop_name }}</h1>
+        <p>{{ links.instagram }}</p>
+        <p>{{ shop.shop_contact_number }}</p>
+        <p>{{ address.line1 }} {{ address.line2 }} {{ address.city }}</p>
+    </div>
+
+    <div style="display: flex; flex-direction: column; margin-top: 40px;">
+        {% for product in products %}
+            <h2>{{ product.name }} </h2>
+            {% if product.min_price == product.max_price %}
+                <p>PHP {{ product.min_price }}</p>
+            {% else %}
+                <p>PHP {{ product.min_price }} - {{ product.max_price }}</p>
+            {% endif %}
+            <a href="{% url 'orders:add-order' product.id %}">Add to Cart</a>
+        {% endfor %}
+    </div>
+
+{% endblock %}

@@ -1,0 +1,67 @@
+{% extends 'quicklink/customers.html' %}
+
+{% block pagetitle %}Add {{ product.name | title }}{% endblock %}
+
+{% block maincontent %}
+<form method="POST">
+    <div class="order-product-description">
+        <h3 class='bold'>{{ product.name }}</h3>
+        <p class='product-description'>{{ product.description }}</p>
+        {% if product.stock == "Made to Order" %}
+            <p class='product-stock'>{{ product.stock }}</p>
+        {% else %}
+            <p class='product-stock'>Stocks available: {{ product.stock }}</p>
+        {% endif %}
+        <p class='product-instructions'>Possible allergens: {{ product.instructions }}</p>
+    </div>
+
+    {% csrf_token %}
+    <div class="order-product-size">
+        <h2 class='subtitle bold'>Size/Type</h2>
+        {{ form.size.as_p }}
+
+        <!-- MANUAL RENDERING -->
+        <!-- {% for size in sizes %}
+            <div class="order-product-size-input">
+                <label class="radio-mobile">
+                    <input type="radio" id="">
+                    <span class="radio-select-mobile"></span>
+                </label>
+                <label for="size" class='subtitle product-size'>{{ size.size }} (PHP {{ size.price_size }})</label>
+            </div>
+        {% endfor %} -->
+    </div>
+
+    {% if not addons %}
+    {% else %}
+    <div class="order-product-addons">
+        <h2 class='subtitle bold'>Add-Ons</h2>
+        {{ form.addons.as_p }}
+
+        <!-- MANUAL RENDERING -->
+        <!-- {% for addon in addons %}
+            <div class="order-product-addon">
+                <div class="order-product-addons-input">
+                    <label class="checkbox-mobile">
+                        <input type="checkbox">
+                        <span class="checkmark-mobile"></span>
+                    </label>
+                    <label for="addon" class='subtitle product-addon'>{{ addon.addon }}</label>
+                </div>
+                <span class="addon-price">+ PHP {{ addon.price_addon }}.00</span>
+            </div>
+        {% endfor %} -->
+    </div>
+    {% endif %}
+
+    <div class="order-product-instructions">
+        <h2 class='subtitle bold'>Special Instructions</h2>
+        {{ form.instructions }}
+    </div>
+
+    <div class="order-products-footer">
+    {{ form.quantity }}
+    <input type="submit" value="Add Product" class="add-to-basket-btn subtitle bold">
+</form>
+
+{% endblock %}

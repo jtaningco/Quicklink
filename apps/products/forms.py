@@ -31,8 +31,8 @@ class ProductForm(ModelForm):
                 'placeholder': 'Describe your product for your customers to see!'}),
 
             'stock': forms.fields.TextInput(attrs={
-                'class':'small-input disabled subtitle',
-                'placeholder': '1'}),
+                'class':'smallest-input disabled subtitle',
+                'placeholder': '100'}),
 
             'days': forms.fields.NumberInput(attrs={
                 'class':'smallest-input disabled subtitle',
@@ -44,11 +44,11 @@ class ProductForm(ModelForm):
 
             'schedule': forms.fields.TextInput(attrs={
                 'class':'input default subtitle',
-                'placeholder': 'Saturdays'}),
+                'placeholder': 'Everyday'}),
 
-            'orders': forms.fields.NumberInput(attrs={
+            'orders': forms.fields.TextInput(attrs={
                 'class':'smallest-input disabled subtitle',
-                'placeholder': '0'}),
+                'placeholder': '10'}),
             
             'instructions': forms.Textarea(attrs={
                 'class':'large-input default subtitle',
