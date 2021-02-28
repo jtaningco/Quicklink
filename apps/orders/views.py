@@ -37,44 +37,21 @@ def orders(request):
 @login_required(login_url='accounts:merchant-login')
 @allowed_users(allowed_roles=[User.Types.MERCHANT, User.Types.ADMIN])
 def pendingOrders(request):
+    # RESTART THIS TOMORROW
+    
+    user = request.user
+    product = Product.objects.filter(user=user).order_by('name')[0]
+
     orders = Order.objects.filter(shop=user, order_status="Pending")
-    orderCount = Order.objects.filter(shop=user, order_status="Pending").count()
+    productOrders = ProductOrder.objects.filter(order__in=orders).order_by('product')
 
-    productFilter = PendingOrderFilter(request.GET, queryset=orders)
-    orders = productFilter.qs.filter(order_status="Pending")
+    orderCount = ProductOrder.objects.filter(order__in=orders).count()
+
+    productFilter = PendingOrderFilter(request.GET, queryset=productOrders)
+    products = productFilter.qs.filter(order__order_status="Pending")
     
-    context = {'orders':orders, 'productFilter':productFilter, 'orderCount':orderCount}
+    context = {'orders':orders, 'products':productOrders, 'productFilter':productFilter, 'orderCount':orderCount}
     return render(request, 'orders/pending_orders.html', context)
-
-# Pending Orders with Today's Filter
-@login_required(login_url='accounts:login')
-@allowed_users(allowed_roles=[User.Types.MERCHANT, User.Types.ADMIN])
-def pendingToday(request):
-    today = datetime.now()
-    tomorrow = datetime.now() + timedelta(hours=24)
-    orders = Order.objects.filter(shop=user, order_status="Pending", 
-            delivery_date__range=(today, tomorrow))
-    
-    productFilter = PendingOrderFilter(request.GET, queryset=orders)
-    orders = productFilter.qs.filter(order_status="Pending")
-    
-    context = {'orders':orders, 'productFilter':productFilter}
-    return render(request, 'orders/pending_orders_today.html', context)
-
-# Pending Orders with Next Seven Days Filter
-@login_required(login_url='accounts:merchant-login')
-@allowed_users(allowed_roles=[User.Types.MERCHANT, User.Types.ADMIN])
-def pendingNextSevenDays(request):
-    today = datetime.today()
-    next_seven_days = datetime.today() + timedelta(days=7)
-    orders = Order.objects.filter(shop=user, order_status="Pending",
-            delivery_date__range=(today, next_seven_days))
-    
-    productFilter = PendingOrderFilter(request.GET, queryset=orders)
-    orders = productFilter.qs.filter(order_status="Pending")
-    
-    context = {'orders':orders, 'productFilter':productFilter}
-    return render(request, 'orders/pending_orders_week.html', context)
 
 # View Products (Merchant Preview)
 @login_required(login_url='accounts:merchant-login')

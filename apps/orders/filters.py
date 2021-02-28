@@ -16,8 +16,14 @@ class PendingOrderFilter(django_filters.FilterSet):
         
     def __init__(self, data=None, queryset=None, request=None, prefix=None):
         super(PendingOrderFilter, self).__init__(data=data, queryset=queryset, request=request, prefix=prefix)
+
+        # Initialize Filter
+        data = data.copy()
+        if len(data) == 0:
+            data['product'] = queryset[0]
+
         self.filters['product'].label=''
         self.filters['product'].field.widget.attrs.update({
             'class':'select subtitle bold',
-            'initial' : 'All Products',
         })
+        self.filters['product'].initial = queryset[0]

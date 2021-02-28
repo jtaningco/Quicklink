@@ -42,10 +42,16 @@ class Order(models.Model):
     # Date of when the order was published (Auto-filled)
     order_date = models.DateTimeField(auto_now_add=True, null=True)
 
+    # Preferred delivery date of when the product will be delivered (Auto-filled)
+    delivery_date = models.DateTimeField(null=True, default=datetime.today()+timedelta(days=1))
+
     notes = models.CharField(max_length=255, null=True, blank=True)
 
     def __str__(self):
         return f"{self.order_date} - Total of PHP {self.total}"
+
+    def delivery_date(self):
+        return datetime.today()+timedelta(days=3)
 
 class ProductOrder(models.Model):
     # Order cart
@@ -71,9 +77,6 @@ class ProductOrder(models.Model):
 
     # Date of when the order was published (Auto-filled)
     order_date = models.DateTimeField(auto_now_add=True, null=True)
-
-    # Date of when the product will be delivered (Auto-filled)
-    delivery_date = models.DateTimeField(null=True, default=datetime.today()+timedelta(days=1))
     
 
     def __str__(self):
@@ -87,6 +90,3 @@ class ProductOrder(models.Model):
             return (self.quantity * self.size.price_size) + addons_total
         else:    
             return self.quantity * self.size.price_size
-
-    def delivery_date(self):
-        return datetime.today()+timedelta(days=self.product.days)

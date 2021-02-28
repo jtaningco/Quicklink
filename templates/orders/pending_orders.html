@@ -22,14 +22,6 @@
                 <div class="orders-header-content">
                     <h1 class="extra-bold">Pending Orders</h1>
                 </div>
-                <div class="orders-header-btns">
-                    <button class="tertiary-btn">
-                        <a href="{% url 'orders:pending-today' %}" class="tertiary-btn-link subtitle bold">Today</a>
-                    </button>
-                    <button class="tertiary-btn">
-                        <a href="{% url 'orders:pending-next-seven-days' %}" class="tertiary-btn-link subtitle bold">Next 7 days</a>
-                    </button>
-                </div>
             </div>
         </div>
 
@@ -56,9 +48,9 @@
                 <table class="orders-summary-table">
                     <tr class="orders-table-header">
                         <th class="table-header order-table-cell">Order Number</th>
-                        <th class="table-header order-table-cell">Customer Name</th>
                         <th class="table-header order-table-cell">Product</th>
-                        <th class="table-header order-table-cell">Status</th>
+                        <th class="table-header order-table-cell">Size</th>
+                        <th class="table-header order-table-cell">No-Addons</th>
                         <th class="table-header order-table-cell">Quantity</th>
                         <th class="table-header order-table-cell">Size</th>
 
@@ -70,39 +62,39 @@
                         <th class="table-header order-table-cell">Additional Notes</th>
                     </tr>
 
-                    {% for order in orders %}
+                    {% for i in products %}
                         {% if forloop.counter|divisibleby:2 %}
                             <tr class="order-table-row-2">
-                                <td class="order-table-cell subtitle">{{ order.id }}</td>
-                                <td class="order-table-cell subtitle">Sample Name</td>
-                                <td class="order-table-cell subtitle">{{ order.product.name }}</td>
+                                <td class="order-table-cell subtitle">{{ i.order.id }}</td>
+                                <td class="order-table-cell subtitle">{{ i.order.user.username }}</td>
+                                <td class="order-table-cell subtitle">{{ i.product.name }}</td>
                                 
-                                {% if order.order_status == "Pending" %}
+                                {% if i.order.order_status == "Pending" %}
                                     <td class="order-table-cell">
                                         <div class="status-container">
                                             <div class="order-status pending">
                                                 <div class="order-status-text pending-text">
-                                                    {{ order.order_status }}
+                                                    {{ i.order.order_status }}
                                                 </div>
                                             </div>
                                         </div>
                                     </td>
-                                {% elif order.order_status == "Sent" %}
+                                {% elif i.order.order_status == "Sent" %}
                                     <td class="order-table-cell">
                                         <div class="status-container">
                                             <div class="order-status sent">
                                                 <div class="order-status-text sent-text">
-                                                    {{ order.order_status }}
+                                                    {{ i.order.order_status }}
                                                 </div>
                                             </div>
                                         </div>
                                     </td>
-                                {% elif order.order_status == "Received" %}
+                                {% elif i.order.order_status == "Received" %}
                                     <td class="order-table-cell">
                                         <div class="status-container">
                                             <div class="order-status received">
                                                 <div class="order-status-text received-text">
-                                                    {{ order.order_status }}
+                                                    {{ i.order.order_status }}
                                                 </div>
                                             </div>
                                         </div>
@@ -112,15 +104,15 @@
                                         <div class="status-container">
                                             <div class="order-status cancelled">
                                                 <div class="order-status-text cancelled-text">
-                                                    {{ order.order_status }}
+                                                    {{ i.order.order_status }}
                                                 </div>
                                             </div>
                                         </div>
                                     </td>
                                 {% endif %}
 
-                                <td class="order-table-cell subtitle">{{ order.quantity }}</td>
-                                <td class="order-table-cell subtitle">{{ order.product.size }}</td>
+                                <td class="order-table-cell subtitle">{{ i.quantity }}</td>
+                                <td class="order-table-cell subtitle">{{ i.size }}</td>
 
                                 <!-- Insert Add-On For Loop Here -->
                                 <td class="order-table-cell subtitle">
@@ -138,7 +130,7 @@
                                     </label>
                                 </td>
                                 
-                                <td class="order-table-cell subtitle">{{ order.delivery_date|date:"d-m-Y" }}</td>
+                                <td class="order-table-cell subtitle">{{ i.order.delivery_date|date:"d-m-Y" }}</td>
                                 <td class="order-table-cell subtitle">
                                     <a href="" class="tertiary-btn-link bold">See Notes</a>
                                 </td>
@@ -146,36 +138,36 @@
 
                         {% else %}
                             <tr class="order-table-row-1">
-                                <td class="order-table-cell subtitle">{{ order.id }}</td>
-                                <td class="order-table-cell subtitle">Sample Name</td>
-                                <td class="order-table-cell subtitle">{{ order.product.name }}</td>
+                                <td class="order-table-cell subtitle">{{ i.id }}</td>
+                                <td class="order-table-cell subtitle">{{ i.order.user }}</td>
+                                <td class="order-table-cell subtitle">{{ i.product }}</td>
                                 
-                                {% if order.order_status == "Pending" %}
+                                {% if i.order.order_status == "Pending" %}
                                     <td class="order-table-cell">
                                         <div class="status-container">
                                             <div class="order-status pending">
                                                 <div class="order-status-text pending-text">
-                                                    {{ order.order_status }}
+                                                    {{ i.order.order_status }}
                                                 </div>
                                             </div>
                                         </div>
                                     </td>
-                                {% elif order.order_status == "Sent" %}
+                                {% elif i.order.order_status == "Sent" %}
                                     <td class="order-table-cell">
                                         <div class="status-container">
                                             <div class="order-status sent">
                                                 <div class="order-status-text sent-text">
-                                                    {{ order.order_status }}
+                                                    {{ i.order.order_status }}
                                                 </div>
                                             </div>
                                         </div>
                                     </td>
-                                {% elif order.order_status == "Received" %}
+                                {% elif i.order.order_status == "Received" %}
                                     <td class="order-table-cell">
                                         <div class="status-container">
                                             <div class="order-status received">
                                                 <div class="order-status-text received-text">
-                                                    {{ order.order_status }}
+                                                    {{ i.order.order_status }}
                                                 </div>
                                             </div>
                                         </div>
@@ -185,15 +177,15 @@
                                         <div class="status-container">
                                             <div class="order-status cancelled">
                                                 <div class="order-status-text cancelled-text">
-                                                    {{ order.order_status }}
+                                                    {{ i.order.order_status }}
                                                 </div>
                                             </div>
                                         </div>
                                     </td>
                                 {% endif %}
 
-                                <td class="order-table-cell subtitle">{{ order.quantity }}</td>
-                                <td class="order-table-cell subtitle">{{ order.product.size }}</td>
+                                <td class="order-table-cell subtitle">{{ i.quantity }}</td>
+                                <td class="order-table-cell subtitle">{{ i.size }}</td>
 
                                 <!-- Insert Add-On For Loop Here -->
                                 <td class="order-table-cell subtitle">
@@ -211,7 +203,7 @@
                                     </label>
                                 </td>
                                 
-                                <td class="order-table-cell subtitle">{{ order.delivery_date|date:"d-m-Y" }}</td>
+                                <td class="order-table-cell subtitle">{{ i.order.delivery_date|date:"d-m-Y" }}</td>
                                 <td class="order-table-cell subtitle">
                                     <a href="" class="tertiary-btn-link bold">See Notes</a>
                                 </td>
