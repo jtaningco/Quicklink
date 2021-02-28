@@ -17,16 +17,18 @@ from django.http import HttpResponse
 @login_required(login_url='accounts:merchant-login')
 @allowed_users(allowed_roles=[User.Types.MERCHANT, User.Types.ADMIN])
 def orders(request):
+    user = request.user
     search_query = request.GET.get('search', '')
 
     if search_query:
-        orders = Order.objects.filter(Q(order_status__icontains=search_query) |
+        orders = Order.objects.filter(shop=user | 
+            Q(order_status__icontains=search_query) |
             Q(payment_status__icontains=search_query) |
             Q(order_date__icontains=search_query) |
             Q(delivery_date__icontains=search_query) |
             Q(id__icontains=search_query))
     else:
-        orders = Order.objects.all()
+        orders = Order.objects.filter(shop=user)
 
     context = {'orders':orders }
     return render(request, 'orders/order_summary.html', context)
@@ -35,8 +37,8 @@ def orders(request):
 @login_required(login_url='accounts:merchant-login')
 @allowed_users(allowed_roles=[User.Types.MERCHANT, User.Types.ADMIN])
 def pendingOrders(request):
-    orders = Order.objects.filter(order_status="Pending")
-    orderCount = Order.objects.filter(order_status="Pending").count()
+    orders = Order.objects.filter(shop=user, order_status="Pending")
+    orderCount = Order.objects.filter(shop=user, order_status="Pending").count()
 
     productFilter = PendingOrderFilter(request.GET, queryset=orders)
     orders = productFilter.qs.filter(order_status="Pending")
@@ -50,7 +52,7 @@ def pendingOrders(request):
 def pendingToday(request):
     today = datetime.now()
     tomorrow = datetime.now() + timedelta(hours=24)
-    orders = Order.objects.filter(order_status="Pending", 
+    orders = Order.objects.filter(shop=user, order_status="Pending", 
             delivery_date__range=(today, tomorrow))
     
     productFilter = PendingOrderFilter(request.GET, queryset=orders)
@@ -65,7 +67,7 @@ def pendingToday(request):
 def pendingNextSevenDays(request):
     today = datetime.today()
     next_seven_days = datetime.today() + timedelta(days=7)
-    orders = Order.objects.filter(order_status="Pending",
+    orders = Order.objects.filter(shop=user, order_status="Pending",
             delivery_date__range=(today, next_seven_days))
     
     productFilter = PendingOrderFilter(request.GET, queryset=orders)
@@ -115,7 +117,14 @@ def deleteOrder(request, order_pk):
 @login_required(login_url='accounts:customer-login')
 @allowed_users(allowed_roles=[User.Types.CUSTOMER, User.Types.MERCHANT, User.Types.ADMIN])
 def viewShops(request):
-    shops = ShopInformation.objects.all()
+    users = User.objects.filter(role=User.Types.MERCHANT)
+    allShops = ShopInformation.objects.all()
+    shops = []
+
+    for shop in allShops:
+        if shop.user in users:
+            shops.append(shop)
+
     context = {'shops':shops}
     return render(request, 'customers/shops.html', context)
 
@@ -148,26 +157,41 @@ def viewProducts(request, shop_pk):
 # Add Products to Cart (Customers)
 @login_required(login_url='accounts:customer-login')
 @allowed_users(allowed_roles=[User.Types.CUSTOMER, User.Types.MERCHANT, User.Types.ADMIN])
-def addOrder(request, product_pk):
+def addOrder(request, shop_pk, product_pk):
     user = request.user
+    shop = ShopInformation.objects.get(id=shop_pk)
+    shopOwner = shop.user
+
     product = Product.objects.get(id=product_pk)
-    sizes = Size.objects.filter(product=product)
+
+    # sizes = Size.objects.filter(product=product)
     addons = Addon.objects.filter(product=product)
-    form = OrderForm(product=product)
-    if request.POST == 'POST':
-        # Check if order form exists
-        try:
-            order = Order.objects.get(user=user)
-        except:
-            order = Order.objects.create(
-                user=user
-            )
-            order.save()
-        form = OrderForm(product=product, data=request.POST)
+    
+    try:
+        order = Order.objects.get(user=user, shop=shopOwner)
+        print("ORDER Successfully found! \n")
+    except:
+        order = Order.objects.create(
+            user=user,
+            shop=shopOwner,
+        )
+        order.save()
+        print("ORDER Successfully created! \n")
+    
+    form = OrderForm(product=product, initial={
+        'product': product, 'order': order
+    })
+
+    if request.method == 'POST':
+        print("POST Success! \n")
+        # Check if order form exists        
         
+        form = OrderForm(request.POST, product=product)
+        print("Form response successfully loaded! \n")
+
         # Save form if form is valid
         if form.is_valid():
-            form.order = order
+            print("Form is valid! \n")
             form.save()
 
             product.sold = product.sold + 1
@@ -179,8 +203,10 @@ def addOrder(request, product_pk):
             
             return HttpResponse('Order successfully created!')
         else:
-            form = OrderForm(request.POST)
+            form = OrderForm(data=request.POST)
             print(form.errors.as_data())
+            return HttpResponse('Order failed!')
 
-    context = {'form':form, 'product':product, 'sizes':sizes, 'addons':addons}
+    # 'sizes':sizes, 
+    context = {'form':form, 'product':product, 'addons':addons}
     return render(request, 'customers/order_form.html', context)

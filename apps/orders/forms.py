@@ -52,8 +52,9 @@ class OrderForm(ModelForm):
                 'placeholder': 'Leave us a note! (Optional)'}),
         }
 
-    def __init__(self, product, *args, **kwargs):
+    def __init__(self, *args, **kwargs):
+        product = kwargs.pop('product', None)
         super(OrderForm, self).__init__(*args, **kwargs)
-        self.fields['product'].initial = product
-        self.fields['size'].queryset = self.fields['size'].queryset.filter(product=product)
-        self.fields['addons'].queryset = self.fields['addons'].queryset.filter(product=product)
+        if product:
+            self.fields['size'].queryset = self.fields['size'].queryset.filter(product=product)
+            self.fields['addons'].queryset = self.fields['addons'].queryset.filter(product=product)

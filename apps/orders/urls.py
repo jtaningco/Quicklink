@@ -14,5 +14,5 @@ urlpatterns = [
     path('pending/next-seven-days', views.pendingNextSevenDays, name='pending-next-seven-days'),
     path('shops/', views.viewShops, name='view-shops'),
     path('shops/<str:shop_pk>/products', views.viewProducts, name='view-products'),
-    path('shops/<str:product_pk>/add', views.addOrder, name='add-order')
+    path('shops/<str:shop_pk>/products/<str:product_pk>/add', views.addOrder, name='add-order')
 ]  + static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)

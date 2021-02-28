@@ -19,7 +19,7 @@
             {% else %}
                 <p>PHP {{ product.min_price }} - {{ product.max_price }}</p>
             {% endif %}
-            <a href="{% url 'orders:add-order' product.id %}">Add to Cart</a>
+            <a href="{% url 'orders:add-order' shop.id product.id %}">Add to Cart</a>
         {% endfor %}
     </div>
 

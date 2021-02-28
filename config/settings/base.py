@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'apps.products',
     'apps.orders',
     'apps.accounts',
+    'apps.finances',
     'django_filters',
     'crispy_forms',
 ]

@@ -22,7 +22,10 @@ class Order(models.Model):
     ]
 
     # User manipulating the product (request.user — whoever is logged in)
-    user = models.ForeignKey(User, null=True, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, null=True, on_delete=models.CASCADE, related_name="order_sender")
+
+    # Shop getting the order
+    shop = models.ForeignKey(User, null=True, on_delete=models.CASCADE, related_name="order_receiver")
 
     # Order quantity is different from product quantity -- sum of all products na kasama
     order_quantity = models.IntegerField(null=True, default=1)
@@ -55,7 +58,7 @@ class ProductOrder(models.Model):
     size = models.ForeignKey(Size, null=True, on_delete=models.CASCADE)
     
     # Product addons
-    addons = models.ManyToManyField(Addon)  
+    addons = models.ManyToManyField(Addon, blank=True)  
     
     # Product quantity ordered
     quantity = models.IntegerField(null=True, default=1)
