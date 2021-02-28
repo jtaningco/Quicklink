@@ -28,7 +28,7 @@ class Order(models.Model):
     order_quantity = models.IntegerField(null=True, default=1)
     
     # Total fees for the order
-    total = models.IntegerField(null=True, default=0)
+    total = models.DecimalField(null=True, default=0, max_digits=10, decimal_places=2)
 
     # Order status
     order_status = models.CharField(max_length=40, null=True, choices=ORDER_STATUS, default='Pending')
@@ -36,10 +36,13 @@ class Order(models.Model):
     # Order payment status
     payment_status = models.CharField(max_length=40, null=True, choices=PAYMENT_STATUS, default='To Receive')
     
+    # Date of when the order was published (Auto-filled)
+    order_date = models.DateTimeField(auto_now_add=True, null=True)
+
     notes = models.CharField(max_length=255, null=True, blank=True)
 
     def __str__(self):
-        return self.product.name
+        return f"{self.order_date} - Total of PHP {self.total}"
 
 class ProductOrder(models.Model):
     # Order cart
@@ -52,7 +55,7 @@ class ProductOrder(models.Model):
     size = models.ForeignKey(Size, null=True, on_delete=models.CASCADE)
     
     # Product addons
-    addons = models.ManyToManyField(Addon, null=True)  
+    addons = models.ManyToManyField(Addon)  
     
     # Product quantity ordered
     quantity = models.IntegerField(null=True, default=1)
@@ -61,7 +64,7 @@ class ProductOrder(models.Model):
     instructions = models.CharField(max_length=140, null=True, blank=True)
     
     # Total product fees (Auto-filled)
-    total = models.IntegerField(null=True, default=0)
+    total = models.DecimalField(null=True, default=0, max_digits=8, decimal_places=2)
 
     # Date of when the order was published (Auto-filled)
     order_date = models.DateTimeField(auto_now_add=True, null=True)
@@ -78,9 +81,9 @@ class ProductOrder(models.Model):
             addons_total = 0
             for i in addons:
                 addons_total += i.price_addon
-            return (self.quantity * self.size.price_size)
+            return (self.quantity * self.size.price_size) + addons_total
         else:    
-            return (self.quantity * self.size.price_size)
+            return self.quantity * self.size.price_size
 
     def delivery_date(self):
         return datetime.today()+timedelta(days=self.product.days)

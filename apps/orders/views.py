@@ -9,11 +9,13 @@ from django.contrib.auth.decorators import login_required
 from apps.accounts.decorators import allowed_users
 from apps.accounts.models import *
 
+from django.http import HttpResponse
+
 # Create your views here.
 
 # Order Summary
 @login_required(login_url='accounts:merchant-login')
-@allowed_users(allowed_role=User.Types.MERCHANT)
+@allowed_users(allowed_roles=[User.Types.MERCHANT, User.Types.ADMIN])
 def orders(request):
     search_query = request.GET.get('search', '')
 
@@ -31,7 +33,7 @@ def orders(request):
 
 # Pending Orders
 @login_required(login_url='accounts:merchant-login')
-@allowed_users(allowed_role=User.Types.MERCHANT)
+@allowed_users(allowed_roles=[User.Types.MERCHANT, User.Types.ADMIN])
 def pendingOrders(request):
     orders = Order.objects.filter(order_status="Pending")
     orderCount = Order.objects.filter(order_status="Pending").count()
@@ -44,7 +46,7 @@ def pendingOrders(request):
 
 # Pending Orders with Today's Filter
 @login_required(login_url='accounts:login')
-@allowed_users(allowed_role=User.Types.MERCHANT)
+@allowed_users(allowed_roles=[User.Types.MERCHANT, User.Types.ADMIN])
 def pendingToday(request):
     today = datetime.now()
     tomorrow = datetime.now() + timedelta(hours=24)
@@ -59,7 +61,7 @@ def pendingToday(request):
 
 # Pending Orders with Next Seven Days Filter
 @login_required(login_url='accounts:merchant-login')
-@allowed_users(allowed_role=User.Types.MERCHANT)
+@allowed_users(allowed_roles=[User.Types.MERCHANT, User.Types.ADMIN])
 def pendingNextSevenDays(request):
     today = datetime.today()
     next_seven_days = datetime.today() + timedelta(days=7)
@@ -74,7 +76,7 @@ def pendingNextSevenDays(request):
 
 # View Products (Merchant Preview)
 @login_required(login_url='accounts:merchant-login')
-@allowed_users(allowed_role=User.Types.MERCHANT)
+@allowed_users(allowed_roles=[User.Types.MERCHANT, User.Types.ADMIN])
 def menuPreview(request):
     products = Product.objects.all()
     context = {'products':products}
@@ -82,7 +84,7 @@ def menuPreview(request):
 
 # Order Form (Merchant Preview)
 @login_required(login_url='accounts:merchant-login')
-@allowed_users(allowed_role=User.Types.MERCHANT)
+@allowed_users(allowed_roles=[User.Types.MERCHANT, User.Types.ADMIN])
 def addPreviewOrder(request, pk):
     product = Product.objects.get(id=pk)
     sizes = Size.objects.filter(product=product)
@@ -91,12 +93,7 @@ def addPreviewOrder(request, pk):
     if request.method == 'POST':
         form = PreviewOrderForm(request.POST)
         if form.is_valid():
-            form.save()
-            product.sold = product.sold + 1
-            if product.stock == 'Made to Order':
-                pass
-            else:
-                product.stock = str(int(product.stock) - 1)
+            alert("The form has been submitted, but the data won't be portrayed in your merchant dashboard for this is merely a test.")
             return redirect('/shop/orders/')
 
     context = {'form':form, 'product':product, 'sizes':sizes, 'addons':addons}
@@ -104,7 +101,7 @@ def addPreviewOrder(request, pk):
 
 # Deleting Orders (For Testing)
 @login_required(login_url='accounts:merchant-login')
-@allowed_users(allowed_role=User.Types.MERCHANT)
+@allowed_users(allowed_roles=[User.Types.MERCHANT, User.Types.ADMIN])
 def deleteOrder(request, order_pk):
     order = Order.objects.get(id=order_pk)
     if request.method == "POST":
@@ -116,7 +113,7 @@ def deleteOrder(request, order_pk):
 
 # View Products (Customers)
 @login_required(login_url='accounts:customer-login')
-@allowed_users(allowed_role=User.Types.CUSTOMER)
+@allowed_users(allowed_roles=[User.Types.CUSTOMER, User.Types.MERCHANT, User.Types.ADMIN])
 def viewShops(request):
     shops = ShopInformation.objects.all()
     context = {'shops':shops}
@@ -124,7 +121,7 @@ def viewShops(request):
 
 # View Products (Customers)
 @login_required(login_url='accounts:customer-login')
-@allowed_users(allowed_role=User.Types.CUSTOMER)
+@allowed_users(allowed_roles=[User.Types.CUSTOMER, User.Types.MERCHANT, User.Types.ADMIN])
 def viewProducts(request, shop_pk):
     shop = ShopInformation.objects.get(id=shop_pk)
     products = Product.objects.filter(user=shop.user)
@@ -141,7 +138,6 @@ def viewProducts(request, shop_pk):
         product.min_price = min(size_prices)
         product.max_price = max(size_prices)
         product.save()
-        print(product)
         size_prices.clear()
 
     address = Address.objects.get(user=shop.user)
@@ -151,38 +147,40 @@ def viewProducts(request, shop_pk):
 
 # Add Products to Cart (Customers)
 @login_required(login_url='accounts:customer-login')
-@allowed_users(allowed_role=User.Types.CUSTOMER)
+@allowed_users(allowed_roles=[User.Types.CUSTOMER, User.Types.MERCHANT, User.Types.ADMIN])
 def addOrder(request, product_pk):
     user = request.user
-    order = Order.objects.get(user=user)
     product = Product.objects.get(id=product_pk)
     sizes = Size.objects.filter(product=product)
     addons = Addon.objects.filter(product=product)
-    form = OrderForm()
-    if request.method == 'POST':
+    form = OrderForm(product=product)
+    if request.POST == 'POST':
         # Check if order form exists
-        if not order:
+        try:
+            order = Order.objects.get(user=user)
+        except:
             order = Order.objects.create(
                 user=user
             )
             order.save()
-
+        form = OrderForm(product=product, data=request.POST)
+        
+        # Save form if form is valid
         if form.is_valid():
-            orderForm = ProductOrder.objects.create(
-                order=order,
-                product=product,
-                size=form.cleaned_data.get('size'),
-                addons=form.cleaned_data.get('addons'),
-                quantity=form.cleaned_data.get('quantity'),
-                instructions=form.cleaned_data.get('instructions')
-            )
-            orderForm.save()
+            form.order = order
+            form.save()
+
             product.sold = product.sold + 1
             if product.stock == 'Made to Order':
                 pass
             else:
                 product.stock = str(int(product.stock) - 1)
-            return redirect('/shop/orders/shops')
+                product.save()
+            
+            return HttpResponse('Order successfully created!')
+        else:
+            form = OrderForm(request.POST)
+            print(form.errors.as_data())
 
     context = {'form':form, 'product':product, 'sizes':sizes, 'addons':addons}
     return render(request, 'customers/order_form.html', context)

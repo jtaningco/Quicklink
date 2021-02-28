@@ -15,7 +15,7 @@ from django.db.models import Q
 
 # Create your views here.
 @login_required(login_url='accounts:merchant-login')
-@allowed_users(allowed_role=User.Types.MERCHANT)
+@allowed_users(allowed_roles=[User.Types.MERCHANT, User.Types.ADMIN])
 def products(request):
     user = request.user
     search_query = request.GET.get('search', '')
@@ -30,13 +30,13 @@ def products(request):
     return render(request, 'products/products.html', context)
 
 @login_required(login_url='accounts:merchant-login')
-@allowed_users(allowed_role=User.Types.MERCHANT)
+@allowed_users(allowed_roles=[User.Types.MERCHANT, User.Types.ADMIN])
 def productDetails(request, product_pk):
     product = Product.objects.get(id=product_pk)
     return render(request, 'products/product_modal.html', {'product':product})
 
 @login_required(login_url='accounts:merchant-login')
-@allowed_users(allowed_role=User.Types.MERCHANT)
+@allowed_users(allowed_roles=[User.Types.MERCHANT, User.Types.ADMIN])
 def addProduct(request):
     user = request.user
     form = ProductForm()
@@ -107,7 +107,7 @@ def addProduct(request):
     return render(request, 'products/product_form.html', context)
 
 @login_required(login_url='accounts:merchant-login')
-@allowed_users(allowed_role=User.Types.MERCHANT)
+@allowed_users(allowed_roles=[User.Types.MERCHANT, User.Types.ADMIN])
 def updateProduct(request, product_pk):
     product = Product.objects.get(id=product_pk)
     form = ProductForm(instance=product)
@@ -155,7 +155,7 @@ def updateProduct(request, product_pk):
     return render(request, 'products/edit_product.html', context)
 
 @login_required(login_url='accounts:merchant-login')
-@allowed_users(allowed_role=User.Types.MERCHANT)
+@allowed_users(allowed_roles=[User.Types.MERCHANT, User.Types.ADMIN])
 def deleteProduct(request, product_pk):
     product = Product.objects.get(id=product_pk)
     if request.method == "POST":

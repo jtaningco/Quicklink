@@ -20,7 +20,7 @@ def unauthenticated_customer(view_func):
 
     return wrapper_func
 
-def allowed_users(allowed_role):
+def allowed_users(allowed_roles=[]):
     def decorator(view_func):
         def wrapper_func(request, *args, **kwargs):
             role = None
@@ -30,7 +30,7 @@ def allowed_users(allowed_role):
             else:
                 role = request.user.role
             
-            if role == allowed_role:
+            if role in allowed_roles:
                 return view_func(request, *args, **kwargs)
             else:
                 return HttpResponse('You are not authorized to view this page.')

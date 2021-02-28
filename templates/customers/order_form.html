@@ -1,6 +1,11 @@
 {% extends 'quicklink/customers.html' %}
+{% load static %}
 
 {% block pagetitle %}Add {{ product.name | title }}{% endblock %}
+
+{% block stylesheets %} 
+    <link rel="stylesheet" href="{% static '/css/customer-products.css' %}">
+{% endblock %}
 
 {% block maincontent %}
 <form method="POST">
@@ -16,39 +21,41 @@
     </div>
 
     {% csrf_token %}
+    {{ form.product }}
     <div class="order-product-size">
         <h2 class='subtitle bold'>Size/Type</h2>
-        {{ form.size.as_p }}
+        {{ form.size }}
 
         <!-- MANUAL RENDERING -->
-        <!-- {% for size in sizes %}
-            <div class="order-product-size-input">
-                <label class="radio-mobile">
-                    <input type="radio" id="">
-                    <span class="radio-select-mobile"></span>
-                </label>
-                <label for="size" class='subtitle product-size'>{{ size.size }} (PHP {{ size.price_size }})</label>
-            </div>
-        {% endfor %} -->
+        <!-- <div id="order-radios">
+            {% for size in sizes %}
+                <div class="order-product-size-input">
+                    <div class="radio-mobile sizeRadio">
+                        <input type="radio" name="size_0" id="size_0" class="size-radio-input">
+                        <span class="radio-select-mobile"></span>
+                    </div>
+                    <label for="size_0" class='subtitle product-size'>{{ size.size }} (PHP {{ size.price_size | floatformat:0 }})</label>
+                </div>
+            {% endfor %}
+        </div> -->
     </div>
 
-    {% if not addons %}
-    {% else %}
+    {% if addons %}
     <div class="order-product-addons">
         <h2 class='subtitle bold'>Add-Ons</h2>
-        {{ form.addons.as_p }}
+        {{ form.addons }}
 
         <!-- MANUAL RENDERING -->
         <!-- {% for addon in addons %}
             <div class="order-product-addon">
                 <div class="order-product-addons-input">
                     <label class="checkbox-mobile">
-                        <input type="checkbox">
+                        <input type="checkbox" name="addon_0" id="addon_0" class="addon-radio-input">
                         <span class="checkmark-mobile"></span>
                     </label>
-                    <label for="addon" class='subtitle product-addon'>{{ addon.addon }}</label>
+                    <label for="addon_0" class='subtitle product-addon'>{{ addon.addon }}</label>
                 </div>
-                <span class="addon-price">+ PHP {{ addon.price_addon }}.00</span>
+                <span class="addon-price">+ PHP {{ addon.price_addon | floatformat:2 }}</span>
             </div>
         {% endfor %} -->
     </div>
@@ -61,7 +68,12 @@
 
     <div class="order-products-footer">
     {{ form.quantity }}
-    <input type="submit" value="Add Product" class="add-to-basket-btn subtitle bold">
+    <button type="submit" 
+     class="add-to-basket-btn subtitle bold">Add Product</button>
 </form>
 
+{% endblock %}
+
+{% block scriptsBody %} 
+<script src="{% static 'js/order.js' %}"></script>
 {% endblock %}

@@ -2,11 +2,11 @@ import django_filters
 from django_filters import CharFilter
 from django.db import models
 from django import forms
-from apps.orders.models import Order
+from apps.orders.models import ProductOrder
 
 class PendingOrderFilter(django_filters.FilterSet):
     class Meta:
-        model = Order
+        model = ProductOrder
         fields = [
             'product',
         ]

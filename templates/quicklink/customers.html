@@ -10,6 +10,7 @@
     {% block stylesheets %} {% endblock %}
 
     {% block scriptsHead %} {% endblock %}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="{% static '/js/cart.js' %}"></script>
 </head>
 <body onload="realtimeClock()">
@@ -36,6 +37,7 @@
         {% endblock %}
     </main>
 
+    <script type="text/javascript" src="{% static 'js/cart.js' %}"></script>
     {% block scriptsBody %} {% endblock %}
 </body>
 </html>

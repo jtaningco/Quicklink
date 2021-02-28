@@ -30,7 +30,7 @@ def registerMerchant(request):
     return render(request, 'accounts/merchant-register.html', context)
 
 @login_required(login_url='accounts:merchant-login')
-@allowed_users(allowed_role=User.Types.MERCHANT)
+@allowed_users(allowed_roles=[User.Types.MERCHANT, User.Types.ADMIN])
 def registerShopInformation(request):
     user = request.user
     form = ShopInformationForm()
@@ -82,7 +82,7 @@ def registerShopInformation(request):
     return render(request, 'accounts/add-shop-information.html', context)
 
 @login_required(login_url='accounts:merchant-login')
-@allowed_users(allowed_role=User.Types.MERCHANT)
+@allowed_users(allowed_roles=[User.Types.MERCHANT, User.Types.ADMIN])
 def registerShopLogo(request):
     shop = ShopInformation.objects.get(user=request.user)
     form = ShopLogoForm(initial={'shop': shop})
@@ -98,7 +98,7 @@ def registerShopLogo(request):
     return render(request, 'accounts/add-shop-logo.html', context)
 
 @login_required(login_url='accounts:merchant-login')
-@allowed_users(allowed_role=User.Types.MERCHANT)
+@allowed_users(allowed_roles=[User.Types.MERCHANT, User.Types.ADMIN])
 def registerShopAccount(request):
     user = request.user
     form = ShopAccountForm()
@@ -183,7 +183,7 @@ def loginCustomer(request):
     return render(request, 'accounts/customer-login.html', context)
 
 @login_required(login_url='accounts:customer-login')
-@allowed_users(allowed_role=User.Types.CUSTOMER)
+@allowed_users(allowed_roles=[User.Types.CUSTOMER, User.Types.ADMIN])
 def registerCustomerInformation(request):
     user = request.user
     form = CustomerInformationForm()
@@ -214,7 +214,7 @@ def registerCustomerInformation(request):
     return render(request, 'accounts/add-customer-information.html', context)
 
 @login_required(login_url='accounts:customer-login')
-@allowed_users(allowed_role=User.Types.CUSTOMER)
+@allowed_users(allowed_roles=[User.Types.CUSTOMER, User.Types.ADMIN])
 def registerCustomerAddress(request):
     user = request.user
     form = CustomerAddressForm()
@@ -240,7 +240,7 @@ def registerCustomerAddress(request):
     return render(request, 'accounts/add-customer-address.html', context)
 
 @login_required(login_url='accounts:customer-login')
-@allowed_users(allowed_role=User.Types.CUSTOMER)
+@allowed_users(allowed_roles=[User.Types.CUSTOMER, User.Types.ADMIN])
 def registerCustomerAccount(request):
     user = request.user
     form = CustomerAccountForm()
@@ -266,7 +266,7 @@ def registerCustomerAccount(request):
     return render(request, 'accounts/add-customer-payment.html', context)
 
 @login_required(login_url='accounts:customer-login')
-@allowed_users(allowed_role=User.Types.CUSTOMER)
+@allowed_users(allowed_roles=[User.Types.CUSTOMER, User.Types.ADMIN])
 def registerCustomerNotifications(request):
     user = request.user
     form = NotificationsForm()
@@ -292,7 +292,7 @@ def logoutCustomer(request):
     logout(request)
     return redirect('accounts:customer-login')
 
-@allowed_users(allowed_role=User.Types.CUSTOMER)
+@allowed_users(allowed_roles=[User.Types.CUSTOMER, User.Types.ADMIN])
 def landingCustomer(request):
     context = {}
     return render(request, 'accounts/sample-customer-landing.html', context)
