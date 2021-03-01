@@ -11,6 +11,8 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    background-image: url('../assets/long-bg.svg');
+    background-repeat:no-repeat;
 }
 
 /* div */
@@ -18,8 +20,6 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    background-image: url('../assets/long-bg.svg');
-    background-repeat:no-repeat;
     width: 100%;
     height: 100%;
 }
