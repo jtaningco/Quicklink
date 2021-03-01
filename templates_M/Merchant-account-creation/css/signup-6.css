@@ -42,9 +42,31 @@ body {
     padding: 0px 24px 0px 24px;
     width: 100%;
 }
-/* card header texts */
-#ql-logo {
-    padding: 8px 0px 16px 0px;
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top:16px;
+  padding-bottom: 16px;
+}
+.pagination a {
+  font-size:20px;
+  color:var(--primary-main);
+  padding: 8px 16px;
+  text-decoration: none;
+  border: 1px solid var(--primary-main);
+  border-radius: 50%;
+}
+.pagination a.active {
+  background-color: var(--primary-main);
+  color: white;
+  border-radius: 50%;
+}
+.line {
+  display: block;
+  width:32px;
+  height:1px;
+  background-color: var(--primary-main)
 }
 .cardHeaderText {
     display: flex;
@@ -55,7 +77,6 @@ body {
     font-weight: 600;
     padding: 0 0 8px 0;
 }
-/* card body div */
 .cardHeaderBody {
     font-family: Overpass;
     font-style: normal;
@@ -71,7 +92,6 @@ body {
     flex-direction: column;
     width: 100%;
 }
-/* card body text */
 .signup-card-questions {
     font-family: Overpass;
     font-style: normal;
