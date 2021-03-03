@@ -37,20 +37,50 @@ def orders(request):
 @login_required(login_url='accounts:merchant-login')
 @allowed_users(allowed_roles=[User.Types.MERCHANT, User.Types.ADMIN])
 def pendingOrders(request):
-    # RESTART THIS TOMORROW
-    
+    # Get merchant user
     user = request.user
-    product = Product.objects.filter(user=user).order_by('name')[0]
 
+    # Get initial value for filter set (Alphabetical Order)
+    productChoices = Product.objects.filter(user=user).order_by('name')
+    product = productChoices[0]
+
+    # Get pending orders
     orders = Order.objects.filter(shop=user, order_status="Pending")
+    
+    # Get pending product orders
     productOrders = ProductOrder.objects.filter(order__in=orders).order_by('product')
 
+    # Get total count of orders that are in pending orders Query set
     orderCount = ProductOrder.objects.filter(order__in=orders).count()
 
-    productFilter = PendingOrderFilter(request.GET, queryset=productOrders)
-    products = productFilter.qs.filter(order__order_status="Pending")
+    # Product filter form
+    productFilter = PendingOrderFilter(request.GET, request=request, queryset=productOrders)
+    products = productFilter.qs
     
-    context = {'orders':orders, 'products':productOrders, 'productFilter':productFilter, 'orderCount':orderCount}
+    try:
+        addons = Addon.objects.filter(product=products[0].product)
+        selected_addons = []
+        for product in products:
+            for addon in product.addons.all():
+                if addon in addons: selected_addons.append(addon)
+        orderCount = products.count()
+    except:
+        addons = Addon.objects.filter(product=product)
+        selected_addons = []
+        for product in productOrders:
+            for addon in product.addons.all():
+                if addon in addons: selected_addons.append(addon.addon)
+        orderCount = productOrders.count()
+    
+    context = {'orders':orders, 
+    'products':products,
+    'productOrders':productOrders, 
+    'products_verification':list(products),
+    'productOrders_verification':list(productOrders), 
+    'productFilter':productFilter, 
+    'orderCount':orderCount, 
+    'addons':addons, 
+    'selected_addons':selected_addons}
     return render(request, 'orders/pending_orders.html', context)
 
 # View Products (Merchant Preview)

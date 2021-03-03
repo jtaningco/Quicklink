@@ -44,7 +44,7 @@ class Product(models.Model):
     sold = models.IntegerField(null=True, blank=True, default=0)
 
     def __str__(self):
-        return f"{self.user} — {self.name}"
+        return f"{self.name}"
 
 # Class Size for implementation of inline formsets
 class Size(models.Model):
