@@ -70,11 +70,12 @@
     <div class="order-products-footer">
     {{ form.quantity }}
     <button type="submit" 
-     class="add-to-basket-btn subtitle bold">Add Product</button>
+     class="add-to-basket-btn subtitle bold update-cart">Add to Basket - PHP {{ product.size.price }} </button>
 </form>
 
 {% endblock %}
 
 {% block scriptsBody %} 
-<script src="{% static 'js/order.js' %}"></script>
+    <script src="{% static 'js/order.js' %}"></script>
+    <script src="{% static 'js/cart.js' %}"></script>
 {% endblock %}
