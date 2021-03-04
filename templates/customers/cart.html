@@ -1,10 +1,26 @@
-{% extends 'quicklink/customers.html' %}
 {% load static %}
 
-{% block pagetitle %}Quicklink: Shops{% endblock %}
+<div class="cart-container" style="position: fixed; right: 0; top: 0; padding: 5rem;">
+    <h1>My Basket</h1>
+    {% for item in items %}
+        <h2>{{ item.product.name }}</h1>
+        <h3>{{ item.size.size }}</h1>
+        <p>{{ item.total }}</p>
+        <br>
+        {% if item.addons %}
+            {% for addon in item.addons.all %}
+                <p>{{ addon.addon }}</p>
+                <p>+ PHP {{ addon.price_addon }}</p>
+            {% endfor %}
+        {% endif %}
+        <img class="decrease-quantity update-cart" data-shop="{{ shop.id }}" data-product="{{ item.product.id }}" 
+        data-action="remove" src="{% static 'media/icons/order_minus.svg' %}" alt="—">
+        
+        {{ item.quantity }}
 
-{% block maincontent %}
-
-
-
-{% endblock %}
+        <img class="increase-quantity update-cart" data-shop="{{ shop.id }}" data-product="{{ item.product.id }}" data-action="add"
+        src="{% static 'media/icons/order_plus.svg' %}" alt="+">
+        
+        <button type="submit">Edit</button>
+    {% endfor %}
+</div>

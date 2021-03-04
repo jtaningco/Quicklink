@@ -143,6 +143,14 @@ def viewProducts(request, shop_pk):
 
     size_prices = []
 
+    if request.user.is_authenticated:
+        customer = request.user
+        order, created = Order.objects.get_or_create(user=customer, complete=False)
+        items = order.productorder_set.all()
+    else:
+        items = []
+        order = {'get_cart_total': 0, 'get_cart_items': 0}
+
     for product in products:
         for size in sizes:
             if size.product == product:
@@ -156,7 +164,7 @@ def viewProducts(request, shop_pk):
 
     address = Address.objects.get(user=shop.user)
     links = SocialMediaLink.objects.get(user=shop.user)
-    context = {'products':products, 'shop':shop, 'links':links, 'address':address, 'sizes':sizes}
+    context = {'products':products, 'shop':shop, 'links':links, 'address':address, 'sizes':sizes, 'items':items, 'order':order, 'shop':shop}
     return render(request, 'customers/products.html', context)
 
 # Add Products to Cart (Customers)
@@ -190,37 +198,22 @@ def addOrder(request, shop_pk, product_pk):
 
         # Save form if form is valid
         if form.is_valid():
-            form.save()
-
             product.sold = product.sold + 1
             if product.stock == 'Made to Order':
                 pass
             else:
                 product.stock = str(int(product.stock) - 1)
                 product.save()
-            
-            return redirect('/shop/orders/shops')
+            return redirect('add/')
         else:
             form = OrderForm(data=request.POST)
             print(form.errors.as_data())
             return HttpResponse('Order failed!')
 
-    context = {'form':form, 'product':product, 'sizes':sizes, 'addons':addons}
+    context = {'form':form, 'product':product, 'sizes':sizes, 'addons':addons, 'shop':shop}
     return render(request, 'customers/order_form.html', context)
 
-def cart(request):
-    if request.user.is_authenticated:
-        customer = request.user
-        order, created = Order.objects.get_or_create(user=customer, complete=False)
-        items = order.productorder_set.all()
-    else:
-        items = []
-        order = {'get_cart_total': 0, 'get_cart_items': 0}
-
-    context = {'items':items, 'order':order}
-    return render(request, 'customers/cart.html', context)
-
-def checkout(request):
+def checkout(request, shop_pk):
     if request.user.is_authenticated:
         customer = request.user
         order, created = Order.objects.get_or_create(user=customer, complete=False)
@@ -232,10 +225,57 @@ def checkout(request):
     context = {'items':items, 'order':order}
     return render(request, 'customers/checkout.html', context)
 
-def updateItem(request):
-    data = json.loads(request.data)
+def updateItem(request, shop_pk, product_pk):
+    data = json.loads(request.body)
+    form = data['form']
+    shopId = data['shopId']
     productId = data['productId']
     action = data['action']
-    print('Product Id: ', productId)
-    print('Action: ', action)
+
+    addons_list = []
+    quantity = 1
+
+    for i in form:
+        if i.get('name') == 'size':
+            size = Size.objects.get(id=i.get('value'))
+        
+        if i.get('name') == 'addons':
+            addons_list.append(i.get('value'))
+        
+        if i.get('name') == 'instructions':
+            instructions = i.get('value')
+        
+        if i.get('name') == 'quantity':
+            quantity = int(i.get('value'))
+    
+    addons = Addon.objects.filter(id__in=addons_list)
+
+    customer = request.user
+    shop = ShopInformation.objects.get(id=shopId)
+    shopOwner = shop.user
+
+    product = Product.objects.get(id=productId)
+    order, created = Order.objects.get_or_create(user=customer, shop=shopOwner, complete=False)
+
+    if addons:
+        addons_total = 0
+        for i in addons:
+            addons_total += (quantity * i.price_addon)
+        total = (quantity * size.price_size) + addons_total
+    else:    
+        total = (quantity * size.price_size)
+
+    productOrder, created = ProductOrder.objects.get_or_create(
+        order=order, product=product, size=size, addons__in=addons,
+        instructions=instructions, quantity=quantity, total=total)
+
+    if action == "add":
+        productOrder.quantity = (productOrder.quantity + 1)
+    elif action == "remove":
+        productOrder.quantity = (productOrder.quantity - 1)
+    productOrder.save()
+
+    if productOrder.quantity <= 0:
+        productOrder.delete()
+
     return JsonResponse('Item was added', safe=False)

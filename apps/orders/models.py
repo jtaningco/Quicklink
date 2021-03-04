@@ -30,6 +30,9 @@ class Order(models.Model):
     # Order quantity is different from product quantity -- sum of all products na kasama
     order_quantity = models.IntegerField(null=True, default=1)
     
+    # Convenience fees for the order
+    fees = models.DecimalField(null=True, default=0, max_digits=8, decimal_places=2)
+
     # Total fees for the order
     total = models.DecimalField(null=True, default=0, max_digits=10, decimal_places=2)
 
@@ -75,7 +78,7 @@ class ProductOrder(models.Model):
     # Special instructions per order
     instructions = models.CharField(max_length=140, null=True, blank=True)
     
-    # Total product fees (Auto-filled)
+    # Total product fees (Auto-filled in views.py under updateItem, line 265)
     total = models.DecimalField(null=True, default=0, max_digits=8, decimal_places=2)
 
     # Date of when the order was published (Auto-filled)
@@ -83,13 +86,4 @@ class ProductOrder(models.Model):
     
 
     def __str__(self):
-        return f"{self.order} - {self.quantity} {self.product}" 
-
-    def total(self):
-        if addons:
-            addons_total = 0
-            for i in addons:
-                addons_total += i.price_addon
-            return (self.quantity * self.size.price_size) + addons_total
-        else:    
-            return self.quantity * self.size.price_size
+        return f"{self.quantity} {self.product} - Total of PHP {self.total}" 

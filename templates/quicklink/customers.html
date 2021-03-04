@@ -32,6 +32,7 @@
             return cookieValue;
         }
         const csrftoken = getToken('csrftoken');
+        console.log(csrftoken);
     </script>
 </head>
 <body onload="realtimeClock()">
@@ -56,6 +57,7 @@
     <main>
         {% block maincontent %}
         {% endblock %}
+        {% include 'customers/cart.html' %}
     </main>
 
     <script type="text/javascript" src="{% static 'js/cart.js' %}"></script>
