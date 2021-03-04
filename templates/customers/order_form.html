@@ -25,40 +25,36 @@
     {{ form.product }}
     <div class="order-product-size">
         <h2 class='subtitle bold'>Size/Type</h2>
-        {{ form.size }}
-
         <!-- MANUAL RENDERING -->
-        <!-- <div id="order-radios">
+        <div id="order-radios">
             {% for size in sizes %}
                 <div class="order-product-size-input">
                     <div class="radio-mobile sizeRadio">
-                        <input type="radio" name="size_0" id="size_0" class="size-radio-input">
+                        <input type="radio" name="size" id="id_size_1" value="{{ size.id }}" class="size-radio-input">
                         <span class="radio-select-mobile"></span>
                     </div>
-                    <label for="size_0" class='subtitle product-size'>{{ size.size }} (PHP {{ size.price_size | floatformat:0 }})</label>
+                    <label for="id_size_1" class='subtitle product-size' data-price="{{ size.price_size }}">{{ size.size }} (PHP {{ size.price_size | floatformat:0 }})</label>
                 </div>
             {% endfor %}
-        </div> -->
+        </div>
     </div>
 
     {% if addons %}
     <div class="order-product-addons">
         <h2 class='subtitle bold'>Add-Ons</h2>
-        {{ form.addons }}
-
         <!-- MANUAL RENDERING -->
-        <!-- {% for addon in addons %}
+        {% for addon in addons %}
             <div class="order-product-addon">
                 <div class="order-product-addons-input">
                     <label class="checkbox-mobile">
-                        <input type="checkbox" name="addon_0" id="addon_0" class="addon-radio-input">
+                        <input type="checkbox" name="addons" id="id_addon_0" value="{{ addon.id }}" class="addon-radio-input">
                         <span class="checkmark-mobile"></span>
                     </label>
-                    <label for="addon_0" class='subtitle product-addon'>{{ addon.addon }}</label>
+                    <label for="id_addon_0" class='subtitle product-addon' data-price="{{ addon.price_addon }}">{{ addon.addon }}</label>
                 </div>
                 <span class="addon-price">+ PHP {{ addon.price_addon | floatformat:2 }}</span>
             </div>
-        {% endfor %} -->
+        {% endfor %}
     </div>
     {% endif %}
 
@@ -69,13 +65,13 @@
 
     <div class="order-products-footer">
     {{ form.quantity }}
-    <button type="submit" 
-     class="add-to-basket-btn subtitle bold update-cart">Add to Basket - PHP {{ product.size.price }} </button>
+    <button type="button" data-product="{{ product.id }}" data-action="add" id="add-to-cart" class="add-to-basket-btn subtitle bold update-cart">Add to Cart Test</a>
+    <button type="submit" data-product="{{ product.id }}" data-action="add" id="add-to-basket"
+     class="add-to-basket-btn subtitle bold update-cart">Add to Basket</button>
 </form>
 
 {% endblock %}
 
 {% block scriptsBody %} 
     <script src="{% static 'js/order.js' %}"></script>
-    <script src="{% static 'js/cart.js' %}"></script>
 {% endblock %}

@@ -22,10 +22,10 @@ class Order(models.Model):
     ]
 
     # User manipulating the product (request.user — whoever is logged in)
-    user = models.ForeignKey(User, null=True, on_delete=models.CASCADE, related_name="order_sender")
+    user = models.ForeignKey(User, null=True, on_delete=models.SET_NULL, related_name="order_sender")
 
     # Shop getting the order
-    shop = models.ForeignKey(User, null=True, on_delete=models.CASCADE, related_name="order_receiver")
+    shop = models.ForeignKey(User, null=True, on_delete=models.SET_NULL, related_name="order_receiver")
 
     # Order quantity is different from product quantity -- sum of all products na kasama
     order_quantity = models.IntegerField(null=True, default=1)
@@ -45,6 +45,9 @@ class Order(models.Model):
     # Preferred delivery date of when the product will be delivered (Auto-filled)
     delivery_date = models.DateTimeField(null=True, default=datetime.today()+timedelta(days=1))
 
+    # Check if order is complete
+    complete = models.BooleanField(default=False, null=True, blank=False)
+
     notes = models.CharField(max_length=255, null=True, blank=True)
 
     def __str__(self):
@@ -55,10 +58,10 @@ class Order(models.Model):
 
 class ProductOrder(models.Model):
     # Order cart
-    order = models.ForeignKey(Order, null=True, on_delete=models.CASCADE) 
+    order = models.ForeignKey(Order, null=True, blank=True, on_delete=models.SET_NULL) 
 
     # Product ordered
-    product = models.ForeignKey(Product, null=True, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, null=True, on_delete=models.SET_NULL)
 
     # Product size
     size = models.ForeignKey(Size, null=True, on_delete=models.CASCADE)

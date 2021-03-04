@@ -18,7 +18,7 @@ class PendingOrderFilter(filters.FilterSet):
     class Meta:
         model = ProductOrder
         fields = [
-            'product',
+            'product'
         ]
         labels = {
             'product': '',
@@ -40,4 +40,3 @@ class PendingOrderFilter(filters.FilterSet):
         self.filters['product'].field.widget.attrs.update({
             'class':'select subtitle bold',
         })
-        self.filters['product'].initial = super().qs[1]

@@ -1,4 +1,5 @@
 {% extends 'quicklink/customers.html' %}
+{% load static %}
 
 {% block pagetitle %}{{ shop.shop_name | title }}{% endblock %}
 
@@ -23,8 +24,4 @@
         {% endfor %}
     </div>
 
-{% endblock %}
-
-{% block scriptsBody %} 
-    <script src="{% static 'js/cart.js' %}"></script>
 {% endblock %}

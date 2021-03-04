@@ -1,15 +1,17 @@
 from django.shortcuts import render, redirect
-from apps.products.models import Product, Size, Addon
-from apps.orders.models import Order, ProductOrder
-from .forms import PreviewOrderForm, OrderForm
-from .filters import PendingOrderFilter
 from django.utils.timezone import datetime, timedelta
 from django.db.models import Q
 from django.contrib.auth.decorators import login_required
+
+from .forms import PreviewOrderForm, OrderForm
+from .filters import PendingOrderFilter
+from apps.products.models import Product, Size, Addon
+from apps.orders.models import Order, ProductOrder
 from apps.accounts.decorators import allowed_users
 from apps.accounts.models import *
 
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
+import json
 
 # Create your views here.
 
@@ -121,8 +123,6 @@ def deleteOrder(request, order_pk):
     return render(request, 'orders/delete_order.html', context)
 
 # View Products (Customers)
-@login_required(login_url='accounts:customer-login')
-@allowed_users(allowed_roles=[User.Types.CUSTOMER, User.Types.MERCHANT, User.Types.ADMIN])
 def viewShops(request):
     users = User.objects.filter(role=User.Types.MERCHANT)
     allShops = ShopInformation.objects.all()
@@ -136,8 +136,6 @@ def viewShops(request):
     return render(request, 'customers/shops.html', context)
 
 # View Products (Customers)
-@login_required(login_url='accounts:customer-login')
-@allowed_users(allowed_roles=[User.Types.CUSTOMER, User.Types.MERCHANT, User.Types.ADMIN])
 def viewProducts(request, shop_pk):
     shop = ShopInformation.objects.get(id=shop_pk)
     products = Product.objects.filter(user=shop.user)
@@ -162,8 +160,6 @@ def viewProducts(request, shop_pk):
     return render(request, 'customers/products.html', context)
 
 # Add Products to Cart (Customers)
-@login_required(login_url='accounts:customer-login')
-@allowed_users(allowed_roles=[User.Types.CUSTOMER, User.Types.MERCHANT, User.Types.ADMIN])
 def addOrder(request, shop_pk, product_pk):
     user = request.user
     shop = ShopInformation.objects.get(id=shop_pk)
@@ -171,34 +167,29 @@ def addOrder(request, shop_pk, product_pk):
 
     product = Product.objects.get(id=product_pk)
 
-    # sizes = Size.objects.filter(product=product)
+    sizes = Size.objects.filter(product=product)
     addons = Addon.objects.filter(product=product)
     
-    try:
-        order = Order.objects.get(user=user, shop=shopOwner)
-        print("ORDER Successfully found! \n")
-    except:
-        order = Order.objects.create(
-            user=user,
-            shop=shopOwner,
-        )
-        order.save()
-        print("ORDER Successfully created! \n")
-    
-    form = OrderForm(product=product, initial={
-        'product': product, 'order': order
-    })
+    if request.user.is_authenticated:
+        customer = request.user
+        order, created = Order.objects.get_or_create(user=customer, shop=shopOwner, complete=False)
+        items = order.productorder_set.all()
+        form = OrderForm(product=product, initial={
+            'product': product, 'order': order
+        })
+    else:
+        items = []
+        order = {'get_cart_total': 0, 'get_cart_items': 0}
+        form = OrderForm(product=product, initial={
+            'product': product
+        })
 
     if request.method == 'POST':
-        print("POST Success! \n")
         # Check if order form exists        
-        
         form = OrderForm(request.POST, product=product)
-        print("Form response successfully loaded! \n")
 
         # Save form if form is valid
         if form.is_valid():
-            print("Form is valid! \n")
             form.save()
 
             product.sold = product.sold + 1
@@ -208,12 +199,43 @@ def addOrder(request, shop_pk, product_pk):
                 product.stock = str(int(product.stock) - 1)
                 product.save()
             
-            return HttpResponse('Order successfully created!')
+            return redirect('/shop/orders/shops')
         else:
             form = OrderForm(data=request.POST)
             print(form.errors.as_data())
             return HttpResponse('Order failed!')
 
-    # 'sizes':sizes, 
-    context = {'form':form, 'product':product, 'addons':addons}
+    context = {'form':form, 'product':product, 'sizes':sizes, 'addons':addons}
     return render(request, 'customers/order_form.html', context)
+
+def cart(request):
+    if request.user.is_authenticated:
+        customer = request.user
+        order, created = Order.objects.get_or_create(user=customer, complete=False)
+        items = order.productorder_set.all()
+    else:
+        items = []
+        order = {'get_cart_total': 0, 'get_cart_items': 0}
+
+    context = {'items':items, 'order':order}
+    return render(request, 'customers/cart.html', context)
+
+def checkout(request):
+    if request.user.is_authenticated:
+        customer = request.user
+        order, created = Order.objects.get_or_create(user=customer, complete=False)
+        items = order.productorder_set.all()
+    else:
+        items = []
+        order = {'get_cart_total': 0, 'get_cart_items': 0}
+
+    context = {'items':items, 'order':order}
+    return render(request, 'customers/checkout.html', context)
+
+def updateItem(request):
+    data = json.loads(request.data)
+    productId = data['productId']
+    action = data['action']
+    print('Product Id: ', productId)
+    print('Action: ', action)
+    return JsonResponse('Item was added', safe=False)
