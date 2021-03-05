@@ -13,14 +13,26 @@
                 <p>+ PHP {{ addon.price_addon }}</p>
             {% endfor %}
         {% endif %}
-        <img class="decrease-quantity update-cart" data-shop="{{ shop.id }}" data-product="{{ item.product.id }}" 
-        data-action="remove" src="{% static 'media/icons/order_minus.svg' %}" alt="—">
-        
-        {{ item.quantity }}
 
-        <img class="increase-quantity update-cart" data-shop="{{ shop.id }}" data-product="{{ item.product.id }}" data-action="add"
-        src="{% static 'media/icons/order_plus.svg' %}" alt="+">
-        
-        <button type="submit">Edit</button>
+        <div id="edit-cart-form">
+            <img class="decrease-quantity update-cart" data-shop="{{ shop.id }}" data-product="{{ item.product.id }}" data-item="{{ item.id }}" 
+            data-action="decrease" src="{% static 'media/icons/order_minus.svg' %}" alt="—">
+            
+            {{ item.quantity }}
+
+            <img class="increase-quantity update-cart" data-shop="{{ shop.id }}" data-product="{{ item.product.id }}" data-item="{{ item.id }}" 
+            data-action="increase" src="{% static 'media/icons/order_plus.svg' %}" alt="+">
+        </div>
+        <button class="edit-product-qty" type="submit">Edit</button>
     {% endfor %}
+
+    <p>Subtotal: PHP {{order.subtotal}}</p>
+    <p>Subtotal: PHP {{order.fees}}</p>
+    <h2>Total: PHP {{order.total}}</h2>
+    <button>Proceed to Check Out</button>
+
 </div>
+
+<!-- Insert editable buttons here -->
+<script>
+</script>

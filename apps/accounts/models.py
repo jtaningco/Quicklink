@@ -62,19 +62,19 @@ class Address(models.Model):
         ("Metro Manila", _("Metro Manila")),
     ]
 
-    user = models.OneToOneField(User, related_name='user_address', on_delete=models.CASCADE, null=True, blank=True)
-    line1 = models.CharField(_("address line1"), null=True, max_length=155)
-    line2 = models.CharField(_("address line2"), null=True, max_length=155)
-    city = models.CharField(_("address city"), choices=CITIES, null=True, max_length=55, default=None)
-    province = models.CharField(_("address province"), choices=PROVINCES, null=True, max_length=55, default=None)
-    postal_code = models.CharField(_("address postal code"), null=True, max_length=4, validators=[only_int])
+    user = models.OneToOneField(User, related_name='user_address', on_delete=models.SET_NULL, null=True, blank=True)
+    line1 = models.CharField(_("address line1"), null=True, blank=False, max_length=155)
+    line2 = models.CharField(_("address line2"), null=True, blank=True, max_length=155)
+    city = models.CharField(_("address city"), choices=CITIES, null=True, blank=False, max_length=55, default=None)
+    province = models.CharField(_("address province"), choices=PROVINCES, null=True, blank=False, max_length=55, default=None)
+    postal_code = models.CharField(_("address postal code"), null=True, max_length=4, blank=False, validators=[only_int])
 
     def __str__(self):
         return f"{self.line1}, {self.line2}, {self.city}, {self.province}, {self.postal_code}, Philippines"
 
 # Social Media Links
 class SocialMediaLink(models.Model):
-    user = models.OneToOneField(User, related_name='user_links', on_delete=models.CASCADE, null=True, blank=True)
+    user = models.OneToOneField(User, related_name='user_links', on_delete=models.SET_NULL, null=True, blank=True)
     instagram = models.CharField(_("instagram link"), null=True, max_length=255)
     facebook = models.CharField(_("facebook link"), null=True, max_length=255)
     twitter = models.CharField(_("twitter link"), null=True, max_length=255)
@@ -91,7 +91,7 @@ class BankAccount(models.Model):
         ("GrabPay", _("GrabPay")),
     ]
     
-    user = models.OneToOneField(User, related_name='user_account', on_delete=models.CASCADE, null=True, blank=True)
+    user = models.OneToOneField(User, related_name='user_account', on_delete=models.SET_NULL, null=True, blank=True)
     bank_name = models.CharField(_("bank name"), choices=BANKS, null=True, max_length=55)
     cardholder_name = models.CharField(_("cardholder name"), null=True, max_length=155)
     account_number = models.CharField(_("account number"), null=True, max_length=55)
@@ -134,7 +134,7 @@ class BankAccount(models.Model):
         return f"{self.cardholder_name} - {self.account_number}"
 
 class Notification(models.Model):
-    user = models.OneToOneField(User, related_name='customer_notifications', on_delete=models.CASCADE, null=True, blank=True)
+    user = models.OneToOneField(User, related_name='customer_notifications', on_delete=models.SET_NULL, null=True, blank=True)
     sms = models.BooleanField(_('sms notifications'), null=True, default=False)
     email = models.BooleanField(_('email notifications'), null=True, default=False)
 
@@ -207,7 +207,7 @@ class OpenHours(models.Model):
         (7, _("Sunday")),
     ]
 
-    shop = models.OneToOneField(ShopInformation, on_delete=models.CASCADE, null=True, blank=True)
+    shop = models.OneToOneField(ShopInformation, on_delete=models.SET_NULL, null=True, blank=True)
     day_from = models.PositiveSmallIntegerField(choices=WEEKDAYS, null=True, default=None)
     day_to = models.PositiveSmallIntegerField(choices=WEEKDAYS, null=True, default=None)
     from_hour = models.PositiveSmallIntegerField(choices=HOUR_OF_DAY_24, null=True, default=None)
@@ -231,7 +231,7 @@ class OpenHours(models.Model):
 
 # Shop Logo
 class ShopLogo(models.Model):
-    shop = models.OneToOneField(ShopInformation, related_name='logo_shop', on_delete=models.CASCADE, null=True, blank=True)
+    shop = models.OneToOneField(ShopInformation, related_name='logo_shop', on_delete=models.SET_NULL, null=True, blank=True)
     logo = models.ImageField(null=True, blank=True)
 
     def __str__(self):
@@ -244,9 +244,13 @@ class CustomerManager(models.Manager):
 
 class CustomerInformation(models.Model):
     customer = models.OneToOneField(
-        User, related_name="info_customer", on_delete=models.CASCADE
+        User, related_name="info_customer", on_delete=models.SET_NULL, null=True
     )
     customer_name = models.CharField(_("customer name"), max_length=150, null=True, blank=False)
+    customer_email = models.EmailField(_("email"), 
+        max_length=150, 
+        null=True,
+    )
     customer_contact_number = models.CharField(_("mobile number"), max_length=15, null=True, blank=False, validators=[only_int])
     customer_username = models.CharField(_("customer username"), 
         max_length=150, 

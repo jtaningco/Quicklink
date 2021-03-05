@@ -30,11 +30,14 @@ class Order(models.Model):
     # Order quantity is different from product quantity -- sum of all products na kasama
     order_quantity = models.IntegerField(null=True, default=1)
     
+    # Subtotal for the order
+    subtotal = models.DecimalField(null=True, default=0, max_digits=10, decimal_places=2)
+
     # Convenience fees for the order
     fees = models.DecimalField(null=True, default=0, max_digits=8, decimal_places=2)
 
     # Total fees for the order
-    total = models.DecimalField(null=True, default=0, max_digits=10, decimal_places=2)
+    total = models.DecimalField(null=True, default=0, max_digits=12, decimal_places=2)
 
     # Order status
     order_status = models.CharField(max_length=40, null=True, choices=ORDER_STATUS, default='Pending')
@@ -84,6 +87,5 @@ class ProductOrder(models.Model):
     # Date of when the order was published (Auto-filled)
     order_date = models.DateTimeField(auto_now_add=True, null=True)
     
-
     def __str__(self):
         return f"{self.quantity} {self.product} - Total of PHP {self.total}" 

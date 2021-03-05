@@ -1,6 +1,5 @@
 from django import forms
 from django.forms import ModelForm, inlineformset_factory
-from django.forms.models import BaseInlineFormSet
 from django.forms.widgets import Textarea
 from apps.products.models import *
 from django.utils.translation import ugettext_lazy as _

@@ -11,6 +11,7 @@ from apps.accounts.decorators import allowed_users
 from apps.accounts.models import *
 
 from django.http import HttpResponse, JsonResponse
+from decimal import Decimal
 import json
 
 # Create your views here.
@@ -147,6 +148,7 @@ def viewProducts(request, shop_pk):
         customer = request.user
         order, created = Order.objects.get_or_create(user=customer, complete=False)
         items = order.productorder_set.all()
+        print([item for item in items.all()])
     else:
         items = []
         order = {'get_cart_total': 0, 'get_cart_items': 0}
@@ -210,7 +212,7 @@ def addOrder(request, shop_pk, product_pk):
             print(form.errors.as_data())
             return HttpResponse('Order failed!')
 
-    context = {'form':form, 'product':product, 'sizes':sizes, 'addons':addons, 'shop':shop}
+    context = {'form':form, 'product':product, 'sizes':sizes, 'addons':addons, 'shop':shop, 'order':order}
     return render(request, 'customers/order_form.html', context)
 
 def checkout(request, shop_pk):
@@ -225,7 +227,7 @@ def checkout(request, shop_pk):
     context = {'items':items, 'order':order}
     return render(request, 'customers/checkout.html', context)
 
-def updateItem(request, shop_pk, product_pk):
+def addItem(request, shop_pk, product_pk):
     data = json.loads(request.body)
     form = data['form']
     shopId = data['shopId']
@@ -269,13 +271,56 @@ def updateItem(request, shop_pk, product_pk):
         order=order, product=product, size=size, addons__in=addons,
         instructions=instructions, quantity=quantity, total=total)
 
-    if action == "add":
+    for addon in addons:
+        productOrder.addons.add(addon)
+
+    productOrder.save()
+    
+    order.subtotal = 0
+    for product in order.productorder_set.all():
+        order.subtotal += product.total
+
+    order.fees = order.subtotal * Decimal(0.05)
+    order.total = order.subtotal + order.fees
+    order.save()
+
+    return JsonResponse('Item was added', safe=False)
+
+def updateItem(request, shop_pk, product_pk):
+    data = json.loads(request.body)
+    shopId = data['shopId']
+    itemId = data['itemId']
+    productId = data['productId']
+    action = data['action']
+
+    productOrder = ProductOrder.objects.get(id=itemId)
+    order = productOrder.order
+    addons = productOrder.addons.all()
+
+    if action == "increase":
         productOrder.quantity = (productOrder.quantity + 1)
-    elif action == "remove":
+    elif action == "decrease":
         productOrder.quantity = (productOrder.quantity - 1)
+
+    if addons:
+        addons_total = 0
+        for i in addons:
+            addons_total += (productOrder.quantity * i.price_addon)
+        productOrder.total = (productOrder.quantity * productOrder.size.price_size) + addons_total
+    else:    
+        productOrder.total = (productOrder.quantity * productOrder.size.price_size)
+
     productOrder.save()
 
     if productOrder.quantity <= 0:
         productOrder.delete()
+    
+    order.subtotal = 0
+    for product in order.productorder_set.all():
+        order.subtotal += product.total
+
+    order.fees = order.subtotal * Decimal(0.05)
+    order.total = order.subtotal + order.fees
+    order.save()
 
     return JsonResponse('Item was added', safe=False)
