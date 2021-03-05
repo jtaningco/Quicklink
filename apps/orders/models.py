@@ -3,7 +3,7 @@ from django.db.models.deletion import CASCADE
 from django.db.models.fields import IntegerField
 from django.utils.timezone import datetime, timedelta
 
-from apps.accounts.models import User
+from apps.accounts.models import *
 from apps.products.models import *
 
 # Create your models here.
@@ -61,6 +61,48 @@ class Order(models.Model):
 
     def delivery_date(self):
         return datetime.today()+timedelta(days=3)
+
+class OrderInformation(models.Model):
+    # User session id if user attribute does not exist (if user isn't logged in, use a session id instead)
+    session_id = models.CharField(max_length=32, null=True)
+
+    order = models.OneToOneField(
+        Order, 
+        related_name="order_information",
+        null=True, 
+        on_delete=models.SET_NULL)
+
+    # Guest session user info
+    session_sender = models.OneToOneField(
+        CustomerInformation, 
+        related_name="sender_information", 
+        on_delete=models.SET_NULL, 
+        null=True
+    )
+    
+    # Guest session user address
+    session_address = models.OneToOneField(
+        Address, 
+        related_name="sender_address", 
+        on_delete=models.SET_NULL, 
+        null=True
+    )
+
+    # Guest session user payment details
+    session_address = models.OneToOneField(
+        BankAccount, 
+        related_name="sender_address", 
+        on_delete=models.SET_NULL, 
+        null=True
+    )
+
+    # Guest session user payment details
+    session_notifications = models.OneToOneField(
+        Notification, 
+        related_name="sender_address", 
+        on_delete=models.SET_NULL, 
+        null=True
+    )
 
 class ProductOrder(models.Model):
     # Order cart

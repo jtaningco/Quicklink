@@ -246,6 +246,7 @@ class CustomerInformation(models.Model):
     customer = models.OneToOneField(
         User, related_name="info_customer", on_delete=models.SET_NULL, null=True
     )
+
     customer_name = models.CharField(_("customer name"), max_length=150, null=True, blank=False)
     customer_email = models.EmailField(_("email"), 
         max_length=150, 

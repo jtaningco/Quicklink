@@ -2,7 +2,7 @@ from django import forms
 from django.forms import ModelForm, inlineformset_factory
 from apps.accounts.models import *
 from apps.products.models import Product, Addon
-from apps.orders.models import ProductOrder
+from apps.orders.models import ProductOrder, OrderInformation
 from django.utils.translation import ugettext_lazy as _
 
 class PreviewOrderForm(ModelForm):
@@ -47,63 +47,73 @@ class OrderForm(ModelForm):
                 'placeholder': 'Leave us a note! (Optional)'}),
         }
 
-class CheckoutForm(ModelForm):
-    class Meta:
-        model = CustomerInformation
-        fields = [
-            'customer_name', 'customer_email', 'customer_contact_number',
-        ]
-        required_fields = [
-            'customer_name', 'customer_email', 'customer_contact_number',
-        ]
+class CheckoutForm(forms.Form):
+    # Personal Details
+    name = forms.CharField(label='', 
+        widget=forms.fields.TextInput(attrs={
+        'class':'input default subtitle',
+        'placeholder': 'Name'}),)
+    email = forms.CharField(label='', 
+        widget=forms.fields.TextInput(attrs={
+        'class':'input default subtitle',
+        'placeholder': 'Email'}),)
+    contact_number = forms.CharField(label='',  
+        widget=forms.fields.TextInput(attrs={
+        'class':'input default subtitle',
+        'placeholder': 'Mobile Number'}),)
 
+    # Shipping Address
+    line1 = forms.CharField(label='', 
+        widget=forms.fields.TextInput(attrs={
+        'class': 'input default subtitle', 
+        'placeholder': 'Address Line 1'}))
+    line2 = forms.CharField(label='', 
+        widget=forms.fields.TextInput(attrs={
+        'class': 'input default subtitle', 
+        'placeholder': 'Address Line 2'}))
+    city = forms.ChoiceField(label='', 
+        widget=forms.Select(attrs={
+        'class': 'input default subtitle', 
+        'placeholder': 'City'}),
+        choices=Address.CITIES)
+    province = forms.ChoiceField(label='', 
+        widget=forms.Select(attrs={
+        'class': 'small-input default subtitle', 
+        'placeholder': 'Province'}),
+        choices=Address.PROVINCES)
+    postal_code = forms.CharField(label='', 
+        widget=forms.fields.TextInput(attrs={
+        'class': 'small-input default subtitle', 
+        'placeholder': 'Postal Code'}))
 
-# FORMSET DRAFTS
-# The formset for filling out customer information and shipping address
-CustomerInfoFormset = inlineformset_factory(
-                    User,
-                    CustomerInformation,
-                    can_delete=False,
-                    fields=('customer_name', 'customer_email', 'customer_contact_number'),
-                    widgets={
-                        'customer_name': forms.fields.TextInput(attrs={
-                            'class':'input default subtitle',
-                            'placeholder': 'Name'}),
+    # Preferred Delivery Date
+    delivery_date = forms.DateField(label='', 
+        widget=forms.fields.DateInput())
 
-                        'customer_email': forms.fields.TextInput(attrs={
-                            'class':'input default subtitle',
-                            'placeholder': 'Email'}),
-                        'customer_contact_number': forms.fields.TextInput(attrs={
-                            'class':'input default subtitle',
-                            'placeholder': 'Mobile Number'}),
-                    },
-                    labels={
-                        'customer_name':'',
-                        'customer_email':'',
-                        'customer_contact_number':'',
-                    },
-                    extra=1
-                )
+    # Mode of Payment
+    cardholder_name = forms.CharField(label='', 
+        widget=forms.fields.TextInput(attrs={
+        'class': 'input default subtitle', 
+        'placeholder': 'Ex. Juan Dela Cruz'}))
+    card_number = forms.CharField(label='', 
+        widget=forms.fields.TextInput(attrs={
+        'class': 'input default subtitle', 
+        'placeholder': 'Ex. 1234 5678 9876 5432'}))
+    expiry_date = forms.CharField(label='', 
+        widget=forms.fields.TextInput(attrs={
+        'class': 'small-input default subtitle', 
+        'placeholder': 'MM/YY'}))
+    cvv = forms.CharField(label='', 
+        widget=forms.fields.TextInput(attrs={
+        'class': 'small-input default subtitle', 
+        'placeholder': '***'}))
 
-ShippingFormset = inlineformset_factory(
-                    User,
-                    Address,
-                    can_delete=False,
-                    fields=('line1', 'line2', 'city', 'province', 'postal_code'),
-                    widgets={
-                        'line1': forms.fields.TextInput(attrs={
-                            'class':'input default subtitle',
-                            'placeholder': 'Address Line 1'}),
+    # Updates
+    sms = forms.BooleanField(label='Receive SMS updates on order status',
+        widget=forms.fields.CheckboxInput())
+    email = forms.BooleanField(label='Receive email updates on order status',
+        widget=forms.fields.CheckboxInput())
 
-                        'line2': forms.fields.TextInput(attrs={
-                            'class':'input default subtitle',
-                            'placeholder': 'Address Line 2 (Optional)'}),
-                        'city':
-                    },
-                    labels={
-                        'customer_name':'',
-                        'customer_email':'',
-                        'customer_contact_number':'',
-                    },
-                    extra=1
-                )
+    def __init__(self, min_date, max_date, *args, **kwargs):
+        super(CheckoutForm, self).__init__(*args, **kwargs)
+        self.fields['delivery_date'].widget.attrs.update({'min': min_date, 'max': max_date})
