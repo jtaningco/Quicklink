@@ -48,6 +48,12 @@ class OrderForm(ModelForm):
         }
 
 class CheckoutForm(forms.Form):
+    BANKS = [
+        ("Debit/Credit Card", _("Debit/Credit Card")),
+        ("eWallet", _("eWallet")),
+        ("Cash on Delivery", _("Cash on Delivery (COD)")),
+    ]
+
     # Personal Details
     name = forms.CharField(label='', 
         widget=forms.fields.TextInput(attrs={
@@ -91,22 +97,11 @@ class CheckoutForm(forms.Form):
         widget=forms.fields.DateInput())
 
     # Mode of Payment
-    cardholder_name = forms.CharField(label='', 
-        widget=forms.fields.TextInput(attrs={
+    bank_name = forms.ChoiceField(label='', 
+        widget=forms.RadioSelect(attrs={
         'class': 'input default subtitle', 
-        'placeholder': 'Ex. Juan Dela Cruz'}))
-    card_number = forms.CharField(label='', 
-        widget=forms.fields.TextInput(attrs={
-        'class': 'input default subtitle', 
-        'placeholder': 'Ex. 1234 5678 9876 5432'}))
-    expiry_date = forms.CharField(label='', 
-        widget=forms.fields.TextInput(attrs={
-        'class': 'small-input default subtitle', 
-        'placeholder': 'MM/YY'}))
-    cvv = forms.CharField(label='', 
-        widget=forms.fields.TextInput(attrs={
-        'class': 'small-input default subtitle', 
-        'placeholder': '***'}))
+        'placeholder': 'City'}),
+        choices=BANKS)
 
     # Updates
     sms = forms.BooleanField(label='Receive SMS updates on order status',

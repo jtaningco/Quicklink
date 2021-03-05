@@ -1,6 +1,6 @@
 {% load static %}
 
-<div class="cart-container" style="position: fixed; right: 0; top: 0; padding: 5rem;">
+<div class="cart-container" style="position: fixed; right: 0; top: 0; padding: 5rem; max-height: 100vh; overflow-y: scroll;">
     <h1>My Basket</h1>
     {% for item in items %}
         <h2>{{ item.product.name }}</h1>
@@ -26,10 +26,12 @@
         <button class="edit-product-qty" type="submit">Edit</button>
     {% endfor %}
 
-    <p>Subtotal: PHP {{order.subtotal}}</p>
-    <p>Subtotal: PHP {{order.fees}}</p>
-    <h2>Total: PHP {{order.total}}</h2>
-    <button>Proceed to Check Out</button>
+    {% if items %}
+        <p>Subtotal: PHP {{order.subtotal}}</p>
+        <p>Convenience Fee: PHP {{order.fees}}</p>
+        <h2>Total: PHP {{order.total}}</h2>
+        <button>Proceed to Check Out</button>
+    {% endif %}
 
 </div>
 

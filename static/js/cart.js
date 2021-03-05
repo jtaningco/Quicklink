@@ -31,7 +31,7 @@ function addOrderProduct(shopId, productId, action) {
     console.log('User is logged in, sending data...')
 
     var form = $('form').serializeArray()
-    var url = '/shop/orders/shops/' + String(shopId) + '/products/' + String(productId) + '/add/'
+    var url = '/shops/' + String(shopId) + '/products/' + String(productId) + '/add/'
 
     fetch(url, {
         method: 'POST',
@@ -54,7 +54,7 @@ function addOrderProduct(shopId, productId, action) {
 function editQuantity(shopId, productId, itemId, action) {
     console.log('User is logged in, editing product...')
 
-    var url = '/shop/orders/shops/' + String(shopId) + '/products/' + String(productId) + '/edit/'
+    var url = '/shops/' + String(shopId) + '/products/' + String(productId) + '/edit/'
 
     fetch(url, {
         method: 'POST',

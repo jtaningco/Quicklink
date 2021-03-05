@@ -8,7 +8,7 @@
     {% for shop in shops %}
         <h1>{{ shop.shop_name }}</h1>
         <p>Contact Number: {{ shop.shop_contact_number }} </p>
-        <a href="{% url 'orders:view-products' shop.id %}">Check Products</a>
+        <a href="{% url 'customers:view-products' shop.id %}">Check Products</a>
     {% endfor %}
 
 {% endblock %}

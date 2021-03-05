@@ -5,6 +5,7 @@ from django.utils.timezone import datetime, timedelta
 
 from apps.accounts.models import *
 from apps.products.models import *
+import uuid
 
 # Create your models here.
 class Order(models.Model):
@@ -64,13 +65,14 @@ class Order(models.Model):
 
 class OrderInformation(models.Model):
     # User session id if user attribute does not exist (if user isn't logged in, use a session id instead)
-    session_id = models.CharField(max_length=32, null=True)
+    session_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
 
     order = models.OneToOneField(
         Order, 
         related_name="order_information",
         null=True, 
-        on_delete=models.SET_NULL)
+        on_delete=models.SET_NULL
+    )
 
     # Guest session user info
     session_sender = models.OneToOneField(
@@ -89,7 +91,7 @@ class OrderInformation(models.Model):
     )
 
     # Guest session user payment details
-    session_address = models.OneToOneField(
+    session_payment = models.OneToOneField(
         BankAccount, 
         related_name="sender_address", 
         on_delete=models.SET_NULL, 

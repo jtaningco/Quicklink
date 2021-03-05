@@ -7,9 +7,9 @@
 
     <div>
         <h1>{{ shop.shop_name }}</h1>
-        <p>{{ links.instagram }}</p>
+        <p>{{ user.user_links.instagram }}</p>
         <p>{{ shop.shop_contact_number }}</p>
-        <p>{{ address.line1 }} {{ address.line2 }} {{ address.city }}</p>
+        <p>{{ user.user_address.line1 }} {{ user.user_address.line2 }} {{ user.user_address.city }}</p>
     </div>
 
     <div style="display: flex; flex-direction: column; margin-top: 40px;">
@@ -20,7 +20,7 @@
             {% else %}
                 <p>PHP {{ product.min_price }} - {{ product.max_price }}</p>
             {% endif %}
-            <a href="{% url 'orders:add-order' shop.id product.id %}">Add to Cart</a>
+            <a href="{% url 'customers:add-order' shop.id product.id %}">Add to Cart</a>
         {% endfor %}
     </div>
 

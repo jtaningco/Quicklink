@@ -21,6 +21,7 @@ from config import settings
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', include(('customers.urls', 'customers'), namespace='customers')),
     path('user/', include(('accounts.urls', 'accounts'), namespace='accounts')),
     path('shop/orders/', include(('orders.urls', 'orders'), namespace='orders')),
     path('shop/products/', include(('products.urls', 'products'), namespace='products')),
