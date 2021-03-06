@@ -50,7 +50,7 @@ class Order(models.Model):
     order_date = models.DateTimeField(auto_now_add=True, null=True)
 
     # Preferred delivery date of when the product will be delivered (Auto-filled)
-    delivery_date = models.DateTimeField(null=True, default=datetime.today()+timedelta(days=1))
+    delivery_date = models.DateField(null=True, default=datetime.today()+timedelta(days=1))
 
     # Check if order is complete
     complete = models.BooleanField(default=False, null=True, blank=False)
@@ -103,7 +103,7 @@ class OrderInformation(models.Model):
         Notification, 
         related_name="sender_address", 
         on_delete=models.SET_NULL, 
-        null=True
+        null=True,
     )
 
 class ProductOrder(models.Model):

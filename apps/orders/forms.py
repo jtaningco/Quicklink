@@ -94,7 +94,10 @@ class CheckoutForm(forms.Form):
 
     # Preferred Delivery Date
     delivery_date = forms.DateField(label='', 
-        widget=forms.DateInput(format=('%d-%m-%Y')))
+        widget=forms.widgets.DateInput(attrs={
+            'type': 'date'
+        })
+    )
 
     # Mode of Payment
     bank_name = forms.ChoiceField(label='', 
@@ -103,11 +106,79 @@ class CheckoutForm(forms.Form):
         choices=BANKS)
 
     # Updates
-    notif_sms = forms.BooleanField(label='Receive SMS updates on order status',
+    notif_sms = forms.BooleanField(required=False, label='Receive SMS updates on order status',
         widget=forms.fields.CheckboxInput())
-    notif_email = forms.BooleanField(label='Receive email updates on order status',
+    notif_email = forms.BooleanField(required=False, label='Receive email updates on order status',
         widget=forms.fields.CheckboxInput())
 
-    def __init__(self, min_date, *args, **kwargs):
+    def __init__(self, min_date, user, *args, **kwargs):
         super(CheckoutForm, self).__init__(*args, **kwargs)
         self.fields['delivery_date'].widget.attrs.update({'min': min_date})
+
+        if user:
+            self.fields['email'].initial = user.email
+
+            # Personal Details
+            if user.role == "CUSTOMER":
+                try:
+                    self.fields['name'].initial = user.info_customer.customer_name
+                    self.fields['contact_number'].initial = user.info_customer.customer_contact_number
+                except:
+                    pass
+            else:
+                try:
+                    self.fields['name'].initial = user.info_shop.shop_name
+                    self.fields['contact_number'].initial = user.info_shop.shop_contact_number
+                except:
+                    pass
+
+            # Shipping Address
+            try:
+                self.fields['line1'].initial = user.user_address.line1
+                self.fields['line2'].initial = user.user_address.line2
+                self.fields['city'].initial = user.user_address.city
+                self.fields['province'].initial = user.user_address.province
+                self.fields['postal_code'].initial = user.user_address.postal_code
+            except:
+                pass   
+
+            # Preferred Delivery Date
+            try:
+                self.fields['delivery_date'].initial = min_date
+            except:
+                pass 
+    
+    def save(self):
+        data = self.cleaned_data
+        try:
+            sessionSender = CustomerInformation.objects.create(
+                customer_name = data.get('name'),
+                customer_email = data.get('email'),
+                customer_contact_number = data.get('contact_number')
+            )
+            sessionSender.save()
+                
+            sessionAddress = Address.objects.create(
+                line1 = data.get('line1'),
+                line2 = data.get('line2'),                
+                city = data.get('city'),
+                province = data.get('province'),
+                postal_code = data.get('postal_code'),
+            )
+            sessionAddress.save()
+
+            orderNotifications = Notification.objects.create(
+                sms = data.get('notif_sms'),
+                email = data.get('notif_email')
+            )
+            orderNotifications.save()
+
+            orderInfo = OrderInformation.objects.create(
+                order = order,
+                session_sender = sessionSender,
+                session_address = sessionAddress,
+                session_notifications = orderNotifications,
+            )
+            orderInfo.save()
+        except:
+            print("Form is valid, but can't save.")
