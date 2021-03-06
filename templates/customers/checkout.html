@@ -1,0 +1,33 @@
+{% extends 'quicklink/customers.html' %}
+{% load static %}
+
+{% block pagetitle %}Checkout{% endblock %}
+
+{% block maincontent %}
+    <form method="post">
+        {% csrf_token %}
+        <h1>Fill up your details</h1>
+        {{ form.name }}
+        {{ form.email }}
+        {{ form.contact_number }}
+        
+        <h1>Shipping Address</h1>
+        {{ form.line1 }}
+        {{ form.line2 }}
+        {{ form.city }}
+        {{ form.province }}
+        {{ form.postal_code }}
+        
+        <h1>Preferred Delivery Date</h1>
+        {{ form.delivery_date }}
+
+        <h1>Mode of Payment</h1>
+        {{ form.bank_name }}
+
+        <h1>Receive Updates</h1>
+        {{ form.sms }}
+        {{ form.email }}
+
+        <button type="submit" class="primary-btn primary-btn-link">Proceed to Payment</button>
+    </form>
+{% endblock %}

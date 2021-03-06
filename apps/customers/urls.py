@@ -10,5 +10,5 @@ urlpatterns = [
     path('shops/<str:shop_pk>/products/<str:product_pk>/', views.addOrder, name='add-order'),
     path('shops/<str:shop_pk>/products/<str:product_pk>/add/', views.addItem, name='add-item'),
     path('shops/<str:shop_pk>/products/<str:product_pk>/edit/', views.updateItem, name='update-item'),
-    path('shops/<str:shop_pk>/checkout/', views.checkout, name='checkout'),
+    path('checkout/', views.checkout, name='checkout'),
 ]  + static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)

@@ -94,21 +94,20 @@ class CheckoutForm(forms.Form):
 
     # Preferred Delivery Date
     delivery_date = forms.DateField(label='', 
-        widget=forms.fields.DateInput())
+        widget=forms.DateInput(format=('%d-%m-%Y')))
 
     # Mode of Payment
     bank_name = forms.ChoiceField(label='', 
         widget=forms.RadioSelect(attrs={
-        'class': 'input default subtitle', 
-        'placeholder': 'City'}),
+        'class': 'default subtitle'}),
         choices=BANKS)
 
     # Updates
-    sms = forms.BooleanField(label='Receive SMS updates on order status',
+    notif_sms = forms.BooleanField(label='Receive SMS updates on order status',
         widget=forms.fields.CheckboxInput())
-    email = forms.BooleanField(label='Receive email updates on order status',
+    notif_email = forms.BooleanField(label='Receive email updates on order status',
         widget=forms.fields.CheckboxInput())
 
-    def __init__(self, min_date, max_date, *args, **kwargs):
+    def __init__(self, min_date, *args, **kwargs):
         super(CheckoutForm, self).__init__(*args, **kwargs)
-        self.fields['delivery_date'].widget.attrs.update({'min': min_date, 'max': max_date})
+        self.fields['delivery_date'].widget.attrs.update({'min': min_date})

@@ -30,7 +30,7 @@
         <p>Subtotal: PHP {{order.subtotal}}</p>
         <p>Convenience Fee: PHP {{order.fees}}</p>
         <h2>Total: PHP {{order.total}}</h2>
-        <button>Proceed to Check Out</button>
+        <button class="primary-btn"><a href="{% url 'customers:checkout' %}" class="primary-btn-link">Proceed to Checkout</a></button>
     {% endif %}
 
 </div>

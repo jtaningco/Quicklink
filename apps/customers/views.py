@@ -201,16 +201,61 @@ def updateItem(request, shop_pk, product_pk):
 
     return JsonResponse('Item was edited', safe=False)
 
-def checkout(request, shop_pk):
+def checkout(request):    
     if request.user.is_authenticated:
         customer = request.user
         order, created = Order.objects.get_or_create(user=customer, complete=False)
         items = order.productorder_set.all()
-    else:
-        items = []
-        order = {'get_cart_total': 0, 'get_cart_items': 0}
 
-    form = CheckoutForm()
+        highest_days = 0
+        for item in items:
+            if item.product.days > highest_days: 
+                highest_days = item.product.days
+        min_date = datetime.today() + timedelta(days=highest_days)
+
+        if customer.role == 'CUSTOMER':
+            try:
+                form = CheckoutForm(min_date=min_date,
+                    initial={'name': customer.info_customer.customer_name,
+                    'email': customer.email,
+                    'contact_number': customer.info_customer.customer_contact_number,
+                    'line1': customer.user_address.line1,
+                    'line2': customer.user_address.line2,
+                    'city': customer.user_address.city,
+                    'province': customer.user_address.province,
+                    'postal_code': customer.user_address.postal_code,
+                    'notif_sms': customer.customer_notification.sms,
+                    'notif_email': customer.customer_notification.email,
+                })
+            except:
+                form = CheckoutForm(min_date=min_date)
+        elif customer.role == 'MERCHANT' or customer.role == 'ADMIN':
+            try:
+                form = CheckoutForm(min_date=min_date,
+                initial={'name': customer.info_shop.customer_name,
+                    'email': customer.email,
+                    'contact_number': customer.info_shop.customer_contact_number,
+                    'line1': customer.user_address.line1,
+                    'line2': customer.user_address.line2,
+                    'city': customer.user_address.city,
+                    'province': customer.user_address.province,
+                    'postal_code': customer.user_address.postal_code,
+                    'notif_sms': customer.customer_notification.sms,
+                    'notif_email': customer.customer_notification.email,
+                })
+            except:
+                form = CheckoutForm(min_date=min_date)
+    else:
+        order = {'get_cart_total': 0, 'get_cart_items': 0}
+        items = []
+
+        highest_days = 0
+        for item in items:
+            if item.product.days > highest_days: 
+                highest_days = item.product.days
+        min_date = datetime.today() + timedelta(days=highest_days)
+        
+        form = CheckoutForm(min_date=min_date)
 
     if request.method == "POST":
         form = CheckoutForm(request.POST)
@@ -232,8 +277,8 @@ def checkout(request, shop_pk):
             sessionAddress.save()
 
             orderNotifications = Notification.objects.create(
-                sms = form.cleaned_data.get('sms'),
-                email = form.cleaned_data.get('email')
+                sms = form.cleaned_data.get('notif_sms'),
+                email = form.cleaned_data.get('notif_email')
             )
             orderNotifications.save()
 
@@ -259,5 +304,5 @@ def checkout(request, shop_pk):
             else:
                 return HttpResponse("Pay with COD!")
 
-    context = {'items':items, 'order':order}
+    context = {'items':items, 'order':order, 'form':form}
     return render(request, 'customers/checkout.html', context)
