@@ -5,11 +5,14 @@ from apps.products.models import Product, Size, Addon
 from apps.orders.models import Order, ProductOrder, OrderInformation
 from apps.accounts.models import *
 
-from apps.orders.forms import OrderForm, CheckoutForm
+from apps.orders.forms import OrderForm, CheckoutForm, CardForm
 
 from django.http import HttpResponse, JsonResponse
 from decimal import Decimal
 import json
+import shortuuid
+
+from xendit import Xendit
 
 # Create your views here.
 # View Products (Customers)
@@ -235,56 +238,56 @@ def checkout(request):
     if request.method == "POST":
         form = CheckoutForm(data=request.POST or None, min_date=min_date, user=customer)
         if form.is_valid():
-            # sessionSender = CustomerInformation.objects.create(
-            #     customer_name = form.cleaned_data.get('name'),
-            #     customer_email = form.cleaned_data.get('email'),
-            #     customer_contact_number = form.cleaned_data.get('contact_number')
-            # )
-            # sessionSender.save()
+            sessionSender = CustomerInformation.objects.create(
+                customer_name = form.cleaned_data.get('name'),
+                customer_email = form.cleaned_data.get('email'),
+                customer_contact_number = form.cleaned_data.get('contact_number')
+            )
+            sessionSender.save()
                 
-            # sessionAddress = Address.objects.create(
-            #     line1 = form.cleaned_data.get('line1'),
-            #     line2 = form.cleaned_data.get('line2'),                
-            #     city = form.cleaned_data.get('city'),
-            #     province = form.cleaned_data.get('province'),
-            #     postal_code = form.cleaned_data.get('postal_code'),
-            # )
-            # sessionAddress.save()
+            sessionAddress = Address.objects.create(
+                line1 = form.cleaned_data.get('line1'),
+                line2 = form.cleaned_data.get('line2'),                
+                city = form.cleaned_data.get('city'),
+                province = form.cleaned_data.get('province'),
+                postal_code = form.cleaned_data.get('postal_code'),
+            )
+            sessionAddress.save()
 
-            # orderNotifications = Notification.objects.create(
-            #     sms = form.cleaned_data.get('notif_sms'),
-            #     email = form.cleaned_data.get('notif_email')
-            # )
-            # orderNotifications.save()
+            orderNotifications = Notification.objects.create(
+                sms = form.cleaned_data.get('notif_sms'),
+                email = form.cleaned_data.get('notif_email')
+            )
+            orderNotifications.save()
 
-            # orderInfo = OrderInformation.objects.create(
-            #     order = order,
-            #     session_sender = sessionSender,
-            #     session_address = sessionAddress,
-            #     session_notifications = orderNotifications,
-            # )
-            # orderInfo.save()
+            orderInfo = OrderInformation.objects.create(
+                order = order,
+                session_sender = sessionSender,
+                session_address = sessionAddress,
+                session_notifications = orderNotifications,
+            )
+            orderInfo.save()
             
             bankAccount = form.cleaned_data.get('bank_name')
 
             # If Debit/Credit
             if bankAccount in CheckoutForm.BANKS[0]:
-                return redirect('payment/')
+                return redirect('payment/card/')
             
             # If eWallet
             elif bankAccount in CheckoutForm.BANKS[1]:
-                return redirect('payment/')
+                return redirect('payment/ewallet/')
 
             # if COD
             else:
-                return redirect('payment/')
+                return redirect('payment/cod/')
         else:
             print(form.errors.as_data())
 
     context = {'items':items, 'order':order, 'form':form}
     return render(request, 'customers/checkout.html', context)
 
-def payment(request):
+def payment(request, slug):
     if request.user.is_authenticated:
         customer = request.user
         order, created = Order.objects.get_or_create(user=customer, complete=False)
@@ -293,5 +296,124 @@ def payment(request):
         items = []
         order = {'get_cart_total': 0, 'get_cart_items': 0}
 
-    context = {'items':items}
+    # If Debit/Credit
+    if slug == 'card':
+        try:
+            form = CardForm(initial={
+                'currency':"PHP",
+                'amount': order.total,
+                'cardholder_name': customer.user_account.cardholder_name,
+                'account_number': customer.user_account.account_number,
+                'exp_date': customer.user_account.exp_date,
+            })
+        except:
+            form = CardForm(initial={
+                'currency':"PHP",
+                'amount': order.total,
+            })
+            
+    # If eWallet
+    elif slug == 'ewallet':
+        form = CardForm(initial={
+                'currency':"PHP",
+                'amount': order.total,
+            })
+    # if COD
+    else:
+        form = CardForm(initial={
+                'currency':"PHP",
+                'amount': order.total,
+            })
+
+    orderInfo = OrderInformation.objects.get(order=order)
+    customer_name = orderInfo.session_sender.customer_name.split(' ')
+    given_names_list = []
+    for name in customer_name:
+        if name != customer_name[-1]:
+            given_names_list.append(str(name))
+        else:
+            surname = str(name)
+        given_names = ' '.join(given_names_list)
+
+    if request.method == 'POST':
+        form = CardForm(request.POST)
+        if form.is_valid():
+            exp_month = str(form.cleaned_data.get('exp_date').split('/')[0])
+            exp_year = str('20' + form.cleaned_data.get('exp_date').split('/')[1])
+            card_number_list = form.cleaned_data.get("account_number").split(' ')
+            card_number = ''.join(card_number_list)
+            card_cvn = form.cleaned_data.get("cvv")
+            data = {
+                "amount": str(order.total),
+                "card_number": card_number,
+                "card_exp_month": exp_month,
+                "card_exp_year": exp_year,
+                "is_multiple_use": "false",
+                "should_authenticate": "true",
+                "currency": "PHP",
+                "on_behalf_of": "",
+                "billing details": {
+                    "given_names": given_names,
+                    "surname": surname,
+                    "email": orderInfo.session_sender.customer_email,
+                    "mobile_number": orderInfo.session_sender.customer_contact_number,
+                    "phone_number": orderInfo.session_sender.customer_contact_number,
+                    "address": {
+                        "country": "63",
+                        "street_line1": orderInfo.session_address.line1,
+                        "street_line2": orderInfo.session_address.line2,
+                        "city": orderInfo.session_address.city,
+                        "province_state": orderInfo.session_address.province,
+                        "postal_code": orderInfo.session_address.postal_code
+                    } 
+                },
+                "token_id": "",
+                "card_cvn": str(card_cvn),
+            }
+            request.session['data'] = json.dumps(data)
+            print(request.session['data'])
+            return redirect('token/', slug)
+        else:
+            data = form.errors.as_json()
+            return JsonResponse(data, status=400) 
+
+    context = {'items':items, 'form':form, 'slug':slug, 'order':order}
     return render(request, 'customers/payment.html', context)
+
+def createToken(request, slug):
+    if request.user.is_authenticated:
+        customer = request.user
+    
+    data = request.session['data']
+
+    if request.method == 'POST':
+        new_data = json.loads(data)
+        print(new_data)
+        token_id = request.POST.get('token_id')
+        new_data['token_id'] = token_id
+        request.session['data'] = json.dumps(new_data)
+
+    context = {'data':data}
+    return render(request, 'customers/token.html', context)
+
+def createAuthorization(request, slug):
+    api_key = "xnd_development_Fa5W47XyJYmpFC3Ylp1XIHZg0VueYlccu90ST6lVoSkthxYfBduImPeEQknxe"
+    xendit_instance = Xendit(api_key=api_key)
+    CreditCard = xendit_instance.CreditCard
+
+    data = request.session['data']
+    json_data = json.loads(data)
+    token_id = str(json_data['token_id'])
+    amount = float(json_data['amount'])
+    card_cvn = str(json_data['card_cvn'])
+    external_id = shortuuid.uuid()
+
+    charge = CreditCard.create_authorization(
+        token_id=token_id,
+        external_id="quicklink-card_charge" + external_id,
+        amount=amount,
+        card_cvn=card_cvn,
+    )
+    print(charge)
+
+    return HttpResponse('Charge created!')

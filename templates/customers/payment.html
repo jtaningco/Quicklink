@@ -12,28 +12,31 @@
 {% block maincontent %}
     <form method="post">
         {% csrf_token %}
-        <h1>Fill up your details</h1>
-        {{ form.name }}<br><br>
-        {{ form.email }}<br><br>
-        {{ form.contact_number }}<br><br><br>
+        {% if slug == 'card' %}
+            {{ form.amount }} {{ form.currency }}
+            <h1>Pay through Credit/Debit Card</h1><br>
+            <p>Cardholder's Name</p>
+            {{ form.cardholder_name }}<br>
+            <p>Card Number</p>
+            {{ form.account_number }}<br>
+            <p>Expiry Date</p>
+            {{ form.exp_date }}<br>
+            <p>CVV</p>
+            {{ form.cvv }}<br><br>
+        {% elif slug == 'ewallet' %}
+            {{ form.amount }} {{ form.currency }}
+            <h1>Pay through eWallet</h1><br>
+            <p>Account Name</p>
+            {{ form.cardholder_name }}<br>
+            <p>Card Number</p>
+            {{ form.account_number }}<br><br>
+        {% else %}
+            <h1>Pay through Cash on Delivery</h1><br>
+            <p>Change for</p>
+            <input type="text" name="change" id="change" class="small-input default subtitle"><br><br>
+        {% endif %}
         
-        <h1>Shipping Address</h1>
-        {{ form.line1 }}<br><br>
-        {{ form.line2 }}<br><br>
-        {{ form.city }}<br><br>
-        {{ form.province }}
-        {{ form.postal_code }}<br><br><br>
-        
-        <h1>Preferred Delivery Date</h1>
-        {{ form.delivery_date }}
-
-        <h1>Mode of Payment</h1>
-        {{ form.bank_name }}<br><br>
-
-        <h1>Receive Updates</h1>
-        {{ form.notif_sms }} {{ form.notif_sms.label }}<br>
-        {{ form.notif_email }} {{ form.notif_email.label }}<br><br><br>
-        <button type="submit" class="primary-btn primary-btn-link">Proceed to Payment</button>
+        <button type="submit" class="primary-btn primary-btn-link">Pay Now</button>
     </form>
 {% endblock %}
 

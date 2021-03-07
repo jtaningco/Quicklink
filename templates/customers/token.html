@@ -1,0 +1,85 @@
+{% extends 'quicklink/customers.html' %}
+{% load static %}
+
+{% block pagetitle %}Payment{% endblock %}
+
+{% block scriptsHead %}
+<script src="https://js.xendit.co/v1/xendit.min.js"></script>
+
+<!-- Set Xendit Authorization -->
+<script>Xendit.setPublishableKey('xnd_public_development_A44I6GFvh3ecLZaiRLehBCbF8bGuBxwodSfXV9Qo9w6K2aGuCS2FRqE4ENxa9XeD');</script> 
+{% endblock %}
+
+{% block maincontent %}
+    <h1>Please wait while your payment is being processed...</h1>
+    <div id="tokenData" style="display: none;">{{ data }}</div>
+    <form method="post">
+        {% csrf_token %}
+        <input type="text" name="token_id" id="token_id">
+        <input type="submit" value="Charge">
+    </form>
+{% endblock %}
+
+{% block scriptsBody %}
+    <script>
+        // Create Token
+        let data = document.getElementById('tokenData').innerHTML;
+        let tokenInput = document.getElementById('token_id');
+        
+        let tokenData = JSON.parse(data);
+        var token_id = "";
+        let amount = parseFloat(tokenData['amount']);
+
+        var current_url = String(window.location.href);
+        var next_url = current_url.replace('token', 'auth');
+        console.log(next_url)
+
+        function createToken() {
+            Xendit.card.createToken(tokenData, function(err, data) {
+                if (err) {
+                    console.log('Unable to create token.', err)
+                }
+
+                if (data.status === 'VERIFIED') {
+                    console.log('Data has been verified. Token has been created', data)
+                    token_id = data.id;
+                    tokenInput.value = token_id;
+                } else if (data.status === 'IN_REVIEW') {
+                    // Handle authentication (3DS)
+                    window.open(creditCardToken.payer_authentication_url, 'sample-inline-frame');
+                    console.log('Data is being reviewed for authentication. Token is not yet created.', data)
+                } else if (data.status === 'FAILED') {
+                    console.log('Failed to create token.', data)
+                }
+            });
+        }
+
+        function authenticateData() {
+            var authenticationData = {
+                "amount": amount,
+                "token_id": token_id
+            }
+
+            Xendit.card.createAuthentication(authenticationData, function (err, data) {
+                if (err) {
+                    console.log('Unable to create authentication.', err)
+                }
+
+                if (data.status === 'VERIFIED') {
+                    console.log('Data has been verified. Authentication has been created', data)
+                } else if (data.status === 'IN_REVIEW') {
+                    // Handle authentication (3DS)
+                    console.log('Data is being reviewed. Authentication is not yet created.', data)
+                } else if (data.status === 'FAILED') {
+                    console.log('Failed to create authentication.', data)
+                }
+            });
+        }
+
+        createToken();
+        setTimeout(authenticateData, 3000);
+        setTimeout(function(){
+            window.location.href = next_url
+        }, 5000);
+    </script>
+{% endblock %}

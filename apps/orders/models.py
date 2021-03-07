@@ -2,6 +2,7 @@ from django.db import models
 from django.db.models.deletion import CASCADE
 from django.db.models.fields import IntegerField
 from django.utils.timezone import datetime, timedelta
+from django.contrib.postgres.fields import JSONField
 
 from apps.accounts.models import *
 from apps.products.models import *
