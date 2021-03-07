@@ -147,38 +147,22 @@ class CheckoutForm(forms.Form):
                 self.fields['delivery_date'].initial = min_date
             except:
                 pass 
-    
-    def save(self):
-        data = self.cleaned_data
-        try:
-            sessionSender = CustomerInformation.objects.create(
-                customer_name = data.get('name'),
-                customer_email = data.get('email'),
-                customer_contact_number = data.get('contact_number')
-            )
-            sessionSender.save()
-                
-            sessionAddress = Address.objects.create(
-                line1 = data.get('line1'),
-                line2 = data.get('line2'),                
-                city = data.get('city'),
-                province = data.get('province'),
-                postal_code = data.get('postal_code'),
-            )
-            sessionAddress.save()
 
-            orderNotifications = Notification.objects.create(
-                sms = data.get('notif_sms'),
-                email = data.get('notif_email')
-            )
-            orderNotifications.save()
-
-            orderInfo = OrderInformation.objects.create(
-                order = order,
-                session_sender = sessionSender,
-                session_address = sessionAddress,
-                session_notifications = orderNotifications,
-            )
-            orderInfo.save()
-        except:
-            print("Form is valid, but can't save.")
+class PaymentForm(forms.Form):
+    # Payment Details
+    cardholder_name = forms.CharField(label='', 
+        widget=forms.fields.TextInput(attrs={
+        'class': 'input default subtitle', 
+        'placeholder': 'Ex. John Smith'}))
+    account_number = forms.CharField(label='', 
+        widget=forms.fields.TextInput(attrs={
+        'class': 'input default subtitle', 
+        'placeholder': 'Ex. 1234 5678 9876 5432'}))
+    exp_date = forms.CharField(label='', 
+        widget=forms.fields.TextInput(attrs={
+        'class': 'small-input default subtitle', 
+        'placeholder': 'MM/YY'}))
+    cvv = forms.CharField(label='', 
+        widget=forms.fields.TextInput(attrs={
+        'class': 'small-input default subtitle', 
+        'placeholder': '***'}))

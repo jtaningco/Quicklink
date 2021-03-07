@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.utils.timezone import datetime, timedelta
 
 from apps.products.models import Product, Size, Addon
-from apps.orders.models import Order, ProductOrder
+from apps.orders.models import Order, ProductOrder, OrderInformation
 from apps.accounts.models import *
 
 from apps.orders.forms import OrderForm, CheckoutForm
@@ -235,23 +235,63 @@ def checkout(request):
     if request.method == "POST":
         form = CheckoutForm(data=request.POST or None, min_date=min_date, user=customer)
         if form.is_valid():
-            form.save()
+            # sessionSender = CustomerInformation.objects.create(
+            #     customer_name = form.cleaned_data.get('name'),
+            #     customer_email = form.cleaned_data.get('email'),
+            #     customer_contact_number = form.cleaned_data.get('contact_number')
+            # )
+            # sessionSender.save()
+                
+            # sessionAddress = Address.objects.create(
+            #     line1 = form.cleaned_data.get('line1'),
+            #     line2 = form.cleaned_data.get('line2'),                
+            #     city = form.cleaned_data.get('city'),
+            #     province = form.cleaned_data.get('province'),
+            #     postal_code = form.cleaned_data.get('postal_code'),
+            # )
+            # sessionAddress.save()
+
+            # orderNotifications = Notification.objects.create(
+            #     sms = form.cleaned_data.get('notif_sms'),
+            #     email = form.cleaned_data.get('notif_email')
+            # )
+            # orderNotifications.save()
+
+            # orderInfo = OrderInformation.objects.create(
+            #     order = order,
+            #     session_sender = sessionSender,
+            #     session_address = sessionAddress,
+            #     session_notifications = orderNotifications,
+            # )
+            # orderInfo.save()
             
             bankAccount = form.cleaned_data.get('bank_name')
 
             # If Debit/Credit
-            if bankAccount == CheckoutForm.BANKS[0]:
-                return HttpResponse("Pay with Debit/Credit!")
+            if bankAccount in CheckoutForm.BANKS[0]:
+                return redirect('payment/')
             
             # If eWallet
-            elif bankAccount == CheckoutForm.BANKS[1]:
-                return HttpResponse("Pay with eWallet!")
+            elif bankAccount in CheckoutForm.BANKS[1]:
+                return redirect('payment/')
 
             # if COD
             else:
-                return HttpResponse("Pay with COD!")
+                return redirect('payment/')
         else:
             print(form.errors.as_data())
 
     context = {'items':items, 'order':order, 'form':form}
     return render(request, 'customers/checkout.html', context)
+
+def payment(request):
+    if request.user.is_authenticated:
+        customer = request.user
+        order, created = Order.objects.get_or_create(user=customer, complete=False)
+        items = order.productorder_set.all()
+    else:
+        items = []
+        order = {'get_cart_total': 0, 'get_cart_items': 0}
+
+    context = {'items':items}
+    return render(request, 'customers/payment.html', context)
