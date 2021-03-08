@@ -11,8 +11,11 @@ from django.http import HttpResponse, JsonResponse
 from decimal import Decimal
 import json
 import shortuuid
+from secret_key_generator import secret_key_generator
 
 from xendit import Xendit
+import jwt
+import base64
 
 # Create your views here.
 # View Products (Customers)
@@ -348,8 +351,8 @@ def payment(request, slug):
                 "card_number": card_number,
                 "card_exp_month": exp_month,
                 "card_exp_year": exp_year,
-                "is_multiple_use": "false",
-                "should_authenticate": "true",
+                "is_multiple_use": False,
+                "should_authenticate": True,
                 "currency": "PHP",
                 "on_behalf_of": "",
                 "billing details": {
@@ -371,7 +374,19 @@ def payment(request, slug):
                 "card_cvn": str(card_cvn),
             }
             request.session['data'] = json.dumps(data)
-            print(request.session['data'])
+
+            private_key = secret_key_generator.generate(len_of_secret_key=15)
+            public_key = secret_key_generator.generate(len_of_secret_key=15)
+
+            orderInfo.token_private_key = private_key
+            orderInfo.token_public_key = public_key
+
+            orderInfo.token_jwt_id = jwt.encode(
+                data, 
+                private_key, 
+                algorithm="HS256"
+            )
+            orderInfo.save()
             return redirect('token/', slug)
         else:
             data = form.errors.as_json()
@@ -383,36 +398,54 @@ def payment(request, slug):
 def createToken(request, slug):
     if request.user.is_authenticated:
         customer = request.user
+        order = Order.objects.get(user=customer, complete=False)
+        orderInfo = OrderInformation.objects.get(order=order)
     
-    data = request.session['data']
+    json_data = jwt.decode(
+        orderInfo.token_jwt_id, 
+        orderInfo.token_public_key, 
+        algorithms=["HS256"]
+    )
+    data = json.dumps(json_data)
 
     if request.method == 'POST':
-        new_data = json.loads(data)
-        print(new_data)
         token_id = request.POST.get('token_id')
-        new_data['token_id'] = token_id
-        request.session['data'] = json.dumps(new_data)
+        json_data['token_id'] = token_id
+        orderInfo.token_jwt_id = jwt.encode(json_data, orderInfo.token_private_key, algorithm="HS256")
+        orderInfo.save()
 
-    context = {'data':data}
+    context = {'data':data, 'json_data':json_data}
     return render(request, 'customers/token.html', context)
 
 def createAuthorization(request, slug):
+    if request.user.is_authenticated:
+        customer = request.user
+        order = Order.objects.get(user=customer, complete=False)
+        orderInfo = OrderInformation.objects.get(order=order)
+    
+    data = jwt.decode(
+        orderInfo.token_jwt_id, 
+        orderInfo.token_public_key, 
+        algorithms=["HS256"]
+    )
+
     api_key = "xnd_development_Fa5W47XyJYmpFC3Ylp1XIHZg0VueYlccu90ST6lVoSkthxYfBduImPeEQknxe"
     xendit_instance = Xendit(api_key=api_key)
     CreditCard = xendit_instance.CreditCard
 
-    data = request.session['data']
-    json_data = json.loads(data)
-    token_id = str(json_data['token_id'])
-    amount = float(json_data['amount'])
-    card_cvn = str(json_data['card_cvn'])
-    external_id = shortuuid.uuid()
+    token_id = str(data['token_id'])
+    amount = float(data['amount'])
+    card_cvn = str(data['card_cvn'])
+    random_uuid = shortuuid.uuid()
+    external_id = "quicklink_card_charge_" + random_uuid
+    print(token_id, amount, card_cvn, external_id)
 
-    charge = CreditCard.create_authorization(
+    charge = CreditCard.create_charge(
         token_id=token_id,
-        external_id="quicklink-card_charge" + external_id,
+        external_id=external_id,
         amount=amount,
         card_cvn=card_cvn,
+        currency="PHP"
     )
     print(charge)
 

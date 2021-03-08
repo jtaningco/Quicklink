@@ -2,7 +2,6 @@ from django.db import models
 from django.db.models.deletion import CASCADE
 from django.db.models.fields import IntegerField
 from django.utils.timezone import datetime, timedelta
-from django.contrib.postgres.fields import JSONField
 
 from apps.accounts.models import *
 from apps.products.models import *
@@ -106,6 +105,18 @@ class OrderInformation(models.Model):
         on_delete=models.SET_NULL, 
         null=True,
     )
+
+    # JWT token ID
+    token_id = models.CharField(max_length=55, null=True, blank=True)
+
+    # JWT token ID
+    token_jwt_id = models.CharField(max_length=999, null=True, blank=True)
+    
+    # For encoding token to jwt
+    token_private_key = models.CharField(max_length=255, null=True, blank=True)
+
+    # For decoding token to jwt
+    token_public_key = models.CharField(max_length=255, null=True, blank=True)
 
 class ProductOrder(models.Model):
     # Order cart

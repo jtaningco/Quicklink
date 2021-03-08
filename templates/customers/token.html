@@ -28,11 +28,10 @@
         
         let tokenData = JSON.parse(data);
         var token_id = "";
-        let amount = parseFloat(tokenData['amount']);
+        let amount = parseInt(tokenData['amount']);
 
         var current_url = String(window.location.href);
         var next_url = current_url.replace('token', 'auth');
-        console.log(next_url)
 
         function createToken() {
             Xendit.card.createToken(tokenData, function(err, data) {
@@ -55,10 +54,10 @@
         }
 
         function authenticateData() {
-            var authenticationData = {
-                "amount": amount,
-                "token_id": token_id
-            }
+            // var authData = '{"method": "POST", "headers": {"Authentication": "Basic xnd_public_development_A44I6GFvh3ecLZaiRLehBCbF8bGuBxwodSfXV9Qo9w6K2aGuCS2FRqE4ENxa9XeD:"}, "data": {"amount": "' + amount + '", "token_id": "' + token_id + '"}}'
+            var authData = '{"amount": "' + amount + '", "token_id": "' + token_id + '"}'
+            var authenticationData = JSON.parse(authData)
+            console.log(authenticationData['headers'])
 
             Xendit.card.createAuthentication(authenticationData, function (err, data) {
                 if (err) {
@@ -78,8 +77,8 @@
 
         createToken();
         setTimeout(authenticateData, 3000);
-        setTimeout(function(){
-            window.location.href = next_url
-        }, 5000);
+        // setTimeout(function(){
+        //     window.location.href = next_url
+        // }, 5000);
     </script>
 {% endblock %}
