@@ -437,15 +437,14 @@ def createAuthorization(request, slug):
     amount = float(data['amount'])
     card_cvn = str(data['card_cvn'])
     random_uuid = shortuuid.uuid()
-    external_id = "quicklink_card_charge_" + random_uuid
-    print(token_id, amount, card_cvn, external_id)
+    external_id = "quicklink_card_charge_" + str(random_uuid)
 
-    charge = CreditCard.create_charge(
+    charge = CreditCard.create_authorization(
         token_id=token_id,
         external_id=external_id,
         amount=amount,
         card_cvn=card_cvn,
-        currency="PHP"
+        currency="PHP",
     )
     print(charge)
 
