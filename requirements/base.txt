@@ -8,3 +8,4 @@ shortuuid==1.0.1
 pyjwt==2.0.1
 secret-key-generator==0.0.7
 cryptography==3.4.6
+django-cors-headers==3.7.0

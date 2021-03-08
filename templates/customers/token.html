@@ -4,10 +4,12 @@
 {% block pagetitle %}Payment{% endblock %}
 
 {% block scriptsHead %}
-<script src="https://js.xendit.co/v1/xendit.min.js"></script>
+<script type="text/javascript" src="https://js.xendit.co/v1/xendit.min.js"></script>
 
 <!-- Set Xendit Authorization -->
-<script>Xendit.setPublishableKey('xnd_public_development_A44I6GFvh3ecLZaiRLehBCbF8bGuBxwodSfXV9Qo9w6K2aGuCS2FRqE4ENxa9XeD');</script> 
+<script type="text/javascript">
+    Xendit.setPublishableKey('xnd_public_development_A44I6GFvh3ecLZaiRLehBCbF8bGuBxwodSfXV9Qo9w6K2aGuCS2FRqE4ENxa9XeD');
+</script> 
 {% endblock %}
 
 {% block maincontent %}
@@ -16,23 +18,65 @@
     <form method="post">
         {% csrf_token %}
         <input type="text" name="token_id" id="token_id">
+        <input type="text" name="auth_id" id="auth_id">
         <input type="submit" value="Charge">
     </form>
 {% endblock %}
 
 {% block scriptsBody %}
     <script>
-        // Create Token
+        // VARIABLES
         let data = document.getElementById('tokenData').innerHTML;
         let tokenInput = document.getElementById('token_id');
+        let authInput = document.getElementById('auth_id');
         
         let tokenData = JSON.parse(data);
         var token_id = "";
         let amount = parseInt(tokenData['amount']);
 
         var current_url = String(window.location.href);
+        var prev_url = current_url.replace('token/', '');
         var next_url = current_url.replace('token', 'auth');
+        var auth_url = ''
 
+        // DATA VERIFICATION
+        function verifyData() {
+            var cardNumber = tokenData.card_number;
+            var expMonth = tokenData.card_exp_month;
+            var expYear = tokenData.card_exp_year;
+            var cvn = tokenData.card_cvn;
+            console.log(cardNumber, expMonth, expYear, cvn)
+
+            if (Xendit.card.validateCardNumber(cardNumber)) {
+                console.log("Card Number Validated!")
+            } else {
+                alert("Invalid Card Number")
+                setTimeout(function() {
+                    window.location.href = prev_url
+                }, 2000)
+            }
+
+            if (Xendit.card.validateExpiry(expMonth, expYear)) {
+                console.log("Card Expiry Validated!")
+            } else {
+                alert("Invalid Card Expiry Date")
+                setTimeout(function() {
+                    window.location.href = prev_url
+                }, 2000)
+            }
+
+
+            if (Xendit.card.validateCvn(cvn)) {
+                console.log("Card CVV/CVN Validated!")
+            } else {
+                alert("Invalid CVN")
+                setTimeout(function() {
+                    window.location.href = prev_url
+                }, 2000)
+            }
+        }
+        
+        // TOKENIZATION
         function createToken() {
             Xendit.card.createToken(tokenData, function(err, data) {
                 if (err) {
@@ -41,11 +85,17 @@
 
                 if (data.status === 'VERIFIED') {
                     console.log('Data has been verified. Token has been created', data)
+                    
                     token_id = data.id;
+                    auth_id = data.authentication_id
+
                     tokenInput.value = token_id;
+                    authInput.value = auth_id;
+                    
+                    auth_url = payer_authentication_url;
                 } else if (data.status === 'IN_REVIEW') {
                     // Handle authentication (3DS)
-                    window.open(creditCardToken.payer_authentication_url, 'sample-inline-frame');
+                    window.open(data.payer_authentication_url, 'sample-inline-frame');
                     console.log('Data is being reviewed for authentication. Token is not yet created.', data)
                 } else if (data.status === 'FAILED') {
                     console.log('Failed to create token.', data)
@@ -68,16 +118,19 @@
                 } else if (data.status === 'IN_REVIEW') {
                     // Handle authentication (3DS)
                     console.log('Data is being reviewed. Authentication is not yet created.', data)
+                    window.open(auth_url, 'sample-inline-frame');
                 } else if (data.status === 'FAILED') {
                     console.log('Failed to create authentication.', data)
+                    window.open(auth_url, 'sample-inline-frame');
                 }
             });
         }
 
-        createToken();
-        setTimeout(authenticateData, 3000);
-        setTimeout(function(){
-            window.location.href = next_url
-        }, 5000);
+        verifyData();
+        setTimeout(createToken, 1000);
+        setTimeout(authenticateData, 4000);
+        // setTimeout(function(){
+        //     window.location.href = next_url
+        // }, 8000);
     </script>
 {% endblock %}

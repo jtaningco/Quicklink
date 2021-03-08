@@ -293,7 +293,7 @@ def checkout(request):
 def payment(request, slug):
     if request.user.is_authenticated:
         customer = request.user
-        order, created = Order.objects.get_or_create(user=customer, complete=False)
+        order, created = Order.objects.get(user=customer, complete=False)
         items = order.productorder_set.all()
     else:
         items = []
@@ -342,7 +342,10 @@ def payment(request, slug):
         form = CardForm(request.POST)
         if form.is_valid():
             exp_month = str(form.cleaned_data.get('exp_date').split('/')[0])
-            exp_year = str('20' + form.cleaned_data.get('exp_date').split('/')[1])
+            if len(form.cleaned_data.get('exp_date').split('/')[1]) == 2:
+                exp_year = str('20' + form.cleaned_data.get('exp_date').split('/')[1])
+            elif len(form.cleaned_data.get('exp_date').split('/')[1]) == 4:
+                exp_year = str(form.cleaned_data.get('exp_date').split('/')[1])
             card_number_list = form.cleaned_data.get("account_number").split(' ')
             card_number = ''.join(card_number_list)
             card_cvn = form.cleaned_data.get("cvv")
@@ -351,6 +354,7 @@ def payment(request, slug):
                 "card_number": card_number,
                 "card_exp_month": exp_month,
                 "card_exp_year": exp_year,
+                "card_cvn": str(card_cvn),
                 "is_multiple_use": False,
                 "should_authenticate": True,
                 "currency": "PHP",
@@ -371,7 +375,6 @@ def payment(request, slug):
                     } 
                 },
                 "token_id": "",
-                "card_cvn": str(card_cvn),
             }
             request.session['data'] = json.dumps(data)
 
@@ -439,7 +442,12 @@ def createAuthorization(request, slug):
     random_uuid = shortuuid.uuid()
     external_id = "quicklink_card_charge_" + str(random_uuid)
 
-    charge = CreditCard.create_authorization(
+    print("Token ID: ", token_id)
+    print("Amount: ", amount)
+    print("Card CVV: ", card_cvn)
+    print("External ID: ", external_id)
+
+    charge = CreditCard.create_charge(
         token_id=token_id,
         external_id=external_id,
         amount=amount,
