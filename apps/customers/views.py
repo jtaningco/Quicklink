@@ -355,7 +355,7 @@ def payment(request, slug):
                 "card_exp_month": exp_month,
                 "card_exp_year": exp_year,
                 "card_cvn": str(card_cvn),
-                "is_multiple_use": False,
+                "is_multiple_use": True,
                 "should_authenticate": True,
                 "currency": "PHP",
                 "on_behalf_of": "",
@@ -373,8 +373,7 @@ def payment(request, slug):
                         "province_state": orderInfo.session_address.province,
                         "postal_code": orderInfo.session_address.postal_code
                     } 
-                },
-                "token_id": "",
+                }
             }
             request.session['data'] = json.dumps(data)
 
@@ -410,18 +409,23 @@ def createToken(request, slug):
         algorithms=["HS256"]
     )
     data = json.dumps(json_data)
-
-    if request.method == 'POST':
+    
+    if request.is_ajax and request.method == 'POST':
         token_id = request.POST.get('token_id')
-        json_data['token_id'] = token_id
-
         auth_id = request.POST.get('auth_id')
-        json_data['auth_id'] = auth_id
-        
-        orderInfo.token_jwt_id = jwt.encode(json_data, orderInfo.token_private_key, algorithm="HS256")
-        orderInfo.save()
 
-    context = {'data':data, 'json_data':json_data}
+        if token_id:
+            json_data['token_id'] = token_id
+            orderInfo.token_jwt_id = jwt.encode(json_data, orderInfo.token_private_key, algorithm="HS256")
+            orderInfo.save()
+        
+        if auth_id:
+            json_data['authentication_id'] = auth_id
+            orderInfo.token_jwt_id = jwt.encode(json_data, orderInfo.token_private_key, algorithm="HS256")
+            orderInfo.save()
+            return redirect('/checkout/payment/card/auth/')
+
+    context = {'data':data}
     return render(request, 'customers/token.html', context)
 
 def createAuthorization(request, slug):
@@ -435,24 +439,22 @@ def createAuthorization(request, slug):
         orderInfo.token_public_key, 
         algorithms=["HS256"]
     )
+    print(data)
 
     api_key = "xnd_development_Fa5W47XyJYmpFC3Ylp1XIHZg0VueYlccu90ST6lVoSkthxYfBduImPeEQknxe"
     xendit_instance = Xendit(api_key=api_key)
     CreditCard = xendit_instance.CreditCard
 
     token_id = str(data['token_id'])
+    auth_id = str(data['authentication_id'])
     amount = float(data['amount'])
     card_cvn = str(data['card_cvn'])
-    random_uuid = shortuuid.uuid()
-    external_id = "quicklink_card_charge_" + str(random_uuid)
-
-    print("Token ID: ", token_id)
-    print("Amount: ", amount)
-    print("Card CVV: ", card_cvn)
-    print("External ID: ", external_id)
+    random_uuid = str(shortuuid.uuid())
+    external_id = "quicklink_card_charge_" + random_uuid
 
     charge = CreditCard.create_charge(
         token_id=token_id,
+        authentication_id=auth_id,
         external_id=external_id,
         amount=amount,
         card_cvn=card_cvn,

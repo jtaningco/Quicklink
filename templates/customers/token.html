@@ -15,22 +15,14 @@
 {% block maincontent %}
     <h1>Please wait while your payment is being processed...</h1>
     <div id="tokenData" style="display: none;">{{ data }}</div>
-    <!-- <form method="post">
-        {% csrf_token %}
-        <input type="text" name="token_id" id="token_id">
-        <input type="text" name="auth_id" id="auth_id">
-    </form> -->
 {% endblock %}
 
 {% block scriptsBody %}
     <script>
         // VARIABLES
         let data = document.getElementById('tokenData').innerHTML;
-        let tokenInput = document.getElementById('token_id');
-        let authInput = document.getElementById('auth_id');
         
         let tokenData = JSON.parse(data);
-        console.log(tokenData)
         var token_id = "";
         let amount = parseInt(tokenData['amount']);
 
@@ -45,7 +37,6 @@
             var expMonth = tokenData.card_exp_month;
             var expYear = tokenData.card_exp_year;
             var cvn = tokenData.card_cvn;
-            console.log(cardNumber, expMonth, expYear, cvn)
 
             if (Xendit.card.validateCardNumber(cardNumber)) {
                 console.log("Card Number Validated!")
@@ -78,6 +69,35 @@
         
         // TOKENIZATION
         function createToken() {
+            var csrftoken = getToken('csrftoken');
+
+            function csrfSafeMethod(method) {
+                // these HTTP methods do not require CSRF protection
+                return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+            }
+            
+            function sameOrigin(url) {
+                // test that a given url is a same-origin URL
+                // url could be relative or scheme relative or absolute
+                var host = document.location.host; // host + port
+                var protocol = document.location.protocol;
+                var sr_origin = '//' + host;
+                var origin = protocol + sr_origin;
+                // Allow absolute or scheme relative URLs to same origin
+                return (url == origin || url.slice(0, origin.length + 1) == origin + '/') ||
+                    (url == sr_origin || url.slice(0, sr_origin.length + 1) == sr_origin + '/') ||
+                    // or any other URL that isn't scheme relative or absolute i.e relative.
+                    !(/^(\/\/|http:|https:).*/.test(url));
+            }
+
+            $.ajaxSetup({
+                beforeSend: function(xhr, settings) {
+                    if (!csrfSafeMethod(settings.type) && sameOrigin(settings.url)) {
+                        xhr.setRequestHeader("X-CSRFToken", csrftoken);
+                    }
+                }
+            });
+
             Xendit.card.createToken(tokenData, function(err, data) {
                 if (err) {
                     console.log('Unable to create token.', err)
@@ -87,14 +107,14 @@
                     console.log('Data has been verified. Token has been created', data)
                     
                     token_id = data.id;
-                    auth_id = data.authentication_id
+                    auth_id = data.authentication_id;
 
                     $.ajax({
                         url: current_url,
                         type: "POST",
-                        data: {token_id: token_id, auth_id: auth_id},
+                        data: {"token_id": token_id, "auth_id": auth_id},
                         success:function(response){
-                            console.log("AJAX: Data successfully sent.")
+                            alert("Data successfully sent.")
                         },
                         complete:function(){
                             console.log("AJAX: Data verification complete.")
@@ -103,21 +123,60 @@
                             alert("Can't send data.");
                         }
                     });
-                    
-                    auth_url = payer_authentication_url;
                 } else if (data.status === 'IN_REVIEW') {
                     // Handle authentication (3DS)
-                    window.open(data.payer_authentication_url, 'sample-inline-frame');
-                    console.log('Data is being reviewed for authentication. Token is not yet created.', data)
+                    window.open(data.payer_authentication_url, "3DS Authentication", "width=400, height=300, status, resizable");
+                    console.log('Data is being reviewed for authentication.', data)
+                    
+                    token_id = data.id;
+                    auth_id = data.authentication_id;
+
+                    $.ajax({
+                        url: current_url,
+                        type: "POST",
+                        data: {"token_id": token_id, "auth_id": auth_id},
+                        success:function(response){
+                            alert("Data successfully sent.")
+                        },
+                        complete:function(){
+                            console.log("AJAX: Data verification complete.")
+                        },
+                        error:function (xhr, textStatus, thrownError){
+                            alert("Can't send data.");
+                        }
+                    });
                 } else if (data.status === 'FAILED') {
-                    console.log('Failed to create token.', data)
+                    if (data.failure_reason == 'AUTHENTICATION_FAILED') {
+                        console.log('Failed to create token.')
+                        console.log('Failure Reason: ' + String(data.failure_reason), data)
+
+                        token_id = data.id;
+                        auth_id = data.authentication_id;
+
+                        $.ajax({
+                            url: current_url,
+                            type: "POST",
+                            data: {"token_id": token_id, "auth_id": auth_id},
+                            success:function(response){
+                                console.log("AJAX: Data successfully sent.")
+                            },
+                            complete:function(){
+                                console.log("AJAX: Data verification complete.")
+                            },
+                            error:function (xhr, textStatus, thrownError){
+                                alert("Can't send data.");
+                            }
+                        });
+                    } else {
+                        alert('Failed to create token.\n', 'Failure Reason: ' + String(data.failure_reason), data)
+                    }
                 }
             });
         }
 
         function authenticateData() {
             // var authData = '{"method": "POST", "headers": {"Authentication": "Basic xnd_public_development_A44I6GFvh3ecLZaiRLehBCbF8bGuBxwodSfXV9Qo9w6K2aGuCS2FRqE4ENxa9XeD:"}, "data": {"amount": "' + amount + '", "token_id": "' + token_id + '"}}'
-            var authData = '{"amount": "' + amount + '", "token_id": "' + token_id + '"}'
+            var authData = '{"amount": "' + amount + '", "token_id": "' + token_id + '", "currency": "PHP"}'
             var authenticationData = JSON.parse(authData)
 
             Xendit.card.createAuthentication(authenticationData, function (err, data) {
@@ -127,13 +186,29 @@
 
                 if (data.status === 'VERIFIED') {
                     console.log('Data has been verified. Authentication has been created', data)
+
+                    auth_id = data.id
+
+                    $.ajax({
+                        url: current_url,
+                        type: "POST",
+                        data: {"auth_id": auth_id},
+                        success:function(response){
+                            alert("Data successfully sent.")
+                        },
+                        complete:function(){
+                            console.log("AJAX: Data verification complete.")
+                        },
+                        error:function (xhr, textStatus, thrownError){
+                            alert("Can't send data.");
+                        }
+                    });
                 } else if (data.status === 'IN_REVIEW') {
                     // Handle authentication (3DS)
                     console.log('Data is being reviewed. Authentication is not yet created.', data)
                     window.open(auth_url, 'sample-inline-frame');
                 } else if (data.status === 'FAILED') {
                     console.log('Failed to create authentication.', data)
-                    window.open(auth_url, 'sample-inline-frame');
                 }
             });
         }

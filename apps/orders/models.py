@@ -126,7 +126,7 @@ class ProductOrder(models.Model):
     product = models.ForeignKey(Product, null=True, on_delete=models.SET_NULL)
 
     # Product size
-    size = models.ForeignKey(Size, null=True, on_delete=models.CASCADE)
+    size = models.ForeignKey(Size, null=True, on_delete=models.SET_NULL)
     
     # Product addons
     addons = models.ManyToManyField(Addon, blank=True)  
