@@ -7,72 +7,102 @@
     <link rel="stylesheet" href="css/main.css">
   </head>
 
-<!-- needs navbar and top bar -->
-
   <body>
-    <div class="header">
-      <p class="financesHeader">Total Revenue</p>
+    <div class="container">
+      <div class="wrapper">
+          <div>
+              <h1 class="financePageHeader">Pending Orders</h1>
+                <div class="mainCards">
+                    <div class="cards">
+                      <h3 class="cardHeader">Total Expected Revenue</h3>
+                      <h1 class="totalValue">Php 25,000.00</h1>
+                      <subtitle class="cardSubheader">This is the complete total revenue you have.</subtitle>
+                    </div>
+                    <div class="cards">
+                      <h3 class="cardHeader">Total Expected Revenue</h3>
+                      <h1 class="totalValue">Php 25,000.00</h1>
+                      <subtitle class="cardSubheader">This is the complete total revenue you have.</subtitle>
+                    </div>
+                    <div class="cards">
+                      <h3 class="cardHeader">Total Expected Revenue</h3>
+                      <h1 class="totalValue">Php 25,000.00</h1>
+                      <subtitle class="cardSubheader">This is the complete total revenue you have.</subtitle>
+                    </div>   
+                </div>
+                <table class="paymentMethodTable">
+                  <thead>
+                    <tr>
+                      <th>ORDER NUMBER</th>
+                      <th>PAYMENT METHOD</th>
+                      <th>PAYMENT STATUS</th>
+                      <th>DATE</th>
+                      <th>TOTAL AMOUNT</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>01</td>
+                      <td>UnionBank</td>
+                      <td><img src="assets/StatusProcessing.svg"></td>
+                      <td>12-24-21</td>
+                      <td>PHP 2000.00</td>
+                    </tr>
+                    <tr>
+                      <td>02</td>
+                      <td>GCash</td>
+                      <td><img src="assets/StatusProcessing.svg"></td>
+                      <td>12-24-21</td>
+                      <td>PHP 2000.00</td>
+                    </tr>
+                    <tr>
+                      <td>03</td>
+                      <td>UnionBank</td>
+                      <td><img src="assets/StatusReceive.svg"></td>
+                      <td>12-24-21</td>
+                      <td>PHP 2000.00</td>
+                    </tr>
+                    <tr>
+                      <td>04</td>
+                      <td>UnionBank</td>
+                      <td><img src="assets/StatusReceived.svg"></td>
+                      <td>12-24-21</td>
+                      <td>PHP 2000.00</td>
+                    </tr>
+                    <tr>
+                      <td>05</td>
+                      <td>UnionBank</td>
+                      <td><img src="assets/StatusReceived.svg"></td>
+                      <td>12-24-21</td>
+                      <td>PHP 2000.00</td>
+                    </tr>
+                    <tr>
+                      <td>06</td>
+                      <td>UnionBank</td>
+                      <td><img src="assets/StatusReceived.svg"></td>
+                      <td>12-24-21</td>
+                      <td>PHP 2000.00</td>
+                    </tr>
+                  </tbody>
+                </table>
+          </div>
+          <div class="pagination">
+            <button class="pageNumberButton">
+              <img src="assets/leftArrow.svg" id="arrow">
+              <p class="buttonText">Previous</p>
+            </button>
+            <a href="#" class="active">1</a>
+            <a href="#">2</a>
+            <a href="#">3</a>
+            <a href="#">4</a>
+            <a href="#">5</a>
+            <a href="#">6</a>
+            <button class="pageNumberButton">
+              <p class="buttonText">Next</p>
+              <img src="assets/rightArrow.svg" id="arrow">
+            </button>
+          </div>
+      </div>
     </div>
-    <div class="container-1">
-      <div class="box-1">
-        <p class="financesCardHeader">Total Expected Revenue</p>
-        <p class="financesLargeText">Php 25,000</p>
-        <p class="financesSmallerText">This is the complete total revenue you have.</p>
-      </div>
-      <div class="box-2">
-        <p class="financesCardHeader">Payments Received</p>
-          <p class="financesLargeText">Php 23,585</p>
-          <p class="financesSmallerText">These are the payments you have sucessfully received.</p>
-      </div>
-
-      <div class="box-3">
-        <p class="financesCardHeader">Payments Receivable</p>
-        <p class="financesLargeText">Php 1,415</p>
-        <p class="financesSmallerText">These payments are still being processed.</p>
-      </div>
-    </div>
-
-    <div class="container-2">
-      <!-- finance table header -->
-      <div class="box-4">
-          <p class="financeTableHeader">
-            ORDER NUMBER
-          </p>
-          <p class="financeTableHeader">
-            PAYMENT METHOD
-          </p>
-          <p class="financeTableHeader">
-            PAYMENT STATUS
-          </p>
-          <p class="financeTableHeader">
-            DATE
-          </p>
-          <p class="financeTableHeader">
-            TOTAL AMOUNT
-          </p>
-        </div>
-  </div>
-
-    <div class="container-3">
-      <div class="box-5">
-        <p class="financeTableBody">
-          01
-        </p>
-        <p class="financeTableBody">
-          Union Bank
-        </p>
-        <p class="financeTableBody">
-          <img src="">
-        </p>
-        <p class="financeTableBody">
-          12-24-20
-        </p>
-        <p class="financeTableBody">
-          Php 2000.00
-        </p>
-      </div>
-    </div>
-  </div>
-  
+  <script src="revenue.js"></script>
   </body>
 </html>
