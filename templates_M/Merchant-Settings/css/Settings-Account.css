@@ -1,0 +1,107 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Overpass:wght@400;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap');
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: var(--bg-color)
+}
+/* div */
+.cardContainer {
+    width: 100%;
+    height: 100%;
+    margin-left: 12rem; /* sidenav space */
+}
+.cardWrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: left;
+    background-color: transparent;
+    margin: 4.5rem 0px 1.5rem 2rem;
+    padding: 0px 1.5rem 0px 1.5rem;
+    max-width: 520px;
+    height: 100%;
+    width: 100%;
+}
+.cardHeaderText {
+    color: var(--secondary-alt);
+    font-size: 28px;
+    font-weight: 700;
+}
+.cardBody {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+.cardBodyHeader {
+    padding: 2rem 0;
+}
+.cardBodyHeaderText {
+    font-size: 16px;
+    color: var(--muted-dark);
+    font-weight: bold;
+    padding-bottom: 0.5rem;
+}
+.cardBodyHeaderInfo {
+    color:var(--muted-dark);
+    font-size: 16px;
+}
+.cardBodyDiv {
+    padding-top: 2rem;
+}
+.cardBodyTitle {
+    font-size: 16px;
+    color: var(--muted-dark);
+    font-weight: bold;
+    padding-bottom: 0.5rem;
+}
+.cardBodyInfo {
+    color: var(--muted-light);
+    font-size: 16px;
+}
+.secondary-btn-password {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.2rem;
+  width: 8.7rem;    
+  margin: 2rem 0;
+  border: 1px solid var(--primary-main);
+
+}
+.outline-btn-info {
+  font-family: 'Overpass', sans-serif;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  padding: 8px;
+  color: var(--primary-main);
+  background-color: transparent;
+  box-shadow: none;
+}
+.red-secondary-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.2rem;
+  width: 8.7rem;    
+  margin: 2rem 0;
+  border: 1px solid var(--failure-main);
+}
+.red-outline-btn-info {
+  font-family: 'Overpass', sans-serif;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  padding: 8px;
+  color: var(--failure-main);
+  background-color: transparent;
+  box-shadow: none;
+}
