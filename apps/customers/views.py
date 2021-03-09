@@ -13,7 +13,7 @@ import json
 import shortuuid
 from secret_key_generator import secret_key_generator
 
-from xendit import Xendit
+from xendit import Xendit, Balance
 import jwt
 import base64
 
@@ -338,7 +338,16 @@ def payment(request, slug):
             surname = str(name)
         given_names = ' '.join(given_names_list)
 
-    if request.method == 'POST':
+    contact_number = orderInfo.session_sender.customer_contact_number
+    mobile_number_list = []
+    
+    for number in contact_number:
+        mobile_number_list.append(number)
+    mobile_number_list[0] = '(+63)('
+    mobile_number_list[-1] = mobile_number_list[-1] + ')'
+    mobile_number = ''.join(mobile_number_list)
+
+    if request.method == 'POST' and slug == 'card':
         form = CardForm(request.POST)
         if form.is_valid():
             exp_month = str(form.cleaned_data.get('exp_date').split('/')[0])
@@ -355,7 +364,7 @@ def payment(request, slug):
                 "card_exp_month": exp_month,
                 "card_exp_year": exp_year,
                 "card_cvn": str(card_cvn),
-                "is_multiple_use": True,
+                "is_multiple_use": False,
                 "should_authenticate": True,
                 "currency": "PHP",
                 "on_behalf_of": "",
@@ -366,7 +375,7 @@ def payment(request, slug):
                     "mobile_number": orderInfo.session_sender.customer_contact_number,
                     "phone_number": orderInfo.session_sender.customer_contact_number,
                     "address": {
-                        "country": "63",
+                        "country": "PH",
                         "street_line1": orderInfo.session_address.line1,
                         "street_line2": orderInfo.session_address.line2,
                         "city": orderInfo.session_address.city,
@@ -375,7 +384,6 @@ def payment(request, slug):
                     } 
                 }
             }
-            request.session['data'] = json.dumps(data)
 
             private_key = secret_key_generator.generate(len_of_secret_key=15)
             public_key = secret_key_generator.generate(len_of_secret_key=15)
@@ -392,10 +400,75 @@ def payment(request, slug):
             return redirect('token/', slug)
         else:
             data = form.errors.as_json()
+            return JsonResponse(data, status=400)
+
+    if request.method == 'POST' and slug == 'ewallet':
+        form = CardForm(request.POST)
+        if form.is_valid():
+            # Create Customer Object
+            # Include Metadata to store more data for analysis
+            random_uuid = str(shortuuid.uuid())
+            reference_id = "quicklink_customer-" + random_uuid
+
+            api_key = "xnd_development_P4qDfOss0OCpl8RtKrROHjaQYNCk9dN5lSfk+R1l9Wbe+rSiCwZ3jw=="
+            xendit_instance = Xendit(api_key=api_key)
+            DirectDebit = xendit_instance.DirectDebit
+
+            data = {
+                "reference_id": reference_id,
+                "email": orderInfo.session_sender.customer_email,
+                "mobile_number": mobile_number,
+                "description": "eWallet Customer",
+                "given_names": given_names,
+                "surname": surname,
+                "nationality": "PH",
+                "address": {
+                    "country": "PH",
+                    "street_line1": orderInfo.session_address.line1,
+                    "street_line2": orderInfo.session_address.line2,
+                    "city": orderInfo.session_address.city,
+                    "province_state": orderInfo.session_address.province,
+                    "postal_code": orderInfo.session_address.postal_code 
+                }
+            }
+
+            private_key = secret_key_generator.generate(len_of_secret_key=15)
+            public_key = secret_key_generator.generate(len_of_secret_key=15)
+
+            orderInfo.token_private_key = private_key
+            orderInfo.token_public_key = public_key
+
+            orderInfo.token_jwt_id = jwt.encode(
+                data, 
+                private_key, 
+                algorithm="HS256"
+            )
+            orderInfo.save()
+            return redirect('/checkout/payment/ewallet/callback')
+        else:
+            data = form.errors.as_json()
             return JsonResponse(data, status=400) 
 
     context = {'items':items, 'form':form, 'slug':slug, 'order':order}
     return render(request, 'customers/payment.html', context)
+
+def eWalletCallback(request, slug):
+    if request.user.is_authenticated:
+        customer = request.user
+        order = Order.objects.get(user=customer, complete=False)
+        orderInfo = OrderInformation.objects.get(order=order)
+    else:
+        items = []
+        order = {'get_cart_total': 0, 'get_cart_items': 0}
+
+    json_data = jwt.decode(
+        orderInfo.token_jwt_id, 
+        orderInfo.token_public_key, 
+        algorithms=["HS256"]
+    )
+
+    return JsonResponse(json_data, status=200) 
+
 
 def createToken(request, slug):
     if request.user.is_authenticated:
@@ -411,19 +484,21 @@ def createToken(request, slug):
     data = json.dumps(json_data)
     
     if request.is_ajax and request.method == 'POST':
-        token_id = request.POST.get('token_id')
-        auth_id = request.POST.get('auth_id')
+        if request.POST.get('token_id') != None:
+            token_id = request.POST.get('token_id')
+        if request.POST.get('auth_id') != None:
+            auth_id = request.POST.get('auth_id')
 
-        if token_id:
-            json_data['token_id'] = token_id
-            orderInfo.token_jwt_id = jwt.encode(json_data, orderInfo.token_private_key, algorithm="HS256")
-            orderInfo.save()
+    if "token_id" in locals():
+        json_data['token_id'] = token_id
+        orderInfo.token_jwt_id = jwt.encode(json_data, orderInfo.token_private_key, algorithm="HS256")
+        orderInfo.save()
         
-        if auth_id:
-            json_data['authentication_id'] = auth_id
-            orderInfo.token_jwt_id = jwt.encode(json_data, orderInfo.token_private_key, algorithm="HS256")
-            orderInfo.save()
-            return redirect('/checkout/payment/card/auth/')
+    if "auth_id" in locals():
+        json_data['authentication_id'] = auth_id
+        orderInfo.token_jwt_id = jwt.encode(json_data, orderInfo.token_private_key, algorithm="HS256")
+        orderInfo.save()
+        return redirect('/checkout/payment/card/auth/')
 
     context = {'data':data}
     return render(request, 'customers/token.html', context)
@@ -441,7 +516,7 @@ def createAuthorization(request, slug):
     )
     print(data)
 
-    api_key = "xnd_development_Fa5W47XyJYmpFC3Ylp1XIHZg0VueYlccu90ST6lVoSkthxYfBduImPeEQknxe"
+    api_key = "xnd_development_L8LFCGlEVFmq8qcCLZKNoVnq303nlkB47u5W2TrknkwioknAn4H0KOQcFfbm7"
     xendit_instance = Xendit(api_key=api_key)
     CreditCard = xendit_instance.CreditCard
 
@@ -450,9 +525,9 @@ def createAuthorization(request, slug):
     amount = float(data['amount'])
     card_cvn = str(data['card_cvn'])
     random_uuid = str(shortuuid.uuid())
-    external_id = "quicklink_card_charge_" + random_uuid
+    external_id = "quicklink_charge-" + random_uuid
 
-    charge = CreditCard.create_charge(
+    charge = CreditCard.create_authorization(
         token_id=token_id,
         authentication_id=auth_id,
         external_id=external_id,
@@ -462,4 +537,4 @@ def createAuthorization(request, slug):
     )
     print(charge)
 
-    return HttpResponse('Charge created!')
+    return HttpResponse(charge)

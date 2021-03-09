@@ -24,12 +24,12 @@
         
         let tokenData = JSON.parse(data);
         var token_id = "";
-        let amount = parseInt(tokenData['amount']);
+        var auth_id = "";
+        let amount = parseFloat(tokenData['amount']);
 
         var current_url = String(window.location.href);
         var prev_url = current_url.replace('token/', '');
         var next_url = current_url.replace('token', 'auth');
-        var auth_url = ''
 
         // DATA VERIFICATION
         function verifyData() {
@@ -68,6 +68,55 @@
         }
         
         // TOKENIZATION
+        function sendTokenData(a) {
+            token_id = a;
+
+            $.ajax({
+                url: current_url,
+                type: "POST",
+                data: {"token_id": token_id},
+                success:function(response){
+                    console.log("Token data successfully sent.");
+                },
+                error:function (xhr, textStatus, thrownError){
+                    console.log("Can't send token data.");
+                }
+            });
+        }
+
+        function sendTokenWithAuthData(a, b) {
+            token_id = a;
+            auth_id = b;
+
+            $.ajax({
+                url: current_url,
+                type: "POST",
+                data: {"token_id": token_id, "auth_id": auth_id},
+                success:function(response){
+                    console.log("Token and authentication data successfully sent.")
+                },
+                error:function (xhr, textStatus, thrownError){
+                    console.log("Can't send token and authentication data.");
+                }
+            });
+        }
+
+        function sendAuthData(a) {
+            auth_id = a;
+
+            $.ajax({
+                url: current_url,
+                type: "POST",
+                data: {"auth_id": auth_id},
+                success:function(response){
+                    console.log("Authentication data successfully sent.")
+                },
+                error:function (xhr, textStatus, thrownError){
+                    console.log("Can't send authentication data.");
+                }
+            });
+        }
+        
         function createToken() {
             var csrftoken = getToken('csrftoken');
 
@@ -105,68 +154,33 @@
 
                 if (data.status === 'VERIFIED') {
                     console.log('Data has been verified. Token has been created', data)
-                    
-                    token_id = data.id;
-                    auth_id = data.authentication_id;
-
-                    $.ajax({
-                        url: current_url,
-                        type: "POST",
-                        data: {"token_id": token_id, "auth_id": auth_id},
-                        success:function(response){
-                            alert("Data successfully sent.")
-                        },
-                        complete:function(){
-                            console.log("AJAX: Data verification complete.")
-                        },
-                        error:function (xhr, textStatus, thrownError){
-                            alert("Can't send data.");
-                        }
-                    });
+                    if (tokenData.is_multiple_use == false) {
+                        token_id = data.id;
+                        auth_id = data.authentication_id;
+                        sendTokenWithAuthData(token_id, auth_id);
+                    } else {
+                        token_id = data.id;
+                        sendTokenData(token_id);
+                    }
                 } else if (data.status === 'IN_REVIEW') {
                     // Handle authentication (3DS)
-                    window.open(data.payer_authentication_url, "3DS Authentication", "width=400, height=300, status, resizable");
-                    console.log('Data is being reviewed for authentication.', data)
-                    
-                    token_id = data.id;
-                    auth_id = data.authentication_id;
+                    if (tokenData.is_multiple_use == false) {
+                        window.open(data.payer_authentication_url, "3DS Authentication", "width=400, height=300, status, resizable");
+                        token_id = data.id;
+                        auth_id = data.authentication_id;
+                        sendTokenWithAuthData(token_id, auth_id);
+                    }
 
-                    $.ajax({
-                        url: current_url,
-                        type: "POST",
-                        data: {"token_id": token_id, "auth_id": auth_id},
-                        success:function(response){
-                            alert("Data successfully sent.")
-                        },
-                        complete:function(){
-                            console.log("AJAX: Data verification complete.")
-                        },
-                        error:function (xhr, textStatus, thrownError){
-                            alert("Can't send data.");
-                        }
-                    });
+                    console.log('Data is being reviewed for authentication.', data)
+                    token_id = data.id;
+                    sendTokenData(token_id);
                 } else if (data.status === 'FAILED') {
                     if (data.failure_reason == 'AUTHENTICATION_FAILED') {
                         console.log('Failed to create token.')
                         console.log('Failure Reason: ' + String(data.failure_reason), data)
 
                         token_id = data.id;
-                        auth_id = data.authentication_id;
-
-                        $.ajax({
-                            url: current_url,
-                            type: "POST",
-                            data: {"token_id": token_id, "auth_id": auth_id},
-                            success:function(response){
-                                console.log("AJAX: Data successfully sent.")
-                            },
-                            complete:function(){
-                                console.log("AJAX: Data verification complete.")
-                            },
-                            error:function (xhr, textStatus, thrownError){
-                                alert("Can't send data.");
-                            }
-                        });
+                        sendTokenData(token_id);
                     } else {
                         alert('Failed to create token.\n', 'Failure Reason: ' + String(data.failure_reason), data)
                     }
@@ -174,7 +188,7 @@
             });
         }
 
-        function authenticateData() {
+        function createAuthentication() {
             // var authData = '{"method": "POST", "headers": {"Authentication": "Basic xnd_public_development_A44I6GFvh3ecLZaiRLehBCbF8bGuBxwodSfXV9Qo9w6K2aGuCS2FRqE4ENxa9XeD:"}, "data": {"amount": "' + amount + '", "token_id": "' + token_id + '"}}'
             var authData = '{"amount": "' + amount + '", "token_id": "' + token_id + '", "currency": "PHP"}'
             var authenticationData = JSON.parse(authData)
@@ -186,27 +200,12 @@
 
                 if (data.status === 'VERIFIED') {
                     console.log('Data has been verified. Authentication has been created', data)
-
-                    auth_id = data.id
-
-                    $.ajax({
-                        url: current_url,
-                        type: "POST",
-                        data: {"auth_id": auth_id},
-                        success:function(response){
-                            alert("Data successfully sent.")
-                        },
-                        complete:function(){
-                            console.log("AJAX: Data verification complete.")
-                        },
-                        error:function (xhr, textStatus, thrownError){
-                            alert("Can't send data.");
-                        }
-                    });
+                    auth_id = data.id;
+                    sendAuthData(auth_id);
                 } else if (data.status === 'IN_REVIEW') {
                     // Handle authentication (3DS)
+                    window.open(data.payer_authentication_url, "3DS Authentication", "width=400, height=300, status, resizable");
                     console.log('Data is being reviewed. Authentication is not yet created.', data)
-                    window.open(auth_url, 'sample-inline-frame');
                 } else if (data.status === 'FAILED') {
                     console.log('Failed to create authentication.', data)
                 }
@@ -215,7 +214,11 @@
 
         verifyData();
         setTimeout(createToken, 1000);
-        setTimeout(authenticateData, 4000);
+        
+        if (tokenData.is_multiple_use == true) {
+            setTimeout(createAuthentication, 4000);
+        }
+        
         // setTimeout(function(){
         //     window.location.href = next_url
         // }, 8000);
