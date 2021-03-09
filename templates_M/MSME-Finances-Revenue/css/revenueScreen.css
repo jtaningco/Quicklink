@@ -63,6 +63,9 @@ body {
   color: var(--muted-dark);
   font-size: 12px;
   text-align: center;
+  border-top: 1px solid var(--muted-lightest);
+  border-bottom: 1px solid var(--muted-lightest)
+
 }
 .paymentMethodTable tr{
   font-family: 'Overpass', sans-serif;
