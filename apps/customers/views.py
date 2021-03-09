@@ -293,7 +293,7 @@ def checkout(request):
 def payment(request, slug):
     if request.user.is_authenticated:
         customer = request.user
-        order, created = Order.objects.get(user=customer, complete=False)
+        order = Order.objects.get(user=customer, complete=False)
         items = order.productorder_set.all()
     else:
         items = []
@@ -359,7 +359,7 @@ def payment(request, slug):
                 "should_authenticate": True,
                 "currency": "PHP",
                 "on_behalf_of": "",
-                "billing details": {
+                "billing_details": {
                     "given_names": given_names,
                     "surname": surname,
                     "email": orderInfo.session_sender.customer_email,
