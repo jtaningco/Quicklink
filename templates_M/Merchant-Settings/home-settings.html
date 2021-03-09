@@ -15,11 +15,9 @@
                 <h2 class="cardHeaderText">
                     My Shop
                 </h2>
-                <p class="cardHeaderBody">
-                    <div class="companydp">
-                        <img src="assets/sc.png" id="companydp">
-                    </div>
-                </p>
+                <div class="companydp">
+                    <img src="assets/sc.png" id="companydp">
+                </div>
             </div>
         
         <div class="cardBody">
@@ -32,17 +30,13 @@
             </subtitle>
             <input type="text" placeholder="Contact Number">
             <subtitle class="signup-card-questions">
-                Email Address<span style="color: var(--failure-main)">*</span>
+                Shop Username<span style="color: var(--failure-main)">*</span>
             </subtitle>
-            <input type="text" placeholder="Email Address">
+            <input type="text" placeholder="Shop Username">
             <subtitle class="signup-card-questions">
-                Shop Quicklink Username<span style="color: var(--failure-main)">*</span>
+                Shop Working Days<span style="color: var(--failure-main)">*</span>
             </subtitle>
-            <input type="text" placeholder="Shop Quicklink Username">
-            <subtitle class="signup-card-questions">
-                Available Delivery Schedules<span style="color: var(--failure-main)">*</span>
-            </subtitle>
-            <input type="text" placeholder="Everyday">
+            <input type="text" placeholder="Everyday except Sunday">
             <subtitle class="signup-card-questions">
                 Shop Address<span style="color: var(--failure-main)">*</span>
             </subtitle>
@@ -71,10 +65,19 @@
               </label>
                 <p class="switchText">Yes</p>
             </div>
-
+            <subtitle class="signup-card-questions">
+                Bank Details<span style="color: var(--failure-main)">*</span>
+            </subtitle>
+            <input type="text" placeholder="Bank (ex. UnionBank PH)">
+            <input type="text" placeholder="Account Number">
         </div>
-            <div class="primary-btn">
-                <button class="btn-info">Next</button>
+            <div class="buttons">
+                <div class="secondary-btn">
+                    <button class="outline-btn-info">Cancel</button>
+                </div>
+                <div class="primary-btn">
+                    <button class="btn-info">Save Changes</button>
+                </div>
             </div>
         </div>
     </div>
