@@ -414,6 +414,10 @@ def createToken(request, slug):
     if request.method == 'POST':
         token_id = request.POST.get('token_id')
         json_data['token_id'] = token_id
+
+        auth_id = request.POST.get('auth_id')
+        json_data['auth_id'] = auth_id
+        
         orderInfo.token_jwt_id = jwt.encode(json_data, orderInfo.token_private_key, algorithm="HS256")
         orderInfo.save()
 

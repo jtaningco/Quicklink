@@ -15,12 +15,11 @@
 {% block maincontent %}
     <h1>Please wait while your payment is being processed...</h1>
     <div id="tokenData" style="display: none;">{{ data }}</div>
-    <form method="post">
+    <!-- <form method="post">
         {% csrf_token %}
         <input type="text" name="token_id" id="token_id">
         <input type="text" name="auth_id" id="auth_id">
-        <input type="submit" value="Charge">
-    </form>
+    </form> -->
 {% endblock %}
 
 {% block scriptsBody %}
@@ -90,8 +89,20 @@
                     token_id = data.id;
                     auth_id = data.authentication_id
 
-                    tokenInput.value = token_id;
-                    authInput.value = auth_id;
+                    $.ajax({
+                        url: current_url,
+                        type: "POST",
+                        data: {token_id: token_id, auth_id: auth_id},
+                        success:function(response){
+                            console.log("AJAX: Data successfully sent.")
+                        },
+                        complete:function(){
+                            console.log("AJAX: Data verification complete.")
+                        },
+                        error:function (xhr, textStatus, thrownError){
+                            alert("Can't send data.");
+                        }
+                    });
                     
                     auth_url = payer_authentication_url;
                 } else if (data.status === 'IN_REVIEW') {
