@@ -217,7 +217,7 @@ def updateItem(request, shop_pk, product_pk):
 def checkout(request):    
     if request.user.is_authenticated:
         customer = request.user
-        order, created = Order.objects.get_or_create(user=customer, complete=False)
+        order = Order.objects.get(user=customer, complete=False)
         items = order.productorder_set.all()
 
         highest_days = 0
@@ -236,15 +236,27 @@ def checkout(request):
                 highest_days = item.product.days
         min_date = datetime.today() + timedelta(days=highest_days+1)
         
+    try:
+        orderInfo = OrderInformation.objects.get(order=order)
+        orderInfo.delete()
+    except:
+        print("Order Information does not exist!")
+
     form = CheckoutForm(min_date=min_date, user=customer)
 
     if request.method == "POST":
         form = CheckoutForm(data=request.POST or None, min_date=min_date, user=customer)
         if form.is_valid():
+            for number in form.cleaned_data.get('contact_number'):
+                mobile_number_list.append(number)
+            mobile_number_list[0] = '(+63)('
+            mobile_number_list[-1] = mobile_number_list[-1] + ')'
+            mobile_number = ''.join(mobile_number_list)
+
             sessionSender = CustomerInformation.objects.create(
                 customer_name = form.cleaned_data.get('name'),
                 customer_email = form.cleaned_data.get('email'),
-                customer_contact_number = form.cleaned_data.get('contact_number')
+                customer_contact_number = mobile_number
             )
             sessionSender.save()
                 
@@ -270,6 +282,9 @@ def checkout(request):
                 session_notifications = orderNotifications,
             )
             orderInfo.save()
+
+            order.delivery_date = form.cleaned_data.get('delivery_date')
+            order.save()
             
             bankAccount = form.cleaned_data.get('bank_name')
 
@@ -295,9 +310,11 @@ def payment(request, slug):
         customer = request.user
         order = Order.objects.get(user=customer, complete=False)
         items = order.productorder_set.all()
+        is_multiple_use = True
     else:
         items = []
         order = {'get_cart_total': 0, 'get_cart_items': 0}
+        is_multiple_use = False
 
     # If Debit/Credit
     if slug == 'card':
@@ -329,15 +346,6 @@ def payment(request, slug):
             })
 
     orderInfo = OrderInformation.objects.get(order=order)
-    customer_name = orderInfo.session_sender.customer_name.split(' ')
-    given_names_list = []
-    for name in customer_name:
-        if name != customer_name[-1]:
-            given_names_list.append(str(name))
-        else:
-            surname = str(name)
-        given_names = ' '.join(given_names_list)
-
     contact_number = orderInfo.session_sender.customer_contact_number
     mobile_number_list = []
     
@@ -350,6 +358,15 @@ def payment(request, slug):
     if request.method == 'POST' and slug == 'card':
         form = CardForm(request.POST)
         if form.is_valid():
+            customer_name = form.cleaned_data.get('cardholder_name').split(' ')
+            given_names_list = []
+            for name in customer_name:
+                if name != customer_name[-1]:
+                    given_names_list.append(str(name))
+                else:
+                    surname = str(name)
+                given_names = ' '.join(given_names_list)
+
             exp_month = str(form.cleaned_data.get('exp_date').split('/')[0])
             if len(form.cleaned_data.get('exp_date').split('/')[1]) == 2:
                 exp_year = str('20' + form.cleaned_data.get('exp_date').split('/')[1])
@@ -358,6 +375,17 @@ def payment(request, slug):
             card_number_list = form.cleaned_data.get("account_number").split(' ')
             card_number = ''.join(card_number_list)
             card_cvn = form.cleaned_data.get("cvv")
+
+            orderPayment = BankAccount.objects.create(
+                cardholder_name=form.cleaned_data.get('cardholder_name'),
+                account_number=card_number,
+                exp_date=exp_month+'/'+exp_year,
+                cvv=card_cvn
+            )
+
+            orderInfo.session_payment = orderPayment
+            orderInfo.save()
+
             data = {
                 "amount": str(order.total),
                 "card_number": card_number,
@@ -372,7 +400,7 @@ def payment(request, slug):
                     "given_names": given_names,
                     "surname": surname,
                     "email": orderInfo.session_sender.customer_email,
-                    "mobile_number": orderInfo.session_sender.customer_contact_number,
+                    "mobile_number": mobile_number,
                     "phone_number": orderInfo.session_sender.customer_contact_number,
                     "address": {
                         "country": "PH",
@@ -405,6 +433,23 @@ def payment(request, slug):
     if request.method == 'POST' and slug == 'ewallet':
         form = CardForm(request.POST)
         if form.is_valid():
+            customer_name = form.cleaned_data.get('cardholder_name')
+            given_names_list = []
+            for name in customer_name:
+                if name != customer_name[-1]:
+                    given_names_list.append(str(name))
+                else:
+                    surname = str(name)
+                given_names = ' '.join(given_names_list)
+
+            orderPayment = BankAccount.objects.create(
+                cardholder_name=given_names+surname,
+                account_number=card_number,
+            )
+
+            orderInfo.session_payment=orderPayment
+            orderInfo.save()
+
             # Create Customer Object
             # Include Metadata to store more data for analysis
             random_uuid = str(shortuuid.uuid())
@@ -471,6 +516,13 @@ def eWalletCallback(request, slug):
 
 
 def createToken(request, slug):
+    api_key = "xnd_development_L8LFCGlEVFmq8qcCLZKNoVnq303nlkB47u5W2TrknkwioknAn4H0KOQcFfbm7"
+
+    if 'HTTP_AUTHORIZATION' not in request.META:
+        byte = bytes(api_key, 'utf-8')
+        username = base64.b64encode(byte)
+        request.META['HTTP_AUTHORIZATION'] = username
+    
     if request.user.is_authenticated:
         customer = request.user
         order = Order.objects.get(user=customer, complete=False)
@@ -498,12 +550,11 @@ def createToken(request, slug):
         json_data['authentication_id'] = auth_id
         orderInfo.token_jwt_id = jwt.encode(json_data, orderInfo.token_private_key, algorithm="HS256")
         orderInfo.save()
-        return redirect('/checkout/payment/card/auth/')
 
     context = {'data':data}
     return render(request, 'customers/token.html', context)
 
-def createAuthorization(request, slug):
+def cardPayment(request, slug):
     if request.user.is_authenticated:
         customer = request.user
         order = Order.objects.get(user=customer, complete=False)
@@ -514,7 +565,6 @@ def createAuthorization(request, slug):
         orderInfo.token_public_key, 
         algorithms=["HS256"]
     )
-    print(data)
 
     api_key = "xnd_development_L8LFCGlEVFmq8qcCLZKNoVnq303nlkB47u5W2TrknkwioknAn4H0KOQcFfbm7"
     xendit_instance = Xendit(api_key=api_key)
@@ -527,7 +577,9 @@ def createAuthorization(request, slug):
     random_uuid = str(shortuuid.uuid())
     external_id = "quicklink_charge-" + random_uuid
 
-    charge = CreditCard.create_authorization(
+    # If capture = False, you need to capture charge (default: capture = True)
+    # See more in Xendit Docs Here: https://developers.xendit.co/api-reference/#capture-charge
+    charge = CreditCard.create_charge(
         token_id=token_id,
         authentication_id=auth_id,
         external_id=external_id,
@@ -535,6 +587,22 @@ def createAuthorization(request, slug):
         card_cvn=card_cvn,
         currency="PHP",
     )
-    print(charge)
 
-    return HttpResponse(charge)
+    if charge.status == "CAPTURED":
+        url = 'checkout/invoice/' + str(order.id) + '/'
+        return redirect(url, order.id)
+
+    context = {'data':data}
+    return render(request, 'customers/token.html', context)
+
+def orderInvoice(request, order_id):
+    if request.user.is_authenticated:
+        customer = request.user
+        order = Order.objects.get(id=order_id)
+        orderInfo = OrderInformation.objects.get(order=order)
+
+    order.complete = True
+    order.save()
+
+    context = {'order':order, 'info':orderInfo}
+    return render(request, 'customers/invoice.html', context)

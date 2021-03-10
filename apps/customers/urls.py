@@ -14,5 +14,6 @@ urlpatterns = [
     path('checkout/payment/<str:slug>/', views.payment, name='payment'),
     path('checkout/payment/<str:slug>/callback/', views.eWalletCallback, name='ewallet-callback'),
     path('checkout/payment/<str:slug>/token/', views.createToken, name='create-token'),
-    path('checkout/payment/<str:slug>/auth/', views.createAuthorization, name='create-auth'),
+    path('checkout/payment/<str:slug>/pay/', views.cardPayment, name='create-payment'),
+    path('checkout/invoice/<str:order_id>/', views.orderInvoice, name='order-invoice'),
 ]  + static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)

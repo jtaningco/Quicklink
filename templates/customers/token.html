@@ -152,7 +152,7 @@
                     console.log('Unable to create token.', err)
                 }
 
-                if (data.status === 'VERIFIED') {
+                if (data.status === 'APPROVED' || data.status === 'VERIFIED') {
                     console.log('Data has been verified. Token has been created', data)
                     if (tokenData.is_multiple_use == false) {
                         token_id = data.id;
@@ -169,12 +169,15 @@
                         token_id = data.id;
                         auth_id = data.authentication_id;
                         sendTokenWithAuthData(token_id, auth_id);
+                    } else {
+                        token_id = data.id;
+                        sendTokenData(token_id);
                     }
 
                     console.log('Data is being reviewed for authentication.', data)
                     token_id = data.id;
                     sendTokenData(token_id);
-                } else if (data.status === 'FAILED') {
+                } else if (data.status === 'FAILED' || data.status === 'FRAUD') {
                     if (data.failure_reason == 'AUTHENTICATION_FAILED') {
                         console.log('Failed to create token.')
                         console.log('Failure Reason: ' + String(data.failure_reason), data)
@@ -198,16 +201,17 @@
                     console.log('Unable to create authentication.', err)
                 }
 
-                if (data.status === 'VERIFIED') {
-                    console.log('Data has been verified. Authentication has been created', data)
+                if (data.status === 'APPROVED' || data.status === 'VERIFIED') {
+                    console.log('Data has been verified. Authentication has been created', data);
                     auth_id = data.id;
                     sendAuthData(auth_id);
-                } else if (data.status === 'IN_REVIEW') {
+                } else if (data.status === 'IN_REVIEW' || data.status === 'CARD_ENROLLED') {
                     // Handle authentication (3DS)
                     window.open(data.payer_authentication_url, "3DS Authentication", "width=400, height=300, status, resizable");
-                    console.log('Data is being reviewed. Authentication is not yet created.', data)
-                } else if (data.status === 'FAILED') {
-                    console.log('Failed to create authentication.', data)
+                    console.log('Data is being reviewed. Authentication is not yet created.', data);
+                    sendAuthData(auth_id);
+                } else if (data.status === 'FAILED' || data.status === 'FRAUD') {
+                    console.log('Failed to create authentication.', data);
                 }
             });
         }

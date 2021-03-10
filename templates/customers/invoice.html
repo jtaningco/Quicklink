@@ -1,0 +1,127 @@
+{% extends 'quicklink/customers.html' %}
+{% load static %}
+
+{% block pagetitle %}Order Invoice{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{% static 'css/invoice.css' %}">
+{% endblock %}
+
+{% block scriptsHead %}
+    <script type="text/javascript" src="https://js.xendit.co/v1/xendit.min.js"></script>
+
+    <!-- Set Xendit Authorization -->
+    <script type="text/javascript">
+        Xendit.setPublishableKey('xnd_public_development_A44I6GFvh3ecLZaiRLehBCbF8bGuBxwodSfXV9Qo9w6K2aGuCS2FRqE4ENxa9XeD');
+    </script> 
+{% endblock %}
+
+{% block maincontent %}
+    <div class="modal-background" id="modal-background">
+        <div class="payment-modal" id="payment-modal">
+            <img src="{% static 'media/logos/navbar-logo-main.png' %}" alt="Quicklink Logo">
+            <h1 class="modal-header">Payment Complete!</h1>
+            <button type="button" class="disable-modal subtitle bold">Thanks</button>
+        </div>
+        <div class="account-modal" id="account-modal">
+            <img src="{% static 'media/logos/navbar-logo-main.png' %}" alt="Quicklink Logo">
+            <h1 class="modal-header bold">Want a smoother order flow next time?</h1>
+            <p class="model-text subtitle">Save information for future purchases</p>
+            <p class="model-text subtitle">Easily track your orders</p>
+            <p class="model-text subtitle">Discounted convenience fees</p>
+            <button type="button" class="primary-btn create-account">
+                <a href="{% url 'accounts:customer-register' %}" class="primary-btn-link">Create an account</a>
+            </button>
+            <button type="button" class="disable-modal subtitle bold">Maybe next time</button>
+        </div>
+    </div>
+    
+    <div class="invoice-container">
+        <div class="invoice-header-wrapper">
+            <!-- Replace these with Shop Information -->
+            <h1 class="invoice-header-title">The Good Batch</h1>
+            <div class="invoice-header-content">
+                <p class="invoice-header-text">Everyday, 1pm-5pm</p>
+                <p class="invoice-header-text">@thegoodbatch</p>
+                <p class="invoice-header-text">thegoodbatch@gmail.com</p>
+                <p class="invoice-header-text">+63 917 123 4567</p>
+                <p class="invoice-header-text">Greenhills, San Juan City</p>
+            </div>
+        </div>
+        <div class="invoice-content-wrapper">
+            <div class="invoice-content-header">
+                <h1 class="invoice-content-header-title" id="order-status"></h1>
+                <p class="invoice-content-header-order-number body medium">Your order number is: #{{ order.id }}</p>
+                
+                <!-- Insert slug here -->
+                <p class="invoice-content-header-order-link body medium">Here's your receipt link: 
+                    <a href="#">
+                        randomlink.io
+                    </a>
+                </p>
+            </div>
+            <div class="invoice-content-tracking">
+                <h1 class="invoice-content-tracking-title">Track your order!</h1>
+                <p>Your order is being prepared.</p>
+                <p>Your order is ready for delivery.</p>
+                <p>Your order is shipped out.</p>
+            </div>
+            
+            <div class="invoice-content-contact">
+                <h1 class="invoice-content-contact-header">{{ info.session_sender.customer_name }}</h1>
+                <p class="invoice-content-contact-text">{{ info.session_sender.customer_contact_number }}</p>
+                <p class="invoice-content-contact-text">{{ info.session_sender.customer_email }}</p>
+            </div>
+            
+            <div class="invoice-content-contact">
+                <h1 class="invoice-content-contact-header">Shipping Address</h1>
+                <p class="invoice-content-contact-text">{{ info.session_address.line1 }}, {{ info.session_address.line2 }}, {{ info.session_address.city }}, {{ info.session_address.province }}, {{ info.session_address.postal_code }}</p>
+            </div>
+
+            <div class="invoice-content-contact">
+                <h1 class="invoice-content-contact-header">Preferred Delivery Date</h1>
+                <p class="invoice-content-contact-text">{{ order.delivery_date | date:"M d, Y"}}</p>
+            </div>
+
+            <div class="invoice-content-contact">
+                <h1 class="invoice-content-contact-header">Mode of Delivery</h1>
+                <!-- Change to mode of delivery -->
+                <p class="invoice-content-contact-text">Lalamove</p>
+            </div>
+
+            <div class="invoice-content-contact">
+                <h1 class="invoice-content-contact-header">Receive updates</h1>
+                <p class="invoice-content-contact-text">Receive SMS updates on order status</p>
+                <p class="invoice-content-contact-text">Receive email updates on order status</p>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block scriptsBody %}
+    <script>
+        // Variables
+        var disableBtns = document.getElementsByClassName('disable-modal');
+        var paymentModal = document.getElementById('payment-modal');
+        var accountModal = document.getElementById('account-modal');
+        var modalBG = document.getElementById('modal-background');
+        var orderStatus = document.getElementById('order-status');
+
+        for (i = 0; i <= disableBtns.length; i++) {
+            if (i == 0) {
+                disableBtns[i].addEventListener('click', function() {
+                    paymentModal.style.display = "none";
+                    accountModal.style.display = "flex";
+                    orderStatus.innerHTML = "Your order is confirmed!";
+                })
+            } else {
+                disableBtns[i].addEventListener('click', function() {
+                    accountModal.style.display = "none";
+                    modalBG.style.display = "none";
+                })
+            }
+        }
+
+
+    </script>
+{% endblock %}
