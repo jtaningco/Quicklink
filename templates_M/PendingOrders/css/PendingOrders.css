@@ -17,39 +17,52 @@ body {
   height: 100%;
   margin-left: 200px;
 }
-.financePageHeader {
+.PageHeader {
   color: var(--secondary-alt);
   font-size: 28px;
   font-weight: bold;
   padding: 72px 0px 28px 32px;
 }
-.mainCards {
+.pageInformation {
   display: flex;
-  justify-content: space-between;
-  margin-right: 24px;
 }
-.cards {
-  width: 100%;
-  margin-left: 32px;
-  background-color: #FFF;
-  padding: 20px 0px 16px 20px;
-  box-shadow: 0px 3px 5px rgba(51, 51, 51, 0.15);
+.dropdown {
+  display: flex;
+}
+.dropbtn {
+  background-color: transparent;
+  color: var(--muted-dark);
+  padding: 16px;
+  font-size: 14px;
+  border: none;
+  cursor: pointer;
+}
+.dropdown {
+  position: relative;
+  display: inline-block;
+  border: 1px solid var(--muted-lighter);
   border-radius: 5px;
 }
-.cardHeader {
-  color: var(--secondary-alt);
-  font-size: 20px;
-  font-weight: 600;
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f1f1f1;
+  min-width: 160px;
+  overflow: auto;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
 }
-.totalValue {
-  font-weight: 700;
-  font-size: 28px;
-  padding: 4px 0 8px 0;
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
 }
-.cardSubheader {
-  font-size: 14px;
-  color: var(--muted-default);
-}
+
+.dropdown a:hover {background-color: #ddd;}
+
+.show {display: block;}
+
 .paymentMethodTable {
   border-collapse: collapse;
   margin: 3.1rem 0px;
@@ -61,15 +74,16 @@ body {
   font-family: 'Overpass', sans-serif;
   background-color: #FFF;
   color: var(--muted-dark);
-  font-size: 12px;
+  font-size: 10px;
   text-align: center;
+  align-items: center;
   border-top: 1px solid var(--muted-lightest);
   border-bottom: 1px solid var(--muted-lightest)
 
 }
 .paymentMethodTable tr{
   font-family: 'Overpass', sans-serif;
-  font-size: 1rem;
+  font-size: 10px;
   font-weight: 400;
   text-align: center;
   min-height: 3.5rem;
@@ -77,6 +91,9 @@ body {
 .paymentMethodTable th,
 .paymentMethodTable td {
   padding: 1.5rem 1.5rem;
+}
+.paymentMethodTable td a{
+  color: var(--primary-main);
 }
 .paymentMethodTable tbody tr:nth-of-type(odd) {
   background-color: #F6F7FF;
@@ -119,3 +136,4 @@ body {
   color: var(--primary-main);
   font-size: 16px;
 }
+
