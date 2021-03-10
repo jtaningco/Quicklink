@@ -26,44 +26,6 @@ body {
 .pageInformation {
   display: flex;
 }
-.dropdown {
-  display: flex;
-  justify-content: space-between;
-}
-.dropbtn {
-  background-color: transparent;
-  color: var(--muted-dark);
-  font-size: 12px;
-  width: 15rem;
-  height: 2.7rem;
-  border: none;
-  cursor: pointer;
-}
-.dropdown {
-  position: relative;
-  display: inline-block;
-  border: 1px solid var(--muted-lighter);
-  border-radius: 5px;
-}
-.dropdown-content {
-  display: none;
-  position: absolute;
-  background-color: #f1f1f1;
-  min-width: 160px;
-  overflow: auto;
-  z-index: 1;
-}
-.dropdown-content a {
-  color: var(--muted-dark);
-  padding: 0.5rem 1rem;
-  text-decoration: none;
-  display: block;
-}
-
-.dropdown a:hover {background-color: #ddd;}
-
-.show {display: block;}
-
 .paymentMethodTable {
   border-collapse: collapse;
   margin: 3.1rem 0px;
