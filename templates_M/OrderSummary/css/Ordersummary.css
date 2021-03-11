@@ -1,0 +1,150 @@
+@import url('https://fonts.googleapis.com/css2?family=Overpass:wght@400;600;700;800&display=swap');
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Overpass', sans-serif;
+}
+body {
+  background-color: var(--bg-color);
+}
+.container {
+  width: 100vw;
+  height: 100vh;
+}
+.wrapper {
+  width: 100%;
+  height: 100%;
+  margin-left: 200px;
+}
+.PageHeaderText {
+  color: var(--secondary-alt);
+  font-size: 28px;
+  font-weight: bold;
+  padding: 4.5rem 0px 1.75rem 2.5rem;
+}
+.pageInformation {
+  position: fixed;
+  width: 100vw;
+}
+.pageInformationElements {
+  display: flex;
+  justify-content: space-between;
+}
+.clickable-buttons {
+  display: flex;
+}
+.select-btn {
+  font-size: 0.875rem;
+  padding-left: 2.5rem;
+}
+
+.calendar-btn {
+  display: flex;
+  justify-content: start;
+  align-items: left;
+  font-size: 0.875rem;
+  color: var(--muted-dark);
+  width: 15rem;
+  height:2.5rem;
+  padding-left: 0.9rem;
+  margin-left: 1rem;
+  border: 1px solid var(--muted-lighter);
+  background-color: transparent;
+}
+.display-items {
+  display: flex;
+}
+.display-item-total {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 10.5rem;
+  height: 2.5rem;
+  padding:1rem;
+  border: 1px solid var(--muted-lighter);
+}
+#item-description {
+  font-size: 0.875rem;
+  color: var(--muted-dark);
+}
+#item-total-number {
+  font-size: 0.875rem;
+  color: var(--secondary-alt);
+}
+#grayArrowUp {
+  padding-left: 0.25rem;
+}
+.paymentMethodTable {
+  border-collapse: collapse;
+  margin: 5rem 0px;
+  font-size: .75rem;
+  min-width: 900px;
+  width: 100%;
+}
+.paymentMethodTable thead tr{
+  font-family: 'Overpass', sans-serif;
+  background-color: #FFF;
+  color: var(--muted-dark);
+  font-size: 10px;
+  text-align: center;
+  align-items: center;
+  border-top: 1px solid var(--muted-lightest);
+  border-bottom: 1px solid var(--muted-lightest)
+}
+.paymentMethodTable tr{
+  font-family: 'Overpass', sans-serif;
+  font-size: 10px;
+  font-weight: 400;
+  text-align: center;
+  min-height: 3.5rem;
+}
+.paymentMethodTable th,
+.paymentMethodTable td {
+  padding: 1.5rem 1.5rem;
+}
+.paymentMethodTable td a{
+  color: var(--primary-main);
+}
+.paymentMethodTable tbody tr:nth-of-type(odd) {
+  background-color: #F6F7FF;
+}
+.paymentMethodTable tbody tr:nth-of-type(even) {
+  background-color: #FFF;
+}
+.pagination {
+  display: flex;
+  justify-content: center;
+  padding-top:64px;
+  padding-bottom: 32px;
+  bottom: 0;
+}
+.pagination a {
+  color:var(--muted-light);
+  padding: 4px 12px;
+  text-decoration: none;
+}
+.pagination a.active {
+  background-color: var(--primary-main);
+  color: white;
+  border-radius: 50%;
+}
+.pagination a:hover:not(.active) {
+  background-color: #ddd;
+  border-radius: 50%;
+}
+.pageNumberButton {
+  display: flex;
+  background: transparent;
+  justify-content: center;
+  padding-left: 32px;
+  padding-right: 32px;
+}
+#arrow {
+  padding: 0px 8px 0px 8px;
+}
+.buttonText {
+  color: var(--primary-main);
+  font-size: 16px;
+}
+
