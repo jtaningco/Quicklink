@@ -15,30 +15,27 @@ body {
 .wrapper {
   width: 100%;
   height: 100%;
-  margin-left: 200px;
+  margin-left: 12rem;
 }
 .PageHeaderText {
   color: var(--secondary-alt);
   font-size: 28px;
   font-weight: bold;
-  padding: 4.5rem 0px 1.75rem 2.5rem;
+  padding: 4.625rem 0px 1.75rem 2.5rem;
 }
 .pageInformation {
   position: fixed;
+  align-items: center;
   width: 100vw;
 }
 .pageInformationElements {
   display: flex;
   justify-content: space-between;
+  align-items: center;
 }
-.clickable-buttons {
+.dropdown-buttons {
   display: flex;
 }
-.select-btn {
-  font-size: 0.875rem;
-  padding-left: 2.5rem;
-}
-
 .calendar-btn {
   display: flex;
   justify-content: start;
@@ -48,41 +45,62 @@ body {
   width: 15rem;
   height:2.5rem;
   padding-left: 0.9rem;
-  margin-left: 1rem;
+  margin-left: 2.5rem;
   border: 1px solid var(--muted-lighter);
   background-color: transparent;
 }
-.display-items {
+.left-elements {
   display: flex;
-}
-.display-item-total {
-  display: flex;
-  justify-content: space-between;
   align-items: center;
-  width: 10.5rem;
-  height: 2.5rem;
-  padding:1rem;
-  border: 1px solid var(--muted-lighter);
 }
-#item-description {
-  font-size: 0.875rem;
-  color: var(--muted-dark);
+.searchbar{
+    display: flex;
+    justify-content: start;
+    align-items: center;
 }
-#item-total-number {
-  font-size: 0.875rem;
-  color: var(--secondary-alt);
+input {
+    color: var(--muted-lighter);
+    background-color: transparent;
+    border: 0px;
+    font-size: 1rem;
+    padding-left: 1rem;
+    max-width:32rem;
+}
+#yellow-search-icon {
+    align-items: center;
+}
+#download-btn {
+    color: var(--primary-main);
+    font-size: 0.875rem;
+    border: 1px solid var(--primary-main);
+    background-color: transparent;
+    padding: 0.2rem 1.5rem;
+    margin:1rem;
+}
+#purple-download-icon {
+    padding: 0.5rem;
+}
+#send-updates-btn {
+    color: #FFF;
+    font-size: 0.875rem;
+    background-color: var(--primary-main);
+    padding: 0.5rem 1.5rem;
+    margin-right:2rem;
+}
+#white-send-icon {
+    padding-left: 0.5rem;
 }
 #grayArrowUp {
   padding-left: 0.25rem;
 }
-.paymentMethodTable {
+.OrderSummaryTable {
   border-collapse: collapse;
   margin: 5rem 0px;
   font-size: .75rem;
   min-width: 900px;
   width: 100%;
 }
-.paymentMethodTable thead tr{
+.OrderSummaryTable thead tr{
   font-family: 'Overpass', sans-serif;
   background-color: #FFF;
   color: var(--muted-dark);
@@ -92,26 +110,28 @@ body {
   border-top: 1px solid var(--muted-lightest);
   border-bottom: 1px solid var(--muted-lightest)
 }
-.paymentMethodTable tr{
+.OrderSummaryTable tr{
   font-family: 'Overpass', sans-serif;
-  font-size: 10px;
+  font-size: 0.875rem;
   font-weight: 400;
   text-align: center;
   min-height: 3.5rem;
 }
-.paymentMethodTable th,
-.paymentMethodTable td {
+.OrderSummaryTable th,
+.OrderSummaryTable td {
   padding: 1.5rem 1.5rem;
 }
-.paymentMethodTable td a{
+.OrderSummaryTable td a{
   color: var(--primary-main);
+  font-weight: bold;
 }
-.paymentMethodTable tbody tr:nth-of-type(odd) {
+.OrderSummaryTable tbody tr:nth-of-type(odd) {
   background-color: #F6F7FF;
 }
-.paymentMethodTable tbody tr:nth-of-type(even) {
+.OrderSummaryTable tbody tr:nth-of-type(even) {
   background-color: #FFF;
 }
+/*
 .pagination {
   display: flex;
   justify-content: center;

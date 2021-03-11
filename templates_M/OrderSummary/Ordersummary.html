@@ -14,62 +14,60 @@
               <h1 class="PageHeaderText">Order Summary</h1>
                 <div class="pageInformation">
                   <div class="pageInformationElements">
-                    <div class="clickable-buttons">
-                      <div class="select-btn">
-                        <select id="standard-select">
-                          <option value="Option 1">Option 1</option>
-                          <option value="Option 2">Option 2</option>
-                          <option value="Option 3">Option 3</option>
-                          <option value="Option 4">Option 4</option>
-                          <option value="Option 5">Option 5</option>
-                          <option value="Option length">Option that has too long of a value to fit</option>
-                        </select>
-                      </div>
+                    <div class="dropdown-buttons">
                         <button class="calendar-btn">March 5,2021</button>
                     </div>
-                    <div class="display-items">
-                      <div class="display-item-total">
-                        <p id="item-description">Half Dozen</p>
-                        <p id="item-total-number">9</p>
+                    <div class="left-elements">
+                      <div class="searchbar">
+                        <img src="assets/yellow-search-icon.svg" id="yellow-search-icon">
+                        <input type="text" placeholder="Search">
                       </div>
-                      <div class="display-item-total">
-                        <p id="item-description">Dozen</p>
-                        <p id="item-total-number">9</p>
-                      </div>
+                      <button id="download-btn">Download Summary<img src="assets/purple-download-icon.svg" id="purple-download-icon"></button>
+                      <button id="send-updates-btn">Send Customer Updates <img src="assets/white-send-icon.svg" id="white-send-icon"></button>
                     </div>
                   </div>
                 </div>
-                <table class="paymentMethodTable">
+                <table class="OrderSummaryTable">
                   <thead>
                     <tr>
                         <th>checkbox</th>
                         <th>DATE OF DELIVERY<img src="assets/gray-arrow-down.svg" id="grayArrowUp"></th>
-                        <th>CUSTOMER<img src="assets/gray-arrow-up.svg" id="grayArrowUp"></th>
-                        <th>PRODUCT<img src="assets/gray-arrow-up.svg" id="grayArrowUp"></th>
-                        <th>QUANTITY</th>
-                        <th>SIZE</th>
-                        <th>ADD-ON #1</th>
-                        <th>ADD-ON #2</th>
+                        <th>ORDER NUMBER<img src="assets/gray-arrow-up.svg" id="grayArrowUp"></th>
+                        <th>CUSTOMER NAME</th>
                         <th>ORDER DETAILS</th>
+                        <th>ITEMS</th>
+                        <th>TOTAL AMOUNT<img src="assets/gray-arrow-up.svg" id="grayArrowUp"></th>
+                        <th>ORDER STATUS<img src="assets/gray-arrow-up.svg" id="grayArrowUp"></th>
+                        <th>PAYMENT STATUS<img src="assets/gray-arrow-up.svg" id="grayArrowUp"></th> 
                     </tr>
                   </thead>
                   <tbody>
                     <tr>
                         <th>checkbox</th>
-                        <td>March 5,2021</td>
-                        <td>John Diggle</td>
-                        <td>Raisin Cookies</td>
-                        <td>Quantity</td>
-                        <td>Dozen</td>
-                        <td>checkbox</td>
-                        <td>checkbox</td>
+                        <td>Dec 5,2021</td>
+                        <td>01</td>
+                        <td>John Smith</td>
                         <td><a href="#">See Details</a></td>
+                        <td>2</td>
+                        <td>PHP 2,000.00</td>
+                        <td><img src="assets/StatusPending.svg"></td>
+                        <td><img src="assets/StatusProcessing.svg"></td>
                     </tr>
-                    
-
+                    <tr>
+                        <th>checkbox</th>
+                        <td>Dec 5,2021</td>
+                        <td>01</td>
+                        <td>John Smith</td>
+                        <td><a href="#">See Details</a></td>
+                        <td>2</td>
+                        <td>PHP 2,000.00</td>
+                        <td><img src="assets/StatusReceive.svg"></td>
+                        <td><img src="assets/StatusReceived.svg"></td>
+                    </tr>
                   </tbody>
                 </table>
           </div>
+          <!--
           <div class="pagination">
             <button class="pageNumberButton">
               <img src="assets/leftArrow.svg" id="arrow">
@@ -86,6 +84,7 @@
               <img src="assets/rightArrow.svg" id="arrow">
             </button>
           </div>
+          -->
       </div>
     </div>
   <script src="PendingOrders.js"></script>
