@@ -40,6 +40,7 @@ body {
     border-radius: 50%;
     width: 5rem;
     height: 5rem;
+    filter: drop-shadow(0px 3px 5px rgba(51, 51, 51, 0.15));
 }
 .companydp {
   padding: 2rem 0;
@@ -72,34 +73,34 @@ body {
 }
 /*textbox with info */
 input[type=text], select {
-    font-size:14px;
-    color: #2c2c2c;
-    width: 100%;
-    padding: .5rem 1rem;
-    margin-bottom: 1.5rem;
-    font-family: 'Overpass', sans-serif;
-    background-color: transparent;
-    display: inline-block;
-    box-sizing: border-box;
-    border: 1px solid var(--muted-lighter);
-    border-radius: 4px;
-}
-input[type=custom-text], select {
-  width: 48%;
-  padding: 0.5rem 1rem;
-  margin-bottom: 1rem;
-  background-color: transparent;
-  display: inline-block;
-  font-family: 'Overpass', sans-serif;
-  border: 1px solid var(--muted-lighter);
   font-size:14px;
   color: #2c2c2c;
-  border-radius: 4px;
+  width: 100%;
+  padding: .5rem 1rem;
+  margin-bottom: 1.5rem;
+  font-family: 'Overpass', sans-serif;
+  background-color: transparent;
+  display: inline-block;
   box-sizing: border-box;
+  border: 1px solid var(--muted-lighter);
+  border-radius: 4px;
+}
+input[type=custom-text], select {
+width: 48%;
+padding: 0.5rem 1rem;
+margin-bottom: 1rem;
+background-color: transparent;
+display: inline-block;
+font-family: 'Overpass', sans-serif;
+border: 1px solid var(--muted-lighter);
+font-size:14px;
+color: #2c2c2c;
+border-radius: 4px;
+box-sizing: border-box;
 }
 .two-inputs {
-  display: flex;
-  justify-content: space-between;
+display: flex;
+justify-content: space-between;
 }
 .switchWhole {
   display: flex;
@@ -167,39 +168,39 @@ input:checked + .slider:before {
   border-radius: 50%;
 }
 .primary-btn {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 0.2rem;
-    box-shadow: 0px 3px 5px rgba(51, 51, 51, 0.15);
-    width: 8.6rem;    
-    margin: 1.3rem 1rem;
-}
-.btn-info {
-    font-family: 'Overpass', sans-serif;
-    font-style: normal;
-    font-weight: 600;
-    font-size: 14px;
-    padding: 8px;
-    color: #fff;
-    background-color: transparent;
-    box-shadow: none;
-}
-.secondary-btn {
   display: flex;
   align-items: center;
   justify-content: center;
   border-radius: 0.2rem;
-  width: 5.75rem;    
-  margin: 1.3rem 0;
+  box-shadow: 0px 3px 5px rgba(51, 51, 51, 0.15);
+  width: 8.6rem;    
+  margin: 1.3rem 1rem;
 }
-.outline-btn-info {
+.btn-info {
   font-family: 'Overpass', sans-serif;
   font-style: normal;
   font-weight: 600;
-  font-size: 14px;
-  padding: 8px;
-  color: var(--primary-main);
+  font-size: 0.875;
+  padding: 0.5rem;
+  color: #fff;
   background-color: transparent;
   box-shadow: none;
+}
+.secondary-btn {
+display: flex;
+align-items: center;
+justify-content: center;
+border-radius: 0.2rem;
+width: 5.75rem;    
+margin: 1.3rem 0;
+}
+.outline-btn-info {
+font-family: 'Overpass', sans-serif;
+font-style: normal;
+font-weight: 600;
+font-size: 0.875rem;
+padding: 0.5rem;
+color: var(--primary-main);
+background-color: transparent;
+box-shadow: none;
 }

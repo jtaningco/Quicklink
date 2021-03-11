@@ -1,0 +1,118 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Overpass:wght@400;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap');
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: var(--bg-color)
+}
+/* div */
+.container {
+    width: 100%;
+    height: 100%;
+    margin-left: 12rem; /* sidenav space */
+}
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: left;
+    background-color: transparent;
+    margin: 4.625rem 0px 1.5rem 2rem;
+    padding: 0px 1.5rem 0px 1.5rem;
+    max-width: 38rem;
+    height: 100%;
+    width: 100%;
+}
+.headerText {
+    color: var(--secondary-alt);
+    font-size: 1.75rem;
+    font-weight: 600;
+}
+.body {
+  width: 100%;
+}
+.bodyElement {
+  display: flex;
+  justify-content: space-between;
+  padding-top: 2.5rem;
+}
+.elementDiv {
+  display: flex;
+  flex-direction: column;
+  width: 25rem;
+}
+.elementHeader {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color:var(--muted-dark);
+  padding: 0.5rem 0;
+}
+.elementText {
+  color: var(--muted-light);
+  font-size: 0.875rem;
+}
+.switchWhole {
+  display: flex;
+  margin: 1rem 0;
+}
+.checkbox input:checked ~ #switchTextActive {
+  color:var(--success-main);
+}
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 48px;
+  height: 24px;
+  margin-left: 16px;
+  margin-right: 16px;
+}
+.switch input { 
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 22px;
+  width: 22px;
+  left: 0px;
+  bottom: 0px;
+  background-color: white;
+  border: 1px solid var(--muted-lightest);
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+input:checked + .slider {
+  background-color: var(--success-main);
+}
+input:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
+/* Rounded sliders */
+.slider.round {
+  border-radius: 34px;
+}
+.slider.round:before {
+  border-radius: 50%;
+}

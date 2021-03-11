@@ -51,20 +51,20 @@ body {
 }
 .cardBodyHeaderInfo {
     color:var(--muted-dark);
-    font-size: 16px;
+    font-size: 1rem;
 }
 .cardBodyDiv {
     padding-top: 2rem;
 }
 .cardBodyTitle {
-    font-size: 16px;
+    font-size: 1rem;
     color: var(--muted-dark);
     font-weight: bold;
     padding-bottom: 0.5rem;
 }
 .cardBodyInfo {
     color: var(--muted-light);
-    font-size: 16px;
+    font-size: 1rem;
 }
 .secondary-btn-password {
   display: flex;
@@ -80,8 +80,8 @@ body {
   font-family: 'Overpass', sans-serif;
   font-style: normal;
   font-weight: 600;
-  font-size: 14px;
-  padding: 8px;
+  font-size: 0.875rem;
+  padding: 0.5rem;
   color: var(--primary-main);
   background-color: transparent;
   box-shadow: none;
@@ -99,8 +99,8 @@ body {
   font-family: 'Overpass', sans-serif;
   font-style: normal;
   font-weight: 600;
-  font-size: 14px;
-  padding: 8px;
+  font-size: 0.875rem;
+  padding: 0.5rem;
   color: var(--failure-main);
   background-color: transparent;
   box-shadow: none;
