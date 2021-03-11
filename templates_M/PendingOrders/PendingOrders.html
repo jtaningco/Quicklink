@@ -13,23 +13,38 @@
           <div>
               <h1 class="PageHeaderText">Pending Orders</h1>
                 <div class="pageInformation">
-                  <div class="select-btn">
-                    <select id="standard-select">
-                      <option value="Option 1">Option 1</option>
-                      <option value="Option 2">Option 2</option>
-                      <option value="Option 3">Option 3</option>
-                      <option value="Option 4">Option 4</option>
-                      <option value="Option 5">Option 5</option>
-                      <option value="Option length">Option that has too long of a value to fit</option>
-                    </select>
+                  <div class="pageInformationElements">
+                    <div class="clickable-buttons">
+                      <div class="select-btn">
+                        <select id="standard-select">
+                          <option value="Option 1">Option 1</option>
+                          <option value="Option 2">Option 2</option>
+                          <option value="Option 3">Option 3</option>
+                          <option value="Option 4">Option 4</option>
+                          <option value="Option 5">Option 5</option>
+                          <option value="Option length">Option that has too long of a value to fit</option>
+                        </select>
+                      </div>
+                        <button class="calendar-btn">March 5,2021</button>
+                    </div>
+                    <div class="display-items">
+                      <div class="display-item-total">
+                        <p id="item-description">Half Dozen</p>
+                        <p id="item-total-number">9</p>
+                      </div>
+                      <div class="display-item-total">
+                        <p id="item-description">Dozen</p>
+                        <p id="item-total-number">9</p>
+                      </div>
+                    </div>
                   </div>
                 </div>
                 <table class="paymentMethodTable">
                   <thead>
                     <tr>
-                      <th>DATE OF DELIVERY<img src="assets/gray-arrow-up.svg"></th>
-                      <th>CUSTOMER<img src="assets/gray-arrow-up.svg"></th>
-                      <th>PRODUCT<img src="assets/gray-arrow-up.svg"></th>
+                      <th>DATE OF DELIVERY<img src="assets/gray-arrow-up.svg" id="grayArrowUp"></th>
+                      <th>CUSTOMER<img src="assets/gray-arrow-up.svg" id="grayArrowUp"></th>
+                      <th>PRODUCT<img src="assets/gray-arrow-up.svg" id="grayArrowUp"></th>
                       <th>QUANTITY</th>
                       <th>SIZE</th>
                       <th>ADD-ON #1</th>

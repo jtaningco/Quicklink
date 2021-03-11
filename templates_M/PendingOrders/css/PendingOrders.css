@@ -21,14 +21,63 @@ body {
   color: var(--secondary-alt);
   font-size: 28px;
   font-weight: bold;
-  padding: 72px 0px 28px 32px;
+  padding: 4.5rem 0px 1.75rem 2.5rem;
 }
 .pageInformation {
+  position: fixed;
+  width: 100vw;
+}
+.pageInformationElements {
   display: flex;
+  justify-content: space-between;
+}
+.clickable-buttons {
+  display: flex;
+}
+.select-btn {
+  font-size: 0.875rem;
+  padding-left: 2.5rem;
+}
+
+.calendar-btn {
+  display: flex;
+  justify-content: start;
+  align-items: left;
+  font-size: 0.875rem;
+  color: var(--muted-dark);
+  width: 15rem;
+  height:2.5rem;
+  padding-left: 0.9rem;
+  margin-left: 1rem;
+  border: 1px solid var(--muted-lighter);
+  background-color: transparent;
+}
+.display-items {
+  display: flex;
+}
+.display-item-total {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 10.5rem;
+  height: 2.5rem;
+  padding:1rem;
+  border: 1px solid var(--muted-lighter);
+}
+#item-description {
+  font-size: 0.875rem;
+  color: var(--muted-dark);
+}
+#item-total-number {
+  font-size: 0.875rem;
+  color: var(--secondary-alt);
+}
+#grayArrowUp {
+  padding-left: 0.25rem;
 }
 .paymentMethodTable {
   border-collapse: collapse;
-  margin: 3.1rem 0px;
+  margin: 5rem 0px;
   font-size: .75rem;
   min-width: 900px;
   width: 100%;
@@ -42,7 +91,6 @@ body {
   align-items: center;
   border-top: 1px solid var(--muted-lightest);
   border-bottom: 1px solid var(--muted-lightest)
-
 }
 .paymentMethodTable tr{
   font-family: 'Overpass', sans-serif;
