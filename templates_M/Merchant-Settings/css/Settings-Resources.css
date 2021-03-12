@@ -8,10 +8,12 @@ body {
     background-color: var(--bg-color)
 }
 .tieredNav {
-  display: flex;
+  position: fixed;
   flex-direction: column;
   background-color:#FFF;
   margin-left: 12rem;
+  top:0;
+  left:0;
   width: 192px;
   height: 100vh;
 }
@@ -27,21 +29,32 @@ body {
   align-self: center;
 }
 .tieredNav a {
-  align-items: center;
-  align-content: center;
-  align-self: center;
   color: var(--muted-light);
   font-size: 1rem;
+}
+.tieredNavContent {
+  display: flex;
+  align-items: center;
   width: 192px;
   height: 56px;
 }
-.tieredNav a:hover {
+.tieredNavContent a:active {
+  display: flex;
   align-items: center;
   align-content: center;
   align-self: center;
   color: var(--primary-pressed);
   background-color: rgba(169,184,255,0.5);
-  font-size: 1rem;
+  width: 192px;
+  height: 56px;
+}
+.tieredNavContent a:hover {
+  display: flex;
+  align-items: center;
+  align-content: center;
+  align-self: center;
+  color: var(--primary-pressed);
+  background-color: rgba(169,184,255,0.5);
   width: 192px;
   height: 56px;
 }
@@ -85,4 +98,46 @@ body {
 .elementText {
   color: var(--muted-light);
   font-size: 0.875rem;
+}
+.signup-card-questions {
+  font-family: Overpass;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  font-weight: 600;
+  color: hsl(0, 0%, 17%);
+  padding: 0 0 0.5rem 0;
+}
+/*textbox with info */
+input[type=text], select {
+font-size:14px;
+color: #2c2c2c;
+width: 100%;
+padding: .5rem 1rem;
+margin-bottom: 1.5rem;
+font-family: 'Overpass', sans-serif;
+background-color: transparent;
+display: inline-block;
+box-sizing: border-box;
+border: 1px solid var(--muted-lighter);
+border-radius: 4px;
+}
+.primary-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.2rem;
+  box-shadow: 0px 3px 5px rgba(51, 51, 51, 0.15);
+  width: 8.6rem;    
+  margin: 1.3rem 0rem;
+}
+.btn-info {
+  font-family: 'Overpass', sans-serif;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 0.875rem;
+  padding: 0.5rem;
+  color: #fff;
+  background-color: transparent;
+  box-shadow: none;
 }
