@@ -66,8 +66,15 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
+    # Third-Party Middleware
     'corsheaders.middleware.CorsMiddleware',
+    # 'basicauth.middleware.BasicAuthMiddleware',
 ]
+
+# BASICAUTH_USERS = {
+#     'xnd_development_L8LFCGlEVFmq8qcCLZKNoVnq303nlkB47u5W2TrknkwioknAn4H0KOQcFfbm7':''
+# }
 
 CORS_ORIGIN_ALLOW_ALL = True
 

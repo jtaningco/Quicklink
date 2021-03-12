@@ -24,11 +24,12 @@
             <p>CVV</p>
             {{ form.cvv }}<br><br>
         {% elif slug == 'ewallet' %}
-            {{ form.amount }} {{ form.currency }}
             <h1>Pay through eWallet</h1><br>
+            <p>EWallet</p>
+            {{ form.bank_name }}<br>
             <p>Account Name</p>
             {{ form.cardholder_name }}<br>
-            <p>Card Number</p>
+            <p>Account Number</p>
             {{ form.account_number }}<br><br>
         {% else %}
             <h1>Pay through Cash on Delivery</h1><br>

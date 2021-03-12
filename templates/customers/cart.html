@@ -7,13 +7,17 @@
         <h3>{{ item.size.size }}</h1>
         <p>{{ item.total }}</p>
         <br>
+        
         {% if item.addons %}
             {% for addon in item.addons.all %}
                 <p>{{ addon.addon }}</p>
                 <p>+ PHP {{ addon.price_addon }}</p>
             {% endfor %}
         {% endif %}
-
+        {% if item.instructions %}
+            <p>Notes: {{ item.instructions }}</p>
+        {% endif %}
+        <br><br>
         <div id="edit-cart-form">
             <img class="decrease-quantity update-cart" data-shop="{{ shop.id }}" data-product="{{ item.product.id }}" data-item="{{ item.id }}" 
             data-action="decrease" src="{% static 'media/icons/order_minus.svg' %}" alt="—">

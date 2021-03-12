@@ -27,9 +27,9 @@
         var auth_id = "";
         let amount = parseFloat(tokenData['amount']);
 
-        var current_url = String(window.location.href);
-        var prev_url = current_url.replace('token/', '');
-        var next_url = current_url.replace('token', 'auth');
+        var current_url = window.location.href;
+        var prev_url = String(current_url).replace('token/', '');
+        var next_url = String(current_url).replace('token', 'pay');
 
         // DATA VERIFICATION
         function verifyData() {
@@ -70,6 +70,7 @@
         // TOKENIZATION
         function sendTokenData(a) {
             token_id = a;
+            console.log("Token ID: ", token_id);
 
             $.ajax({
                 url: current_url,
@@ -79,7 +80,7 @@
                     console.log("Token data successfully sent.");
                 },
                 error:function (xhr, textStatus, thrownError){
-                    console.log("Can't send token data.");
+                    console.log("Can't send token data.", xhr, textStatus, thrownError);
                 }
             });
         }
@@ -87,6 +88,8 @@
         function sendTokenWithAuthData(a, b) {
             token_id = a;
             auth_id = b;
+            console.log("Token ID: ", token_id);
+            console.log("Authentication ID: ", auth_id);
 
             $.ajax({
                 url: current_url,
@@ -96,13 +99,14 @@
                     console.log("Token and authentication data successfully sent.")
                 },
                 error:function (xhr, textStatus, thrownError){
-                    console.log("Can't send token and authentication data.");
+                    console.log("Can't send token and authentication data.", xhr, textStatus, thrownError);
                 }
             });
         }
 
         function sendAuthData(a) {
             auth_id = a;
+            console.log("Authentication ID: ", auth_id);
 
             $.ajax({
                 url: current_url,
@@ -112,7 +116,7 @@
                     console.log("Authentication data successfully sent.")
                 },
                 error:function (xhr, textStatus, thrownError){
-                    console.log("Can't send authentication data.");
+                    console.log("Can't send authentication data.", xhr, textStatus, thrownError);
                 }
             });
         }
@@ -173,15 +177,10 @@
                         token_id = data.id;
                         sendTokenData(token_id);
                     }
-
-                    console.log('Data is being reviewed for authentication.', data)
-                    token_id = data.id;
-                    sendTokenData(token_id);
                 } else if (data.status === 'FAILED' || data.status === 'FRAUD') {
                     if (data.failure_reason == 'AUTHENTICATION_FAILED') {
                         console.log('Failed to create token.')
                         console.log('Failure Reason: ' + String(data.failure_reason), data)
-
                         token_id = data.id;
                         sendTokenData(token_id);
                     } else {
@@ -218,7 +217,6 @@
 
         verifyData();
         setTimeout(createToken, 1000);
-        
         if (tokenData.is_multiple_use == true) {
             setTimeout(createAuthentication, 4000);
         }

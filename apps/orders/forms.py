@@ -150,7 +150,6 @@ class CheckoutForm(forms.Form):
 
 # Payment Details for Debit / Credit
 class CardForm(forms.Form):
-    amount = forms.CharField(widget=forms.HiddenInput())
     cardholder_name = forms.CharField(label='', 
         widget=forms.fields.TextInput(attrs={
         'class': 'input default subtitle', 
@@ -167,4 +166,25 @@ class CardForm(forms.Form):
         widget=forms.fields.TextInput(attrs={
         'class': 'small-input default subtitle', 
         'placeholder': '***'}))
-    currency = forms.CharField(widget=forms.HiddenInput())
+
+class eWalletForm(forms.Form):
+    EWALLET = [
+        ("PH_GCASH", _("GCash")),
+        ("PH_PAYMAYA", _("PayMaya")),
+        ("PH_GRABPAY", _("GrabPay"))
+    ]
+
+    bank_name = forms.ChoiceField(label='', 
+        widget=forms.RadioSelect(attrs={
+        'class': 'default subtitle'}),
+        choices=EWALLET)
+    cardholder_name = forms.CharField(label='', 
+        widget=forms.fields.TextInput(attrs={
+        'class': 'input default subtitle', 
+        'placeholder': 'Ex. Juan Dela Cruz'}))
+    account_number = forms.CharField(label='', 
+        widget=forms.fields.TextInput(attrs={
+        'class': 'input default subtitle', 
+        'placeholder': 'Ex. 0916 655 8865'}))
+
+    

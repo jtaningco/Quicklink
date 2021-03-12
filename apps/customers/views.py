@@ -1,21 +1,30 @@
 from django.shortcuts import render, redirect
 from django.utils.timezone import datetime, timedelta
+from django.http import HttpResponse, JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.http import require_POST
+
+from basicauth.decorators import basic_auth_required
 
 from apps.products.models import Product, Size, Addon
 from apps.orders.models import Order, ProductOrder, OrderInformation
 from apps.accounts.models import *
 
-from apps.orders.forms import OrderForm, CheckoutForm, CardForm
+from apps.orders.forms import OrderForm, CheckoutForm, CardForm, eWalletForm
 
-from django.http import HttpResponse, JsonResponse
 from decimal import Decimal
 import json
 import shortuuid
 from secret_key_generator import secret_key_generator
 
-from xendit import Xendit, Balance
+from xendit import Xendit, Balance, EWallet
+
 import jwt
 import base64
+
+# For Cuttly API in invoices
+import urllib
+import requests
 
 # Create your views here.
 # View Products (Customers)
@@ -101,12 +110,6 @@ def addOrder(request, shop_pk, product_pk):
 
         # Save form if form is valid
         if form.is_valid():
-            product.sold = product.sold + 1
-            if product.stock == 'Made to Order':
-                pass
-            else:
-                product.stock = str(int(product.stock) - 1)
-                product.save()
             return redirect('add/')
         else:
             form = OrderForm(data=request.POST)
@@ -173,7 +176,7 @@ def addItem(request, shop_pk, product_pk):
     order.total = order.subtotal + order.fees
     order.save()
 
-    return redirect('/shops/')
+    return redirect('/shops/' + shop_pk + '/products/')
 
 def updateItem(request, shop_pk, product_pk):
     data = json.loads(request.body)
@@ -247,10 +250,11 @@ def checkout(request):
     if request.method == "POST":
         form = CheckoutForm(data=request.POST or None, min_date=min_date, user=customer)
         if form.is_valid():
+            mobile_number_list = []
             for number in form.cleaned_data.get('contact_number'):
                 mobile_number_list.append(number)
-            mobile_number_list[0] = '(+63)('
-            mobile_number_list[-1] = mobile_number_list[-1] + ')'
+            if mobile_number_list[0] == '0':
+                mobile_number_list[0] = '+63'
             mobile_number = ''.join(mobile_number_list)
 
             sessionSender = CustomerInformation.objects.create(
@@ -320,52 +324,30 @@ def payment(request, slug):
     if slug == 'card':
         try:
             form = CardForm(initial={
-                'currency':"PHP",
-                'amount': order.total,
                 'cardholder_name': customer.user_account.cardholder_name,
                 'account_number': customer.user_account.account_number,
                 'exp_date': customer.user_account.exp_date,
             })
         except:
-            form = CardForm(initial={
-                'currency':"PHP",
-                'amount': order.total,
-            })
+            form = CardForm()
             
     # If eWallet
     elif slug == 'ewallet':
-        form = CardForm(initial={
-                'currency':"PHP",
-                'amount': order.total,
-            })
+        form = eWalletForm()
     # if COD
     else:
-        form = CardForm(initial={
-                'currency':"PHP",
-                'amount': order.total,
-            })
+        form = eWalletForm()
 
     orderInfo = OrderInformation.objects.get(order=order)
     contact_number = orderInfo.session_sender.customer_contact_number
-    mobile_number_list = []
-    
-    for number in contact_number:
-        mobile_number_list.append(number)
-    mobile_number_list[0] = '(+63)('
-    mobile_number_list[-1] = mobile_number_list[-1] + ')'
-    mobile_number = ''.join(mobile_number_list)
 
     if request.method == 'POST' and slug == 'card':
         form = CardForm(request.POST)
         if form.is_valid():
-            customer_name = form.cleaned_data.get('cardholder_name').split(' ')
-            given_names_list = []
-            for name in customer_name:
-                if name != customer_name[-1]:
-                    given_names_list.append(str(name))
-                else:
-                    surname = str(name)
-                given_names = ' '.join(given_names_list)
+            given_names_list = form.cleaned_data.get('cardholder_name').split(' ')
+            surname = given_names_list[-1]
+            given_names_list[-1] = ""
+            given_names = ' '.join(given_names_list)
 
             exp_month = str(form.cleaned_data.get('exp_date').split('/')[0])
             if len(form.cleaned_data.get('exp_date').split('/')[1]) == 2:
@@ -400,7 +382,7 @@ def payment(request, slug):
                     "given_names": given_names,
                     "surname": surname,
                     "email": orderInfo.session_sender.customer_email,
-                    "mobile_number": mobile_number,
+                    "mobile_number": orderInfo.session_sender.customer_contact_number,
                     "phone_number": orderInfo.session_sender.customer_contact_number,
                     "address": {
                         "country": "PH",
@@ -428,23 +410,29 @@ def payment(request, slug):
             return redirect('token/', slug)
         else:
             data = form.errors.as_json()
-            return JsonResponse(data, status=400)
+            return JsonResponse(data, status=400, safe=False)
 
     if request.method == 'POST' and slug == 'ewallet':
-        form = CardForm(request.POST)
+        form = eWalletForm(request.POST)
         if form.is_valid():
-            customer_name = form.cleaned_data.get('cardholder_name')
-            given_names_list = []
-            for name in customer_name:
-                if name != customer_name[-1]:
-                    given_names_list.append(str(name))
-                else:
-                    surname = str(name)
-                given_names = ' '.join(given_names_list)
+            given_names_list = form.cleaned_data.get('cardholder_name').split(' ')
+            surname = given_names_list[-1]
+            given_names_list[-1] = ""
+            given_names = ' '.join(given_names_list)
+
+            contact_number = form.cleaned_data.get('account_number')
+            contact_number_list = []
+
+            for num in contact_number:
+                contact_number_list.append(num)
+
+            contact_number_list[0] = '(+63)('
+            contact_number_list[-1] = contact_number_list[-1] + ')'
+            mobile_number = ''.join(contact_number_list)
 
             orderPayment = BankAccount.objects.create(
-                cardholder_name=given_names+surname,
-                account_number=card_number,
+                cardholder_name=given_names+' '+surname,
+                account_number=mobile_number,
             )
 
             orderInfo.session_payment=orderPayment
@@ -454,10 +442,6 @@ def payment(request, slug):
             # Include Metadata to store more data for analysis
             random_uuid = str(shortuuid.uuid())
             reference_id = "quicklink_customer-" + random_uuid
-
-            api_key = "xnd_development_P4qDfOss0OCpl8RtKrROHjaQYNCk9dN5lSfk+R1l9Wbe+rSiCwZ3jw=="
-            xendit_instance = Xendit(api_key=api_key)
-            DirectDebit = xendit_instance.DirectDebit
 
             data = {
                 "reference_id": reference_id,
@@ -472,32 +456,59 @@ def payment(request, slug):
                     "street_line1": orderInfo.session_address.line1,
                     "street_line2": orderInfo.session_address.line2,
                     "city": orderInfo.session_address.city,
-                    "province_state": orderInfo.session_address.province,
+                    "province": orderInfo.session_address.province,
                     "postal_code": orderInfo.session_address.postal_code 
-                }
+                },
+                "channel_code": form.cleaned_data.get('bank_name'),
+                "customer_id": "",
             }
+            print("Data: ", data)
 
+            api_key = "xnd_development_P4qDfOss0OCpl8RtKrROHjaQYNCk9dN5lSfk+R1l9Wbe+rSiCwZ3jw=="
+            xendit_instance = Xendit(api_key=api_key)
+            DirectDebit = xendit_instance.DirectDebit
+
+            customer = DirectDebit.create_customer(
+                reference_id=str(data["reference_id"]),
+                email=str(data["email"]),
+                mobile_number=str(data["mobile_number"]),
+                given_names=str(data["given_names"]),
+                surname=str(data["surname"]),
+                nationality=str(data["nationality"]),
+                addresses=[data["address"]],
+            )
+            data["customer_id"] = customer.id
+            
             private_key = secret_key_generator.generate(len_of_secret_key=15)
             public_key = secret_key_generator.generate(len_of_secret_key=15)
 
-            orderInfo.token_private_key = private_key
-            orderInfo.token_public_key = public_key
+            orderInfo.customer_private_key = private_key
+            orderInfo.customer_public_key = public_key
 
-            orderInfo.token_jwt_id = jwt.encode(
+            orderInfo.customer_jwt_id = jwt.encode(
                 data, 
                 private_key, 
                 algorithm="HS256"
             )
             orderInfo.save()
-            return redirect('/checkout/payment/ewallet/callback')
+            return redirect('/checkout/payment/ewallet/pay/')
         else:
             data = form.errors.as_json()
-            return JsonResponse(data, status=400) 
+            return JsonResponse(data, status=400, safe=False) 
 
     context = {'items':items, 'form':form, 'slug':slug, 'order':order}
     return render(request, 'customers/payment.html', context)
 
-def eWalletCallback(request, slug):
+def eWalletPayment(request):
+    api_key = "xnd_development_L8LFCGlEVFmq8qcCLZKNoVnq303nlkB47u5W2TrknkwioknAn4H0KOQcFfbm7"
+
+    if 'HTTP_AUTHORIZATION' in request.META:
+        byte = api_key.encode('ascii')
+        username = base64.b64encode(byte)
+        headers = request.META['HTTP_AUTHORIZATION'].split()
+        request.META['HTTP_AUTHORIZATION'] = headers
+        request.META['WWW-Authenticate'] = headers
+
     if request.user.is_authenticated:
         customer = request.user
         order = Order.objects.get(user=customer, complete=False)
@@ -506,14 +517,39 @@ def eWalletCallback(request, slug):
         items = []
         order = {'get_cart_total': 0, 'get_cart_items': 0}
 
-    json_data = jwt.decode(
-        orderInfo.token_jwt_id, 
-        orderInfo.token_public_key, 
+    data = jwt.decode(
+        orderInfo.customer_jwt_id, 
+        orderInfo.customer_public_key, 
         algorithms=["HS256"]
     )
 
-    return JsonResponse(json_data, status=200) 
+    random_uuid = str(shortuuid.uuid())
+    reference_id = "quicklink_ewallet_charge-" + random_uuid
+    success_url = "/checkout/invoice/" + str(order.id)
 
+    # Add Basket Items in v2
+    ewallet_charge = EWallet.create_ewallet_charge(
+        reference_id=reference_id,
+        currency="PHP",
+        amount=float(order.total),
+        checkout_method="ONE_TIME_PAYMENT",
+        channel_code=data["channel_code"],
+        channel_properties={
+            "success_redirect_url": success_url,
+            "failure_redirect_url": "/checkout/payment/ewallet/pay/",
+            "cancel_redirect_url": "/checkout/payment/ewallet/pay/",
+        },
+        customer_id=data["customer_id"],
+    )
+
+    return HttpResponse(ewallet_charge) 
+
+@csrf_exempt
+@require_POST
+def eWalletCallback(request):
+    response = request.body
+    response = json.loads(response)
+    return HttpResponse(response, status=200)
 
 def createToken(request, slug):
     api_key = "xnd_development_L8LFCGlEVFmq8qcCLZKNoVnq303nlkB47u5W2TrknkwioknAn4H0KOQcFfbm7"
@@ -550,11 +586,14 @@ def createToken(request, slug):
         json_data['authentication_id'] = auth_id
         orderInfo.token_jwt_id = jwt.encode(json_data, orderInfo.token_private_key, algorithm="HS256")
         orderInfo.save()
+        return redirect('/checkout/payment/card/pay/')
+
+    print("Data: ", json_data)
 
     context = {'data':data}
     return render(request, 'customers/token.html', context)
 
-def cardPayment(request, slug):
+def cardPayment(request):
     if request.user.is_authenticated:
         customer = request.user
         order = Order.objects.get(user=customer, complete=False)
@@ -575,7 +614,7 @@ def cardPayment(request, slug):
     amount = float(data['amount'])
     card_cvn = str(data['card_cvn'])
     random_uuid = str(shortuuid.uuid())
-    external_id = "quicklink_charge-" + random_uuid
+    external_id = "quicklink_card_charge-" + random_uuid
 
     # If capture = False, you need to capture charge (default: capture = True)
     # See more in Xendit Docs Here: https://developers.xendit.co/api-reference/#capture-charge
@@ -587,9 +626,10 @@ def cardPayment(request, slug):
         card_cvn=card_cvn,
         currency="PHP",
     )
+    print(charge.status)
 
-    if charge.status == "CAPTURED":
-        url = 'checkout/invoice/' + str(order.id) + '/'
+    if charge.status == "CAPTURED" or charge.status == "AUTHORIZED" or charge.eci == "05" or charge.eci == "02":
+        url = '/checkout/invoice/' + str(order.id) + '/'
         return redirect(url, order.id)
 
     context = {'data':data}
@@ -600,9 +640,39 @@ def orderInvoice(request, order_id):
         customer = request.user
         order = Order.objects.get(id=order_id)
         orderInfo = OrderInformation.objects.get(order=order)
+        orderItems = ProductOrder.objects.filter(order=order)
+
+    for orderItem in orderItems:
+        product = Product.objects.get(id=orderItem.product.id)
+        product.sold = product.sold + orderItem.quantity
+        if product.stock == 'Made to Order':
+            pass
+        else:
+            product.stock = str(int(product.stock) - orderItem.quantity)
+        product.save()
 
     order.complete = True
     order.save()
 
+    if int(order.id) <= 100:
+        short_url = "order00" + str(order.id)
+    elif int(order.id) <= 1000:
+        short_url = "order0" + str(order.id)
+    else: 
+        short_url = "order" + str(order.id)
+
+    # Cuttly API
+    # See more at https://cutt.ly/api-documentation/team-api
+    key = '3c0c9bc84f2c1f15aefd9f1943ab6a7b04dca'
+    url = urllib.parse.quote(short_url)
+    name  = short_url + ' Invoice'
+    userDomain = '1'
+    r = requests.get('http://cutt.ly/api/api.php?key={}&short={}&name={}&userDomain={}'.format(key, url, name, userDomain))
+    print(r.text)
+
     context = {'order':order, 'info':orderInfo}
     return render(request, 'customers/invoice.html', context)
+
+def invoiceLink(request, order_id):
+    url = 'checkout/invoice/' + order_id + '/'
+    return redirect(url, order_id)

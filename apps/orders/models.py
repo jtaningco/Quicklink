@@ -58,7 +58,7 @@ class Order(models.Model):
     notes = models.CharField(max_length=255, null=True, blank=True)
 
     def __str__(self):
-        return f"{self.order_date} - Total of PHP {self.total}"
+        return f"{self.order_date} - Total of PHP {self.total} (Convenience Fee: PHP {self.fees}"
 
     def delivery_date(self):
         return datetime.today()+timedelta(days=3)
@@ -107,9 +107,6 @@ class OrderInformation(models.Model):
     )
 
     # JWT token ID
-    token_id = models.CharField(max_length=55, null=True, blank=True)
-
-    # JWT token ID
     token_jwt_id = models.CharField(max_length=999, null=True, blank=True)
     
     # For encoding token to jwt
@@ -117,6 +114,11 @@ class OrderInformation(models.Model):
 
     # For decoding token to jwt
     token_public_key = models.CharField(max_length=255, null=True, blank=True)
+
+    # JWT customer ID (eWallet)
+    customer_jwt_id = models.CharField(max_length=999, null=True, blank=True)
+    customer_private_key = models.CharField(max_length=255, null=True, blank=True)
+    customer_public_key = models.CharField(max_length=255, null=True, blank=True)
 
 class ProductOrder(models.Model):
     # Order cart
