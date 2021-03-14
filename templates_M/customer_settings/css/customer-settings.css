@@ -61,6 +61,7 @@
 }
 #activeOrdersHeader {
     color: var(--muted-dark);
+    font-weight: 600;
     font-size: 1.25rem;
     padding-bottom: 0.5rem;
 }
@@ -100,6 +101,7 @@
 #orderCompanyName {
     color: var(--muted-dark);
     font-size: 1rem;
+    font-weight: 600;
     background-color: #FFF;
 }
 #orderDeliveryDate {
@@ -127,6 +129,7 @@
 #orderTotalAmount {
     color:var(--muted-lighter);
     font-size: 0.75rem;
+    font-weight: 400;
     background-color: #FFF;
     padding: 0.25rem 1.25rem;
 }
@@ -149,7 +152,7 @@
 .logout-btn {
     display:flex;
     justify-content: center;
-    padding: 2.5rem 0;
+    padding: 1rem 0;
 }
 #outline-btn {
     text-align: center;
