@@ -8,6 +8,9 @@ from apps.accounts.models import *
 from .forms import *
 from .decorators import allowed_users, unauthenticated_customer, unauthenticated_merchant
 
+# XenPlatform Account Creation
+from xendit import Xendit, XenPlatformAccountType, XenPlatformURLType
+
 # Create your views here.
 @unauthenticated_merchant
 def registerMerchant(request):
@@ -45,6 +48,7 @@ def registerShopInformation(request):
                 shop_username=form.cleaned_data.get("shop_username"),
                 shop_cod=form.cleaned_data.get("shop_cod"),
             )
+            shop_info.save()
             
             open_hours = OpenHours.objects.create(
                 shop=shop_info,
@@ -70,16 +74,43 @@ def registerShopInformation(request):
                 twitter=form.cleaned_data.get("twitter"),
             )
 
-            shop_info.save()
             open_hours.save()
             shop_address.save()
             social_links.save()
 
             messages.success(request, 'Profile successfully updated')
+
+            api_key = "xnd_development_L8LFCGlEVFmq8qcCLZKNoVnq303nlkB47u5W2TrknkwioknAn4H0KOQcFfbm7"
+            xendit_instance = Xendit(api_key=api_key)
+            XenPlatform = xendit_instance.XenPlatform
+
+            xenplatform_account = XenPlatform.create_account(
+                account_email=str(user.email),
+                type=XenPlatformAccountType.MANAGED,
+                business_profile={"business_name": str(shop_info.shop_name)}
+            )
+            print(xenplatform_account)
+
+            # url = "http://127.0.0.1:8000/callback/" + str(xenplatform_account.user_id) + "/"
+            # XenPlatform = xendit_instance.XenPlatform
+
+            # ## When an Invoice is paid, our systems will send a callback to the URL
+            # xenplatform_callback_url = XenPlatform.set_callback_url(
+            #     type=XenPlatformURLType.INVOICE,
+            #     url=url,
+            # )
+
             return redirect('accounts:merchant-register-logo')
 
     context = {'form':form}
     return render(request, 'accounts/add-shop-information.html', context)
+
+### The Set Callback URLs API allows you to set your sub-accounts' Callback URLs.
+# Use your production key to set production URLs; use your development key to set development URLs.
+# Note: Production callback URLs have to use the https protocol.
+def accountCallback(request, user_id):
+    user_id = user_id
+    return HttpResponse(request.body)
 
 @login_required(login_url='accounts:merchant-login')
 @allowed_users(allowed_roles=[User.Types.MERCHANT, User.Types.ADMIN])

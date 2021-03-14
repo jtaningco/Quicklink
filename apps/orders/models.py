@@ -32,13 +32,13 @@ class Order(models.Model):
     order_quantity = models.IntegerField(null=True, default=1)
     
     # Subtotal for the order
-    subtotal = models.DecimalField(null=True, default=0, max_digits=10, decimal_places=2)
+    subtotal = models.DecimalField(null=True, default=0.00, max_digits=10, decimal_places=2)
 
     # Convenience fees for the order
-    fees = models.DecimalField(null=True, default=0, max_digits=8, decimal_places=2)
+    fees = models.DecimalField(null=True, default=0.00, max_digits=8, decimal_places=2)
 
     # Total fees for the order
-    total = models.DecimalField(null=True, default=0, max_digits=12, decimal_places=2)
+    total = models.DecimalField(null=True, default=0.00, max_digits=12, decimal_places=2)
 
     # Order status
     order_status = models.CharField(max_length=40, null=True, choices=ORDER_STATUS, default='Pending')
@@ -106,7 +106,7 @@ class OrderInformation(models.Model):
         null=True,
     )
 
-    # JWT token ID
+    # JWT token ID (Credit Card)
     token_jwt_id = models.CharField(max_length=999, null=True, blank=True)
     
     # For encoding token to jwt
@@ -119,6 +119,17 @@ class OrderInformation(models.Model):
     customer_jwt_id = models.CharField(max_length=999, null=True, blank=True)
     customer_private_key = models.CharField(max_length=255, null=True, blank=True)
     customer_public_key = models.CharField(max_length=255, null=True, blank=True)
+
+class OrderPayment(models.Model):
+    order = models.OneToOneField(Order, related_name='order_payment', null=True, on_delete=models.SET_NULL)
+    xendit_charge_id = models.CharField(max_length=100, null=True, blank=True)
+    payment_for = models.CharField(max_length=100, null=True, blank=True)
+    amount = models.DecimalField(null=True, default=0.00, max_digits=10, decimal_places=2)
+    paid = models.BooleanField(default=False)
+    date = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Order #{self.order.id}: {self.paid}"
 
 class ProductOrder(models.Model):
     # Order cart

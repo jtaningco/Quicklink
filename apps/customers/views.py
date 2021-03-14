@@ -464,7 +464,7 @@ def payment(request, slug):
             }
             print("Data: ", data)
 
-            api_key = "xnd_development_P4qDfOss0OCpl8RtKrROHjaQYNCk9dN5lSfk+R1l9Wbe+rSiCwZ3jw=="
+            api_key = "xnd_development_L8LFCGlEVFmq8qcCLZKNoVnq303nlkB47u5W2TrknkwioknAn4H0KOQcFfbm7"
             xendit_instance = Xendit(api_key=api_key)
             DirectDebit = xendit_instance.DirectDebit
 

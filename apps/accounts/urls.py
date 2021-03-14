@@ -18,6 +18,7 @@ urlpatterns = [
     path('customer/login/', views.loginCustomer, name='customer-login'),
     path('customer/logout/', views.logoutCustomer, name='customer-logout'),
     path('customer/landing/', views.landingCustomer, name='customer-landing'),
+    path('callback/<str:user_id>/', views.accountCallback, name='xendit-callback'),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
