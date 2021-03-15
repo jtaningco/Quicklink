@@ -44,4 +44,81 @@
     background-color: #FFF;
     box-shadow: 0px 3px 5px rgba(51, 51, 51, 0.15);
     border-radius: 5px;
+    padding:1.5rem;
+    margin-bottom: 1rem;
+}
+.customer-profile-display{
+    display: flex;
+    justify-content: start;
+    background-color: #FFF;
+    padding: 0 0 2rem 0;
+}
+#customer-dp {
+    border: 50%;
+    padding-right: 0.675rem;
+    background-color: #FFF;
+}
+.customer-profile-details {
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    background-color: #FFF;
+}
+#profile-name {
+    color: var(--muted-dark);
+    font-size: 1.25rem;
+    background-color: #FFF;
+}
+#profile-username {
+    color: var(--primary-main);
+    font-size: 0.625rem;
+    background-color: #FFF;
+}
+.body-element {
+    font-size: 14px;
+    font-weight: 600;
+    color:var(--muted-dark);
+    padding: 1rem 0;
+    background-color: #FFF;
+}
+input[type=text], select {
+    font-size:14px;
+    color: #2c2c2c;
+    width: 100%;
+    padding: 0.5rem 1rem;
+    margin-bottom: 1rem;
+    border-radius: 0.25rem;
+    background-color: #FFF;
+    border: 1px solid var(--muted-lighter);
+}
+input[type=custom-text], select {
+    font-size:14px;
+    color: #2c2c2c;
+    width: 48%;
+    padding: 0.5rem 1rem;
+    margin-bottom: 1rem;
+    border-radius: 0.25rem;
+    background-color: #FFF;
+    border: 1px solid var(--muted-lighter);
+}
+.two-inputs {
+    display: flex;
+    justify-content: space-between;
+}
+.page-end {
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.yellow-btn {
+    color: #FFF;
+    font-size: 0.875rem;
+    margin: 1rem;
+    padding: 0.5rem 1.5rem;
+    background-color: var(--secondary-main);
+}
+.back-btn {
+    color: var(--muted-lighter);
+    padding: 0.5rem 1.5rem;
+    margin:0 0 1.5rem 0;
 }
