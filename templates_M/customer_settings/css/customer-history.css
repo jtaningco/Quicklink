@@ -28,36 +28,23 @@
     font-weight: 700;
     background-color: transparent;
 }
-.customer-menu-wrapper {
-    padding: 3.5rem 0;
+.page-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
     width: 30rem;
 }
-.customer-profile-display{
-    display: flex;
-    justify-content: start;
-}
-#customer-dp {
-    border: 50%;
-    padding-right: 0.675rem;
-}
-.customer-profile-details {
-    display: flex;
-    flex-direction: column;
-    justify-content: start;
-}
-#profile-name {
+.page-title {
+    font-size: 1.5rem;
     color: var(--muted-dark);
-    font-size: 1.25rem;
+    font-weight: 700;
+    padding: 1.875rem 0;
 }
-#profile-username {
-    color: var(--primary-main);
-    font-size: 0.625rem;
-}
-.customer-active-orders {
+.page-body {
     display: flex;
     flex-direction: column;
-    justify-content: start;
-    padding-top: 2.7rem;
+    justify-content: center;
+    align-items: center;
 }
 #active-order-wrapper {
     padding: 0;
@@ -76,7 +63,7 @@
     width: 30rem;
     height: 5.5rem;
     background-color: #FFF;
-    border-left: 4px solid var(--secondary-main)
+    border-left: 4px solid var(--primary-pressed)
 }
 .order-info {
     display:flex;
@@ -110,8 +97,8 @@
     align-items: center;
     background-color: #FFF;
 }
-#order-status-label {
-    color: var(--primary-pressed);
+#order-status-total {
+    color: var(--secondary-main);
     font-size: 0.75rem;
     background-color: #FFF;
 }
@@ -120,7 +107,10 @@
     padding: 0 0.25rem 0 0;
 }
 .order-total {
+    display: flex;
+    flex-direction: column;
     background-color: #FFF;
+    
 }
 #order-total-amount {
     color:var(--muted-lighter);
@@ -128,33 +118,13 @@
     font-weight: 400;
     background-color: #FFF;
     padding: 0.25rem 1.25rem;
+    text-align: right;
 }
-.customer-settings-options {
-    display: flex;
-    flex-direction: column;
-    align-content: center;
-    margin: 1rem 0;
-    width: 30rem;
-}
-.customer-settings-options a {
-    line-height: normal;
-    color:var(--muted-dark);
-    font-size: 1rem;
-    font-weight: 700;
-    height: 3rem;
-    margin-bottom: 0.5rem;
-    background-color: #FFF;
-}
-.logout-btn {
-    display:flex;
-    justify-content: center;
-    padding: 1rem 0;
-}
-#outline-btn {
-    text-align: center;
-    border: 1px solid var(--failure-main);
-    background-color: #FFF;
-    color:var(--failure-main);
+.primary-btn {
+    color: #FFF;
     font-size: 0.875rem;
-    padding: 0.5rem 7.5rem;
+    text-align: center;
+    padding: 0.5rem 1.5rem;
+    margin: 0 1rem;
+    border-radius: 4px;
 }
