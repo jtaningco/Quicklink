@@ -67,6 +67,7 @@
 }
 .activeOrders {
     display: flex;
+    justify-content: space-between;
     margin: 0.25rem 0;
     padding: 0.3rem;
     width: 30rem;
@@ -74,17 +75,12 @@
     background-color: #FFF;
     border-left: 4px solid var(--secondary-main)
 }
-.orderStructure {
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
-    background-color: #FFF;
-}
 .orderInfo {
     display:flex;
 }
 .orderDisplayPicture{
     background-color: #FFF;
+    border: 50%;
 }
 #displayPicture {
     width: 3rem;
