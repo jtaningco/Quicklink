@@ -11,7 +11,7 @@
     flex-direction: column;
     align-items: center;
 }
-.navDisplay {
+.nav-display {
     display: flex;
     align-items: center;
     background-color: var(--primary-main);
@@ -22,17 +22,17 @@
     background-color: transparent;
     padding: 1.375rem 1rem 1.375rem 1.5rem;
 }
-#navTitle {
+#nav-title {
     font-size: 1.75rem;
     color: #FFF;
     font-weight: 700;
     background-color: transparent;
 }
-.customerMenuWrapper {
+.customer-menu-wrapper {
     padding: 3.5rem 0;
     width: 30rem;
 }
-.customerProfileDisplay{
+.customer-profile-display{
     display: flex;
     justify-content: start;
 }
@@ -40,32 +40,35 @@
     border: 50%;
     padding-right: 0.675rem;
 }
-.customerProfileDetails {
+.customer-profile-details {
     display: flex;
     flex-direction: column;
     justify-content: start;
 }
-#ProfileName {
+#Profile-name {
     color: var(--muted-dark);
     font-size: 1.25rem;
 }
-#profileUsername {
+#profile-username {
     color: var(--primary-main);
     font-size: 0.625rem;
 }
-.customerActiveOrders {
+.customer-active-orders {
     display: flex;
     flex-direction: column;
     justify-content: start;
     padding-top: 2.7rem;
 }
-#activeOrdersHeader {
+#active-order-wrapper {
+    padding: 0;
+}
+#active-orders-header {
     color: var(--muted-dark);
     font-weight: 600;
     font-size: 1.25rem;
     padding-bottom: 0.5rem;
 }
-.activeOrders {
+.active-orders {
     display: flex;
     justify-content: space-between;
     margin: 0.25rem 0;
@@ -75,66 +78,65 @@
     background-color: #FFF;
     border-left: 4px solid var(--secondary-main)
 }
-.orderInfo {
+.order-info {
     display:flex;
 }
-
-#orderDisplayPicture {
+#order-display-picture {
     border: 50%;
     width: 3rem;
     height: 3rem;
     padding: 0.5rem;
     background-color: #FFF;
 }
-.orderDetails {
+.order-details {
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
     background-color: #FFF;
 }
-#orderCompanyName {
+#order-company-name {
     color: var(--muted-dark);
     font-size: 1rem;
     font-weight: 600;
     background-color: #FFF;
 }
-#orderDeliveryDate {
+#order-delivery-date {
     color:var(--muted-lighter);
     font-size: 0.75rem;
     background-color: #FFF;
 }
-.orderStatus {
+.item-status {
     display: flex;
     align-items: center;
     background-color: #FFF;
 }
-#orderStatusLabel {
+#order-status-label {
     color: var(--primary-pressed);
     font-size: 0.75rem;
     background-color: #FFF;
 }
-#orderIcon{
+#order-icon{
     background-color: #FFF;
     padding: 0 0.25rem 0 0;
 }
-.orderTotal {
+.order-total {
     background-color: #FFF;
 }
-#orderTotalAmount {
+#order-total-amount {
     color:var(--muted-lighter);
     font-size: 0.75rem;
     font-weight: 400;
     background-color: #FFF;
     padding: 0.25rem 1.25rem;
 }
-.customerSettingFeatures {
+.customer-settings-options {
     display: flex;
     flex-direction: column;
     align-content: center;
     margin: 1rem 0;
     width: 30rem;
 }
-.customerSettingFeatures a {
+.customer-settings-options a {
     line-height: normal;
     color:var(--muted-dark);
     font-size: 1rem;
