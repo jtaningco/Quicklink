@@ -78,11 +78,9 @@
 .orderInfo {
     display:flex;
 }
-.orderDisplayPicture{
-    background-color: #FFF;
+
+#orderDisplayPicture {
     border: 50%;
-}
-#displayPicture {
     width: 3rem;
     height: 3rem;
     padding: 0.5rem;
