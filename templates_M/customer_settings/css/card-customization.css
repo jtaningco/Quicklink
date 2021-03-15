@@ -40,12 +40,86 @@
     font-weight: 700;
     padding: 1.875rem 0;
 }
-.page-body {
+.body-info {
+    display: flex;
+    flex-direction:column;
+    justify-content: start;
+    width: 100%;
+    padding: 1rem 2rem;
+    margin-bottom: 1rem;
+    background-color: #FFF;
+    box-shadow: 0px 3px 5px rgba(51, 51, 51, 0.15);
+    border-radius: 5px;
+}
+.card-input-details {
     background-color: #FFF;
 }
 .body-title {
     font-size: 1.5rem;
     color: var(--muted-dark);
     font-weight: 700;
-    padding: 1.875rem 0;
+    padding: 1rem 0;
+    background-color: #FFF;
+}
+.text-structure {
+    display: flex;
+    justify-content: space-between;
+    background-color: #FFF;
+}
+.card-logos {
+    display: flex;
+    background-color: #FFF;
+}
+#small-card-logos {
+    background-color: #FFF;
+    padding: 0.25rem;
+}
+.body-element {
+    font-size: 14px;
+    font-weight: 600;
+    color:var(--muted-dark);
+    padding: 0 0 0.25rem 0;
+    background-color: #FFF;
+}
+input[type=text], select {
+    font-size:14px;
+    color: #2c2c2c;
+    width: 100%;
+    padding: 0.5rem 1rem;
+    margin-bottom: 1rem;
+    border-radius: 0.25rem;
+    background-color: #FFF;
+    border: 1px solid var(--muted-lighter);
+}
+input[type=custom-text], select {
+    font-size:14px;
+    color: #2c2c2c;
+    width: 100%;
+    padding: 0.5rem 1rem;
+    margin-bottom: 1rem;
+    border-radius: 0.25rem;
+    background-color: #FFF;
+    border: 1px solid var(--muted-lighter);
+}
+.two-inputs {
+    display: flex;
+    justify-content: space-between;
+    background-color: #FFF;
+}
+.input-structure {
+    display: flex;
+    flex-direction: column;
+    width: 48%;
+    background-color: #FFF;
+}
+.confirmation-btn {
+    background-color: #FFF;
+}
+.yellow-btn {
+    color: #FFF;
+    font-size: 0.875rem;
+    width: 100%;
+    padding: 0.5rem 1.5rem;
+    margin: 1rem 0;
+    background-color: var(--secondary-main);
 }

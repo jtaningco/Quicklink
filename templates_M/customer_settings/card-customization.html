@@ -12,10 +12,40 @@
         </div>
         <div class="page-wrapper">
             <h2 class="page-title">Payment Methods</h2>
-                <div class="page-body">
+                <div class="body-info">
                     <h2 class="body-title">Add Card</h2>
                     <div class="card-input-details">
-
+                        <subtitle class="body-element">
+                            Cardholder's Name<span style="color: var(--failure-main)">*</span>
+                        </subtitle>
+                        <input type="text" placeholder="Juan Dela Cruz">
+                        <div class="text-structure">
+                            <subtitle class="body-element">
+                                Card Number<span style="color: var(--failure-main)">*</span>
+                            </subtitle>
+                            <div class="card-logos">
+                                <img src="assets/small-mastercard-logo.svg" id="small-card-logos">
+                                <img src="assets/small-visa-logo.svg" id="small-card-logos">
+                            </div>
+                        </div>
+                        <input type="text" placeholder="Ex. 1234 5678 9876 5432">
+                        <div class="two-inputs">
+                            <div class="input-structure">
+                                <subtitle class="body-element">
+                                    Valid Thru<span style="color: var(--failure-main)">*</span>
+                                </subtitle>
+                                <input type="custom-text" placeholder="MM/YY">
+                            </div>
+                            <div class="input-structure">
+                                <subtitle class="body-element">
+                                    CVV<span style="color: var(--failure-main)">*</span>
+                                </subtitle>
+                                <input type="custom-text" placeholder="***">
+                            </div>
+                        </div>
+                        <div class="confirmation-btn">
+                            <button class="yellow-btn">Add Card</button>
+                        </div>
                     </div>
                 </div>
         </div>
