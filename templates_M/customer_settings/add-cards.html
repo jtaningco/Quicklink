@@ -13,46 +13,38 @@
         <div class="page-wrapper">
             <h2 class="page-title">Payment Methods</h2>
                 <div class="body-info">
-                    <img src="assets/visa-logo.svg" id="card-type-logo">
-                    <p id="card-number">**** **** **** 4321</p>
+                    <h2 class="body-title">Add Card</h2>
                     <div class="card-input-details">
                         <subtitle class="body-element">
-                            Cardholder's Name
+                            Cardholder's Name<span style="color: var(--failure-main)">*</span>
                         </subtitle>
                         <input type="text" placeholder="Juan Dela Cruz">
                         <div class="text-structure">
                             <subtitle class="body-element">
-                                Card Number
+                                Card Number<span style="color: var(--failure-main)">*</span>
                             </subtitle>
                             <div class="card-logos">
                                 <img src="assets/small-mastercard-logo.svg" id="small-card-logos">
                                 <img src="assets/small-visa-logo.svg" id="small-card-logos">
                             </div>
                         </div>
-                        <input type="text" placeholder="**** **** **** 5432">
+                        <input type="text" placeholder="Ex. 1234 5678 9876 5432">
                         <div class="two-inputs">
                             <div class="input-structure">
                                 <subtitle class="body-element">
-                                    Valid Thru
+                                    Valid Thru<span style="color: var(--failure-main)">*</span>
                                 </subtitle>
-                                <input type="custom-text" placeholder="02/18">
+                                <input type="custom-text" placeholder="MM/YY">
                             </div>
                             <div class="input-structure">
                                 <subtitle class="body-element">
-                                    CVV
+                                    CVV<span style="color: var(--failure-main)">*</span>
                                 </subtitle>
                                 <input type="custom-text" placeholder="***">
                             </div>
                         </div>
-                        <div class="default-option">
-                            <div class="default-option-text">
-                                <p id="default-option-header-text">Make Default</p>
-                                <p id="default-option-subheader-text">Make this card your default when purchasing via credit/debit card.</p>
-                            </div>
-                            slider switch
-                        </div>
-                        <div class="outline-btn">
-                            <button class="delete-btn">Add Card</button>
+                        <div class="confirmation-btn">
+                            <button class="yellow-btn">Add Card</button>
                         </div>
                     </div>
                 </div>
