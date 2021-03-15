@@ -140,6 +140,7 @@ input[type=custom-text], select {
 .default-option {
     display: flex;
     justify-content: space-between;
+    background-color: #FFF;
 }
 #default-option-header-text {
     color: var(--muted-dark);
@@ -152,6 +153,65 @@ input[type=custom-text], select {
     background-color: #FFF;
     width: 12rem;
     line-height: 1.5;
+}
+.switchWhole {
+  display: flex;
+  margin: 1rem 0;
+  background-color: #FFF;
+}
+.checkbox input:checked ~ #switchTextActive {
+  color:var(--success-main);
+}
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 48px;
+  height: 24px;
+  margin-left: 16px;
+  margin-right: 16px;
+}
+.switch input { 
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 22px;
+  width: 22px;
+  left: 0px;
+  bottom: 0px;
+  background-color: white;
+  border: 1px solid var(--muted-lightest);
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+input:checked + .slider {
+  background-color: var(--success-main);
+}
+input:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
+/* Rounded sliders */
+.slider.round {
+  border-radius: 34px;
+}
+.slider.round:before {
+  border-radius: 50%;
 }
 .outline-btn {
     background-color: #FFF;
