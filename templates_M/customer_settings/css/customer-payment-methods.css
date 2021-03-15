@@ -1,0 +1,100 @@
+@import url('https://fonts.googleapis.com/css2?family=Overpass:wght@700&display=swap');
+
+*{
+    margin: 0;
+    padding: 0;
+    font-family: 'Overpass', sans-serif;
+    background-color: var(--bg-color);
+}
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.nav-display {
+    display: flex;
+    align-items: center;
+    background-color: var(--primary-main);
+    width: 100%;
+    height: 5rem;
+}
+#small-white-ql-logo {
+    background-color: transparent;
+    padding: 1.375rem 1rem 1.375rem 1.5rem;
+}
+#nav-title {
+    font-size: 1.75rem;
+    color: #FFF;
+    font-weight: 700;
+    background-color: transparent;
+}
+.page-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    width: 30rem;
+}
+.page-title {
+    font-size: 1.5rem;
+    color: var(--muted-dark);
+    font-weight: 700;
+    padding: 1.875rem 0;
+}
+.payment-options {
+    display: flex;
+    flex-direction:column;
+    justify-content: start;
+    width: 100%;
+    height: 6.5rem;
+    padding: 1rem 2rem;
+    margin-bottom: 1rem;
+    background-color: #FFF;
+    box-shadow: 0px 3px 5px rgba(51, 51, 51, 0.15);
+    border-radius: 5px;
+}
+#payment-direction {
+    background-color: transparent;
+    padding: 0;
+}
+.payment-alignment {
+    display: flex;
+    justify-content:space-between;
+    align-items: center;
+    padding:0.75rem 0;
+    background-color: #FFF;
+}
+#status-icon{
+    background-color: #FFF;
+}
+.payment-options {
+    background-color: #FFF;
+}
+#mastercard-icon {
+    background-color: transparent;
+    width: 4rem;
+    height: 5rem;
+}
+#card-number {
+    color: var(--muted-dark);
+    font-size:0.875rem;
+    background-color: #FFF;
+}
+.add-payment-options {
+    background-color: #FFF;
+    padding: 0.625rem;
+    box-shadow: 0px 3px 5px rgba(51, 51, 51, 0.15);
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    margin: 0.5rem 0;
+}
+#gray-plus-icon {
+    padding: 0 1rem;
+    background-color: transparent;
+}
+#additional-payment-option-text {
+    color: var(--muted-lighter);
+    font-size: 0.875rem;
+    font-weight: 600;
+    background-color: transparent;
+}
