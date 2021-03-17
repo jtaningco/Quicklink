@@ -7,9 +7,9 @@
 
     <div>
         <h1>{{ shop.shop_name }}</h1>
-        <p>{{ user.user_links.instagram }}</p>
+        <p>{{ shopOwner.user_links.instagram }}</p>
         <p>{{ shop.shop_contact_number }}</p>
-        <p>{{ user.user_address.line1 }} {{ user.user_address.line2 }} {{ user.user_address.city }}</p>
+        <p>{{ shopOwner.user_address.line1 }} {{ shopOwner.user_address.line2 }} {{ shopOwner.user_address.city }}</p>
     </div>
 
     <div style="display: flex; flex-direction: column; margin-top: 40px;">
@@ -24,4 +24,7 @@
         {% endfor %}
     </div>
 
+{% endblock %}
+
+{% block scriptsBody %}
 {% endblock %}

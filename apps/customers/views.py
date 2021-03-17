@@ -5,6 +5,8 @@ from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST
 
 from basicauth.decorators import basic_auth_required
+from django.contrib.auth.decorators import login_required
+from apps.accounts.decorators import allowed_users
 
 from apps.products.models import Product, Size, Addon
 from apps.orders.models import Order, ProductOrder, OrderInformation
@@ -28,6 +30,8 @@ import requests
 
 # Create your views here.
 # View Products (Customers)
+@login_required(login_url='accounts:merchant-login')
+@allowed_users(allowed_roles=[User.Types.ADMIN])
 def viewShops(request):
     users = User.objects.filter(role=User.Types.MERCHANT)
     allShops = ShopInformation.objects.all()
@@ -51,7 +55,7 @@ def viewShops(request):
 # View Products (Customers)
 def viewProducts(request, shop_pk):
     shop = ShopInformation.objects.get(id=shop_pk)
-    user = shop.user
+    shopOwner = shop.user
     products = Product.objects.filter(user=shop.user)
     sizes = Size.objects.filter(product__in=products)
 
@@ -59,11 +63,12 @@ def viewProducts(request, shop_pk):
 
     if request.user.is_authenticated:
         customer = request.user
-        order, created = Order.objects.get_or_create(user=customer, complete=False)
-        items = order.productorder_set.all()
     else:
-        items = []
-        order = {'get_cart_total': 0, 'get_cart_items': 0}
+        device = request.COOKIES['device']
+        customer, created = User.objects.get_or_create(device_id=device, role=User.Types.CUSTOMER)
+    
+    order, created = Order.objects.get_or_create(user=customer, shop=shopOwner, complete=False)
+    items = order.productorder_set.all()
 
     for product in products:
         for size in sizes:
@@ -76,7 +81,7 @@ def viewProducts(request, shop_pk):
         product.save()
         size_prices.clear()
 
-    context = {'products':products, 'shop':shop, 'user':user, 'sizes':sizes, 'items':items, 'order':order, 'shop':shop}
+    context = {'products':products, 'shop':shop, 'shopOwner':shopOwner, 'sizes':sizes, 'items':items, 'order':order, 'shop':shop}
     return render(request, 'customers/products.html', context)
 
 # Add Products to Cart (Customers)
@@ -92,28 +97,28 @@ def addOrder(request, shop_pk, product_pk):
     
     if request.user.is_authenticated:
         customer = request.user
-        order, created = Order.objects.get_or_create(user=customer, complete=False)
-        items = order.productorder_set.all()
-        form = OrderForm(initial={
-            'product': product, 'order': order
-        })
     else:
-        items = []
-        order = {'get_cart_total': 0, 'get_cart_items': 0}
-        form = OrderForm(initial={
-            'product': product
-        })
+        device = request.COOKIES['device']
+        customer, created = User.objects.get_or_create(device_id=device, role=User.Types.CUSTOMER)
+    
+    order, created = Order.objects.get_or_create(user=customer, shop=shopOwner, complete=False)
+    items = order.productorder_set.all()
+    
+    form = OrderForm()
 
     if request.method == 'POST':
         # Check if order form exists        
-        form = OrderForm(request.POST, product=product)
-
+        form = OrderForm(request.POST)
         # Save form if form is valid
         if form.is_valid():
+            print("Form: ", form)
+            print("POST Request: ", request.POST)
             return redirect('add/')
         else:
             form = OrderForm(data=request.POST)
             print(form.errors.as_data())
+
+            # INSERT FAILED TO PLACE ORDER HERE
             return HttpResponse('Order failed!')
 
     context = {'form':form, 'product':product, 'sizes':sizes, 'addons':addons, 'shop':shop, 'order':order}
@@ -144,27 +149,26 @@ def addItem(request, shop_pk, product_pk):
     
     addons = Addon.objects.filter(id__in=addons_list)
 
-    customer = request.user
+    if request.user.is_authenticated:
+        customer = request.user
+    else:
+        device = request.COOKIES['device']
+        customer = User.objects.get(device_id=device, role=User.Types.CUSTOMER)
+
     shop = ShopInformation.objects.get(id=shopId)
     shopOwner = shop.user
 
     product = Product.objects.get(id=productId)
-    order, created = Order.objects.get_or_create(user=customer, complete=False)
-
-    if addons:
-        addons_total = 0
-        for i in addons:
-            addons_total += (quantity * i.price_addon)
-        total = (quantity * size.price_size) + addons_total
-    else:    
-        total = (quantity * size.price_size)
+    order = Order.objects.get(user=customer, shop=shopOwner, complete=False)
 
     productOrder, created = ProductOrder.objects.get_or_create(
         order=order, product=product, size=size, addons__in=addons,
-        instructions=instructions, quantity=quantity, total=total)
+        instructions=instructions, quantity=quantity)
 
     for addon in addons:
         productOrder.addons.add(addon)
+
+    productOrder.total = productOrder.get_total
 
     productOrder.save()
     
@@ -174,9 +178,8 @@ def addItem(request, shop_pk, product_pk):
 
     order.fees = order.subtotal * Decimal(0.05)
     order.total = order.subtotal + order.fees
-    order.save()
-
-    return redirect('/shops/' + shop_pk + '/products/')
+    order.save()    
+    return redirect('customers:view-products', shop_pk)
 
 def updateItem(request, shop_pk, product_pk):
     data = json.loads(request.body)
@@ -194,14 +197,7 @@ def updateItem(request, shop_pk, product_pk):
     elif action == "decrease":
         productOrder.quantity = (productOrder.quantity - 1)
 
-    if addons:
-        addons_total = 0
-        for i in addons:
-            addons_total += (productOrder.quantity * i.price_addon)
-        productOrder.total = (productOrder.quantity * productOrder.size.price_size) + addons_total
-    else:    
-        productOrder.total = (productOrder.quantity * productOrder.size.price_size)
-
+    productOrder.total = productOrder.get_total
     productOrder.save()
 
     if productOrder.quantity <= 0:
@@ -220,36 +216,33 @@ def updateItem(request, shop_pk, product_pk):
 def checkout(request):    
     if request.user.is_authenticated:
         customer = request.user
-        order = Order.objects.get(user=customer, complete=False)
-        items = order.productorder_set.all()
-
-        highest_days = 0
-        for item in items:
-            if item.product.days > highest_days: 
-                highest_days = item.product.days
-        min_date = datetime.today() + timedelta(days=highest_days+1)
     else:
-        customer = None
-        order = {'get_cart_total': 0, 'get_cart_items': 0}
-        items = []
+        device = request.COOKIES['device']
+        customer = User.objects.get(device_id=device, role=User.Types.CUSTOMER)
+    
+    order = Order.objects.get(user=customer, complete=False)
+    items = order.productorder_set.all()
 
-        highest_days = 0
-        for item in items:
-            if item.product.days > highest_days: 
-                highest_days = item.product.days
-        min_date = datetime.today() + timedelta(days=highest_days+1)
+    highest_days = 0
+    for item in items:
+        if item.product.days > highest_days: 
+            highest_days = item.product.days
+    min_date = datetime.today() + timedelta(days=highest_days+1)
         
     try:
         orderInfo = OrderInformation.objects.get(order=order)
         orderInfo.delete()
     except:
-        print("Order Information does not exist!")
+        pass
 
     form = CheckoutForm(min_date=min_date, user=customer)
 
     if request.method == "POST":
         form = CheckoutForm(data=request.POST or None, min_date=min_date, user=customer)
         if form.is_valid():
+            if not request.user.is_authenticated:
+                customer.email = form.cleaned_data.get('email')
+
             mobile_number_list = []
             for number in form.cleaned_data.get('contact_number'):
                 mobile_number_list.append(number)
@@ -312,13 +305,14 @@ def checkout(request):
 def payment(request, slug):
     if request.user.is_authenticated:
         customer = request.user
-        order = Order.objects.get(user=customer, complete=False)
-        items = order.productorder_set.all()
         is_multiple_use = True
     else:
-        items = []
-        order = {'get_cart_total': 0, 'get_cart_items': 0}
+        device = request.COOKIES['device']
+        customer = User.objects.get(device_id=device, role=User.Types.CUSTOMER)
         is_multiple_use = False
+    
+    order = Order.objects.get(user=customer, complete=False)
+    items = order.productorder_set.all()
 
     # If Debit/Credit
     if slug == 'card':
@@ -558,11 +552,15 @@ def createToken(request, slug):
         byte = bytes(api_key, 'utf-8')
         username = base64.b64encode(byte)
         request.META['HTTP_AUTHORIZATION'] = username
-    
+
     if request.user.is_authenticated:
         customer = request.user
-        order = Order.objects.get(user=customer, complete=False)
-        orderInfo = OrderInformation.objects.get(order=order)
+    else:
+        device = request.COOKIES['device']
+        customer = User.objects.get(device_id=device, role=User.Types.CUSTOMER)
+    
+    order = Order.objects.get(user=customer, complete=False)
+    orderInfo = OrderInformation.objects.get(order=order)
     
     json_data = jwt.decode(
         orderInfo.token_jwt_id, 
@@ -596,8 +594,12 @@ def createToken(request, slug):
 def cardPayment(request):
     if request.user.is_authenticated:
         customer = request.user
-        order = Order.objects.get(user=customer, complete=False)
-        orderInfo = OrderInformation.objects.get(order=order)
+    else:
+        device = request.COOKIES['device']
+        customer = User.objects.get(device_id=device, role=User.Types.CUSTOMER)
+    
+    order = Order.objects.get(user=customer, complete=False)
+    orderInfo = OrderInformation.objects.get(order=order)
     
     data = jwt.decode(
         orderInfo.token_jwt_id, 
@@ -638,9 +640,13 @@ def cardPayment(request):
 def orderInvoice(request, order_id):
     if request.user.is_authenticated:
         customer = request.user
-        order = Order.objects.get(id=order_id)
-        orderInfo = OrderInformation.objects.get(order=order)
-        orderItems = ProductOrder.objects.filter(order=order)
+    else:
+        device = request.COOKIES['device']
+        customer = User.objects.get(device_id=device, role=User.Types.CUSTOMER)
+    
+    order = Order.objects.get(user=customer, complete=False)
+    orderInfo = OrderInformation.objects.get(order=order)
+    orderItems = ProductOrder.objects.filter(order=order)
 
     for orderItem in orderItems:
         product = Product.objects.get(id=orderItem.product.id)

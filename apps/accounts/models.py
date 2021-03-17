@@ -29,11 +29,15 @@ class User(AbstractUser):
         unique=True,
         error_messages={"unique": _("That email is already being used by another account."),},
     )
+    device_id = models.CharField(max_length=200, null=True, blank=True)
     password = models.CharField(max_length=150, null=True)
     date_created = models.DateTimeField(auto_now_add=True, null=True)
 
     def __str__(self):
-        return self.email
+        if self.email:
+            return f"{self.email}"
+        elif self.device_id:
+            return f"{self.device_id}"
 
 # ACCOUNT INFORMATION
 # Address

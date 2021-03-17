@@ -27,7 +27,13 @@
             <img class="increase-quantity update-cart" data-shop="{{ shop.id }}" data-product="{{ item.product.id }}" data-item="{{ item.id }}" 
             data-action="increase" src="{% static 'media/icons/order_plus.svg' %}" alt="+">
         </div>
-        <button class="edit-product-qty" type="submit">Edit</button>
+        <a href="/">
+            <div class="secondary-btn edit-product-qty" type="submit">
+                <p class="secondary-btn-link">
+                    Edit
+                </p>
+            </div>
+        </a>
     {% endfor %}
 
     {% if items %}

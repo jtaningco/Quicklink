@@ -58,10 +58,22 @@ class Order(models.Model):
     notes = models.CharField(max_length=255, null=True, blank=True)
 
     def __str__(self):
-        return f"{self.order_date} - Total of PHP {self.total} (Convenience Fee: PHP {self.fees}"
+        return f"{self.order_date} - Total of PHP {self.total} (Convenience Fee: PHP {self.fees})"
 
     def delivery_date(self):
         return datetime.today()+timedelta(days=3)
+
+    @property
+    def get_cart_total(self):
+        orderItems = self.productorder_set.all()
+        total = ([item.get_total for item in orderItems])
+        return total
+
+    @property
+    def get_cart_items(self):
+        orderItems = self.productorder_set.all()
+        total = ([item.quantity for item in orderItems])
+        return total
 
 class OrderInformation(models.Model):
     # User session id if user attribute does not exist (if user isn't logged in, use a session id instead)
@@ -157,4 +169,12 @@ class ProductOrder(models.Model):
     order_date = models.DateTimeField(auto_now_add=True, null=True)
     
     def __str__(self):
-        return f"{self.quantity} {self.product} - Total of PHP {self.total}" 
+        return f"{self.quantity} {self.product} - Total of PHP {self.total}"
+
+    @property
+    def get_total(self):
+        addons_total = 0
+        if self.addons:
+            for i in self.addons.all(): addons_total += (self.quantity * i.price_addon)
+        total = (self.size.price_size * self.quantity) + addons_total
+        return total 

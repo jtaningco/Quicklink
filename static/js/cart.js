@@ -1,4 +1,5 @@
 var updateBtns = document.getElementsByClassName('update-cart')
+var cookieQty = $('#id_quantity')
 
 for (i=0; i < updateBtns.length; i++) {
     updateBtns[i].addEventListener('click', function() {
@@ -7,31 +8,21 @@ for (i=0; i < updateBtns.length; i++) {
         var itemId = this.dataset.item
         var action = this.dataset.action
 
-        if (user === 'AnonymousUser') {
-            if (action === 'add') {
-                console.log('Not logged in')
-            } else {
-                console.log('Not logged in')
-            }
+        if (action === 'add') {
+            addOrderProduct(shopId, productId, action)
+        } else if (action === 'increase' || action === 'decrease') {
+            editOrderProduct(shopId, productId, itemId, action)
         } else {
-            if (action === 'add') {
-                addOrderProduct(shopId, productId, action)
-            } else if (action === 'increase') {
-                editQuantity(shopId, productId, itemId, action)
-            } else if (action === 'decrease') {
-                editQuantity(shopId, productId, itemId, action)
-            } else {
-                console.log('Remove')
-            }
+            console.log('Remove')
         }
     })
 }
 
 function addOrderProduct(shopId, productId, action) {
     console.log('User is logged in, sending data...')
-
     var form = $('form').serializeArray()
     var url = '/shops/' + String(shopId) + '/products/' + String(productId) + '/add/'
+    var next_url = '/shops/' + String(shopId) + '/products/'
 
     fetch(url, {
         method: 'POST',
@@ -43,18 +34,21 @@ function addOrderProduct(shopId, productId, action) {
     })
 
     .then((response) => {
-        return response.json()
+        return response.text()
     })
+
     .then((data) => {
-        // location.reload()
         console.log("data: ", data)
+        setTimeout(function() {
+            window.location.href = next_url
+        }, 2000)
     })
 }
 
-function editQuantity(shopId, productId, itemId, action) {
+function editOrderProduct(shopId, productId, itemId, action) {
     console.log('User is logged in, editing product...')
 
-    var url = '/shops/' + String(shopId) + '/products/' + String(productId) + '/edit/'
+    var url = '/shops/' + String(shopId) + '/products/' + String(productId) + '/update/'
 
     fetch(url, {
         method: 'POST',
@@ -66,7 +60,7 @@ function editQuantity(shopId, productId, itemId, action) {
     })
 
     .then((response) => {
-        return response.json()
+        return response.text()
     })
     .then((data) => {
         location.reload()
