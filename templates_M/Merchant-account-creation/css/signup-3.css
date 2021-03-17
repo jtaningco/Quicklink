@@ -15,74 +15,68 @@ body {
     width: 100vw;
     height: 100vh;
 }
-
-/* div */
-.cardContainer {
+.card-container {
     display: flex;
     justify-content: center;
     align-items: center;
 }
-
-.cardWrapper {
+.card-wrapper {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    margin: 2rem 0;
     background-color: #FFF;
     height: 100%;
     width: 100%;
-    padding: 0px 24px 0px 24px;
-    max-height: 900px;
-    max-width: 520px;
+    padding: 0 1.5rem;
+    max-height: 56rem;
+    max-width: 32.5rem;
     box-shadow: 0px 3px 5px rgba(51, 51, 51, 0.15);
     border-radius: 5px;
 }
-
-.cardContainerHeader {
+.card-container-header {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding: 16px 24px 0px 24px;
+    padding: 1rem 1.5rem 0 1.5rem;
     width: 100%;
 }
-
 #ql-logo {
-    padding: 16px 0px 16px 0px;
+    padding-bottom: 1rem;
 }
-
-.cardHeaderText {
+.card-header-text {
     text-align: center;
     color: var(--primary-main);
-    font-size: 28px;
+    font-size: 1.75rem;
     font-weight: 600;
-    padding: 0 0 8px 0;
+    padding: 0 0 0.5rem 0;
 }
-
-.cardBody {
+.card-body {
     justify-content: center;
     align-content: center;
     width: 100%;
-    padding-left: 24px;
-    padding-right: 24px;
+    padding: 0 1.5rem;
 }
-.cardBodyText {
+.card-body-text {
     justify-content: center;
     text-align: center;
-    line-height: 32px;
-    color: var(--muted-default)
+    padding-bottom: 1rem;
+    font-weight: 300;
+    color: var(--muted-default);
 }
 .primary-btn {
     border-radius: 0.2rem;
     box-shadow: 0px 3px 5px rgba(51, 51, 51, 0.15);
-    padding: 0px 16px 0px 16px;
-    margin: 24px 0px 24px 0px;
+    padding: 0 1rem;
+    margin: 1rem 0;
 }
 .btn-info {
     font-family: Overpass;
     font-style: normal;
     font-weight: 600;
-    font-size: 14px;
-    padding: 8px;
+    font-size: 0.875rem;
+    padding: 0.5rem;
     color: #fff;
 }
