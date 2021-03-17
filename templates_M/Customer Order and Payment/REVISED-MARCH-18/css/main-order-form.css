@@ -1,5 +1,6 @@
 body{
     background-color: var(--bg-color);
+    font-family: 'Overpass', sans-serif;
 }
 /*nav css*/
 .white-nav {
@@ -97,8 +98,79 @@ body{
     display: flex;
     border-radius: 5px;
     width: 41rem;
-    background-color: var(--muted-lightest);
+    background-color: rgba(220,220,220,.3);
 }
 #yellow-search-icon {
-    padding: 1rem 0.75rem;
+    padding: 0 1rem;
+}
+input[type=text], select {
+    width: 100%;
+    display: inline-block;
+    box-sizing: border-box;
+    border: none;
+    background-color:transparent;
+    font-size:0.875rem;
+    color: var(--muted-default);
+    border-radius: 0.25rem;
+    padding: 1rem 0;
+}
+/*end of searchbar*/
+
+.order-grid {
+    display: flex;
+    flex-wrap:wrap;
+    width: 65%;
+    padding:2.5rem 0;
+}
+.card-whole {
+    display: flex;
+    flex-direction: column;
+    background-color: #FFF;
+    width: 20rem;
+    height:17rem;
+    margin: 0 1.2rem 1.2rem 0;
+    box-shadow: 0px 3px 10px rgba(171, 185, 255, 0.25);    border-radius: 7.171px;
+}
+.card-name {
+    font-size: 1.25rem;
+    color: var(--muted-dark);
+    font-weight:700;
+    padding: 1rem 0 0 1rem;
+}
+.card-subtext {
+    font-size: 1rem;
+    color: var(--muted-dark);
+    font-weight: 400;
+    padding: 0.15rem 0 1.25rem 1rem;
+}
+#item-dp {
+    border-radius: 5px;
+    width: 20rem;
+    height:11rem;
+}
+/*start of basket */
+.basket-menu {
+    display: flex;
+    flex-direction: column;
+    width: 20rem;
+}
+.basket-header {
+    display: flex;
+    justify-content: space-between;
+}
+.basket-header-display {
+    display: flex;
+    align-items: center;
+}
+#yellow-basket-icon {
+    padding: 0 0.5rem;
+}
+
+#show-display-btn {
+    color: var(--primary-main);
+    font-size: 0.875rem;
+    background-color: transparent;
+    border: none;
+    box-shadow: none;
+    padding: 0.5rem 1rem;
 }
