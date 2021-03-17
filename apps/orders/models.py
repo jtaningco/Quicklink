@@ -55,6 +55,9 @@ class Order(models.Model):
     # Check if order is complete
     complete = models.BooleanField(default=False, null=True, blank=False)
 
+    # Order invoice short URL
+    slug = models.CharField(max_length=40, null=True, blank=False)
+
     notes = models.CharField(max_length=255, null=True, blank=True)
 
     def __str__(self):

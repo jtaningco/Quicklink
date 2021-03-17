@@ -55,9 +55,7 @@
                 
                 <!-- Insert slug here -->
                 <p class="invoice-content-header-order-link body medium">Here's your receipt link: 
-                    <a href="#">
-                        randomlink.io
-                    </a>
+                    <a href="{% url 'customers:order-invoice' order.id %}" id="id_slug">{{ order.slug }}</a>
                 </p>
             </div>
             <div class="invoice-content-tracking">
@@ -94,6 +92,7 @@
 
 {% block scriptsBody %}
     <script>
+        // MODALS
         // Variables
         var disableBtns = document.getElementsByClassName('disable-modal');
         var paymentModal = document.getElementById('payment-modal');
@@ -101,7 +100,7 @@
         var modalBG = document.getElementById('modal-background');
         var orderStatus = document.getElementById('order-status');
 
-        for (i = 0; i <= disableBtns.length; i++) {
+        for (i = 0; i <= disableBtns.length - 1; i++) {
             if (i == 0) {
                 disableBtns[i].addEventListener('click', function() {
                     paymentModal.style.display = "none";
@@ -116,6 +115,53 @@
             }
         }
 
+        // LINK CREATION
+        // Variables
+        var current_url = window.location.href;
+        var order_number = current_url.split("/").slice(-1)[0];
+        var api_key = "a197b3a2fb404830a358324abf17ade7";
+        var workspace_id = "e15cc4543df7480aa8b63f4ffb474316";
+        var slugExists = $('#id_slug').val();
+        
+        if (slugExists != "") {
+            let linkRequest = {
+                destination: current_url,
+                domain: { fullName: "rebrand.ly" }, 
+                slashtag: order_number, 
+                title: "Order Invoice #" + order_number
+            }
 
+            let requestHeaders = {
+                "Content-Type": "application/json",
+                "apikey": api_key,
+                "workspace": workspace_id
+            }
+
+            $.ajax({
+                url: "https://api.rebrandly.com/v1/links",
+                type: "post",
+                data: JSON.stringify(linkRequest),
+                headers: requestHeaders,
+                dataType: "json",
+                success: (link) => {
+                    console.log(`URL successfully created. Long URL was ${link.destination}, short URL is ${link.shortUrl}`);
+                    slug = link.shortUrl
+                    $.ajax({
+                        url: current_url,
+                        type: "POST",
+                        data: {"slug": slug},
+                        success:function(response){
+                            console.log("Short link successfully sent.");
+                        },
+                        error:function (xhr, textStatus, thrownError){
+                            console.log("Can't send short link.", xhr, textStatus, thrownError);
+                        }
+                    });
+                },
+                error:function (xhr, textStatus, thrownError){
+                    console.log("Can't create short link.", xhr, textStatus, thrownError);
+                }
+            });
+        }
     </script>
 {% endblock %}

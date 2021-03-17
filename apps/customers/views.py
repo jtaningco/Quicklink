@@ -24,9 +24,9 @@ from xendit import Xendit, Balance, EWallet
 import jwt
 import base64
 
-# For Cuttly API in invoices
-import urllib
+# For Rebrandly API in invoices
 import requests
+from django.urls import reverse
 
 # Create your views here.
 # View Products (Customers)
@@ -237,26 +237,24 @@ def checkout(request):
 
     form = CheckoutForm(min_date=min_date, user=customer)
 
+    if request.is_ajax and request.method == 'POST':
+        if request.POST.get('name') != None:
+            customer_name = request.POST.get('name')
+        if request.POST.get('email') != None:
+            customer_email = request.POST.get('email')
+        if request.POST.get('phone') != None:
+            customer_contact_number = request.POST.get('phone')
+
+        sessionSender = CustomerInformation.objects.create(
+                customer_name = customer_name,
+                customer_email = customer_email,
+                customer_contact_number = customer_contact_number
+        )
+        sessionSender.save()
+
     if request.method == "POST":
         form = CheckoutForm(data=request.POST or None, min_date=min_date, user=customer)
         if form.is_valid():
-            if not request.user.is_authenticated:
-                customer.email = form.cleaned_data.get('email')
-
-            mobile_number_list = []
-            for number in form.cleaned_data.get('contact_number'):
-                mobile_number_list.append(number)
-            if mobile_number_list[0] == '0':
-                mobile_number_list[0] = '+63'
-            mobile_number = ''.join(mobile_number_list)
-
-            sessionSender = CustomerInformation.objects.create(
-                customer_name = form.cleaned_data.get('name'),
-                customer_email = form.cleaned_data.get('email'),
-                customer_contact_number = mobile_number
-            )
-            sessionSender.save()
-                
             sessionAddress = Address.objects.create(
                 line1 = form.cleaned_data.get('line1'),
                 line2 = form.cleaned_data.get('line2'),                
@@ -638,13 +636,7 @@ def cardPayment(request):
     return render(request, 'customers/token.html', context)
 
 def orderInvoice(request, order_id):
-    if request.user.is_authenticated:
-        customer = request.user
-    else:
-        device = request.COOKIES['device']
-        customer = User.objects.get(device_id=device, role=User.Types.CUSTOMER)
-    
-    order = Order.objects.get(user=customer, complete=False)
+    order = Order.objects.get(id=order_id)
     orderInfo = OrderInformation.objects.get(order=order)
     orderItems = ProductOrder.objects.filter(order=order)
 
@@ -657,26 +649,58 @@ def orderInvoice(request, order_id):
             product.stock = str(int(product.stock) - orderItem.quantity)
         product.save()
 
+    # api_key = "a197b3a2fb404830a358324abf17ade7"
+    # workspace_id = "e15cc4543df7480aa8b63f4ffb474316"
+
+    # current_url = str(request.get_full_path)
+    # domain = "rebrand.ly"
+
+    # if int(order_id) < 99:
+    #     slashtag = "00" + str(order_id)
+    # elif int(order_id) < 999:
+    #     slashtag = "0" + str(order_id)
+    # else:
+    #     slashtag = str(order_id)
+
+    # linkRequest = {
+    #     "destination": current_url, 
+    #     "domain": { "fullName": domain }, 
+    #     "slashtag": slashtag, 
+    #     "title": "Order Invoice #" + slashtag
+    # }
+
+    # requestHeaders = {
+    #     "Content-type": "application/json",
+    #     "apikey": api_key,
+    #     "workspace": workspace_id
+    # }
+
+    # r = requests.post("https://api.rebrandly.com/v1/links", 
+    #     data = json.dumps(linkRequest),
+    #     headers = requestHeaders
+    # )
+
+    # if (r.status_code == requests.codes.ok):
+    #     link = r.json()
+    #     slug = link["shortUrl"]
+    #     print("Long URL was %s, short URL is %s" % (link["destination"], link["shortUrl"]))
+    # else:
+    #     print("POST Status: ", r.status_code)
+    #     print("POST Data: ", r)
+    #     slug = "Short URL can't be generated"
+
+    if order.slug:
+        slug = order.slug
+    else:
+        if request.is_ajax and request.method == 'POST':
+            if request.POST.get('slug') != None:
+                slug = request.POST.get('slug')
+                order.slug = slug
+                
     order.complete = True
     order.save()
 
-    if int(order.id) <= 100:
-        short_url = "order00" + str(order.id)
-    elif int(order.id) <= 1000:
-        short_url = "order0" + str(order.id)
-    else: 
-        short_url = "order" + str(order.id)
-
-    # Cuttly API
-    # See more at https://cutt.ly/api-documentation/team-api
-    key = '3c0c9bc84f2c1f15aefd9f1943ab6a7b04dca'
-    url = urllib.parse.quote(short_url)
-    name  = short_url + ' Invoice'
-    userDomain = '1'
-    r = requests.get('http://cutt.ly/api/api.php?key={}&short={}&name={}&userDomain={}'.format(key, url, name, userDomain))
-    print(r.text)
-
-    context = {'order':order, 'info':orderInfo}
+    context = {'order':order, 'info':orderInfo, 'slug':slug}
     return render(request, 'customers/invoice.html', context)
 
 def invoiceLink(request, order_id):
