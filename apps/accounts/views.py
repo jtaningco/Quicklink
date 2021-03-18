@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.models import Group
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 
@@ -14,20 +15,20 @@ from xendit import Xendit, XenPlatformAccountType, XenPlatformURLType
 # Create your views here.
 @unauthenticated_merchant
 def registerMerchant(request):
-    form = MerchantForm(initial={'role': User.Types.MERCHANT})
-    
+    form = CreateUserForm()
     if request.method == 'POST':
-        form = MerchantForm(request.POST)
-        if form.is_valid():
-            user = User.objects.create(
-                role=User.Types.MERCHANT,
-                username=form.cleaned_data.get("username"),
+        form = CreateUserForm(request.POST)
+        if form.is_valid() and form.validate_password():
+            user = User.objects.create_user(
                 email=form.cleaned_data.get("email"),
+                password=form.cleaned_data.get("password1")
             )
-            user.set_password(form.cleaned_data.get("password"))
-            user.save()
+            user.role = User.Types.MERCHANT
 
-            messages.success(request, 'Account successfully created')
+            merchant_group, created = Group.objects.get_or_create(name='Merchant')
+            user.groups.add(merchant_group)
+
+            user.save()
             return redirect('accounts:merchant-login')
     context = {'form':form}
     return render(request, 'accounts/merchant-register.html', context)
@@ -177,9 +178,9 @@ def logoutMerchant(request):
 
 @unauthenticated_customer
 def registerCustomer(request):
-    form = CustomerForm(initial={'role': User.Types.CUSTOMER})
+    form = CreateUserForm()
     if request.method == 'POST':
-        form = CustomerForm(request.POST)
+        form = CreateUserForm(request.POST)
         if form.is_valid():
             user = User.objects.create(
                 username=form.cleaned_data.get("username"),

@@ -43,12 +43,19 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
     
     # Third-Party Apps
     # 'rest_framework',
     'django_filters',
     'crispy_forms',
     'corsheaders',
+
+    # OAuth
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
 
     # Local Apps (Your project's apps)
     'apps.products',
@@ -71,6 +78,39 @@ MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
     # 'basicauth.middleware.BasicAuthMiddleware',
 ]
+
+AUTHENTICATION_BACKENDS = [
+    # Needed to login by username in Django admin, regardless of `allauth`
+    'django.contrib.auth.backends.ModelBackend',
+
+    # `allauth` specific authentication methods, such as login by e-mail
+    'allauth.account.auth_backends.AuthenticationBackend',
+]
+
+# Dev Client ID: 544512465341-20tohjme9g80vapafh83qfjl5a7d4978.apps.googleusercontent.com
+# Dev Secret Key: sy58fMd-HMzK6JpN1MtTPb00
+
+SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+        'APP': {
+            'client_id': '123',
+            'secret': '456',
+            'key': ''
+        },
+        'SCOPE': [
+            'profile',
+            'email',
+        ],
+        'AUTH_PARAMS': {
+            'access_type': 'online',
+        }
+    }
+}
+
+SITE_ID = 1
+
+LOGIN_REDIRECT_URL = '/shop/products/'
+LOGOUT_REDIRECT_URL = '/user/merchant/login'
 
 # BASICAUTH_USERS = {
 #     'xnd_development_L8LFCGlEVFmq8qcCLZKNoVnq303nlkB47u5W2TrknkwioknAn4H0KOQcFfbm7':''

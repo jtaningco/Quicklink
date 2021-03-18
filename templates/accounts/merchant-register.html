@@ -1,4 +1,5 @@
 {% load static %}
+{% load socialaccount %}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -6,55 +7,182 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Merchant Sign Up</title>
-    <link rel="stylesheet" href="{% static '/css/main.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static '/css/main.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static '/css/user.css' %}">
+
+    <!-- NOTY Notification Stylesheets -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/noty/3.1.4/noty.css" integrity="sha512-NXUhxhkDgZYOMjaIgd89zF2w51Mub53Ru3zCNp5LTlEzMbNNAjTjDbpURYGS5Mop2cU4b7re1nOIucsVlrx9fA==" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/noty/3.1.4/noty.min.css" integrity="sha512-0p3K0H3S6Q4bEWZ/WmC94Tgit2ular2/n0ESdfEX8l172YyQj8re1Wu9s/HT9T/T2osUw5Gx/6pAZNk3UKbESw==" crossorigin="anonymous">
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.js" integrity="sha512-n/4gHW3atM3QqRcbCn6ewmpxcLAHGaDjpEBu4xZd47N0W2oQ+6q7oc3PXstrJYXcbNU1OHdQ1T7pAP+gi5Yu8g==" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous"></script>
 </head>
-<body onload="realtimeClock()">    
+<body>    
     <main>
-        <form action="" method="post">
-
-            <div class="registration-container">
+        <div class="signup-container">
+            <div class="registration-card">
                 <div class="registration-wrapper">
-        
-                    <h1>Customer Registration</h1>
-        
-                    {% csrf_token %}
-        
-                    {{ form.role }}
-                    
-                    <div class="registration-content">
-                        <p>Username</p>
-                        {{form.username}}
+                    <div class="registration-header">
+                        <img 
+                            src="https://ik.imagekit.io/ripzjge77zz/Quicklink_App/logos/Shortened-logo_BzQkxRgQX.svg" 
+                            alt="Quicklink Logo" 
+                            srcset="
+                                https://ik.imagekit.io/ripzjge77zz/Quicklink_App/logos/shortened/Shortened-4x_qiZytmz_G.png 4x,
+                                https://ik.imagekit.io/ripzjge77zz/Quicklink_App/logos/shortened/Shortened-3x_qwYOTUuxmZn.png 3x,
+                                https://ik.imagekit.io/ripzjge77zz/Quicklink_App/logos/shortened/Shortened-2x_KY3DONXuR.png 2x,
+                                https://ik.imagekit.io/ripzjge77zz/Quicklink_App/logos/shortened/Shortened-logo_BzQkxRgQX.svg 1x,"
+                            style="padding-bottom: 0.75rem;"
+                        >
+                        <h1 class="bold" style="color: var(--primary-main); padding: 0.25rem 0; ">Sign up for Quicklink!</h1>
+                        <h2 class="body" style="color: var(--muted-default);">One click closer to quick and easy transactions</h2>
                     </div>
-        
-                    <div class="registration-content">
-                        <p>Email</p>
-                        {{form.email}}
+                    <form action="" method="post" class="registration-form">
+                        {% csrf_token %}
+                        {{ form.role }}
+                                
+                        <div class="registration-content">
+                            <p>Email</p>
+                            {{form.email}}
+                            <div class="registration-content--email">
+                                <img 
+                                    src="https://ik.imagekit.io/ripzjge77zz/Quicklink_App/Merchant/Account_Creation/icons/fi_info_DX4GENMoh.svg" 
+                                    alt="Guide" class="registration-content--email-icon" style="width: 1rem; height: 1rem;"
+                                >
+                                <p class="registration-content--email-guide caption">Please use a business email.</p>
+                            </div>
+
+                        </div>
+            
+                        <div class="registration-content">
+                            <p>Password</p>
+                            {{form.password1}}
+                        </div>
+            
+                        <div class="registration-content">
+                            <p>Confirm Password</p>
+                            {{form.password2}}
+                        </div>
+
+                        <div class="terms-of-use-wrapper">
+                            <label class="checkbox">
+                                <input type="checkbox" name="terms" id="terms" required>
+                                <span class="checkmark"></span>
+                            </label>
+                            <p class="subtitle">I agree to the 
+                                <a href="" class="subtitle terms-link">Terms of Use</a>
+                                and
+                                <a href="" class="subtitle terms-link">Privacy Policy</a>
+                            </p>
+                        </div>
+            
+                        <!-- To edit style, edit .errorlist (ul) and .errorlist li (each message) -->
+                        <div id="form-errors">{{ form.errors.as_json }}</div>
+            
+                        <button type="submit" style="margin: 24px 0; width: 100%;" id="js-sign-up-btn" class="primary-btn primary-btn-link disabled sign-up-btn">Sign Up</button>
+                    </form>
+                    <div class="registration-footer">
+                        <div class="registration-footer--or-wrapper">
+                            <div class="line"></div>
+                            <p class="registration-footer--or overline">or</p>
+                            <div class="line"></div>
+                        </div>
+                        <div class="registration-footer--google-wrapper">
+                            <a href="{% provider_login_url 'google' %}" style="text-decoration: none;">
+                                <div class="google-btn" style="margin-top: 2.5rem;">
+                                    <img src="https://ik.imagekit.io/ripzjge77zz/Quicklink_App/logos/google/google-logo-9808_1_3YDBfzZoyaXR.svg" 
+                                    alt="Google Icon" style="width: 24px; height: 24px;">
+                                    <p class="google-btn-link subtitle bold">Sign in with Google</p>
+                                </div>
+                            </a>
+                        </div>
                     </div>
-        
-                    <div class="registration-content">
-                        <p>Password</p>
-                        {{form.password}}
-                    </div>
-        
-                    <div class="registration-content">
-                        <p>Confirm Password</p>
-                        {{form.password2}}
-                    </div>
-        
-                    {{ form.errors }}
-        
-                    <input type="submit" name="Create User" style="margin: 24px 0;" class="preview-btn">
-        
-                    <div class="registration-content">
-                        <p class="subtitle">Already have an account?</p>
-                        <a class="tertiary-btn-link" href="{% url 'accounts:customer-login' %}">Login Here</a>
-                    </div>
-        
                 </div>
             </div>
-        </form>
+        </div>
     </main>
+
+    <!-- NOTY Notifications -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/noty/3.1.4/noty.min.js" integrity="sha512-lOrm9FgT1LKOJRUXF3tp6QaMorJftUjowOWiDcG5GFZ/q7ukof19V0HKx/GWzXCdt9zYju3/KhBNdCLzK8b90Q==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/noty/3.1.4/noty.js" integrity="sha512-mgZL3SZ/vIooDg2mU2amX6NysMlthFl/jDbscSRgF/k3zmICLe6muAs7YbITZ+61FeUoo1plofYAocoR5Sa1rQ==" crossorigin="anonymous"></script>
+
+    <script>
+        var accept = false;
+
+        $(".input").on("keyup", function () {    	
+            canChangeColor();
+        });
+
+        $("#terms").change(function() {
+            if(this.checked) {
+                accept = true
+            } else {
+                accept = false
+            }
+            canChangeColor();
+        })
+        
+        function canChangeColor(){          
+            var can = true;
+
+            $(".form-field").each(function(){
+                if($(this).val()==''){
+                    can = false;
+                }
+            });
+            
+            if (can && accept) {
+                $('#js-sign-up-btn').toggleClass('disabled', false)
+            } else {
+                $('#js-sign-up-btn').toggleClass('disabled', true)
+            }
+        }
+    </script>
+
+    <!-- NOTY -->
+    <script>
+        var errors = $('#form-errors').text();
+        var jsonErrors = JSON.parse(errors);
+        var errorMessages = [];
+        
+        for (i = 0; i <= Object.keys(jsonErrors).length; i++) {
+            if ('email' in jsonErrors) {
+                for (i = 0; i < Object.keys(jsonErrors['email']).length; i++) {
+                    errorMessages.push(jsonErrors['email'][String(i)]['message'])
+                }
+            } else {
+                var emailError = null
+            }
+            
+            if ('password1' in jsonErrors) {
+                for (i = 0; i < Object.keys(jsonErrors['password1']).length; i++) {
+                    errorMessages.push(jsonErrors['password1'][String(i)]['message'])
+                }
+            } else {
+                var passwordError = null
+            }
+            
+            if ('password2' in jsonErrors) {
+                for (i = 0; i < Object.keys(jsonErrors['password2']).length; i++) {
+                    errorMessages.push(jsonErrors['password2'][String(i)]['message'])
+                }
+            } else {
+                var password2Error = null
+            }
+        }
+
+        for (i = 0; i <= Object.keys(errorMessages).length; i++) {
+            if (errorMessages[String(i)] != undefined) {
+                console.log(errorMessages[String(i)])
+                new Noty({
+                    type: 'error',
+                    theme: 'bootstrap-v4',
+                    text: errorMessages[String(i)],
+                    layout: "topRight",
+                    timeout: 5000,
+                    progressBar: true,
+                }).show();
+            }
+        }
+    </script>
 </body>
 </html>

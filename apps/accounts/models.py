@@ -1,43 +1,88 @@
 from django.db import models
-from django.contrib.auth.models import UnicodeUsernameValidator
-from django.contrib.auth.models import AbstractUser
+from django.contrib.auth.models import UnicodeUsernameValidator, AbstractBaseUser, BaseUserManager, PermissionsMixin
 from django.utils.translation import gettext_lazy as _
 from django.urls import reverse
 from .validators import only_int, exp_date
 
 # Create your models here.
+# Django Roles, Permissions, and Groups: https://medium.com/djangotube/django-roles-groups-and-permissions-introduction-a54d1070544
+# Django Custom Authentication: https://docs.djangoproject.com/en/3.1/topics/auth/customizing/
 
-class User(AbstractUser):
+# SUMMARY OF ACCOUNT MODELS:
+# Super Admin — Quicklink High-Ranking Programmers (CRUD All)
+# Admin — Quicklink Founders, High-Ranking Employees, and Programmers (CUD Some, R All)
+# Quickies — Quicklink Employees (R All)
+# Merchants — Quicklink Clients / Users ()
+# Customers — Customers of Quicklink Clients
+
+class MyUserManager(BaseUserManager):
+    ## A custom user manager to deal with emails as unique identifiers for auth
+    # instead of usernames. The default that's used is "UserManager"
+
+    def create_user(self, email, password, **extra_fields):
+        # Creates and saves a User with the given email and password.
+        if not email:
+            raise ValueError('The email must be set')
+        email = self.normalize_email(email)
+        user = self.model(email=email, **extra_fields)
+        user.set_password(password)
+        user.save()
+        return user
+
+    def create_superuser(self, email, password, **extra_fields):
+        extra_fields.setdefault('is_staff', True)
+        extra_fields.setdefault('is_superuser', True)
+        extra_fields.setdefault('is_active', True)
+
+        if extra_fields.get('is_staff') is not True:
+            raise ValueError('Superuser must have is_staff=True.')
+        if extra_fields.get('is_superuser') is not True:
+            raise ValueError('Superuser must have is_superuser=True.')
+        return self._create_user(email, password, **extra_fields)
+
+class User(AbstractBaseUser, PermissionsMixin):
     class Types(models.TextChoices):
+        SUPER_ADMIN = "SUPER_ADMIN", "Super Admin"
         ADMIN = "ADMIN", "Admin"
+        QUICKIES = "QUICKIES", "Quickies"
         MERCHANT = "MERCHANT", "Merchant"
         CUSTOMER = "CUSTOMER", "Customer"
 
     role = models.CharField(_('role'), max_length=50, choices=Types.choices, default=Types.ADMIN, null=True)
-    username = models.CharField(_("username"), 
-        max_length=150, 
-        null=True, 
-        unique=True, 
-        help_text=_(
-            "Required. 150 characters or fewer. Letters, digits, and @/./+/-/_ only."
-        ),
-        error_messages={"unique": _("A user with that username already exists."),},
-    )
-    email = models.EmailField(_("email"), 
+    
+    username = None
+    email = models.EmailField(_("email address"), 
         max_length=150, 
         null=True, 
         unique=True,
         error_messages={"unique": _("That email is already being used by another account."),},
     )
-    device_id = models.CharField(max_length=200, null=True, blank=True)
+
     password = models.CharField(max_length=150, null=True)
+
+    device_id = models.CharField(max_length=200, null=True, blank=True)
     date_created = models.DateTimeField(auto_now_add=True, null=True)
+
+    is_staff = models.BooleanField(default=False)
+    is_active = models.BooleanField(default=True)
+
+    USERNAME_FIELD = 'email'
+    EMAIL_FIELD = 'email'
+    REQUIRED_FIELDS = ['role', 'password']
+    
+    objects = MyUserManager()
 
     def __str__(self):
         if self.email:
             return f"{self.email}"
         elif self.device_id:
             return f"{self.device_id}"
+
+    def get_full_name(self):
+        return self.email
+
+    def get_short_name(self):
+        return self.email
 
 # ACCOUNT INFORMATION
 # Address
@@ -146,21 +191,21 @@ class Notification(models.Model):
         return f"SMS: {self.sms} | Email: {self.email}"
 
 # MERCHANT
-class MerchantManager(models.Manager):
-    def get_queryset(self, *args, **kwargs):
-        return super().get_queryset(*args, **kwargs).filter(type=User.Types.MERCHANT)
+# class MerchantManager(models.Manager):
+#     def get_queryset(self, *args, **kwargs):
+#         return super().get_queryset(*args, **kwargs).filter(type=User.Types.MERCHANT)
 
-class Merchant(User):
-    base_type = User.Types.MERCHANT
-    objects = MerchantManager()
+# class Merchant(User):
+#     base_type = User.Types.MERCHANT
+#     objects = MerchantManager()
 
-    class Meta:
-        proxy = True
+#     class Meta:
+#         proxy = True
 
-    def save(self, *args, **kwargs):
-        if not self.pk:
-            self.type = User.Types.MERCHANT
-        return super().save(*args, **kwargs)
+#     def save(self, *args, **kwargs):
+#         if not self.pk:
+#             self.type = User.Types.MERCHANT
+#         return super().save(*args, **kwargs)
 
 # Shop Information
 class ShopInformation(models.Model):
@@ -242,9 +287,21 @@ class ShopLogo(models.Model):
         return f"URL: {self.logo}"
 
 # CUSTOMERS
-class CustomerManager(models.Manager):
-    def get_queryset(self, *args, **kwargs):
-        return super().get_queryset(*args, **kwargs).filter(type=User.Types.CUSTOMER)
+# class CustomerManager(models.Manager):
+#     def get_queryset(self, *args, **kwargs):
+#         return super().get_queryset(*args, **kwargs).filter(type=User.Types.CUSTOMER)
+
+# class Customer(User):
+#     base_type = User.Types.CUSTOMER
+#     objects = CustomerManager()
+
+#     class Meta:
+#         proxy = True
+
+#     def save(self, *args, **kwargs):
+#         if not self.pk:
+#             self.type = User.Types.CUSTOMER
+#         return super().save(*args, **kwargs)
 
 class CustomerInformation(models.Model):
     customer = models.OneToOneField(
@@ -269,15 +326,3 @@ class CustomerInformation(models.Model):
 
     def __str__(self):
         return f"{self.customer_username} - {self.customer_name} ({self.customer_contact_number})"
-
-class Customer(User):
-    base_type = User.Types.CUSTOMER
-    objects = CustomerManager()
-
-    class Meta:
-        proxy = True
-
-    def save(self, *args, **kwargs):
-        if not self.pk:
-            self.type = User.Types.CUSTOMER
-        return super().save(*args, **kwargs)

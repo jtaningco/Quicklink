@@ -1,35 +1,49 @@
+from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from django import forms
 from django.forms import ModelForm
-from django.contrib.auth.forms import UserCreationForm
 from django.utils.translation import gettext_lazy as _
 
 from apps.accounts.models import *
 
-class MerchantForm(ModelForm):
-    password2=forms.CharField(label='Confirm Password', 
-                            widget=forms.PasswordInput(attrs={
-                            'class': 'input', 
+# Create User
+class CreateUserForm(UserCreationForm):
+    password1=forms.CharField(widget=forms.PasswordInput(attrs={
+                            'class': 'input default', 
+                            'placeholder': 'Enter Password'}))
+
+    password2=forms.CharField(widget=forms.PasswordInput(attrs={
+                            'class': 'input default', 
                             'placeholder': 'Confirm Password'}))
 
     class Meta: 
         model = User
-        fields = ['role', 'email', 'password', 'password2']
-        required_fields = ['email', 'password', 'password2']
+        fields = ('email',)
 
         widgets = {
-            'role': forms.HiddenInput(attrs={
-                'value':User.Types.MERCHANT}),
             'email': forms.fields.EmailInput(attrs={
-                'class':'input',
-                'placeholder': 'Email'}),
-            'password': forms.PasswordInput(attrs={
-                'class': 'input', 
-                'placeholder': 'Enter Password'})
+                'class':'input default',
+                'placeholder': 'Email'})
         }
 
         def __init__(self, *args, **kwargs):
-            super(MerchantForm, self).__init__(*args, **kwargs)
-            self.fields['role'].initial = User.Types.MERCHANT
+            super(CreateUserForm, self).__init__(*args, **kwargs)
+
+    def validate_password(self):
+        password1 = self.cleaned_data.get("password1")
+        password2 = self.cleaned_data.get("password2")
+        if password1 and password2 and password1 != password2:
+            raise forms.ValidationError(
+                self.error_messages['Passwords does not match.'],
+                code='password_mismatch',
+            )
+        return True
+
+    def save(self, commit=True):
+        user = super(UserCreationForm, self).save(commit=False)
+        user.set_password(self.cleaned_data["password1"])
+        if commit:
+            user.save()
+        return user
 
 class ShopInformationForm(ModelForm):
     # shop_delivery_schedule
@@ -142,35 +156,6 @@ class ShopAccountForm(ModelForm):
                 'class':'input',
                 'placeholder': 'Account Number'}),
         }
-
-class CustomerForm(ModelForm):
-    password2=forms.CharField(label='Confirm Password', 
-                            widget=forms.PasswordInput(attrs={
-                            'class': 'input', 
-                            'placeholder': 'Confirm Password'}))
-
-    class Meta: 
-        model = User
-        fields = ['role', 'username', 'email', 'password', 'password2']
-        required_fields = ['username', 'email', 'password', 'password2']
-
-        widgets = {
-            'role': forms.HiddenInput(attrs={
-                'value':User.Types.CUSTOMER}),
-            'username': forms.fields.TextInput(attrs={
-                'class':'input',
-                'placeholder': 'Username'}),
-            'email': forms.fields.TextInput(attrs={
-                'class':'input',
-                'placeholder': 'Email'}),
-            'password': forms.PasswordInput(attrs={
-                'class': 'input', 
-                'placeholder': 'Enter Password'})
-        }
-
-        def __init__(self, *args, **kwargs):
-            super(CustomerForm, self).__init__(*args, **kwargs)
-            self.fields['role'].initial = User.Types.CUSTOMER
 
 class CustomerInformationForm(ModelForm):
     # shop_links
