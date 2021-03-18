@@ -13,16 +13,13 @@ class MerchantForm(ModelForm):
 
     class Meta: 
         model = User
-        fields = ['role', 'username', 'email', 'password', 'password2']
-        required_fields = ['username', 'email', 'password', 'password2']
+        fields = ['role', 'email', 'password', 'password2']
+        required_fields = ['email', 'password', 'password2']
 
         widgets = {
             'role': forms.HiddenInput(attrs={
                 'value':User.Types.MERCHANT}),
-            'username': forms.fields.TextInput(attrs={
-                'class':'input',
-                'placeholder': 'Username'}),
-            'email': forms.fields.TextInput(attrs={
+            'email': forms.fields.EmailInput(attrs={
                 'class':'input',
                 'placeholder': 'Email'}),
             'password': forms.PasswordInput(attrs={

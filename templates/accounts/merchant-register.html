@@ -1,52 +1,60 @@
-{% extends 'quicklink/base.html' %}
 {% load static %}
 
-{% block pagetitle %}Merchant Registration{% endblock %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Merchant Sign Up</title>
+    <link rel="stylesheet" href="{% static '/css/main.css' %}">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.js" integrity="sha512-n/4gHW3atM3QqRcbCn6ewmpxcLAHGaDjpEBu4xZd47N0W2oQ+6q7oc3PXstrJYXcbNU1OHdQ1T7pAP+gi5Yu8g==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous"></script>
+</head>
+<body onload="realtimeClock()">    
+    <main>
+        <form action="" method="post">
 
-{% block maincontent %}
-
-<form action="" method="post">
-
-    <div class="registration-container">
-        <div class="registration-wrapper">
-
-            <h1>Merchant Registration</h1>
-
-            {% csrf_token %}
-
-            {{ form.role }}
-
-            <div class="registration-content">
-                <p>Username</p>
-                {{form.username}}
+            <div class="registration-container">
+                <div class="registration-wrapper">
+        
+                    <h1>Customer Registration</h1>
+        
+                    {% csrf_token %}
+        
+                    {{ form.role }}
+                    
+                    <div class="registration-content">
+                        <p>Username</p>
+                        {{form.username}}
+                    </div>
+        
+                    <div class="registration-content">
+                        <p>Email</p>
+                        {{form.email}}
+                    </div>
+        
+                    <div class="registration-content">
+                        <p>Password</p>
+                        {{form.password}}
+                    </div>
+        
+                    <div class="registration-content">
+                        <p>Confirm Password</p>
+                        {{form.password2}}
+                    </div>
+        
+                    {{ form.errors }}
+        
+                    <input type="submit" name="Create User" style="margin: 24px 0;" class="preview-btn">
+        
+                    <div class="registration-content">
+                        <p class="subtitle">Already have an account?</p>
+                        <a class="tertiary-btn-link" href="{% url 'accounts:customer-login' %}">Login Here</a>
+                    </div>
+        
+                </div>
             </div>
-
-            <div class="registration-content">
-                <p>Email</p>
-                {{form.email}}
-            </div>
-
-            <div class="registration-content">
-                <p>Password</p>
-                {{form.password}}
-            </div>
-
-            <div class="registration-content">
-                <p>Confirm Password</p>
-                {{form.password2}}
-            </div>
-
-            {{ form.errors }}
-
-            <input type="submit" name="Create User" style="margin: 24px 0;" class="preview-btn">
-
-            <div class="registration-content">
-                <p class="subtitle">Already have an account?</p>
-                <a class="tertiary-btn-link" href="{% url 'accounts:merchant-login' %}">Login Here</a>
-            </div>
-
-        </div>
-    </div>
-</form>
-
-{% endblock %}
+        </form>
+    </main>
+</body>
+</html>
