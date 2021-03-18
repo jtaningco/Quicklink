@@ -2,6 +2,7 @@ from django.db import models
 from django.db.models.fields import IntegerField
 
 from apps.accounts.models import User
+import pdb
 
 # Create your models here.
 class Tag(models.Model):
@@ -14,14 +15,14 @@ class Product(models.Model):
     # tags = models.ManyToManyField(Tag)
 
     # User manipulating the product (request.user — whoever is logged in)
-    user = models.ForeignKey(User, null=True, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, null=True, on_delete=models.SET_NULL, related_name="shop_product")
 
     # Product name and description
     name = models.CharField(max_length=30, null=True, blank=False)
     description = models.CharField(max_length=100, null=True, blank=False)
 
-    # Product images
-    image = models.ImageField(null=True, blank=True)
+    # Product images (upload to external image hosting site, get URLs)
+    image = models.ImageField(upload_to ='uploads/', null=True, blank=True)
 
     # Stocks available
     stock = models.CharField(max_length=55, null=True, blank=True, default=0)
@@ -33,13 +34,13 @@ class Product(models.Model):
     days = models.IntegerField(null=True, blank=False, default=0)
     time = models.CharField(max_length=10, null=True, blank=False)
 
-    orders = models.CharField(max_length=55, null=True, blank=True, default=0)
+    orders = models.CharField(max_length=25, null=True, blank=True, default=0)
 
-    instructions = models.CharField(max_length=100, null=True, blank=True)
+    instructions = models.CharField(max_length=125, null=True, blank=True, default="")
     
     # Cheapest and Highest Prices
-    min_price = models.CharField(max_length=100, null=True, blank=True)
-    max_price = models.CharField(max_length=100, null=True, blank=True)
+    min_price = models.CharField(max_length=25, null=True, blank=True)
+    max_price = models.CharField(max_length=25, null=True, blank=True)
 
     sold = models.IntegerField(null=True, blank=True, default=0)
 
@@ -52,6 +53,7 @@ class Size(models.Model):
     size = models.CharField(max_length=80, null=True, blank=False)
     price_size = models.DecimalField(null=True, blank=False, max_digits=6, decimal_places=2)
 
+    @property
     def size_to_json(self):
         return {
             "product": self.product,

@@ -649,46 +649,6 @@ def orderInvoice(request, order_id):
             product.stock = str(int(product.stock) - orderItem.quantity)
         product.save()
 
-    # api_key = "a197b3a2fb404830a358324abf17ade7"
-    # workspace_id = "e15cc4543df7480aa8b63f4ffb474316"
-
-    # current_url = str(request.get_full_path)
-    # domain = "rebrand.ly"
-
-    # if int(order_id) < 99:
-    #     slashtag = "00" + str(order_id)
-    # elif int(order_id) < 999:
-    #     slashtag = "0" + str(order_id)
-    # else:
-    #     slashtag = str(order_id)
-
-    # linkRequest = {
-    #     "destination": current_url, 
-    #     "domain": { "fullName": domain }, 
-    #     "slashtag": slashtag, 
-    #     "title": "Order Invoice #" + slashtag
-    # }
-
-    # requestHeaders = {
-    #     "Content-type": "application/json",
-    #     "apikey": api_key,
-    #     "workspace": workspace_id
-    # }
-
-    # r = requests.post("https://api.rebrandly.com/v1/links", 
-    #     data = json.dumps(linkRequest),
-    #     headers = requestHeaders
-    # )
-
-    # if (r.status_code == requests.codes.ok):
-    #     link = r.json()
-    #     slug = link["shortUrl"]
-    #     print("Long URL was %s, short URL is %s" % (link["destination"], link["shortUrl"]))
-    # else:
-    #     print("POST Status: ", r.status_code)
-    #     print("POST Data: ", r)
-    #     slug = "Short URL can't be generated"
-
     if order.slug:
         slug = order.slug
     else:

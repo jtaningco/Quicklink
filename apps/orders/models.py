@@ -50,7 +50,7 @@ class Order(models.Model):
     order_date = models.DateTimeField(auto_now_add=True, null=True)
 
     # Preferred delivery date of when the product will be delivered (Auto-filled)
-    delivery_date = models.DateField(null=True, default=datetime.today()+timedelta(days=1))
+    delivery_date = models.DateField(null=True)
 
     # Check if order is complete
     complete = models.BooleanField(default=False, null=True, blank=False)
@@ -58,13 +58,20 @@ class Order(models.Model):
     # Order invoice short URL
     slug = models.CharField(max_length=40, null=True, blank=False)
 
-    notes = models.CharField(max_length=255, null=True, blank=True)
+    notes = models.CharField(max_length=255, null=True, blank=True, default="")
 
     def __str__(self):
         return f"{self.order_date} - Total of PHP {self.total} (Convenience Fee: PHP {self.fees})"
 
-    def delivery_date(self):
-        return datetime.today()+timedelta(days=3)
+    @property
+    def get_delivery_date(self):
+        orderItems = self.productorder_set.all()
+        highest_days = 0
+        for item in orderItems:
+            if item.product.days > highest_days: 
+                highest_days = item.product.days
+        min_date = datetime.today() + timedelta(days=highest_days+1)
+        return min_date
 
     @property
     def get_cart_total(self):
