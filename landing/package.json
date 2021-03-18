@@ -1,17 +1,24 @@
 {
-  "name": " ",
+  "name": "ql",
   "version": "0.0.1",
   "description": "",
-  "keywords": "",
+  "keywords": [
+    "Quicklink",
+    "Shop",
+    "MSME"
+  ],
   "license": "",
   "author": "",
   "scripts": {
-    "build": "parcel build index.html",
-    "dev": "parcel index.html --open",
+    "build": "parcel build public/*.html --out-dir prod",
+    "dev": "parcel public/*.html",
     "start": "npm run build && npm run dev",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "devDependencies": {
     "parcel-bundler": "^1.12.4"
+  },
+  "dependencies": {
+    "emailjs": "^3.4.0"
   }
 }

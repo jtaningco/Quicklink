@@ -3,15 +3,15 @@
 
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0;">
-  <meta property="og:image" content="static/thumbnail.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <meta property="og:image" content="https://i.ibb.co/XV596J1/thumbnail.png" />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="www.quicklink.ph/how-it-works" />
   <meta property="og:title" content="How Quicklink Works" />
   <meta property="og:description" content=" Quicklink automates order and financial processes, management, and documentation for small business owners to increase efficiency and return of sales." />
 
   <title>Quicklink: How It Works</title>
-  <link rel="icon" href="static/logos/logo.png">
+  <link rel="icon" type="image/x-icon" href="./static/logos/favicon.ico">
 
   <link rel="stylesheet" href="css/main.css">
   <link rel="stylesheet" href="css/home.css">
@@ -19,8 +19,6 @@
   <link rel="stylesheet" href="css/faqs.css">
   <link rel="stylesheet" href="css/hiw.css">
   <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-
-  <script src="js/nav.js"></script>
 </head>
 
 <body>
@@ -33,17 +31,17 @@
       </div>
   
       <div class="navLinks" id="openMobileNav">
-        <a class="logoLink" href="index.html"><div class="scrolled" id="navLogo"></div><img class="navMobileLogo" src="static/logos/logo.png"></a>
-        <a class="navOptions mobileHome" href="index.html">Home</a>
-        <a class="navOptions scrolled active" href="how-it-works.html">How It Works</a>
-        <a class="navOptions scrolled" href="pricing.html">Pricing</a>
-        <a class="navOptions scrolled" href="faqs.html">FAQs</a>
+        <a class="logoLink" href="/"><div class="scrolled" id="navLogo"></div><img class="navMobileLogo" src="static/logos/logo.png"></a>
+        <a class="navOptions mobileHome" href="/">Home</a>
+        <a class="navOptions scrolled active" href="/how-it-works/">How It Works</a>
+        <a class="navOptions scrolled" href="/pricing/">Pricing</a>
+        <a class="navOptions scrolled" href="/faqs/">FAQs</a>
 
-        <button class = "navMobileButton primary-btn"><a class = "navMobileButtonLink primary-btn-link" href="early-access.html">Join Early Access</a></button> 
+        <button class = "navMobileButton primary-btn"><a class = "navMobileButtonLink primary-btn-link" href="/early-access/">Join Early Access</a></button> 
       </div>
   
       <div class = "navButton">
-        <button id="navButton" class="primary-btn"><a id="navButton-link" class="primary-btn-link" href="early-access.html">Join Early Access</a></button>
+        <button id="navButton" class="primary-btn"><a id="navButton-link" class="primary-btn-link" href="/early-access/">Join Early Access</a></button>
       </div>
     </div>
   </nav>
@@ -121,7 +119,7 @@
           <h1 class = "bold">Click your way to quick and easy transactions. All for free.</h1>
         </div>
         <div class="buttonCTA">
-          <button class = "primary-white-btn"><a class = "primary-white-btn-link" href="early-access.html">Join Early Access</a></button>
+          <button class = "primary-white-btn"><a class = "primary-white-btn-link" href="/early-access/">Join Early Access</a></button>
         </div>
       </div>
     </section>
@@ -133,17 +131,17 @@
           <div class = "footerNavs">
             <div class = "footerColumn">
               <h3>How It Works</h3>
-              <a class = "footerLink" href = "how-it-works.html#merchantSection">For Merchants</a>
-              <a class = "footerLink" href = "how-it-works.html#customerSection">For Customers</a>
+              <a class = "footerLink" href = "/how-it-works/#merchantSection">For Merchants</a>
+              <a class = "footerLink" href = "/how-it-works/#customerSection">For Customers</a>
             </div>
             <div class = "footerColumn">
               <h3>Pricing</h3>
-              <a class = "footerLink" href = "pricing.html">Plans</a>
+              <a class = "footerLink" href = "/pricing/">Plans</a>
             </div>
             <div class = "footerColumn">
               <h3>FAQs</h3>
-              <a class="footerLink" href="faqs.html#faqs">General Questions</a>
-              <a class="footerLink" href="faqs.html#productQuestions">About the Product</a>
+              <a class="footerLink" href="/faqs/#faqs">General Questions</a>
+              <a class="footerLink" href="/faqs/#productQuestions">About the Product</a>
             </div>
           </div>
         </div>
@@ -157,22 +155,10 @@
       </div>
     </footer>
 
+    <script src="./js/nav.js"></script>
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
-      AOS.init({
-          duration: 1200,
-      });
-
-      window.onload = function() {
-        // MOBILE NAVBAR
-        var burger = document.getElementById("navBurger");
-          
-        burger.addEventListener("click", () => {
-          document.getElementById("navBurger").classList.toggle("open");
-          document.getElementById("openMobileNav").classList.toggle("navbarActive");
-          document.getElementById("burgerLines").style.backgroundColor("white");
-        });
-      }  
+      AOS.init({ duration: 1200, disable: 'mobile' });
     </script>
 
 </body>

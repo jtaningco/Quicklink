@@ -1,15 +1,20 @@
 html {
   box-sizing: border-box;
-  margin: 0;
-  padding: 0;
   background-color: #fff;
   overflow-x: hidden;
-  overflow-y: auto;
   overscroll-behavior: none;
+  scroll-behavior: smooth;
+  margin: 0px !important;
+  padding: 0px !important;
+  width: 100%;
+  height: 100%;
 }
 
-.navBurger {
-  display: none;
+body { 
+  width: 100%;
+  height: 100%;
+  margin: 0px !important;
+  padding: 0px !important;
 }
 
 .primary-white-btn {
@@ -60,7 +65,7 @@ html {
 }
 
 .hero {
-  width: 100%;
+  min-width: 100%;
   height: 100vh;
   background-image: url("../static/background/heroBG.png");
   background-blend-mode: multiply;
@@ -78,10 +83,11 @@ html {
   flex-direction: column;
   align-items: flex-start;
   justify-content: start;
-  max-width: 40vw;
+  max-width: 45vw;
 }
 
 .heroHead {
+  width: 100%;
   font-size: 2rem;
   line-height: 2.5rem;
   font-weight: 700;
@@ -92,11 +98,11 @@ html {
   font-size: 1.25rem;
   line-height: 2rem;
   color: #fff;
-  margin: 16px 0 32px 0;
+  padding: 16px 0 32px 0;
 }
 
 .heroImage {
-  max-width: 50%;
+  max-width: 45%;
 }
 
 .vp1 {
@@ -178,13 +184,15 @@ html {
 }
 
 .payLogos {
+  width: 100%;
   display: flex;
   margin-top: 8px;
 }
 
 .payLogos div {
+  width: auto;
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
 }
 
 .payLogos img {
@@ -306,7 +314,7 @@ html {
   align-items: center;
   justify-content: center;
   background: linear-gradient(180deg, #BAC6FF 0%, #798CF2 100%);
-  height: 50vh;
+  height: auto;
 }
 
 .footerLogo {
@@ -320,7 +328,7 @@ html {
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
-  padding: 5vh 10vw;
+  padding: 8vh 10vw;
 }
 
 .footerContent {
@@ -369,6 +377,7 @@ html {
 }
 
 .footerInquiries p {
+  width: 60%;
   color: #fff;
   font-weight: 700;
 }
@@ -397,21 +406,22 @@ html {
 }
 
 .documentLinks {
+  max-width: 40%;
   display: flex;
+  justify-content: flex-end;
 }
 
 .documentLinks a {
   cursor: url('../static/logos/blue-cursor.png'), auto;
-}
-
-.documentLinks p {
   color: #fff;
-  font-size: 1rem;
   font-weight: 400;
   transition: color 0.3s ease;
+  text-decoration: none;
+  max-width: 100%;
+  white-space: nowrap;
 }
 
-.documentLinks p:hover {
+.documentLinks a:hover {
   color: var(--secondary-light);
 }
 
@@ -653,10 +663,6 @@ html {
     font-size: 1.5rem;
     line-height: 2.5rem;
   }
-
-  .mainFooter {
-    height: auto;
-  }
 }
 
 @media screen and (min-width: 960px) and (max-width: 1024px) {
@@ -671,6 +677,7 @@ html {
   }
 
   .hero {
+    height: 110vh;
     flex-direction: column-reverse;
     justify-content: center;
     align-items: flex-start;
@@ -689,15 +696,15 @@ html {
   }
 
   .heroText {
-    margin-left: 8vw;
-    margin-top: 40px;
+    margin-left: 5vw;
+    margin-top: 24px;
     max-width: 80%;
   }
 
   .heroImage {
     margin-right: 0px;
     margin-left: 16px;
-    max-width: 75%;
+    max-width: 60%;
   }
 
   .vp1 {
@@ -713,7 +720,7 @@ html {
   }
   
   .vpText h1 {
-    font-size: 2rem;
+    font-size: 1.5rem;
   }
 
   .vpText p {
@@ -805,17 +812,12 @@ html {
     max-width: 80%;
   }
 
-  .mainFooter { height: 70vh; }
-
   .footerContent {
-    margin: 0px 40px;
     display: flex;
     align-items: center;
   }
 
   .footerInquiries {
-    margin-left: 40px;
-    margin-right: 40px;
     margin-top: 64px;
     flex-direction: column;
     align-items: flex-start;
@@ -826,7 +828,8 @@ html {
   }
 
   .documentLinks a {
-    padding: 0px 48px 0px 0px;
+    margin: 0;
+    padding: 0;
   }
 
   .footerContent {
@@ -847,18 +850,21 @@ html {
   }
 
   .footerInquiries {
-    margin-left: 24px;
-    margin-top: 64px;
     flex-direction: column;
     align-items: flex-start;
+    margin-top: 0;
+    padding: 64px 24px;
   }
 
   .documentLinks {
+    width: auto;
     margin-top: 8px;
   }
 
   .documentLinks a {
-    padding: 0px 48px 0px 0px;
+    width: 100%;
+    white-space: nowrap;
+    padding-right: 40px;
   }
 
   .documentLinks p {
@@ -866,8 +872,8 @@ html {
   }
 }
 
-@media screen and (max-width: 576px) {
-  .hero { height: 120vh; padding: 20vh 5vw; justify-content: flex-end; }
+@media screen and (max-width: 768px) {
+  .hero { height: auto; padding: 20vh 5vw; justify-content: flex-end; }
 
   .heroCircle2 {
     position: absolute;
@@ -895,7 +901,7 @@ html {
 
   .heroImage {
     margin-left: 0;
-    min-width: 100%;
+    min-width: 60%;
     height: auto;
   }
 
@@ -970,22 +976,44 @@ html {
 
   .CTA a { font-size: 1rem; line-height: 1.5rem; }
 
-  .mainFooter { height: auto; }
   .footerFull { padding: 5vh 5vw; }
-}
-
-@media screen and (max-width: 320px) {
-  .hero { height: auto; padding: 25vh 5vw; justify-content: flex-end; }
-
-  .heroCircle2 {
-    position: absolute;
-    top: 136px;
-    left: 200px;
-    z-index: -5;
-    max-width: 80px;
-    max-width: 160px;
+  
+  .footerInquiries {
+    flex-direction: column;
+    align-items: flex-start;
+    margin-top: 0;
+    padding: 64px 24px;
   }
 
+  .footerInquiries p {
+    font-size: 14px;
+    min-width: 100%;
+  }
+
+  .documentLinks {
+    width: 100%;
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    align-items: center;
+  }
+
+  .documentLinks a {
+    font-size: 14px;
+    padding: 4px 0;
+  }
+}
+
+@media screen and (max-width: 496px) {
+  html, body {
+    width: 100%;
+    overflow-x: hidden;
+  }
+
+  .hero { height: auto; padding: 25vh 5vw; justify-content: flex-end; }
+
+  .heroCircle1 { display: none; }
+  .heroCircle2 { display: none; }
   .heroCircle3 { display: none; }
 
   .heroHead { 
@@ -1042,8 +1070,9 @@ html {
     min-width: 100%;
   }
 
-  .compCircle { display: none; }
+  .circleBack1 { display: none; }
   .circleBack2 { display: none; }
+  .compCircle { display: none; }
 
   .CTA {
     height: auto;
@@ -1076,8 +1105,15 @@ html {
 
   .CTA a { font-size: 1rem; line-height: 1.5rem; }
 
-  .mainFooter { height: auto; margin-top: 20vh; }
-  .footerFull { padding: 5vh 5vw; }
+  .mainFooter { margin-top: 20vh; }
+  .footerFull { padding: 7.5vh 5vw; }
+  .documentLinks {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+  }
 }
 
 /* IPAD PRO */
@@ -1115,7 +1151,7 @@ html {
   }
 
   .mainFooter {
-    height: 25vh;
+    height: auto;
   }
 
   .footerFull { justify-content: flex-start; padding: 5vh 10vw; }

@@ -143,6 +143,7 @@ a {
 
 .primary-btn.disabled {
   cursor: not-allowed;
+  box-shadow: none;
   background: var(--muted-lightest);
 }
 
@@ -617,7 +618,7 @@ textarea {
 
 .navOptions {
   width: auto;
-  padding: 0px 40px;
+  padding: 4px 40px 0 40px;
   color: #FFF;
   font-size: 1rem;
   font-weight: 700;
@@ -740,7 +741,7 @@ textarea {
   .navWrapper { padding: 0 5vw;}
   #navLogo { display: none; }
   .logoLink { display: flex; justify-content: center; align-items: center; align-content: center; padding: 0; margin-bottom: 2rem; }
-  .navMobileLogo { display: flex; width: 240px; height: 240px; }
+  .navMobileLogo { display: flex; max-width: 240px; max-height: 240px; }
   .navMobileButton { display: flex; margin-top: 2rem; padding: 8px 16px;}
   .navMobileButtonLink { font-size: 1.5rem; }
   .navButton { flex-basis: 50%; }
@@ -764,6 +765,7 @@ textarea {
     opacity: 0;
     transform: translateY(-50%);
     transition: all 0.5s ease-in-out;
+    padding: 15vh 10vw;
   }
   
   .navbarActive {
@@ -802,9 +804,9 @@ textarea {
   }
 }
 
-@media screen and (max-width: 576px) {
-  .navMobileLogo { display: flex; width: 160px; height: 160px; }
-  .navMobileButton { display: flex; margin-top: 2rem; padding: 4px 12px;}
+@media screen and (max-width: 960px) {
+  .navMobileLogo { display: flex; width: 200px; height: 200px; }
+  .navMobileButton { display: flex; margin-top: 2rem; padding: 6px 12px;}
   .navMobileButtonLink { font-size: 1rem; }
 
   .navOptions {
@@ -813,9 +815,26 @@ textarea {
   }
 }
 
-@media screen and (max-width: 320px) {
+@media screen and (max-width: 576px) {
+  .navLanding { width: 100vw; }
+  .navWrapper { padding: 0 4vw; }
+  .navMobileLogo { display: flex; width: 160px; height: 160px; }
+  .navMobileButton { display: flex; margin-top: 1rem; padding: 4px 8px;}
+  .navMobileButtonLink { font-size: 1rem; }
+
+  .navOptions {
+    font-size: 1rem;
+    line-height: 1.5rem;
+    padding: 0;
+  }
+
+  .heroCircle2 { display: none; }
+}
+
+@media screen and (max-width: 360px) {
   .navBurger { flex-basis: 25%; }
   .navButton { flex-basis: 75%; }
+  .navMobileLogo { display: flex; width: 120px; height: 120px; }
 
   .primary-white-btn-link {
     font-size: 0.8rem;
@@ -823,6 +842,12 @@ textarea {
 
   .primary-btn-link {
     font-size: 0.8rem;
+  }
+
+  .navOptions {
+    font-size: 0.8rem;
+    line-height: 1.2rem;
+    padding: 0;
   }
 }
 

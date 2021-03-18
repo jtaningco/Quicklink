@@ -288,6 +288,10 @@
         align-items: center;
     }
 
+    .useCases-text-section p {
+        max-width: 80%;
+    }
+
     .useCases-text-section h1, p {
         text-align: center;
     }
