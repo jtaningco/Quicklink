@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QL: Email Verification</title>
+    <style type="text/css">
+      @import url('https://fonts.googleapis.com/css2?family=Overpass:wght@400;600;700;800&display=swap');
+      @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap');
+
+      * {
+          box-sizing: border-box;
+          margin: 0;
+          padding: 0;
+      }
+
+      :root {
+        /* COLORS */
+        --primary-main: #798CF2;
+        --primary-alt: #0A28BC;
+        --primary-light: #A9B8FF;
+        --primary-pressed: #5569D3;
+
+        --secondary-main: #FFAA2D;
+        --secondary-alt: #FF8A00;
+        --secondary-light: #FED9A4;
+
+        --muted-default: #575757;
+        --muted-dark: #2C2C2C;
+        --muted-light: #757575;
+        --muted-lighter: #A3A3A3;
+        --muted-lightest: #DCDCDC;  
+        --bg-color: #F8F9FF; 
+
+        --success-main: #6CD9BF;
+        --success-alt: #0ABC91;
+        --success-light: #C2FAEC;
+
+        --failure-main: #F35252;
+        --failure-alt: #CC4545;
+        --failure-light: #FFC5BE;
+
+        --pending-main: #FEE14C;
+        --pending-alt: #F8B629;
+        --pending-light: #FFF7CF;
+
+        /* BOX SHADOWS */
+        --regular-box-shadow: 0px 3px 5px rgba(51, 51, 51, 0.15);
+        --navbar-shadow: 4px 0px 10px rgba(0, 0, 0, 0.1);  
+      }
+
+      html {
+          width: auto;
+      }
+
+      body {
+          box-sizing: border-box;
+          max-width: 640px;
+          height: 100%;
+          background-color: var(--bg-color);
+      }
+
+      .container {
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          align-content: center;
+          width: 100%;
+          height: 100%;
+          padding: 2rem;
+      }
+
+      .ql-logo-wrapper {
+          width: 100%;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          align-content: center;
+          padding: 2rem;
+      }
+
+      .ql-logo {
+        width: 100%;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        align-content: center;
+      }
+
+      .ql-logo-img {
+        max-width: 64px;
+        height: 100%;
+      }
+
+      .containerBody {
+          display: flex;
+          flex-direction: column;
+          background-color: #FFF;
+          width: 100%;
+          padding: 2.5rem 2rem;
+      }
+
+      .letterHeaderText {
+          font-family: 'Overpass', sans-serif;
+          line-height: 2rem;
+          font-size: 1rem;
+          color: #333333;
+      }
+
+      .letterBodyText {
+          font-family: 'Overpass', sans-serif;
+          font-size: 1rem;
+          line-height: 2rem;
+          color: #333333;
+          padding-top: 32px;
+      }
+
+      .primary-btn {
+        height: auto;
+        max-width: 152px;
+        margin: 2rem 0 1rem 0;
+        padding: 0.6rem 1.5rem 0.5rem 1.5rem;
+        background: var(--primary-main);
+        border-radius: 4px;
+        border: none;
+        outline: none;
+        box-shadow: 0px 3px 5px rgba(51, 51, 51, 0.15);
+      }
+
+      .primary-btn:hover {
+        background: var(--primary-light); 
+      }
+
+      .primary-btn:focus {
+        border: none;
+        outline: none;
+      }
+
+      .primary-btn.active {
+        background: var(--primary-pressed);
+      }
+
+      .primary-btn.disabled {
+        background: var(--muted-lightest);
+      }
+
+      .primary-btn-link {
+        font-family: 'Overpass', sans-serif;
+        font-size: 0.9rem;
+        line-height: 1.3rem;
+        font-weight: 700;
+        color: white;
+        text-decoration: none;
+      }
+
+      .primary-btn-link.disabled {
+        cursor: default;
+        pointer-events: none; 
+        color: var(--muted-lighter)
+      }
+
+      .letterEndingBody {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: center;
+        align-content: center;
+        background-color: var(--bg-color);
+        width: 100%;
+        padding: 1rem 2rem;
+      }
+
+      .bottomLinks {
+          width: 60%;
+          display: flex;
+          justify-content: space-between;
+          padding: 3rem;
+      }
+
+      .links {
+          font-family: 'Overpass', sans-serif;
+          font-size: 1rem;
+          text-align: center;
+          color: var(--muted-default);
+          text-decoration: none;
+          transition: all 0.3s ease;
+      }
+
+      .links:hover {
+        color: var(--primary-main);
+      }
+
+      .socialMediaLinks {
+          width: 100%;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          align-content: center;
+      }
+
+      .qlBottom {
+          flex-basis: 50%;
+          display: flex;
+          justify-content: flex-start;
+          align-items: center;
+          align-content: center;
+      }
+
+      .qlBottom a {
+        transition: all 0.3s ease-in-out;
+      }
+
+      .qlBottom a:hover {
+        transform: translateY(-5%);
+      }
+
+      .socialMediaImg {
+          flex-basis: 50%;
+          display: flex;
+          justify-content: flex-end;
+          align-items: center;
+          align-content: center;
+      }
+
+      .socialMediaImg a {
+        padding: 1rem;
+        transition: all 0.3s ease-in-out;
+      }
+
+      .socialMediaImg a:hover {
+        transform: translateY(-5%);
+      }
+
+      @media screen and (max-width: 960px) {
+          .container {
+              padding: 1.5rem;
+          }
+          
+          .ql-logo-wrapper {
+              padding: 1.5rem;
+          }
+          
+          .containerBody {
+              padding: 2rem 1.5rem;
+          }
+          
+          .letterEndingBody {
+              padding: 1rem 1.5rem;
+          }
+          
+          .letterHeaderText {
+              font-size: 0.9rem;
+              line-height: 1.8rem;
+          }
+
+          .letterBodyText {
+              font-size: 0.9rem;
+              line-height: 1.8rem;
+          }
+          
+          .links {
+              font-size: 0.9rem;
+          }
+          
+          .bottomLinks {
+              width: 50%;
+              padding: 0;
+              padding: 2rem;
+          }
+      }
+
+      @media screen and (max-width: 576px) {
+          .container {
+              padding: 1rem;
+          }
+          
+          .ql-logo-wrapper {
+              padding: 1rem;
+          }
+          
+          .containerBody {
+              padding: 1.5rem 1rem;
+          }
+          
+          .letterEndingBody {
+              padding: 1rem;
+          }
+
+          .letterHeaderText {
+              font-size: 0.8rem;
+              line-height: 1.6rem;
+          }
+
+          .letterBodyText {
+              font-size: 0.8rem;
+              line-height: 1.6rem;
+          }
+          
+          .links {
+              font-size: 0.8rem;
+          }
+          
+          .bottomLinks {
+              width: 100%;
+              padding: 2rem 0;
+          }
+
+          .socialMediaLinks a {
+              padding: 0.5rem;
+          }
+      }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="ql-logo-wrapper">
+          <div class="ql-logo">
+            <img class="ql-logo-img" src="https://ik.imagekit.io/ripzjge77zz/Quicklink/emails/big-ql-logo_66qI-qTGM.svg">
+          </div>
+        </div>
+
+        <div class="containerBody">
+          <p class="letterHeaderText">Hey there!</p>
+      
+          <p class="letterBodyText">Thank you for signing up for Quicklink. Just a few more clicks before your quick and easy transactions.</p>
+          
+          <p class="letterBodyText">To verify your email, head over to this <a href="{{ link }}">link</a> or click the button below. Once your account is verified, you may proceed to the onboarding process.</p>
+          
+          <p class="letterBodyText">As a part of our early access program, we recommend you to keep your user ID for future purposes: {{ user.id }}. The verification token expires on {{ expiry|time:"TIME_FORMAT" }}.</p>
+
+          <p class="letterBodyText">Welcome to Quicklink!</p>
+      
+          <form action="{{ link }}">
+            <input type="submit" class="primary-btn primary-btn-link" value="Verify Email" />
+          </form>
+        </div>
+
+        <div class="letterEndingBody">
+          <p class="letterBodyText">If you have any questions, feel free to message us at customers@quicklink.ph. </p>
+          <div class="bottomLinks">
+            <a class="links" href="https://bit.ly/QLPrivacyPolicy">Privacy Policy</a>
+            <a class="links" href="https://bit.ly/QLTerms">Terms of Use</a>
+          </div>
+          <div class="socialMediaLinks">
+            <div class="qlBottom">
+              <a href="https://quicklink.ph" target="_blank"><img src="https://ik.imagekit.io/ripzjge77zz/Quicklink/emails/small-ql-logo_8aBOGICoY.svg"></a>
+            </div>
+            <div class="socialMediaImg">
+              <a href="https://twitter.com/quicklinkph" target="_blank">
+                <img src="https://ik.imagekit.io/ripzjge77zz/Quicklink/emails/twitter-logo_-U7UNaQO_.svg">
+              </a>
+              <a href="https://www.facebook.com/quicklinkph" target="_blank">
+                <img src="https://ik.imagekit.io/ripzjge77zz/Quicklink/emails/fb-logo_1Aztd67Sc.svg">
+              </a>
+              <a href="https://www.linkedin.com/company/quicklink-ph/" target="_blank">
+                <img src="https://ik.imagekit.io/ripzjge77zz/Quicklink/emails/ig-logo_Wa60RR0Ns.svg">
+              </a>
+            </div>
+          </div>
+        </div>
+
+    </div>
+</body>
+</html>

@@ -2,6 +2,8 @@ import os
 import environ
 from .base import *
 
+# In production settings, you should focus on the security for your project.
+# See https://www.apptension.com/blog-posts/how-to-configure-your-django-project-for-multiple-environments
 
 env = environ.Env()
 env.read_env()

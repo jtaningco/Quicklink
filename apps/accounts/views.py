@@ -9,8 +9,12 @@ from apps.accounts.models import *
 from .forms import *
 from .decorators import allowed_users, unauthenticated_customer, unauthenticated_merchant
 
+# Email Verification
+from django_email_verification import send_email
+
 # XenPlatform Account Creation
 from xendit import Xendit, XenPlatformAccountType, XenPlatformURLType
+
 
 # Create your views here.
 @unauthenticated_merchant
@@ -24,20 +28,36 @@ def register_merchant(request):
                 password=form.cleaned_data.get("password1")
             )
             user.role = User.Types.MERCHANT
+            user.is_active = False
+            send_email(user)
 
             merchant_group, created = Group.objects.get_or_create(name='Merchant')
             user.groups.add(merchant_group)
 
             user.save()
-            return redirect('accounts:merchant-email-confirmation', user.id)
+            return redirect('accounts:merchant-email-verification', user.id)
     context = {'form':form}
     return render(request, 'accounts/merchant-register.html', context)
 
 @unauthenticated_merchant
-def email_confirmation(request, user_id):
+def email_verification(request, user_id):
     user = User.objects.get(id=user_id)
+    if request.is_ajax and request.method == "POST":
+        send_email(user)
+
     context = {'user': user}
     return render(request, 'accounts/email-verification.html', context)
+
+def email_confirmation(request):
+    if request.is_ajax:
+        userId = request.POST.get('userId')
+        user = User.objects.get(id=userId)
+        if request.POST.get('message') == 'success':
+            login(request, user, backend='django.contrib.auth.backends.ModelBackend')
+            return redirect('/user/merchant/login/')
+        if request.POST.get('message') == 'failure':
+            send_email(user)
+    return JsonResponse(request.data, safe=False)
 
 @login_required(login_url='accounts:merchant-login')
 @allowed_users(allowed_roles=[User.Types.MERCHANT, User.Types.ADMIN])

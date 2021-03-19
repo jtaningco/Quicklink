@@ -4,6 +4,9 @@ from django.utils.translation import gettext_lazy as _
 from django.urls import reverse
 from .validators import only_int, exp_date
 
+import shortuuid
+from shortuuidfield import ShortUUIDField
+
 # Create your models here.
 # Django Roles, Permissions, and Groups: https://medium.com/djangotube/django-roles-groups-and-permissions-introduction-a54d1070544
 # Django Custom Authentication: https://docs.djangoproject.com/en/3.1/topics/auth/customizing/
@@ -47,6 +50,8 @@ class User(AbstractBaseUser, PermissionsMixin):
         QUICKIES = "QUICKIES", "Quickies"
         MERCHANT = "MERCHANT", "Merchant"
         CUSTOMER = "CUSTOMER", "Customer"
+
+    id = ShortUUIDField(primary_key=True, max_length=15, blank=True, editable=False)
 
     role = models.CharField(_('role'), max_length=50, choices=Types.choices, default=Types.ADMIN, null=True)
     

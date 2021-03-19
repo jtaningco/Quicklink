@@ -19,11 +19,14 @@ from django.urls import path, include
 from django.conf.urls.static import static
 from config import settings
 
+from django_email_verification import urls as email_urls
+
 urlpatterns = [
     path('accounts/', include('allauth.urls')),
     path('admin/', admin.site.urls),
+    path('verification/', include(email_urls)),
     path('', include(('customers.urls', 'customers'), namespace='customers')),
-    path('user/', include(('accounts.urls', 'accounts'), namespace='accounts')),
+    path('user/', include(('accounts.urls', 'accounts'), namespace='users')),
     path('shop/orders/', include(('orders.urls', 'orders'), namespace='orders')),
     path('shop/products/', include(('products.urls', 'products'), namespace='products')),
 ]

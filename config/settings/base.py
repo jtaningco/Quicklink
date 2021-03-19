@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'django_filters',
     'crispy_forms',
     'corsheaders',
+    'django_email_verification',
 
     # OAuth
     'allauth',

@@ -1,0 +1,9 @@
+Hey there, merchant!
+
+Thank you for signing up for Quicklink. Just a few more clicks before your quick and easy transactions.
+
+To verify your email, Please click the following link: {{ link }}
+
+As a part of our early access program, we recommend you to keep your user ID for future purposes: {{ user.id }}. The verification token expires on {{ expiry|time:"TIME_FORMAT" }}.
+
+Welcome to Quicklink!
