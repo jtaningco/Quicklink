@@ -22,8 +22,8 @@
             </div>
             <button type="button" style="margin: 0.5rem 0; width: 100%;" id="js-proceed-btn" class="primary-btn primary-btn-link" data-id="{{ user.id }}">Proceed</button>
         {% else %}
-                <h1 class="bold" style="color: var(--muted-dark); padding: 0.25rem 0; ">Unsuccessful Verification!</h1>
-                <p class="body" style="color: var(--muted-dark); margin-top: 0.5rem; text-align: center;">The token for verification was either invalid or has already expired. Please try again.</h2>
+                <h1 class="bold" style="color: var(--muted-dark); padding: 0.25rem 0; ">Uh oh! Something went wrong.</h1>
+                <p class="body" style="color: var(--muted-dark); margin-top: 0.5rem; text-align: center;">You'll need to get a new verification link by hitting the button below.</h2>
             </div>
             <button type="button" style="margin: 0.5rem 0; width: 100%;" id="js-resend-email-btn" class="primary-btn primary-btn-link" data-id="{{ user.id }}">Resend Email</button>
         {% endif %}

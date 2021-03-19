@@ -75,7 +75,7 @@ h1, h2, h3, p, a, input, .body, .subtitle {
 
 h1 { font-size: 1.75rem; line-height: 2.5rem; }
 h2 { font-size: 1.5rem; line-height: 2.25em; }
-h3 { font-size: 1.25rem; line-height: 2rem; }
+h3, .body-big { font-size: 1.25rem; line-height: 2rem; }
 p, .body { font-size: 1rem; line-height: 1.6rem; }
 .subtitle { font-size: 0.9rem; line-height: 1.25rem; }
 .caption { font-size: 0.75rem; line-height: 1rem; }

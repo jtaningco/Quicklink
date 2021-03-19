@@ -1,6 +1,5 @@
 {% extends 'quicklink/signups.html' %}
 {% load static %}
-{% load socialaccount %}
 
 {% block pagetitle %}Merchant Sign Up{% endblock %}
 
@@ -30,7 +29,7 @@
         {{ form.role }}
                 
         <div class="registration-content">
-            <p>Email</p>
+            <p class="subtitle bold">Email</p>
             {{form.email}}
             <div class="registration-content--email">
                 <img 
@@ -42,12 +41,12 @@
         </div>
 
         <div class="registration-content">
-            <p>Password</p>
+            <p class="subtitle bold">Password</p>
             {{form.password1}}
         </div>
 
         <div class="registration-content">
-            <p>Confirm Password</p>
+            <p class="subtitle bold">Confirm Password</p>
             {{form.password2}}
         </div>
 

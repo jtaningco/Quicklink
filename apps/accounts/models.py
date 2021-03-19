@@ -217,7 +217,7 @@ class ShopInformation(models.Model):
     user = models.OneToOneField(
         User, related_name="info_shop", on_delete=models.CASCADE
     )
-    shop_name = models.CharField(_("shop name"), null=True, max_length=25)
+    shop_name = models.CharField(_("shop name"), null=True, max_length=30)
     shop_contact_number = models.CharField(_("contact number"), max_length=15, null=True)
     shop_username = models.CharField(_("shop username"), 
         max_length=150, 
@@ -234,6 +234,54 @@ class ShopInformation(models.Model):
         return f"{self.shop_username} - {self.shop_name} ({self.shop_contact_number})"
 
 # Available Delivery Schedule
+# See more information on how to do it here: https://stackoverflow.com/questions/3663898/representing-a-multi-select-field-for-weekdays-in-a-django-model
+
+class BitChoices(object):
+  def __init__(self, choices):
+    self._choices = []
+    self._lookup = {}
+    for index, (key, val) in enumerate(choices):
+      index = 2**index
+      self._choices.append((index, val))
+      self._lookup[key] = index
+
+  def __iter__(self):
+    return iter(self._choices)
+
+  def __len__(self):
+    return len(self._choices)
+
+  def __getattr__(self, attr):
+    try:
+      return self._lookup[attr]
+    except KeyError:
+      raise AttributeError(attr)
+
+  def get_selected_keys(self, selection):
+    # Return a list of keys for the given selection
+    return [ k for k,b in self._lookup.iteritems() if b & selection]
+
+  def get_selected_values(self, selection):
+    # Return a list of values for the given selection
+    return [ v for b,v in self._choices if b & selection]
+
+WEEKDAYS = BitChoices((
+    ('Mon', 'Monday'), ('Tues', 'Tuesday'), ('Wed', 'Wednesday'),
+    ('Thurs', 'Thursday'), ('Fri', 'Friday'), ('Sat', 'Saturday'),
+    ('Sun', 'Sunday')
+))
+
+class DeliveryDays(models.Model):
+    days = models.PositiveIntegerField(choices=WEEKDAYS)
+    everyday = models.BooleanField(_("everyday delivery"), null=True, default=False)
+
+    def __str__(self):
+        if everyday:
+            return "Everyday"
+        else:
+            return f"{WEEKDAYS.get_selected_values(days).join(', ')}"
+
+# Shop Open Hours
 class OpenHours(models.Model):
     HOUR_OF_DAY_24 = [
         (0, "12:00 AM"),

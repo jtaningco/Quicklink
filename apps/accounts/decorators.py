@@ -5,7 +5,14 @@ from apps.accounts.models import ShopInformation
 def unauthenticated_merchant(view_func):
     def wrapper_func(request, *args, **kwargs):
         if request.user.is_authenticated:
-            return redirect('products:products')
+            if not hasattr(request.user, 'info_shop'):
+                return redirect('accounts:merchant-add-shop')
+            elif not hasattr(request.user, 'logo_shop'):
+                return redirect('accounts:merchant-add-logo')
+            elif not hasattr(request.user, 'user_account'):
+                return redirect('accounts:merchant-add-payment')
+            else:
+                return redirect('products:products')
         else:        
             return view_func(request, *args, **kwargs)
 

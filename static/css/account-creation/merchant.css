@@ -119,6 +119,109 @@
     color: var(--failure-alt);
 }
 
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top:1rem;
+    padding-bottom: 1rem;
+}
+
+.pagination__circle {
+    width: 2.5rem;
+    height: 2.5rem;
+    font-size: 1.25rem;
+    color: var(--primary-main);
+    padding: 0.75rem 1rem 0.5rem 1rem;
+    text-decoration: none;
+    border: 1px solid var(--primary-main);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.3s ease-in-out;
+}
+
+.pagination__circle:hover {
+    background-color: var(--primary-pressed);
+    border: 1px solid var(--primary-pressed);
+    color: white;
+}
+
+.pagination__circle--active {
+    background-color: var(--primary-main);
+    color: white;
+    border-radius: 50%;
+}
+
+.pagination__line {
+    display: block;
+    width: 2.5rem;
+    height: 1px;
+    background-color: var(--primary-main)
+}
+
+.delivery__input {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    align-content: center;
+    padding: 0.5rem 1rem;
+}
+
+@keyframes disappear {
+    from { opacity: 1; }
+    to { opacity: 0; display: none; }
+}
+
+@keyframes appear {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.delivery__modal--background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    transform: translate(0%, 0%,);
+    z-index: 99;
+    background: rgba(0, 0, 0, 0.1);
+    width: 100%;
+    height: 100%;
+    display: none; justify-content: center; align-items: center; align-content: center;
+    transition: all 0.3s ease-in-out;
+}
+
+.delivery__modal {
+    width: 280px; height: 256px;
+    display: none;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: flex-start;
+    align-content: space-between;
+    padding: 1rem 1.5rem;
+    background-color: #FFF;
+    box-shadow: var(--regular-box-shadow);
+    border-radius: 5px;
+    z-index: 999;
+}
+
+.delivery__modal--appear { display: flex; animation: appear 0.2s; }
+
+.delivery__modal__option {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    align-content: center;
+    padding: 1rem 0;
+}
+
+.delivery__modal__option--label {
+    margin-left: 0.75rem;
+    padding-top: 4px;
+}
+
 /* MACBOOKS AND LAPTOPS */
 @media screen and (max-width: 1440px) {
     .registration-card {

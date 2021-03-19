@@ -1,75 +1,208 @@
-{% extends 'quicklink/base.html' %}
+{% extends 'quicklink/signups.html' %}
 {% load static %}
 
-{% block pagetitle %}Registration: Shop Information{% endblock %}
+{% block pagetitle %}Merchant Shop Information{% endblock %}
 
-{% block maincontent %}
+{% block stylesheets %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" />
+{% endblock %}
 
-<form action="" method="post">
+{% block scriptsHead %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.12/js/intlTelInput.min.js" integrity="sha512-OnkjbJ4TwPpgSmjXACCb5J4cJwi880VRe+vWpPDlr8M38/L3slN5uUAeOeWU2jN+4vN0gImCXFGdJmc0wO4Mig==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.12/js/utils.js" integrity="sha512-bUcJxlqkiGA3cmoYPuZaLRsyc5ChG9APG4ajom2AXKSlBtOmx4kLV3c8uv/6uSz43FMjI4Q2QI21+D223rT76w==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.12/js/utils.min.js" integrity="sha512-JtpGKUjQUqCJmgw3TOr8bkL8QqB8oCbofRU39xgDnRYTfIDvfg0gQs2efeKxBCdwSAP/h3CSqhn87+giWSsxjw==" crossorigin="anonymous"></script>
+{% endblock %}
 
-    <div class="registration-container">
-        <div class="registration-wrapper">
-
-            <h1>Shop Information</h1>
-
+{% block cardContent %}    
+        <div class="registration-header">
+            <div class="pagination">
+                <a href="#" class="pagination__circle pagination__circle--active body-big bold">1</a>
+                <div class="pagination__line"></div>
+                <a href="#" class="pagination__circle body-big bold">2</a>
+                <div class="pagination__line"></div>
+                <a href="#" class="pagination__circle body-big bold">3</a>
+            </div>
+            <h1 class="bold" style="color: var(--primary-main); padding: 0.25rem 0; ">Shop Information</h1>
+            <h2 class="body" style="color: var(--muted-default);">Help us get to know your shop better.</h2>
+        </div>
+        
+        <form action="" method="post" style="width: 100%;">
             {% csrf_token %}
-
-            <div class="registration-content" style="flex-direction: column;">
-                <p>Shop Name</p>
+            <div class="registration-content">
+                <p class="subtitle bold">Shop Name<span style="color: var(--failure-main)">*</span></p>
                 {{form.shop_name}}
             </div>
 
-            <div class="registration-content" style="flex-direction: column;">
-                <p>Contact Number</p>
+            <div class="registration-content">
+                <p class="subtitle bold">Contact Number<span style="color: var(--failure-main)">*</span></p>
                 {{form.shop_contact_number}}
             </div>
 
-            <div class="registration-content" style="flex-direction: column;">
-                <p>Shop Quicklink Username</p>
+            <div class="registration-content">
+                <p class="subtitle bold">Shop Quicklink Username<span style="color: var(--failure-main)">*</span></p>
                 {{form.shop_username}}
             </div>
 
-            <div class="registration-content" style="flex-direction: column;">
-                <p>Shop Delivery Schedule</p>
+            <div class="registration-content">
+                <p class="subtitle bold">Shop Delivery Schedule<span style="color: var(--failure-main)">*</span></p>
                 <div class="registration-content">
-                    {{form.day_from}}
-                    {{form.day_to}}
-                </div>
-                <div class="registration-content">
-                    {{form.from_hour}}
-                    {{form.to_hour}}
+                    <div class="input default delivery__input js-toggle-delivery-input">
+                        <p id="js-delivery-input" class="subtitle regular" style="color: var(--muted-lighter);">Everyday</p>
+                        <img src="https://ik.imagekit.io/ripzjge77zz/Quicklink_App/Merchant/Account_Creation/icons/fi_chevron-down_H9oiI7CW7d.png" onerror="this.style.display='none'" class="js-toggle-delivery-input">
+                    </div>
+                    <div class="delivery__modal--background" id="js-delivery-modal-bg">
+                        <div class="delivery__modal" id="js-delivery-modal">
+                            {% for pk, day in form.delivery_schedule.field.widget.choices %}
+                                <div class="delivery__modal__option">
+                                    <label class="checkbox" data-value="{{ pk }}">
+                                        <input type="checkbox" name="delivery_schedule" value="{{ pk }}" id="id_delivery_schedule_{{ forloop.counter0 }}" />
+                                        <span class="checkmark"></span>
+                                    </label>
+                                    <p class="delivery__modal__option--label subtitle bold">{{ day }}</p>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            <div class="registration-content" style="flex-direction: column;">
-                <p>Shop Address</p>
+            <div class="registration-content">
+                <p class="subtitle bold">Shop Address<span style="color: var(--failure-main)">*</span></p>
                 {{form.line1}}
                 {{form.line2}}
                 {{form.city}}
-                <div class="registration-content">
+                <div class="registration-content" style="flex-direction: row;">
                     {{form.province}}
                     {{form.postal_code}}
                 </div>
             </div>
 
-            <div class="registration-content" style="flex-direction: column;">
-                <p>Social Media Links</p>
+            <div class="registration-content">
+                <p class="subtitle bold">Social Media Links</p>
                 {{form.instagram}}
                 {{form.facebook}}
                 {{form.twitter}}
             </div>
 
-            <div class="registration-content" style="flex-direction: column;">
-                <p>Will your shop accept Cash-On-Delivery (COD)?</p>
+            <div class="registration-content">
+                <p class="subtitle bold">Will your shop accept Cash-On-Delivery (COD)?<span style="color: var(--failure-main)">*</span></p>
                 {{form.shop_cod}}
             </div>
 
             {{ form.errors }}
 
             <input type="submit" name="Next" style="margin: 24px 0;" class="preview-btn">
+        </form>
+{% endblock %}
 
-        </div>
-    </div>
-</form>
+{% block scriptsBody %}
+    <!-- intlTelInput — Phone Number Validation -->
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.12/js/intlTelInput.js" integrity="sha512-lib7WdJvAnfLLBi5AHdN+wUkcWwpu1fmYzyEHQijZq7WedcwBiwdVNbcML2rAtKvwtOIU7thMGB+O9Kpb9g2Cw==" crossorigin="anonymous"></script>
 
+    <script>
+        var contactNumberInput = document.querySelector('#id_shop_contact_number');
+
+        var iti ==intlTelInput(contactNumberInput, {
+            utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.12/js/utils.js",
+            initialCountry: "auto",
+            geoIpLookup: function(success, failure) {
+                $.get("https://ipinfo.io", function() {}, "jsonp").always(function(resp) {
+                    var countryCode = (resp && resp.country) ? resp.country : "us";
+                    success(countryCode);
+                });
+            },
+            separateDialCode: true,
+        })
+
+        function verifyPhoneNumber() {
+            // PHONE NUMBER JQUERY
+            var contactNumber = iti.getNumber(intlTelInputUtils.numberFormat.E164);
+            if (contactNumber.indexOf(' ') >= 0) {
+                contactNumber = contactNumber.trim()
+            }
+
+            if (iti.isValidNumber()) {
+                contactNumberInput.classList.remove("error");
+            } else {
+                contactNumberInput.classList.add("error");
+            }
+        }
+
+        contactNumberInput.addEventListener('onkeyup', verifyPhoneNumber)
+    </script> -->
+
+    <script>
+        var listOfDays = [];
+
+        function addDays(i) {
+            console.log(i);
+            if (i == 1) {
+                listOfDays.push('Monday');
+            } else if (i == 2) {
+                listOfDays.push('Tuesday');
+            } else if (i == 3) {
+                listOfDays.push('Wednesday');
+            } else if (i == 4) {
+                listOfDays.push('Thursday');
+            } else if (i == 5) {
+                listOfDays.push('Friday');
+            } else if (i == 6) {
+                listOfDays.push('Saturday')
+            } else {
+                listOfDays.push('Sunday');
+            }
+        }
+
+        function removeDays(i) {
+            console.log(i);
+            if (i == 1) {
+                listOfDays = listOfDays.filter(e => e !== 'Monday');
+            } else if (i == 2) {
+                listOfDays = listOfDays.filter(e => e !== 'Tuesday');
+            } else if (i == 3) {
+                listOfDays = listOfDays.filter(e => e !== 'Wednesday');
+            } else if (i == 4) {
+                listOfDays = listOfDays.filter(e => e !== 'Thursday');
+            } else if (i == 5) {
+                listOfDays = listOfDays.filter(e => e !== 'Friday');
+            } else if (i == 6) {
+                listOfDays = listOfDays.filter(e => e !== 'Saturday');
+            } else {
+                listOfDays = listOfDays.filter(e => e !== 'Sunday');
+            }
+        }
+
+        window.onload = function() {
+            var toggleDeliveryInputBtns = document.getElementsByClassName('js-toggle-delivery-input');
+            var deliveryModalBg = document.getElementById('js-delivery-modal-bg');
+            var deliveryModal = document.getElementById('js-delivery-modal');
+
+            var checkInputs = $('input[type="checkbox"]');
+
+            for (x = 0; x < toggleDeliveryInputBtns.length; x++) {
+                toggleDeliveryInputBtns[x].addEventListener('click', function() {
+                    deliveryModalBg.style.display = 'flex';
+                    deliveryModal.classList.toggle('delivery__modal--appear');
+                });
+            };
+
+            // Subtract 1 to exclude COD Boolean Toggle Field
+            for (y = 0; y < checkInputs.length - 1; y++) {
+                checkInputs.eq(y).change(function() {
+                    if (this.checked) {
+                        addDays(parseInt($(this).val()));
+                    } else {
+                        removeDays(parseInt($(this).val()));
+                    }
+                });
+            }
+
+            deliveryModalBg.addEventListener('click', function(e) {
+                if (! deliveryModal.contains(e.target)) {
+                    deliveryModalBg.style.display = 'none';
+                    deliveryModal.classList.toggle('delivery__modal--appear');
+                }
+            });
+        }
+    </script>
 {% endblock %}

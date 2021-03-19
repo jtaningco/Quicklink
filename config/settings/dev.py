@@ -20,7 +20,7 @@ EMAIL_FROM_ADDRESS = 'josh@quicklink.ph'
 EMAIL_MAIL_SUBJECT = 'Quicklink Email Verification'
 EMAIL_MAIL_HTML = 'emails/verification.html'
 EMAIL_MAIL_PLAIN = 'emails/verification.txt'
-EMAIL_TOKEN_LIFE = 300
+EMAIL_TOKEN_LIFE = 60 * 60
 EMAIL_PAGE_TEMPLATE = 'accounts/email-confirmation.html'
 EMAIL_PAGE_DOMAIN = env("DEV_DOMAIN")
 

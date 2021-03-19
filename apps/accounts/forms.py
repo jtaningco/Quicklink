@@ -45,92 +45,80 @@ class CreateUserForm(UserCreationForm):
             user.save()
         return user
 
-class ShopInformationForm(ModelForm):
+# For Delivery Dates
+# See here for more information: https://stackoverflow.com/questions/19645227/django-create-multiselect-checkbox-input
+# https://stackoverflow.com/questions/3663898/representing-a-multi-select-field-for-weekdays-in-a-django-model
+class BinaryWidget(forms.CheckboxSelectMultiple):
+    def value_from_datadict(self, data, files, name):
+        value = super(BinaryWidget, self).value_from_datadict(data, files, name)
+        if name == 'delivery_schedule':
+            value = sum([2**(int(x)-1) for x in value])
+        return value
+
+class ShopInformationForm(forms.Form):
+    # Shop Details
+    shop_name = forms.CharField(label='', 
+        widget=forms.fields.TextInput(attrs={
+        'class':'input default subtitle',
+        'placeholder': 'Shop Name'}),)
+    shop_contact_number = forms.CharField(label='',  
+        widget=forms.fields.TextInput(attrs={
+        'class':'input default subtitle',
+        'placeholder': 'Contact Number'}),)
+    shop_username = forms.CharField(label='', 
+        widget=forms.fields.TextInput(attrs={
+        'class':'input default subtitle',
+        'placeholder': 'Shop Quicklink Username'}),)
+
     # shop_delivery_schedule
-    day_from = forms.ChoiceField(label='',
-                                widget=forms.Select(attrs={
-                                    'class': 'small-input', 
-                                    'placeholder': 'Opening Day'}),
-                                choices=OpenHours.WEEKDAYS)
-    day_to = forms.ChoiceField(label='',
-                                widget=forms.Select(attrs={
-                                    'class': 'small-input', 
-                                    'placeholder': 'Closing Day'}),
-                                choices=OpenHours.WEEKDAYS)
-    from_hour = forms.ChoiceField(label='',
-                                widget=forms.Select(attrs={
-                                    'class': 'small-input', 
-                                    'placeholder': 'Open From'}),
-                                choices=OpenHours.HOUR_OF_DAY_24)
-    to_hour = forms.ChoiceField(label='',
-                                widget=forms.Select(attrs={
-                                    'class': 'small-input', 
-                                    'placeholder': 'Open Until'}),
-                                choices=OpenHours.HOUR_OF_DAY_24)
+    delivery_schedule = forms.IntegerField(widget=BinaryWidget(choices=(
+        ('1', 'Monday'), ('2', 'Tuesday'), ('3', 'Wednesday'),
+        ('4', 'Thursday'), ('5', 'Friday'), ('6', 'Saturday'),
+        ('7', 'Sunday')
+    )))
 
     # shop_address
     line1=forms.CharField(label='', 
                         widget=forms.fields.TextInput(attrs={
-                        'class': 'input', 
+                        'class': 'input default', 
                         'placeholder': 'Address Line 1'}))
     line2=forms.CharField(label='', 
                         widget=forms.fields.TextInput(attrs={
-                        'class': 'input', 
+                        'class': 'input default', 
                         'placeholder': 'Address Line 2'}))
     city=forms.ChoiceField(label='', 
                         widget=forms.Select(attrs={
-                        'class': 'input', 
+                        'class': 'input default', 
                         'placeholder': 'City'}),
                         choices=Address.CITIES)
     province=forms.ChoiceField(label='', 
                         widget=forms.Select(attrs={
-                        'class': 'small-input', 
+                        'class': 'small-input default', 
                         'placeholder': 'Province'}),
                         choices=Address.PROVINCES)
     postal_code=forms.CharField(label='', 
                         widget=forms.fields.TextInput(attrs={
-                        'class': 'small-input', 
+                        'class': 'small-input default', 
                         'placeholder': 'Postal Code'}))
     
     # shop_links
     instagram=forms.URLField(label='',
                         widget=forms.fields.TextInput(attrs={
-                        'class': 'input', 
+                        'class': 'input default', 
                         'placeholder': 'Instagram Link'}),
                         required = False)
     facebook=forms.URLField(label='',
                         widget=forms.fields.TextInput(attrs={
-                        'class': 'input', 
+                        'class': 'input default', 
                         'placeholder': 'Facebook Link'}),
                         required = False)
     twitter=forms.URLField(label='',
                         widget=forms.fields.TextInput(attrs={
-                        'class': 'input', 
+                        'class': 'input default', 
                         'placeholder': 'Twitter Link'}),
                         required = False)
 
-    class Meta:
-        model = ShopInformation
-        fields = ['shop_name', 
-                'shop_contact_number', 
-                'shop_username',
-                'shop_cod']
-        required_fields = ['shop_name', 
-                'shop_contact_number', 
-                'shop_username',
-                'shop_cod']
-
-        widgets = {
-            'shop_name': forms.fields.TextInput(attrs={
-                'class':'input',
-                'placeholder': 'Shop Name'}),
-            'shop_contact_number': forms.fields.TextInput(attrs={
-                'class':'input',
-                'placeholder': '+639161611616'}),
-            'shop_username': forms.fields.TextInput(attrs={
-                'class':'input',
-                'placeholder': 'Shop Quicklink Username'}),
-        }
+    shop_cod=forms.BooleanField()
 
 class ShopLogoForm(ModelForm):
     class Meta:
