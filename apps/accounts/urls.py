@@ -4,7 +4,8 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    path('merchant/register/', views.registerMerchant, name='merchant-register'),
+    path('merchant/register/', views.register_merchant, name='merchant-register'),
+    path('merchant/<str:user_id>/confirmation/', views.email_confirmation, name='merchant-email-confirmation'),
     path('merchant/register/shop', views.registerShopInformation, name='merchant-register-shop'),
     path('merchant/register/logo', views.registerShopLogo, name='merchant-register-logo'),
     path('merchant/register/payment', views.registerShopAccount, name='merchant-register-payment'),

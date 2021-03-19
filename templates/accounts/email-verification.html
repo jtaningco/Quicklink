@@ -1,0 +1,61 @@
+{% load static %}
+{% load socialaccount %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Merchant Sign Up</title>
+    <link rel="stylesheet" type="text/css" href="{% static '/css/main.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static '/css/account-creation/merchant.css' %}">
+</head>
+<body>    
+    <main>
+        <div class="signup-container">
+            <div class="registration-card">
+                <div class="registration-wrapper">
+                    <div class="registration-header">
+                        <img 
+                            src="https://ik.imagekit.io/ripzjge77zz/Quicklink_App/logos/Shortened-logo_BzQkxRgQX.svg" 
+                            alt="Quicklink Logo" 
+                            srcset="
+                                https://ik.imagekit.io/ripzjge77zz/Quicklink_App/logos/shortened/Shortened-4x_qiZytmz_G.png 4x,
+                                https://ik.imagekit.io/ripzjge77zz/Quicklink_App/logos/shortened/Shortened-3x_qwYOTUuxmZn.png 3x,
+                                https://ik.imagekit.io/ripzjge77zz/Quicklink_App/logos/shortened/Shortened-2x_KY3DONXuR.png 2x,
+                                https://ik.imagekit.io/ripzjge77zz/Quicklink_App/logos/shortened/Shortened-logo_BzQkxRgQX.svg 1x,"
+                            style="padding-bottom: 0.75rem;"
+                        >
+                        <h1 class="bold" style="color: var(--primary-main); padding: 0.25rem 0; ">Check your email inbox!</h1>
+                        <p class="body" style="color: var(--muted-dark); margin-top: 0.5rem; text-align: center;">We sent an email to 
+                            <span style="color: var(--secondary-alt); ">{{ user.email }}</span>
+                        that contains a link that allows you to verify your account. Once you open this link, you may proceed with the QuickLink onboarding process.</h2>
+                    </div>
+                    <button type="button" style="margin: 0.5rem 0; width: 100%;" id="js-resend-email-btn" class="primary-btn primary-btn-link">Resend Email</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        var emailBtn = document.getElementById('js-resend-email-btn');
+
+        emailBtn.addEventListener('click', function() {
+            var timer = 30;
+            emailBtn.innerHTML = "Resend Email (" + String(timer) + ")"
+            emailBtn.classList.toggle('disabled');
+
+            var downloadTimer = setInterval(function(){
+                if (timer <= 0){
+                    emailBtn.classList.remove('disabled');
+                    emailBtn.innerHTML = "Resend Email";
+                    clearInterval(downloadTimer);
+                } else {
+                    emailBtn.innerHTML = "Resend Email (" + String(timer-1) + ")"
+                }
+                timer -= 1;
+            }, 1100);
+        })
+    </script>
+</body>
+</html>

@@ -14,7 +14,7 @@ from xendit import Xendit, XenPlatformAccountType, XenPlatformURLType
 
 # Create your views here.
 @unauthenticated_merchant
-def registerMerchant(request):
+def register_merchant(request):
     form = CreateUserForm()
     if request.method == 'POST':
         form = CreateUserForm(request.POST)
@@ -29,9 +29,15 @@ def registerMerchant(request):
             user.groups.add(merchant_group)
 
             user.save()
-            return redirect('accounts:merchant-login')
+            return redirect('accounts:merchant-email-confirmation', user.id)
     context = {'form':form}
     return render(request, 'accounts/merchant-register.html', context)
+
+@unauthenticated_merchant
+def email_confirmation(request, user_id):
+    user = User.objects.get(id=user_id)
+    context = {'user': user}
+    return render(request, 'accounts/email-verification.html', context)
 
 @login_required(login_url='accounts:merchant-login')
 @allowed_users(allowed_roles=[User.Types.MERCHANT, User.Types.ADMIN])
