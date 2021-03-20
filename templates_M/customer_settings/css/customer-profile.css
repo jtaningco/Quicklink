@@ -110,17 +110,20 @@ input[type=custom-text], select {
     display:flex;
     flex-direction: column;
     justify-content: center;
+    align-items: center;
+    width: 100%;
 }
 .yellow-btn {
     color: #FFF;
     font-size: 0.875rem;
+    width: 100%;
     margin: 1rem;
     padding: 0.5rem 1.5rem;
     background-color: var(--secondary-main);
     box-shadow: 0px 3px 5px rgba(51, 51, 51, 0.15);
     border-radius: 4px;
 }
-.back-btn {
+#back-btn {
     color: var(--muted-lighter);
     padding: 0.5rem 1.5rem;
     margin:0 0 1.5rem 0;
