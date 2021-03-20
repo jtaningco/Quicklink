@@ -189,7 +189,6 @@
         var weekends = ['Saturday', 'Sunday']
 
         function checkShortcut(days, check) {
-            console.log(check);
             for (var i = 0; i < days.length; i++) {
                 if ($.inArray(days[i], check) == -1) { return false; }
             }
@@ -199,7 +198,7 @@
         function editInput() {
             if (listOfDays.length == 7) {
                 deliveryInput.html('Everyday');
-                deliveryInput.css('color', 'var(--muted-dark)')
+                deliveryInput.css('color', 'var(--muted-dark)');
             } else if (listOfDays.length <= 6 && listOfDays.length >= 3) {
                 newDays = $.map(listOfDays, function(day) {
                     return day.slice(0,3);
@@ -216,7 +215,7 @@
                 } else {
                     deliveryInput.html(listOfDays.join(', '));
                 }
-                deliveryInput.css('color', 'var(--muted-dark)')
+                deliveryInput.css('color', 'var(--muted-dark)');
             } else {
                 deliveryInput.html('Everyday');
                 deliveryInput.css('color', 'var(--muted-lighter)')

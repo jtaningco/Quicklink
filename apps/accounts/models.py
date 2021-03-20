@@ -7,14 +7,14 @@ from .validators import only_int, exp_date
 import shortuuid
 from shortuuidfield import ShortUUIDField
 
-# Create your models here.
-# Django Roles, Permissions, and Groups: https://medium.com/djangotube/django-roles-groups-and-permissions-introduction-a54d1070544
-# Django Custom Authentication: https://docs.djangoproject.com/en/3.1/topics/auth/customizing/
+### Create your models here.
+## Django Roles, Permissions, and Groups: https://medium.com/djangotube/django-roles-groups-and-permissions-introduction-a54d1070544
+## Django Custom Authentication: https://docs.djangoproject.com/en/3.1/topics/auth/customizing/
 
-# SUMMARY OF ACCOUNT MODELS:
-# Super Admin — Quicklink High-Ranking Programmers (CRUD All)
-# Admin — Quicklink Founders, High-Ranking Employees, and Programmers (CUD Some, R All)
-# Quickies — Quicklink Employees (R All)
+##### SUMMARY OF ACCOUNT MODELS:
+#### Super Admin — Quicklink High-Ranking Programmers (CRUD All)
+### Admin — Quicklink Founders, High-Ranking Employees, and Programmers (CUD Some, R All)
+## Staff — Quicklink Employees
 # Merchants — Quicklink Clients / Users ()
 # Customers — Customers of Quicklink Clients
 
@@ -341,7 +341,7 @@ class OpenHours(models.Model):
 # Shop Logo
 class ShopLogo(models.Model):
     shop = models.OneToOneField(ShopInformation, related_name='logo_shop', on_delete=models.SET_NULL, null=True, blank=True)
-    logo = models.ImageField(null=True, blank=True)
+    logo = models.ImageField(upload_to='uploads/%Y/%m/%d/shop_logos', null=True, blank=True)
 
     def __str__(self):
         return f"URL: {self.logo}"

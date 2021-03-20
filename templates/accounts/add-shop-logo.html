@@ -4,13 +4,7 @@
 {% block pagetitle %}Merchant Shop Logo{% endblock %}
 
 {% block stylesheets %}
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" />
-{% endblock %}
-
-{% block scriptsHead %}
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.12/js/intlTelInput.min.js" integrity="sha512-OnkjbJ4TwPpgSmjXACCb5J4cJwi880VRe+vWpPDlr8M38/L3slN5uUAeOeWU2jN+4vN0gImCXFGdJmc0wO4Mig==" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.12/js/utils.js" integrity="sha512-bUcJxlqkiGA3cmoYPuZaLRsyc5ChG9APG4ajom2AXKSlBtOmx4kLV3c8uv/6uSz43FMjI4Q2QI21+D223rT76w==" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.12/js/utils.min.js" integrity="sha512-JtpGKUjQUqCJmgw3TOr8bkL8QqB8oCbofRU39xgDnRYTfIDvfg0gQs2efeKxBCdwSAP/h3CSqhn87+giWSsxjw==" crossorigin="anonymous"></script>
+    
 {% endblock %}
 
 {% block cardContent %}    
@@ -26,18 +20,76 @@
             <h2 class="body" style="color: var(--muted-default);">Give your shop a brand!</h2>
         </div>
         
-        <form action="" method="post" enctype="multipart/form-data" style="width: 100%;">
+        <form method="post" enctype="multipart/form-data" style="width: 100%;" class="dropzone">
             {% csrf_token %}
-            {{ form.as_p }}
-            {{ form.errors }}
+            <div class="logo__upload" id="js-logo-upload">
+                {{ form.logo }}
+            </div>
+            <div class="logo__caption">
+                <p class="subtitle">Supported file formats: .jpg, .jpeg, .png</p>
+                <p class="subtitle">Suggested size: 800x800 pixels</p>
+            </div>
+
+            <div id="shop-info">{{ shop.shop_name }}</div>
+            <div id="form-errors">{{ form.errors.as_json }}</div>
 
             <div class="registration-content" style="margin-top: 2rem;">
-                <button type="submit" name="next" style="margin: 0.5rem 0; width: 100%;" class="primary-btn primary-btn-link">Next</button>
+                <button type="button" name="next" style="margin: 0.5rem 0; width: 100%;" class="primary-btn primary-btn-link">Next</button>
                 <a href="{% url 'accounts:merchant-add-shop' %}" class="btn__back" style="margin: 0;"><button type="button" class="secondary-btn secondary-btn-link" style="width: 100%;">Back</button></a>
             </div>
         </form>
 {% endblock %}
 
 {% block scriptsBody %}
-    
+    <!-- DropzoneJS Image Upload -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.8.1/min/dropzone.min.js" integrity="sha512-OTNPkaN+JCQg2dj6Ht+yuHRHDwsq1WYsU6H0jDYHou/2ZayS2KXCfL28s/p11L0+GSppfPOqwbda47Q97pDP9Q==" crossorigin="anonymous"></script>
+    <script>
+        // Dropzone Function
+        var fileName = $('#shop-info').val().replace(/\s+/g, '-').toLowerCase();
+
+        Dropzone.options.logoUploadDropzone = {
+            paramName: fileName, // The name that will be used to transfer the file
+            maxFilesize: 2, // MB
+            acceptedFiles: 'image/, .jpg, jpeg, .png',
+            accept: function(file, done) {
+                if (file.name == "justinbieber.jpg") {
+                    done("Naha, you don't.");
+                }
+                else { done(); }
+            }
+        };
+    </script>
+
+    <!-- NOTY Notifications -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/noty/3.1.4/noty.min.js" integrity="sha512-lOrm9FgT1LKOJRUXF3tp6QaMorJftUjowOWiDcG5GFZ/q7ukof19V0HKx/GWzXCdt9zYju3/KhBNdCLzK8b90Q==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/noty/3.1.4/noty.js" integrity="sha512-mgZL3SZ/vIooDg2mU2amX6NysMlthFl/jDbscSRgF/k3zmICLe6muAs7YbITZ+61FeUoo1plofYAocoR5Sa1rQ==" crossorigin="anonymous"></script>
+
+    <!-- NOTY -->
+    <script>
+        var errors = $('#form-errors').text();
+        var jsonErrors = JSON.parse(errors);
+        var errorMessages = [];
+        
+        for (i = 0; i <= Object.keys(jsonErrors).length; i++) {
+            if ('image' in jsonErrors) {
+                for (i = 0; i < Object.keys(jsonErrors['email']).length; i++) {
+                    errorMessages.push(jsonErrors['image'][String(i)]['message'])
+                }
+            }
+        }
+
+        for (i = 0; i <= Object.keys(errorMessages).length; i++) {
+            if (errorMessages[String(i)] != undefined) {
+                console.log(errorMessages[String(i)])
+                new Noty({
+                    type: 'error',
+                    theme: 'bootstrap-v4',
+                    text: errorMessages[String(i)],
+                    layout: "topRight",
+                    timeout: 5000,
+                    progressBar: true,
+                }).show();
+            }
+        }
+    </script>
 {% endblock %}

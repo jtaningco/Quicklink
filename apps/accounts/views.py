@@ -16,6 +16,8 @@ from django_email_verification import send_email
 # XenPlatform Account Creation
 from xendit import Xendit, XenPlatformAccountType, XenPlatformURLType
 
+# ImageKit IO
+import imagekit
 
 # Create your views here.
 @unauthenticated_merchant
@@ -51,6 +53,7 @@ def email_verification(request, user_id):
     return render(request, 'accounts/email-verification.html', context)
 
 @csrf_exempt
+@unauthenticated_merchant
 def email_confirmation(request):
     if request.is_ajax:
         userId = request.POST.get('userId')
@@ -60,7 +63,7 @@ def email_confirmation(request):
             return redirect('/user/merchant/shop/')
         if request.POST.get('message') == 'failure':
             send_email(user)
-    return JsonResponse(request.data, safe=False)
+    return render(request, 'accounts/email-confirmation.html', context)
 
 @login_required(login_url='accounts:merchant-login')
 @allowed_users(allowed_roles=[User.Types.MERCHANT, User.Types.ADMIN])
@@ -185,7 +188,7 @@ def registerShopLogo(request):
             messages.success(request, 'Logo successfully updated')
             return redirect('accounts:merchant-add-payment')
 
-    context = {'form':form}
+    context = {'form':form, 'shop':shop}
     return render(request, 'accounts/add-shop-logo.html', context)
 
 @login_required(login_url='accounts:merchant-login')

@@ -125,7 +125,7 @@
     font-size: 0.8rem;
 }
 
-#form-errors { display: none; }
+#form-errors, #shop-info { display: none; }
 
 .noty_body {
     font-family: 'Overpass', sans-serif;
@@ -303,6 +303,18 @@ input:checked + .slider:before {
     width: 100%;
     text-decoration: none;
 }
+
+.logo__caption {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    padding-top: 1rem;
+}
+
+.logo__caption p { color: var(--muted-default); }
 
 /* MACBOOKS AND LAPTOPS */
 @media screen and (max-width: 1440px) {

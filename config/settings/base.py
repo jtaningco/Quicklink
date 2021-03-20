@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     'crispy_forms',
     'corsheaders',
     'django_email_verification',
+    'imagekit',
 
     # OAuth
     'allauth',
