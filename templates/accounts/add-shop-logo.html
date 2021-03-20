@@ -1,30 +1,43 @@
-{% extends 'quicklink/base.html' %}
+{% extends 'quicklink/signups.html' %}
 {% load static %}
 
-{% block pagetitle %}Registration: Shop Information{% endblock %}
+{% block pagetitle %}Merchant Shop Logo{% endblock %}
 
-{% block maincontent %}
+{% block stylesheets %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" />
+{% endblock %}
 
-<form action="" method="post" enctype="multipart/form-data">
+{% block scriptsHead %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.12/js/intlTelInput.min.js" integrity="sha512-OnkjbJ4TwPpgSmjXACCb5J4cJwi880VRe+vWpPDlr8M38/L3slN5uUAeOeWU2jN+4vN0gImCXFGdJmc0wO4Mig==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.12/js/utils.js" integrity="sha512-bUcJxlqkiGA3cmoYPuZaLRsyc5ChG9APG4ajom2AXKSlBtOmx4kLV3c8uv/6uSz43FMjI4Q2QI21+D223rT76w==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.12/js/utils.min.js" integrity="sha512-JtpGKUjQUqCJmgw3TOr8bkL8QqB8oCbofRU39xgDnRYTfIDvfg0gQs2efeKxBCdwSAP/h3CSqhn87+giWSsxjw==" crossorigin="anonymous"></script>
+{% endblock %}
 
-    <div class="registration-container">
-        <div class="registration-wrapper">
-
-            <h1>Upload a logo</h1>
-            <p>Give your shop a brand!</p>
-
+{% block cardContent %}    
+        <div class="registration-header">
+            <div class="pagination">
+                <a href="{% url 'accounts:merchant-add-shop' %}" class="pagination__circle body-big bold">1</a>
+                <div class="pagination__line"></div>
+                <a href="{% url 'accounts:merchant-add-logo' %}" class="pagination__circle pagination__circle--active body-big bold">2</a>
+                <div class="pagination__line"></div>
+                <a href="{% url 'accounts:merchant-add-payment' %}" class="pagination__circle body-big bold">3</a>
+            </div>
+            <h1 class="bold" style="color: var(--primary-main); padding: 0.25rem 0; ">Upload a Logo</h1>
+            <h2 class="body" style="color: var(--muted-default);">Give your shop a brand!</h2>
+        </div>
+        
+        <form action="" method="post" enctype="multipart/form-data" style="width: 100%;">
             {% csrf_token %}
             {{ form.as_p }}
-
             {{ form.errors }}
 
-            <input type="submit" name="Next" style="margin: 24px 0;" class="preview-btn">
-            <div class="secondary-btn">
-                <a href="{% url 'accounts:merchant-register-shop' %}" class="secondary-btn-link">Back</a>
+            <div class="registration-content" style="margin-top: 2rem;">
+                <button type="submit" name="next" style="margin: 0.5rem 0; width: 100%;" class="primary-btn primary-btn-link">Next</button>
+                <a href="{% url 'accounts:merchant-add-shop' %}" class="btn__back" style="margin: 0;"><button type="button" class="secondary-btn secondary-btn-link" style="width: 100%;">Back</button></a>
             </div>
+        </form>
+{% endblock %}
 
-        </div>
-    </div>
-</form>
-
+{% block scriptsBody %}
+    
 {% endblock %}

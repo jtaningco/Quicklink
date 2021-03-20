@@ -16,11 +16,11 @@
 {% block cardContent %}    
         <div class="registration-header">
             <div class="pagination">
-                <a href="#" class="pagination__circle pagination__circle--active body-big bold">1</a>
+                <a href="{% url 'accounts:merchant-add-shop' %}" class="pagination__circle pagination__circle--active body-big bold">1</a>
                 <div class="pagination__line"></div>
-                <a href="#" class="pagination__circle body-big bold">2</a>
+                <a href="{% url 'accounts:merchant-add-logo' %}" class="pagination__circle body-big bold">2</a>
                 <div class="pagination__line"></div>
-                <a href="#" class="pagination__circle body-big bold">3</a>
+                <a href="{% url 'accounts:merchant-add-payment' %}" class="pagination__circle body-big bold">3</a>
             </div>
             <h1 class="bold" style="color: var(--primary-main); padding: 0.25rem 0; ">Shop Information</h1>
             <h2 class="body" style="color: var(--muted-default);">Help us get to know your shop better.</h2>
@@ -55,7 +55,11 @@
                             {% for pk, day in form.delivery_schedule.field.widget.choices %}
                                 <div class="delivery__modal__option">
                                     <label class="checkbox" data-value="{{ pk }}">
-                                        <input type="checkbox" name="delivery_schedule" value="{{ pk }}" id="id_delivery_schedule_{{ forloop.counter0 }}" />
+                                        {% if day in selected_dates %}
+                                            <input type="checkbox" name="delivery_schedule" value="{{ pk }}" id="id_delivery_schedule_{{ forloop.counter0 }}" checked>
+                                        {% else %}
+                                            <input type="checkbox" name="delivery_schedule" value="{{ pk }}" id="id_delivery_schedule_{{ forloop.counter0 }}">
+                                        {% endif %}
                                         <span class="checkmark"></span>
                                     </label>
                                     <p class="delivery__modal__option--label subtitle bold">{{ day }}</p>
@@ -71,9 +75,9 @@
                 {{form.line1}}
                 {{form.line2}}
                 {{form.city}}
-                <div class="registration-content" style="flex-direction: row;">
-                    {{form.province}}
-                    {{form.postal_code}}
+                <div class="registration-content registration-content__row">
+                    <div class="registration-content__input--small" style="padding-right: 4px;">{{form.province}}</div>
+                    <div class="registration-content__input--small" style="padding-left: 4px;">{{form.postal_code}}</div>
                 </div>
             </div>
 
@@ -86,12 +90,21 @@
 
             <div class="registration-content">
                 <p class="subtitle bold">Will your shop accept Cash-On-Delivery (COD)?<span style="color: var(--failure-main)">*</span></p>
-                {{form.shop_cod}}
+                <div class="switch-whole">
+                    <p class="subtitle bold" style="color: var(--muted-light);">No</p>
+                    <label class="switch">
+                        {{ form.shop_cod }}
+                        <span class="slider round"></span>
+                  </label>
+                    <p class="subtitle bold" id="js-switch-text" style="color: var(--muted-light); transition: color 0.3s ease">Yes</p>
+                </div>
             </div>
 
             {{ form.errors }}
 
-            <input type="submit" name="Next" style="margin: 24px 0;" class="preview-btn">
+            <div class="registration-content">
+                <button type="submit" name="next" style="margin: 1rem 0; width: 100%;" class="primary-btn primary-btn-link">Next</button>
+            </div>
         </form>
 {% endblock %}
 
@@ -131,11 +144,12 @@
         contactNumberInput.addEventListener('onkeyup', verifyPhoneNumber)
     </script> -->
 
+    <!-- Available Schedule Deliveries -->
     <script>
+        var deliveryInput = $('#js-delivery-input');
         var listOfDays = [];
 
         function addDays(i) {
-            console.log(i);
             if (i == 1) {
                 listOfDays.push('Monday');
             } else if (i == 2) {
@@ -154,7 +168,6 @@
         }
 
         function removeDays(i) {
-            console.log(i);
             if (i == 1) {
                 listOfDays = listOfDays.filter(e => e !== 'Monday');
             } else if (i == 2) {
@@ -169,6 +182,44 @@
                 listOfDays = listOfDays.filter(e => e !== 'Saturday');
             } else {
                 listOfDays = listOfDays.filter(e => e !== 'Sunday');
+            }
+        }
+
+        var weekdays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday']
+        var weekends = ['Saturday', 'Sunday']
+
+        function checkShortcut(days, check) {
+            console.log(check);
+            for (var i = 0; i < days.length; i++) {
+                if ($.inArray(days[i], check) == -1) { return false; }
+            }
+            return true;
+        }
+
+        function editInput() {
+            if (listOfDays.length == 7) {
+                deliveryInput.html('Everyday');
+                deliveryInput.css('color', 'var(--muted-dark)')
+            } else if (listOfDays.length <= 6 && listOfDays.length >= 3) {
+                newDays = $.map(listOfDays, function(day) {
+                    return day.slice(0,3);
+                });
+                if (listOfDays.length == 5 && checkShortcut(listOfDays, weekdays) == true) {
+                    deliveryInput.html('Weekdays only');
+                } else {
+                    deliveryInput.html(newDays.join(', '));
+                }
+                deliveryInput.css('color', 'var(--muted-dark)')
+            } else if (listOfDays.length < 3 && listOfDays.length > 0) {
+                if (listOfDays.length == 2 && checkShortcut(listOfDays, weekends) == true) {
+                    deliveryInput.html('Weekends only');
+                } else {
+                    deliveryInput.html(listOfDays.join(', '));
+                }
+                deliveryInput.css('color', 'var(--muted-dark)')
+            } else {
+                deliveryInput.html('Everyday');
+                deliveryInput.css('color', 'var(--muted-lighter)')
             }
         }
 
@@ -191,11 +242,22 @@
                 checkInputs.eq(y).change(function() {
                     if (this.checked) {
                         addDays(parseInt($(this).val()));
+                        editInput();
+                        
                     } else {
                         removeDays(parseInt($(this).val()));
+                        editInput();
                     }
                 });
             }
+
+            checkInputs.eq(-1).change(function() {
+                if (this.checked) {
+                    document.getElementById('js-switch-text').style.color = "var(--success-alt)"
+                } else {
+                    document.getElementById('js-switch-text').style.color = "var(--muted-light)"
+                }
+            })
 
             deliveryModalBg.addEventListener('click', function(e) {
                 if (! deliveryModal.contains(e.target)) {
@@ -204,5 +266,59 @@
                 }
             });
         }
+    </script>
+
+    <!-- AlgoliaJS – Autocomplete Address -->
+    <!-- Check https://www.algolia.com/apps/1DDI408VTY/dashboard -->
+    <script src="https://cdn.jsdelivr.net/npm/places.js@1.19.0"></script>
+
+    <script>
+        var inputLine1 = $('#id_line1');
+        var inputLine2 = $('#id_line2');
+        var inputCity = $('#id_city');
+        var inputProvince = $('#id_province');
+        var inputPostalCode = $('#id_postal_code');
+
+        const fixedOptions = {
+            container: document.querySelector('#id_line1'),
+            accessibility: {
+                pinButton: {
+                    'aria-label': 'use browser geolocation',
+                    'tab-index': 12,
+                },
+                clearButton: {
+                    'tab-index': 13,
+                }
+            }
+        }
+
+        const reconfigurableOptions = {
+            language: 'en', // Receives results in English
+            countries: ['ph'], // Search in the Philippines
+            useDeviceLocation: true // Ask and use the device location to strengthen search/boost around the source IP
+        };
+
+        var placesAutocomplete = places(fixedOptions).configure(reconfigurableOptions);
+
+        placesAutocomplete.on('change', function(e) {
+            inputLine1.val(e.suggestion.name);
+            inputLine2.val(e.suggestion.city);
+            
+            for (i = 0; i < document.getElementById('id_city').length; i++) {
+                if (document.getElementById('id_city').options[i].value == e.suggestion.county + " City") {
+                    console.log('Matching city found!')
+                    inputCity.val(e.suggestion.county + " City");
+                }
+            }
+
+            for (i = 0; i < document.getElementById('id_province').length; i++) {
+                if (e.suggestion.administrative == "Metro Manila") {
+                    console.log('Matching province found!')
+                    inputProvince.val("Metro Manila");
+                }
+            }
+
+            inputPostalCode.val(e.suggestion.postcode);
+        });
     </script>
 {% endblock %}

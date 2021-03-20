@@ -100,6 +100,7 @@ p, .body { font-size: 1rem; line-height: 1.6rem; }
 /* BUTTONS */
 button {
   font-family: 'Overpass', sans-serif;
+  font-size: 0.9rem;
   width: auto;
   min-height: 40px;
   box-shadow: var(--regular-box-shadow);
@@ -131,7 +132,6 @@ button:focus {
 }
 
 .primary-btn-link {
-    font-size: 0.9rem;
     font-weight: 700;
     color: #FFF;
 }
@@ -153,8 +153,23 @@ button:focus {
   color: var(--primary-main);
 }
 
+.secondary-btn:hover {
+  background: #f8f8f8;
+}
+
+.secondary-btn.active {
+  background: var(--primary-pressed); 
+  color: #fff;
+}
+
+.secondary-btn.disabled {
+  border: 1px solid var(--muted-lightest);
+  background: var(--muted-lightest);
+}
+
 .secondary-btn.failure {
   border: 1px solid var(--failure-main);
+  color: var(--failure-main);
 }
 
 .secondary-btn-link.failure {

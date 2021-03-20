@@ -124,17 +124,23 @@ class Address(models.Model):
     postal_code = models.CharField(_("address postal code"), null=True, max_length=4, blank=False, validators=[only_int])
 
     def __str__(self):
-        return f"{self.line1}, {self.line2}, {self.city}, {self.province}, {self.postal_code}, Philippines"
+        return f"{self.line1}, {self.line2}, {self.city}, {self.province}, Philippines, {self.postal_code}"
 
 # Social Media Links
 class SocialMediaLink(models.Model):
     user = models.OneToOneField(User, related_name='user_links', on_delete=models.SET_NULL, null=True, blank=True)
-    instagram = models.CharField(_("instagram link"), null=True, max_length=255)
-    facebook = models.CharField(_("facebook link"), null=True, max_length=255)
-    twitter = models.CharField(_("twitter link"), null=True, max_length=255)
+    instagram = models.CharField(_("instagram link"), null=True, default="", max_length=255)
+    facebook = models.CharField(_("facebook link"), null=True, default="", max_length=255)
+    twitter = models.CharField(_("twitter link"), null=True, default="", max_length=255)
 
     def __str__(self):
-        return f"Instagram: {self.instagram} - Facebook: {self.facebook} - Twitter: {self.twitter}"
+        accounts = []
+        if self.instagram: accounts.append('Instagram')
+        if self.facebook: accounts.append('Facebook')
+        if self.twitter: accounts.append('Twitter')
+        if len(accounts) == 0:
+            return "No social media accounts"
+        return f"Linked social media accounts: {', '.join(accounts)}"
 
 # Bank Account Information
 class BankAccount(models.Model):
@@ -228,7 +234,7 @@ class ShopInformation(models.Model):
         ),
         error_messages={"unique": _("A user with that username already exists."),},
     )
-    shop_cod = models.BooleanField(_("shop cash on delivery"), null=True, default=False)
+    shop_cod = models.BooleanField(_("shop cash on delivery"), null=True, blank=True, default=False)
 
     def __str__(self):
         return f"{self.shop_username} - {self.shop_name} ({self.shop_contact_number})"
@@ -272,14 +278,15 @@ WEEKDAYS = BitChoices((
 ))
 
 class DeliveryDays(models.Model):
+    shop = models.OneToOneField(ShopInformation, related_name='delivery_days_shop', on_delete=models.SET_NULL, null=True, blank=True)
     days = models.PositiveIntegerField(choices=WEEKDAYS)
     everyday = models.BooleanField(_("everyday delivery"), null=True, default=False)
 
     def __str__(self):
-        if everyday:
+        if self.everyday:
             return "Everyday"
         else:
-            return f"{WEEKDAYS.get_selected_values(days).join(', ')}"
+            return f"{', '.join(WEEKDAYS.get_selected_values(self.days))}"
 
 # Shop Open Hours
 class OpenHours(models.Model):
@@ -309,7 +316,7 @@ class OpenHours(models.Model):
         (7, _("Sunday")),
     ]
 
-    shop = models.OneToOneField(ShopInformation, on_delete=models.SET_NULL, null=True, blank=True)
+    shop = models.OneToOneField(ShopInformation, related_name='open_hours_shop', on_delete=models.SET_NULL, null=True, blank=True)
     day_from = models.PositiveSmallIntegerField(choices=WEEKDAYS, null=True, default=None)
     day_to = models.PositiveSmallIntegerField(choices=WEEKDAYS, null=True, default=None)
     from_hour = models.PositiveSmallIntegerField(choices=HOUR_OF_DAY_24, null=True, default=None)

@@ -93,12 +93,12 @@ class ShopInformationForm(forms.Form):
                         choices=Address.CITIES)
     province=forms.ChoiceField(label='', 
                         widget=forms.Select(attrs={
-                        'class': 'small-input default', 
+                        'class': 'input default', 
                         'placeholder': 'Province'}),
                         choices=Address.PROVINCES)
     postal_code=forms.CharField(label='', 
                         widget=forms.fields.TextInput(attrs={
-                        'class': 'small-input default', 
+                        'class': 'input default', 
                         'placeholder': 'Postal Code'}))
     
     # shop_links
@@ -123,12 +123,8 @@ class ShopInformationForm(forms.Form):
 class ShopLogoForm(ModelForm):
     class Meta:
         model = ShopLogo
-        fields = ['shop', 'logo']
-        required_fields = ['shop', 'logo']
-
-        widgets = {
-            'shop': forms.HiddenInput(),
-        }
+        fields = ['logo']
+        required_fields = ['logo']
 
 class ShopAccountForm(ModelForm):
     class Meta:

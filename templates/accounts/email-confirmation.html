@@ -1,6 +1,5 @@
 {% extends 'quicklink/signups.html' %}
 {% load static %}
-{% load socialaccount %}
 
 {% block pagetitle %}Merchant Email Confirmation{% endblock %}
 
@@ -56,6 +55,8 @@
         </script>
     {% else %}
         <script>
+            const csrftoken = getToken('csrftoken');
+            
             var resendEmailBtn = document.getElementById('js-resend-email-btn');
             var current_url = window.location.href.split('/verification/')[0] + '/user/merchant/confirmation/';
             console.log(current_url)

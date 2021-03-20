@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import Group
+from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 
@@ -39,6 +40,7 @@ def register_merchant(request):
     context = {'form':form}
     return render(request, 'accounts/merchant-register.html', context)
 
+@csrf_exempt
 @unauthenticated_merchant
 def email_verification(request, user_id):
     user = User.objects.get(id=user_id)
@@ -48,13 +50,14 @@ def email_verification(request, user_id):
     context = {'user': user}
     return render(request, 'accounts/email-verification.html', context)
 
+@csrf_exempt
 def email_confirmation(request):
     if request.is_ajax:
         userId = request.POST.get('userId')
         user = User.objects.get(id=userId)
         if request.POST.get('message') == 'success':
             login(request, user, backend='django.contrib.auth.backends.ModelBackend')
-            return redirect('/user/merchant/login/')
+            return redirect('/user/merchant/shop/')
         if request.POST.get('message') == 'failure':
             send_email(user)
     return JsonResponse(request.data, safe=False)
@@ -63,7 +66,37 @@ def email_confirmation(request):
 @allowed_users(allowed_roles=[User.Types.MERCHANT, User.Types.ADMIN])
 def registerShopInformation(request):
     user = request.user
-    form = ShopInformationForm()
+    selected_dates = []
+
+    if hasattr(user, 'info_shop'):
+        shop = user.info_shop
+        form = ShopInformationForm(initial={
+            'shop_name': shop.shop_name,
+            'shop_contact_number': shop.shop_contact_number,
+            'shop_username': shop.shop_username,
+            'shop_cod': shop.shop_cod,
+            'delivery_schedule': shop.delivery_days_shop,
+            'line1' : user.user_address.line1,
+            'line2' : user.user_address.line2,
+            'city' : user.user_address.city,
+            'province' : user.user_address.province,
+            'postal_code' : user.user_address.postal_code,
+            'instagram' : user.user_links.instagram,
+            'facebook' : user.user_links.facebook,
+            'twitter' : user.user_links.twitter,
+        })
+
+        delivery_dates = [('1', 'Monday'), ('2', 'Tuesday'), ('3', 'Wednesday'),
+        ('4', 'Thursday'), ('5', 'Friday'), ('6', 'Saturday'),
+        ('7', 'Sunday')]
+
+        print(shop.delivery_days_shop.days)
+
+        selected_dates = [', '.join(WEEKDAYS.get_selected_values(shop.delivery_days_shop.days))]
+
+        print(shop.delivery_days_shop)
+    else:
+        form = ShopInformationForm()
     
     if request.method == 'POST':
         form = ShopInformationForm(request.POST)
@@ -71,19 +104,19 @@ def registerShopInformation(request):
             shop_info = ShopInformation.objects.create(
                 user=user,
                 shop_name=form.cleaned_data.get("shop_name"),
-                shop_contact_number=form.cleaned_data.get("shop_contact_number"),
+                shop_contact_number=form.cleaned_data.get("shop_contact_number").strip(),
                 shop_username=form.cleaned_data.get("shop_username"),
                 shop_cod=form.cleaned_data.get("shop_cod"),
             )
             shop_info.save()
             
-            open_hours = OpenHours.objects.create(
+            delivery_days = DeliveryDays.objects.create(
                 shop=shop_info,
-                day_from=form.cleaned_data.get("day_from"),
-                day_to=form.cleaned_data.get("day_to"),
-                from_hour=form.cleaned_data.get("from_hour"),
-                to_hour=form.cleaned_data.get("to_hour"),
+                days=form.cleaned_data.get("delivery_schedule")
             )
+
+            if delivery_days.days == 56:
+                delivery_days.everyday = True
             
             shop_address = Address.objects.create(
                 user=user,
@@ -101,22 +134,22 @@ def registerShopInformation(request):
                 twitter=form.cleaned_data.get("twitter"),
             )
 
-            open_hours.save()
+            delivery_days.save()
             shop_address.save()
             social_links.save()
 
             messages.success(request, 'Profile successfully updated')
 
-            api_key = "xnd_development_L8LFCGlEVFmq8qcCLZKNoVnq303nlkB47u5W2TrknkwioknAn4H0KOQcFfbm7"
-            xendit_instance = Xendit(api_key=api_key)
-            XenPlatform = xendit_instance.XenPlatform
+            # api_key = "xnd_development_L8LFCGlEVFmq8qcCLZKNoVnq303nlkB47u5W2TrknkwioknAn4H0KOQcFfbm7"
+            # xendit_instance = Xendit(api_key=api_key)
+            # XenPlatform = xendit_instance.XenPlatform
 
-            xenplatform_account = XenPlatform.create_account(
-                account_email=str(user.email),
-                type=XenPlatformAccountType.MANAGED,
-                business_profile={"business_name": str(shop_info.shop_name)}
-            )
-            print(xenplatform_account)
+            # xenplatform_account = XenPlatform.create_account(
+            #     account_email=str(user.email),
+            #     type=XenPlatformAccountType.MANAGED,
+            #     business_profile={"business_name": str(shop_info.shop_name)}
+            # )
+            # print(xenplatform_account)
 
             # url = "http://127.0.0.1:8000/callback/" + str(xenplatform_account.user_id) + "/"
             # XenPlatform = xendit_instance.XenPlatform
@@ -127,9 +160,9 @@ def registerShopInformation(request):
             #     url=url,
             # )
 
-            return redirect('accounts:merchant-register-logo')
+            return redirect('accounts:merchant-add-logo')
 
-    context = {'form':form}
+    context = {'form':form, 'selected_dates':selected_dates}
     return render(request, 'accounts/add-shop-information.html', context)
 
 ### The Set Callback URLs API allows you to set your sub-accounts' Callback URLs.
@@ -150,7 +183,7 @@ def registerShopLogo(request):
         if form.is_valid():
             form.save()
             messages.success(request, 'Logo successfully updated')
-            return redirect('accounts:merchant-register-payment')
+            return redirect('accounts:merchant-add-payment')
 
     context = {'form':form}
     return render(request, 'accounts/add-shop-logo.html', context)
