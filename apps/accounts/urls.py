@@ -4,13 +4,14 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    path('merchant/register/', views.register_merchant, name='merchant-register'),
+    path('register/', views.register_merchant, name='register'),
+    path('login/', views.loginMerchant, name='login'),
+    path('logout/', views.logout_user, name='logout'),
     path('merchant/<str:user_id>/verification/', views.email_verification, name='merchant-email-verification'),
     path('merchant/confirmation/', views.email_confirmation, name='merchant-email-confirmation'),
     path('merchant/shop/', views.registerShopInformation, name='merchant-add-shop'),
     path('merchant/logo/', views.registerShopLogo, name='merchant-add-logo'),
     path('merchant/payment/', views.registerShopAccount, name='merchant-add-payment'),
-    path('merchant/login/', views.loginMerchant, name='merchant-login'),
     path('customer/register/', views.registerCustomer, name='customer-register'),
     path('customer/register/info', views.registerCustomerInformation, name='customer-register-info'),
     path('customer/register/address', views.registerCustomerAddress, name='customer-register-address'),
@@ -19,7 +20,6 @@ urlpatterns = [
     path('customer/login/', views.loginCustomer, name='customer-login'),
     path('customer/landing/', views.landingCustomer, name='customer-landing'),
     path('callback/<str:user_id>/', views.accountCallback, name='xendit-callback'),
-    path('logout/', views.logout_user, name='logout'),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
