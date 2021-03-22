@@ -20,11 +20,23 @@
             <h2 class="body" style="color: var(--muted-default);">Give your shop a brand!</h2>
         </div>
         
-        <form method="post" enctype="multipart/form-data" style="width: 100%;" class="dropzone">
+        <form action="" method="post" enctype="multipart/form-data" style="width: 100%;">
             {% csrf_token %}
-            <div class="logo__upload" id="js-logo-upload">
-                {{ form.logo }}
-            </div>
+            {% if form.logo.value %}
+                <div class="logo__upload__container success" id="js-logo-upload">
+                        <img src="{{ form.logo.value.url }}" alt="User uploaded logo" class="logo__upload__file">
+                </div>
+                <p class="logo__upload__text" style="text-align: center;">Drag or <span class="logo__upload__link" id="js-browse-files">choose another image from your files.</span></p>
+            {% else %}   
+                <div class="logo__upload__container" id="js-logo-upload">
+                    <img src="https://ik.imagekit.io/ripzjge77zz/Quicklink_App/Merchant/Account_Creation/icons/u_image_XucX2a74QNx.svg" alt="Image Icon" class="logo__upload__icon">
+                    <div class="logo__upload__content">
+                        <p class="logo__upload__text" id="js-logo-text">Drag your shop's logo here, </p>
+                        <p class="logo__upload__text">or <span class="logo__upload__link" id="js-browse-files">browse through your files.</span></p>
+                    </div>
+                </div>
+            {% endif %}
+            <div style="display: none; ">{{ form.as_p }}</div>
             <div class="logo__caption">
                 <p class="subtitle">Supported file formats: .jpg, .jpeg, .png</p>
                 <p class="subtitle">Suggested size: 800x800 pixels</p>
@@ -34,30 +46,82 @@
             <div id="form-errors">{{ form.errors.as_json }}</div>
 
             <div class="registration-content" style="margin-top: 2rem;">
-                <button type="button" name="next" style="margin: 0.5rem 0; width: 100%;" class="primary-btn primary-btn-link">Next</button>
+                <button type="submit" name="next" style="margin: 0.5rem 0; width: 100%;" class="primary-btn primary-btn-link">Next</button>
                 <a href="{% url 'accounts:merchant-add-shop' %}" class="btn__back" style="margin: 0;"><button type="button" class="secondary-btn secondary-btn-link" style="width: 100%;">Back</button></a>
             </div>
         </form>
 {% endblock %}
 
 {% block scriptsBody %}
-    <!-- DropzoneJS Image Upload -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.8.1/min/dropzone.min.js" integrity="sha512-OTNPkaN+JCQg2dj6Ht+yuHRHDwsq1WYsU6H0jDYHou/2ZayS2KXCfL28s/p11L0+GSppfPOqwbda47Q97pDP9Q==" crossorigin="anonymous"></script>
+    <!-- Drag and Drop -->
     <script>
-        // Dropzone Function
-        var fileName = $('#shop-info').val().replace(/\s+/g, '-').toLowerCase();
+        const dropArea = document.getElementById('js-logo-upload');
+        const fileBrowse = document.getElementById('js-browse-files');
+        const fileInput = document.getElementById('id_logo');
+        let file;
 
-        Dropzone.options.logoUploadDropzone = {
-            paramName: fileName, // The name that will be used to transfer the file
-            maxFilesize: 2, // MB
-            acceptedFiles: 'image/, .jpg, jpeg, .png',
-            accept: function(file, done) {
-                if (file.name == "justinbieber.jpg") {
-                    done("Naha, you don't.");
+        function FileListItems (files) {
+            var b = new ClipboardEvent("").clipboardData || new DataTransfer()
+            for (var i = 0, len = files.length; i<len; i++) b.items.add(files[i])
+            return b.files
+        }
+
+        fileBrowse.addEventListener('click', function() {
+            fileInput.click();
+        });
+
+        dropArea.addEventListener('dragover', function(e) {
+            e.preventDefault();
+            dropArea.classList.add("active");
+            dropArea.style.transform = "translateY(-2.5%)";
+        });
+
+        dropArea.addEventListener('dragleave', function() {
+            dropArea.classList.remove("active");
+            dropArea.style.transform = "translateY(0)";
+        });
+
+        dropArea.addEventListener('drop', function(e) {
+            e.preventDefault();
+            dropArea.classList.remove("active");
+            file = e.dataTransfer.files[0];
+            
+            let fileType = file.type;
+            let validFileTypes = ["image/jpeg", "image/jpg", "image/png"]
+            
+            if (validFileTypes.includes(fileType)) {
+                let fileReader = new FileReader();
+                fileReader.onload = function() {
+                    let fileURL = fileReader.result;
+                    let imgTag = `<img src="${fileURL}" alt="User uploaded logo" class="logo__upload__file">`
+                    dropArea.innerHTML = imgTag;
+                    dropArea.classList.remove("active");
+                    dropArea.classList.add("success");
                 }
-                else { done(); }
+                fileReader.readAsDataURL(file);
+                var files = [file]
+                fileInput.files = new FileListItems(files);
+
+                console.log(fileInput.files);
+            } else {
+                alert("Supported image file formats are .jpg, .jpeg, .png only.");
             }
-        };
+        });
+
+        window.onload = function() {
+            function displayImage(file) {
+                fileURL = URL.createObjectURL(file)
+                let imgTag = `<img src="${fileURL}" alt="User uploaded logo" class="logo__upload__file">`
+                dropArea.innerHTML = imgTag;
+                dropArea.classList.remove("active");
+                dropArea.classList.add("success");
+            }
+
+            $("#id_logo").change(function(){
+                file = fileInput.files[0];
+                displayImage(file);
+            });
+        }
     </script>
 
     <!-- NOTY Notifications -->
@@ -70,17 +134,14 @@
         var jsonErrors = JSON.parse(errors);
         var errorMessages = [];
         
-        for (i = 0; i <= Object.keys(jsonErrors).length; i++) {
-            if ('image' in jsonErrors) {
-                for (i = 0; i < Object.keys(jsonErrors['email']).length; i++) {
-                    errorMessages.push(jsonErrors['image'][String(i)]['message'])
-                }
+        for (var k in jsonErrors) {
+            for (var i in Object.keys(jsonErrors[k])) {
+                errorMessages.push([jsonErrors[k][i]['message']]);
             }
         }
 
         for (i = 0; i <= Object.keys(errorMessages).length; i++) {
             if (errorMessages[String(i)] != undefined) {
-                console.log(errorMessages[String(i)])
                 new Noty({
                     type: 'error',
                     theme: 'bootstrap-v4',
@@ -88,6 +149,14 @@
                     layout: "topRight",
                     timeout: 5000,
                     progressBar: true,
+                }).show();
+            } else if (fileInput.files[0] != undefined) {
+                new Noty({
+                    type: 'success',
+                    theme: 'sunset',
+                    text: "Image successfully displayed!",
+                    layout: "topRight",
+                    timeout: 2500
                 }).show();
             }
         }

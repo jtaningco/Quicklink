@@ -128,37 +128,17 @@
     <script>
         var errors = $('#form-errors').text();
         var jsonErrors = JSON.parse(errors);
+
         var errorMessages = [];
-        
-        for (i = 0; i <= Object.keys(jsonErrors).length; i++) {
-            if ('email' in jsonErrors) {
-                for (i = 0; i < Object.keys(jsonErrors['email']).length; i++) {
-                    errorMessages.push(jsonErrors['email'][String(i)]['message'])
-                }
-            } else {
-                var emailError = null
-            }
-            
-            if ('password1' in jsonErrors) {
-                for (i = 0; i < Object.keys(jsonErrors['password1']).length; i++) {
-                    errorMessages.push(jsonErrors['password1'][String(i)]['message'])
-                }
-            } else {
-                var passwordError = null
-            }
-            
-            if ('password2' in jsonErrors) {
-                for (i = 0; i < Object.keys(jsonErrors['password2']).length; i++) {
-                    errorMessages.push(jsonErrors['password2'][String(i)]['message'])
-                }
-            } else {
-                var password2Error = null
+
+        for (var k in jsonErrors) {
+            for (var i in Object.keys(jsonErrors[k])) {
+                errorMessages.push([jsonErrors[k][i]['message']]);
             }
         }
 
         for (i = 0; i <= Object.keys(errorMessages).length; i++) {
             if (errorMessages[String(i)] != undefined) {
-                console.log(errorMessages[String(i)])
                 new Noty({
                     type: 'error',
                     theme: 'bootstrap-v4',

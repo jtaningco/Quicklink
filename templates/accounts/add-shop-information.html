@@ -4,7 +4,7 @@
 {% block pagetitle %}Merchant Shop Information{% endblock %}
 
 {% block stylesheets %}
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-nice-select/1.1.0/css/nice-select.min.css" integrity="sha512-CruCP+TD3yXzlvvijET8wV5WxxEh5H8P4cmz0RFbKK6FlZ2sYl3AEsKlLPHbniXKSrDdFewhbmBK5skbdsASbQ==" crossorigin="anonymous" />
 {% endblock %}
 
 {% block scriptsHead %}
@@ -26,7 +26,7 @@
             <h2 class="body" style="color: var(--muted-default);">Help us get to know your shop better.</h2>
         </div>
         
-        <form action="" method="post" style="width: 100%;">
+        <form action="" method="post" style="width: 100%;" id="js-shop-form">
             {% csrf_token %}
             <div class="registration-content">
                 <p class="subtitle bold">Shop Name<span style="color: var(--failure-main)">*</span></p>
@@ -56,9 +56,9 @@
                                 <div class="delivery__modal__option">
                                     <label class="checkbox" data-value="{{ pk }}">
                                         {% if day in selected_dates %}
-                                            <input type="checkbox" name="delivery_schedule" value="{{ pk }}" id="id_delivery_schedule_{{ forloop.counter0 }}" checked>
+                                            <input type="checkbox" name="delivery_schedule" value="{{ pk }}" id="id_delivery_schedule_{{ forloop.counter0 }}" class="js-date-checkbox" checked>
                                         {% else %}
-                                            <input type="checkbox" name="delivery_schedule" value="{{ pk }}" id="id_delivery_schedule_{{ forloop.counter0 }}">
+                                            <input type="checkbox" name="delivery_schedule" value="{{ pk }}" id="id_delivery_schedule_{{ forloop.counter0 }}" class="js-date-checkbox">
                                         {% endif %}
                                         <span class="checkmark"></span>
                                     </label>
@@ -100,7 +100,7 @@
                 </div>
             </div>
 
-            {{ form.errors }}
+            <div id="form-errors">{{ form.errors.as_json }}</div>
 
             <div class="registration-content">
                 <button type="submit" name="next" style="margin: 1rem 0; width: 100%;" class="primary-btn primary-btn-link">Next</button>
@@ -109,41 +109,15 @@
 {% endblock %}
 
 {% block scriptsBody %}
-    <!-- intlTelInput — Phone Number Validation -->
-    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.12/js/intlTelInput.js" integrity="sha512-lib7WdJvAnfLLBi5AHdN+wUkcWwpu1fmYzyEHQijZq7WedcwBiwdVNbcML2rAtKvwtOIU7thMGB+O9Kpb9g2Cw==" crossorigin="anonymous"></script>
-
+    <!-- Nice Select lightweight JQuery plugin -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-nice-select/1.1.0/js/jquery.nice-select.min.js" integrity="sha512-NqYds8su6jivy1/WLoW8x1tZMRD7/1ZfhWG/jcRQLOzV1k1rIODCpMgoBnar5QXshKJGV7vi0LXLNXPoFsM5Zg==" crossorigin="anonymous"></script>
     <script>
-        var contactNumberInput = document.querySelector('#id_shop_contact_number');
-
-        var iti ==intlTelInput(contactNumberInput, {
-            utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.12/js/utils.js",
-            initialCountry: "auto",
-            geoIpLookup: function(success, failure) {
-                $.get("https://ipinfo.io", function() {}, "jsonp").always(function(resp) {
-                    var countryCode = (resp && resp.country) ? resp.country : "us";
-                    success(countryCode);
-                });
-            },
-            separateDialCode: true,
-        })
-
-        function verifyPhoneNumber() {
-            // PHONE NUMBER JQUERY
-            var contactNumber = iti.getNumber(intlTelInputUtils.numberFormat.E164);
-            if (contactNumber.indexOf(' ') >= 0) {
-                contactNumber = contactNumber.trim()
-            }
-
-            if (iti.isValidNumber()) {
-                contactNumberInput.classList.remove("error");
-            } else {
-                contactNumberInput.classList.add("error");
-            }
-        }
-
-        contactNumberInput.addEventListener('onkeyup', verifyPhoneNumber)
-    </script> -->
-
+        $(document).ready(function() {
+            $('#id_city').niceSelect();
+            $('#id_province').niceSelect();
+        });
+    </script>
+    
     <!-- Available Schedule Deliveries -->
     <script>
         var deliveryInput = $('#js-delivery-input');
@@ -187,6 +161,16 @@
 
         var weekdays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday']
         var weekends = ['Saturday', 'Sunday']
+
+        $('.js-date-checkbox:checkbox:checked').each(function () {
+            if (this.checked) {
+                addDays(parseInt($(this).val()));
+                editInput();    
+            } else {
+                removeDays(parseInt($(this).val()));
+                editInput();
+            }
+        });
 
         function checkShortcut(days, check) {
             for (var i = 0; i < days.length; i++) {
@@ -241,8 +225,7 @@
                 checkInputs.eq(y).change(function() {
                     if (this.checked) {
                         addDays(parseInt($(this).val()));
-                        editInput();
-                        
+                        editInput();    
                     } else {
                         removeDays(parseInt($(this).val()));
                         editInput();
@@ -319,5 +302,38 @@
 
             inputPostalCode.val(e.suggestion.postcode);
         });
+    </script>
+
+    <!-- NOTY Notifications -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/noty/3.1.4/noty.min.js" integrity="sha512-lOrm9FgT1LKOJRUXF3tp6QaMorJftUjowOWiDcG5GFZ/q7ukof19V0HKx/GWzXCdt9zYju3/KhBNdCLzK8b90Q==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/noty/3.1.4/noty.js" integrity="sha512-mgZL3SZ/vIooDg2mU2amX6NysMlthFl/jDbscSRgF/k3zmICLe6muAs7YbITZ+61FeUoo1plofYAocoR5Sa1rQ==" crossorigin="anonymous"></script>
+
+    <!-- NOTY -->
+    <script>
+        var errors = $('#form-errors').text();
+        var jsonErrors = JSON.parse(errors);
+
+        var errorMessages = [];
+
+        for (var k in jsonErrors) {
+            for (var i in Object.keys(jsonErrors[k])) {
+                errorMessages.push([jsonErrors[k][i]['message']]);
+            }
+        }
+
+        function displayErrors() {
+            for (i = 0; i <= Object.keys(errorMessages).length; i++) {
+                if (errorMessages[String(i)] != undefined) {
+                    new Noty({
+                        type: 'error',
+                        theme: 'bootstrap-v4',
+                        text: errorMessages[String(i)],
+                        layout: "topRight",
+                        timeout: 5000,
+                        progressBar: true,
+                    }).show();
+                }
+            }
+        }
     </script>
 {% endblock %}

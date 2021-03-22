@@ -145,9 +145,12 @@ class SocialMediaLink(models.Model):
 # Bank Account Information
 class BankAccount(models.Model):
     BANKS = [
-        ("Bank of the Philippine Islands", _("BPI")),
-        ("Banco de Oro", _("BDO")),
-        ("Gcash", _("GCash")),
+        ('', 'Choose bank / e-wallet'),
+        ("BPI", _("Bank of the Philippine Islands (BPI)")),
+        ("BDO", _("Banco de Oro (BDO)")),
+        ("UB", _("UnionBank PH")),
+        ("GCash", _("GCash PH")),
+        ("PayMaya", _("PayMaya PH")),
         ("GrabPay", _("GrabPay")),
     ]
     
@@ -341,7 +344,7 @@ class OpenHours(models.Model):
 # Shop Logo
 class ShopLogo(models.Model):
     shop = models.OneToOneField(ShopInformation, related_name='logo_shop', on_delete=models.SET_NULL, null=True, blank=True)
-    logo = models.ImageField(upload_to='uploads/%Y/%m/%d/shop_logos', null=True, blank=True)
+    logo = models.ImageField(upload_to='%Y/%m/%d/shop_logos', null=True, blank=True)
 
     def __str__(self):
         return f"URL: {self.logo}"

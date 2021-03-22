@@ -89,59 +89,81 @@ def registerShopInformation(request):
             'twitter' : user.user_links.twitter,
         })
 
-        delivery_dates = [('1', 'Monday'), ('2', 'Tuesday'), ('3', 'Wednesday'),
-        ('4', 'Thursday'), ('5', 'Friday'), ('6', 'Saturday'),
-        ('7', 'Sunday')]
-
-        print(shop.delivery_days_shop.days)
-
-        selected_dates = [', '.join(WEEKDAYS.get_selected_values(shop.delivery_days_shop.days))]
-
-        print(shop.delivery_days_shop)
+        selected_dates = WEEKDAYS.get_selected_values(shop.delivery_days_shop.days)
     else:
         form = ShopInformationForm()
     
     if request.method == 'POST':
         form = ShopInformationForm(request.POST)
         if form.is_valid():
-            shop_info = ShopInformation.objects.create(
-                user=user,
-                shop_name=form.cleaned_data.get("shop_name"),
-                shop_contact_number=form.cleaned_data.get("shop_contact_number").strip(),
-                shop_username=form.cleaned_data.get("shop_username"),
-                shop_cod=form.cleaned_data.get("shop_cod"),
-            )
-            shop_info.save()
-            
-            delivery_days = DeliveryDays.objects.create(
-                shop=shop_info,
-                days=form.cleaned_data.get("delivery_schedule")
-            )
+            if hasattr(user, 'info_shop'):
+                shop_info = ShopInformation.objects.get(user=user)
+                shop_info.shop_name = form.cleaned_data.get("shop_name")
+                shop_info.shop_contact_number = form.cleaned_data.get("shop_contact_number").strip()
+                shop_info.shop_username = form.cleaned_data.get("shop_username")
+                shop_info.shop_cod = form.cleaned_data.get("shop_cod")
+                shop_info.save()
+            else: 
+                shop_info = ShopInformation.objects.create(
+                    user=user,
+                    shop_name=form.cleaned_data.get("shop_name"),
+                    shop_contact_number=form.cleaned_data.get("shop_contact_number").strip(),
+                    shop_username=form.cleaned_data.get("shop_username"),
+                    shop_cod=form.cleaned_data.get("shop_cod"),
+                )
+                shop_info.save()
+                
+            if hasattr(shop_info, 'delivery_days_shop'):
+                delivery_days = DeliveryDays.objects.get(shop=shop_info)
+                delivery_days.days = form.cleaned_data.get("delivery_schedule")
+                
+                if delivery_days.days == 56:
+                    delivery_days.everyday = True
 
-            if delivery_days.days == 56:
-                delivery_days.everyday = True
-            
-            shop_address = Address.objects.create(
-                user=user,
-                line1=form.cleaned_data.get("line1"),
-                line2=form.cleaned_data.get("line2"),
-                city=form.cleaned_data.get("city"),
-                province=form.cleaned_data.get("province"),
-                postal_code=form.cleaned_data.get("postal_code"),
-            )
+                delivery_days.save()
+            else:
+                delivery_days = DeliveryDays.objects.create(
+                    shop=shop_info,
+                    days=form.cleaned_data.get("delivery_schedule")
+                )
 
-            social_links = SocialMediaLink.objects.create(
-                user=user,
-                instagram=form.cleaned_data.get("instagram"),
-                facebook=form.cleaned_data.get("facebook"),
-                twitter=form.cleaned_data.get("twitter"),
-            )
+                if delivery_days.days == 56:
+                    delivery_days.everyday = True
+                delivery_days.save()
 
-            delivery_days.save()
-            shop_address.save()
-            social_links.save()
+            if hasattr(user, 'user_address'):
+                shop_address = Address.objects.get(user=user)
+                shop_address.line1 = form.cleaned_data.get("line1")
+                shop_address.line2 = form.cleaned_data.get("line2")
+                shop_address.city = form.cleaned_data.get("city")
+                shop_address.province = form.cleaned_data.get("province")
+                shop_address.postal_code = form.cleaned_data.get("postal_code")
+                shop_address.save()
+            else:
+                shop_address = Address.objects.create(
+                    user=user,
+                    line1=form.cleaned_data.get("line1"),
+                    line2=form.cleaned_data.get("line2"),
+                    city=form.cleaned_data.get("city"),
+                    province=form.cleaned_data.get("province"),
+                    postal_code=form.cleaned_data.get("postal_code"),
+                )
+                shop_address.save()
 
-            messages.success(request, 'Profile successfully updated')
+            if hasattr(user, 'user_links'):
+                social_links = SocialMediaLink.objects.get(user=user)
+                social_links.instagram = form.cleaned_data.get("instagram")
+                social_links.facebook = form.cleaned_data.get("facebook")
+                social_links.twitter = form.cleaned_data.get("twitter")
+                social_links.save()
+            else:
+                social_links = SocialMediaLink.objects.create(
+                    user=user,
+                    instagram=form.cleaned_data.get("instagram"),
+                    facebook=form.cleaned_data.get("facebook"),
+                    twitter=form.cleaned_data.get("twitter"),
+                )
+                social_links.save()
 
             # api_key = "xnd_development_L8LFCGlEVFmq8qcCLZKNoVnq303nlkB47u5W2TrknkwioknAn4H0KOQcFfbm7"
             # xendit_instance = Xendit(api_key=api_key)
@@ -179,13 +201,26 @@ def accountCallback(request, user_id):
 @allowed_users(allowed_roles=[User.Types.MERCHANT, User.Types.ADMIN])
 def registerShopLogo(request):
     shop = ShopInformation.objects.get(user=request.user)
-    form = ShopLogoForm(initial={'shop': shop})
+    
+    if hasattr(shop, 'logo_shop'):
+        form = ShopLogoForm(initial={'logo':shop.logo_shop.logo})
+        print(shop.logo_shop.logo)
+    else:
+        form = ShopLogoForm()
 
     if request.method == 'POST':
         form = ShopLogoForm(request.POST, request.FILES)
         if form.is_valid():
-            form.save()
-            messages.success(request, 'Logo successfully updated')
+            if hasattr(shop, 'logo_shop'):
+                shop_logo = ShopLogo.objects.get(shop=shop)
+                shop_logo.logo = form.cleaned_data.get('logo')
+                shop_logo.save()
+            else:
+                shop_logo = ShopLogo.objects.create(
+                    shop=shop,
+                    logo=form.cleaned_data.get('logo')
+                )
+                shop_logo.save()
             return redirect('accounts:merchant-add-payment')
 
     context = {'form':form, 'shop':shop}
@@ -195,7 +230,15 @@ def registerShopLogo(request):
 @allowed_users(allowed_roles=[User.Types.MERCHANT, User.Types.ADMIN])
 def registerShopAccount(request):
     user = request.user
-    form = ShopAccountForm()
+
+    if hasattr(user, 'user_account'):
+        form = ShopAccountForm(initial={
+            'bank_name': user.user_account.bank_name,
+            'cardholder_name': user.user_account.cardholder_name,
+            'account_number': user.user_account.account_number,
+        })
+    else:
+        form = ShopAccountForm()
 
     if request.method == 'POST':
         form = ShopAccountForm(request.POST)
@@ -207,8 +250,7 @@ def registerShopAccount(request):
                 account_number=form.cleaned_data.get("account_number")
             )
             bank_info.save()
-
-            messages.success(request, 'Bank account details successfully updated')
+            messages.success(request, 'Profile successfully registered!')
             return redirect('products:products')
 
     context = {'form':form}

@@ -88,12 +88,12 @@ class ShopInformationForm(forms.Form):
                         'placeholder': 'Address Line 2'}))
     city=forms.ChoiceField(label='', 
                         widget=forms.Select(attrs={
-                        'class': 'input default', 
+                        'class': 'wide input default', 
                         'placeholder': 'City'}),
                         choices=Address.CITIES)
     province=forms.ChoiceField(label='', 
                         widget=forms.Select(attrs={
-                        'class': 'input default', 
+                        'class': 'wide input default', 
                         'placeholder': 'Province'}),
                         choices=Address.PROVINCES)
     postal_code=forms.CharField(label='', 
@@ -129,17 +129,22 @@ class ShopLogoForm(ModelForm):
 class ShopAccountForm(ModelForm):
     class Meta:
         model = BankAccount
-        fields = ['user','bank_name', 'cardholder_name', 'account_number']
+        fields = ['bank_name', 'cardholder_name', 'account_number']
         required_fields = ['bank_name', 'cardholder_name', 'account_number']
 
         widgets = {
+            'bank_name': forms.Select(attrs={
+                'class':'wide input default'}),
             'cardholder_name': forms.fields.TextInput(attrs={
-                'class':'input',
+                'class':'input default',
                 'placeholder': 'Cardholder Name'}),
             'account_number': forms.fields.TextInput(attrs={
-                'class':'input',
+                'class':'input default',
                 'placeholder': 'Account Number'}),
         }
+
+    def __init__(self, *args, **kwargs):
+        super(ShopAccountForm, self).__init__(*args, **kwargs)
 
 class CustomerInformationForm(ModelForm):
     # shop_links
