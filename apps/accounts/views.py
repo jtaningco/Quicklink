@@ -243,13 +243,21 @@ def registerShopAccount(request):
     if request.method == 'POST':
         form = ShopAccountForm(request.POST)
         if form.is_valid():
-            bank_info=BankAccount.objects.create(
-                user=user,
-                bank_name=form.cleaned_data.get("bank_name"),
-                cardholder_name=form.cleaned_data.get("cardholder_name"),
-                account_number=form.cleaned_data.get("account_number")
-            )
-            bank_info.save()
+            if hasattr(user, 'user_account'):
+                bank_info = BankAccount.objects.get(user=user)
+                bank_info.bank_name = form.cleaned_data.get('bank_name')
+                bank_info.cardholder_name = form.cleaned_data.get('cardholder_name')
+                bank_info.account_number = form.cleaned_data.get('account_number')
+                bank_info.save()
+            else:
+                bank_info=BankAccount.objects.create(
+                    user=user,
+                    bank_name=form.cleaned_data.get("bank_name"),
+                    cardholder_name=form.cleaned_data.get("cardholder_name"),
+                    account_number=form.cleaned_data.get("account_number")
+                )
+                bank_info.save()
+            
             messages.success(request, 'Profile successfully registered!')
             return redirect('products:products')
 
@@ -259,24 +267,25 @@ def registerShopAccount(request):
 @unauthenticated_merchant
 def loginMerchant(request):
     if request.method == 'POST':
-        username = request.POST.get('username')
+        email = request.POST.get('email')
         password = request.POST.get('password')
 
-        user = authenticate(request, username=username, password=password)
+        user = authenticate(request, email=email, password=password)
 
         if user is not None:
             login(request, user)
             if not hasattr(user, 'info_shop'):
-                return redirect('accounts:merchant-register-shop')
+                return redirect('accounts:merchant-add-shop')
             else:
                 return redirect('products:products')
         else:
-            messages.info(request, "email or password is incorrect.")
+            messages.info(request, "Email or password is incorrect.")
+            return redirect ('accounts:merchant-login')
     
     context = {}
     return render(request, 'accounts/merchant-login.html', context)
 
-def logoutMerchant(request):
+def logout_user(request):
     logout(request)
     return redirect('accounts:merchant-login')
 
@@ -423,10 +432,6 @@ def registerCustomerNotifications(request):
 
     context = {'form':form}
     return render(request, 'accounts/add-customer-notifications.html', context)
-
-def logoutCustomer(request):
-    logout(request)
-    return redirect('accounts:customer-login')
 
 @allowed_users(allowed_roles=[User.Types.CUSTOMER, User.Types.ADMIN])
 def landingCustomer(request):

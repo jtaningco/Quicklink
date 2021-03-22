@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'django_email_verification',
     'imagekit',
+    'avatar',
 
     # OAuth
     'allauth',

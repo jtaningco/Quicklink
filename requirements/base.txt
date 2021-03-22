@@ -20,3 +20,4 @@ django-allauth==0.44.0
 
 django-email-verification==0.1.0
 django-imagekit==4.0.2
+django-avatar==5.0.0

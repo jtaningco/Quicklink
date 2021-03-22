@@ -90,6 +90,14 @@
     margin: 4px;
 }
 
+.registration-content__link {
+    margin: 0;
+    color: var(--primary-main);
+    transition: all 0.3s ease;
+}
+
+.registration-content__link:hover { color: var(--primary-alt); }
+
 .registration-content--email, .registration-footer--or-wrapper, .registration-footer--or-wrapper .registration-footer--or {
     display: flex; justify-content: center; align-items: center; align-content: center;
 }
@@ -123,7 +131,7 @@
     font-size: 0.8rem;
 }
 
-#form-errors, #shop-info { display: none; }
+.form-errors, #form-errors, #shop-info { display: none; }
 
 .noty_body {
     font-family: 'Overpass', sans-serif;

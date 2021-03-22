@@ -7,6 +7,10 @@ from .validators import only_int, exp_date
 import shortuuid
 from shortuuidfield import ShortUUIDField
 
+from imagekit import ImageSpec, register
+from imagekit.models import ImageSpecField
+from imagekit.processors import ResizeToFit
+
 ### Create your models here.
 ## Django Roles, Permissions, and Groups: https://medium.com/djangotube/django-roles-groups-and-permissions-introduction-a54d1070544
 ## Django Custom Authentication: https://docs.djangoproject.com/en/3.1/topics/auth/customizing/
@@ -88,6 +92,19 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     def get_short_name(self):
         return self.email
+
+    def get_initials(self):
+        initials = []
+        if hasattr(self, 'info_shop'):
+            for name in list(self.info_shop.shop_name.split(' ')):
+                initials.append(name[0])
+            return ''.join(initials)
+        elif hasattr(self, 'info_customer'):
+            for name in list(self.info_customer.customer_name.split(' ')):
+                initials.append(name[0])
+            return ''.join(initials)
+        else:
+            return False
 
 # ACCOUNT INFORMATION
 # Address
@@ -342,9 +359,17 @@ class OpenHours(models.Model):
         return f"{self.day_from} ({self.from_hour}) - {self.day_to} ({self.to_hour})"
 
 # Shop Logo
+class Avatar(ImageSpec):
+    processors = [ResizeToFit(16, 16)]
+    format = 'JPEG'
+    options = {'quality': 75}
+
+register.generator('account:avatar', Avatar)
+
 class ShopLogo(models.Model):
     shop = models.OneToOneField(ShopInformation, related_name='logo_shop', on_delete=models.SET_NULL, null=True, blank=True)
     logo = models.ImageField(upload_to='%Y/%m/%d/shop_logos', null=True, blank=True)
+    logo_avatar = ImageSpecField(source='logo', processors=[ResizeToFit(16, 16)], format='JPEG', options={'quality': 75})
 
     def __str__(self):
         return f"URL: {self.logo}"

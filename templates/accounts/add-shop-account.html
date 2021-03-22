@@ -50,6 +50,11 @@
     <script>
         $(document).ready(function() {
             $('#id_bank_name').niceSelect();
+
+            if ($("#id_bank_name").val !== "") {
+                $("#js-display-inputs").show();
+            }
+
             $("#id_bank_name").change(function(){
                 if ($(this).val() !== "") {
                     $("#js-display-inputs").show();
