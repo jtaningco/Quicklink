@@ -55,9 +55,7 @@ def addProduct(request):
                 user=user,
                 name=form.cleaned_data.get('name'),
                 description=form.cleaned_data.get('description'),
-                schedule=form.cleaned_data.get('schedule'),
-                days=form.cleaned_data.get('days'),
-                time=form.cleaned_data.get('time'),
+                orders=form.cleaned_data.get('orders'),
                 image=form.cleaned_data.get('image'),
                 instructions=form.cleaned_data.get('instructions'),
             )

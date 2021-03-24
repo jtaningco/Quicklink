@@ -3,14 +3,14 @@
     min-height: 100vh;
     max-height: 100%;
     display: flex; justify-content: center; align-items: center; align-content: center;
-    background: url("https://ik.imagekit.io/ripzjge77zz/Quicklink_App/Merchant/Account_Creation/background-overlay-final_1_Uo_PI-myL8e.png"), var(--gradient-yellow-blue) no-repeat center;
-    background-size: cover;
+    background: url("https://ik.imagekit.io/ripzjge77zz/Quicklink_App/Merchant/Account_Creation/background-overlay-final_1_Uo_PI-myL8e.png"), var(--gradient-yellow-blue) no-repeat center top;
+    background-size: 150% 100%;
     background-blend-mode: overlay;
     padding: 4rem 0;
 }
 
 .registration-card {
-    width: 27.5vw;
+    min-width: 35vw;
     height: auto;
     padding: 2rem;
     display: flex; justify-content: center; align-items: center; align-content: center;
@@ -351,20 +351,21 @@ input:checked + .slider:before {
 }
 
 .logo__upload__text {
-    padding: 1px;
+    margin-top: -4px;
+    padding: 2px;
 }
 
 .logo__upload__link { 
     cursor: pointer;
-    color: var(--primary-alt);
+    color: var(--primary-main);
+    transition: all 0.3s ease-in-out;
 }
 
 .logo__upload__link:hover {
-    border-bottom: 1px solid var(--primary-alt);
+    border-bottom: 1px solid var(--primary-main);
 }
 
 /* #id_logo { display: none; } */
-
 .logo__caption {
     width: 100%;
     display: flex;

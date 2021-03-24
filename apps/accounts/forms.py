@@ -51,7 +51,7 @@ class CreateUserForm(UserCreationForm):
 class BinaryWidget(forms.CheckboxSelectMultiple):
     def value_from_datadict(self, data, files, name):
         value = super(BinaryWidget, self).value_from_datadict(data, files, name)
-        if name == 'delivery_schedule':
+        if name == 'delivery_days':
             value = sum([2**(int(x)-1) for x in value])
         return value
 
@@ -69,13 +69,10 @@ class ShopInformationForm(forms.Form):
         widget=forms.fields.TextInput(attrs={
         'class':'input default subtitle',
         'placeholder': 'Shop Quicklink Username'}),)
-
-    # shop_delivery_schedule
-    delivery_schedule = forms.IntegerField(widget=BinaryWidget(choices=(
-        ('1', 'Monday'), ('2', 'Tuesday'), ('3', 'Wednesday'),
-        ('4', 'Thursday'), ('5', 'Friday'), ('6', 'Saturday'),
-        ('7', 'Sunday')
-    )))
+    shop_email = forms.EmailField(label='', 
+        widget=forms.fields.TextInput(attrs={
+        'class':'input default subtitle',
+        'placeholder': 'Display Email Address'}),)
 
     # shop_address
     line1=forms.CharField(label='', 
@@ -118,13 +115,91 @@ class ShopInformationForm(forms.Form):
                         'placeholder': 'Twitter Link'}),
                         required = False)
 
-    shop_cod=forms.BooleanField()
-
 class ShopLogoForm(ModelForm):
     class Meta:
         model = ShopLogo
         fields = ['logo']
         required_fields = ['logo']
+
+class ShopSettingsForm(forms.Form):
+    ## Shop COD
+    # shop.shop_general_settings.shop_cod
+    shop_cod=forms.BooleanField()
+
+    ## Order Cut-Off
+    # shop.shop_general_settings.cutoff_days
+    cutoff_days = forms.IntegerField(label='',
+        required=False,
+        widget=forms.fields.NumberInput(attrs={
+        'class':'input default disabled subtitle',
+        'placeholder': '0'}),
+    )
+    
+    # shop.shop_general_settings.cutoff_time
+    cutoff_time = forms.CharField(label='',
+        required=False,
+        widget=forms.fields.TextInput(attrs={
+        'class':'input default disabled subtitle',
+        'placeholder': '1:00 PM'}),
+    )
+
+    ## Delivery Schedule
+    # shop.shop_general_settings.delivery_days
+    delivery_days = forms.IntegerField(label='',
+        widget=BinaryWidget(choices=(
+        ('1', 'Monday'), ('2', 'Tuesday'), ('3', 'Wednesday'),
+        ('4', 'Thursday'), ('5', 'Friday'), ('6', 'Saturday'),
+        ('7', 'Sunday')
+    )))
+
+    # shop.shop_general_settings.delivery_from_hour
+    from_hour = forms.ChoiceField(widget=forms.Select(
+        attrs={'class': 'wide input default', 
+        'placeholder': '12:00PM'}),
+        choices=ShopGeneralSettings.HOUR_OF_DAY_24,
+    )
+
+    # shop.shop_general_settings.delivery_from_hour
+    to_hour = forms.ChoiceField(widget=forms.Select(
+        attrs={'class': 'wide input default', 
+        'placeholder': '6:00PM'}),
+        choices=ShopGeneralSettings.HOUR_OF_DAY_24,
+    )
+
+class DeliverySettingsForm(ModelForm):
+    class Meta:
+        model = ShopDeliverySettings
+        fields = [
+            'seller_books', 
+            'buyer_books', 
+            'buyer_picks_up',
+            'line1',
+            'line2',
+            'city',
+            'province',
+            'postal_code'
+        ]
+
+        widgets = {
+            'line1': forms.fields.TextInput(attrs={
+                'class': 'input default', 
+                'placeholder': 'Address Line 1'}),
+            'line2': forms.fields.TextInput(attrs={
+                'class':'input default',
+                'placeholder': 'Cardholder Name'}),
+            'city': forms.Select(attrs={
+                'class': 'wide input default', 
+                'placeholder': 'City'}),
+            'province': forms.Select(attrs={
+                'class': 'wide input default', 
+                'placeholder': 'Province'}),
+            'postal_code': forms.fields.TextInput(attrs={
+                'class': 'input default', 
+                'placeholder': 'Postal Code'})
+        }
+
+    def __init__(self, *args, **kwargs):
+        super(DeliverySettingsForm, self).__init__(*args, **kwargs)
 
 class ShopAccountForm(ModelForm):
     class Meta:

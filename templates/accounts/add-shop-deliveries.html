@@ -1,0 +1,340 @@
+{% extends 'quicklink/signups.html' %}
+{% load static %}
+
+{% block pagetitle %}Merchant Shop Information{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-nice-select/1.1.0/css/nice-select.min.css" integrity="sha512-CruCP+TD3yXzlvvijET8wV5WxxEh5H8P4cmz0RFbKK6FlZ2sYl3AEsKlLPHbniXKSrDdFewhbmBK5skbdsASbQ==" crossorigin="anonymous" />
+{% endblock %}
+
+{% block scriptsHead %}
+{% endblock %}
+
+{% block cardContent %}    
+        <div class="registration-header">
+            <div class="pagination">
+                <a href="{% url 'accounts:merchant-add-shop' %}" class="pagination__circle body-big bold">1</a>
+                    <div class="pagination__line"></div>
+                <a href="{% url 'accounts:merchant-add-logo' %}" class="pagination__circle body-big bold">2</a>
+                    <div class="pagination__line"></div>
+                <a href="{% url 'accounts:merchant-add-settings' %}" class="pagination__circle  body-big bold">3</a>
+                    <div class="pagination__line"></div>
+                <a href="{% url 'accounts:merchant-add-delivery' %}" class="pagination__circle pagination__circle--active body-big bold">4</a>
+                    <div class="pagination__line"></div>
+                <a href="{% url 'accounts:merchant-add-payment' %}" class="pagination__circle body-big bold">5</a>
+            </div>
+            <h1 class="bold" style="color: var(--primary-main); padding: 0.25rem 0; ">Delivery and Courier</h1>
+            <h2 class="body" style="color: var(--muted-default);">How can your customers get their product?</h2>
+        </div>
+        
+        <form action="" method="post" style="width: 100%;" id="js-shop-form">
+            {% csrf_token %}
+            <div class="registration-content">
+                <p class="subtitle bold">Shop Name<span style="color: var(--failure-main)">*</span></p>
+                {{form.shop_name}}
+            </div>
+
+            <div class="registration-content">
+                <p class="subtitle bold">Contact Number<span style="color: var(--failure-main)">*</span></p>
+                {{form.shop_contact_number}}
+            </div>
+
+            <div class="registration-content">
+                <p class="subtitle bold">Shop Quicklink Username<span style="color: var(--failure-main)">*</span></p>
+                {{form.shop_username}}
+            </div>
+
+            <div class="registration-content">
+                <p class="subtitle bold">Shop Delivery Schedule<span style="color: var(--failure-main)">*</span></p>
+                <div class="registration-content">
+                    <div class="input default delivery__input js-toggle-delivery-input">
+                        <p id="js-delivery-input" class="subtitle regular" style="color: var(--muted-lighter);">Everyday</p>
+                        <img src="https://ik.imagekit.io/ripzjge77zz/Quicklink_App/Merchant/Account_Creation/icons/fi_chevron-down_H9oiI7CW7d.png" onerror="this.style.display='none'" class="js-toggle-delivery-input">
+                    </div>
+                    <div class="delivery__modal--background" id="js-delivery-modal-bg">
+                        <div class="delivery__modal" id="js-delivery-modal">
+                            {% for pk, day in form.delivery_schedule.field.widget.choices %}
+                                <div class="delivery__modal__option">
+                                    <label class="checkbox" data-value="{{ pk }}">
+                                        {% if day in selected_dates %}
+                                            <input type="checkbox" name="delivery_schedule" value="{{ pk }}" id="id_delivery_schedule_{{ forloop.counter0 }}" class="js-date-checkbox" checked>
+                                        {% else %}
+                                            <input type="checkbox" name="delivery_schedule" value="{{ pk }}" id="id_delivery_schedule_{{ forloop.counter0 }}" class="js-date-checkbox">
+                                        {% endif %}
+                                        <span class="checkmark"></span>
+                                    </label>
+                                    <p class="delivery__modal__option--label subtitle bold">{{ day }}</p>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="registration-content">
+                <p class="subtitle bold">Shop Address<span style="color: var(--failure-main)">*</span></p>
+                {{form.line1}}
+                {{form.line2}}
+                {{form.city}}
+                <div class="registration-content registration-content__row">
+                    <div class="registration-content__input--small" style="padding-right: 4px;">{{form.province}}</div>
+                    <div class="registration-content__input--small" style="padding-left: 4px;">{{form.postal_code}}</div>
+                </div>
+            </div>
+
+            <div class="registration-content">
+                <p class="subtitle bold">Social Media Links</p>
+                {{form.instagram}}
+                {{form.facebook}}
+                {{form.twitter}}
+            </div>
+
+            <div class="registration-content">
+                <p class="subtitle bold">Will your shop accept Cash-On-Delivery (COD)?<span style="color: var(--failure-main)">*</span></p>
+                <div class="switch-whole">
+                    <p class="subtitle bold" style="color: var(--muted-light);">No</p>
+                    <label class="switch">
+                        {{ form.shop_cod }}
+                        <span class="slider round"></span>
+                  </label>
+                    <p class="subtitle bold" id="js-switch-text" style="color: var(--muted-light); transition: color 0.3s ease">Yes</p>
+                </div>
+            </div>
+
+            <div id="form-errors">{{ form.errors.as_json }}</div>
+
+            <div class="registration-content">
+                <button type="submit" name="next" style="margin: 1rem 0; width: 100%;" class="primary-btn primary-btn-link">Next</button>
+            </div>
+        </form>
+{% endblock %}
+
+{% block scriptsBody %}
+    <!-- Nice Select lightweight JQuery plugin -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-nice-select/1.1.0/js/jquery.nice-select.min.js" integrity="sha512-NqYds8su6jivy1/WLoW8x1tZMRD7/1ZfhWG/jcRQLOzV1k1rIODCpMgoBnar5QXshKJGV7vi0LXLNXPoFsM5Zg==" crossorigin="anonymous"></script>
+    <script>
+        $(document).ready(function() {
+            $('#id_city').niceSelect();
+            $('#id_province').niceSelect();
+        });
+    </script>
+    
+    <!-- Available Schedule Deliveries -->
+    <script>
+        var deliveryInput = $('#js-delivery-input');
+        var listOfDays = [];
+
+        function addDays(i) {
+            if (i == 1) {
+                listOfDays.push('Monday');
+            } else if (i == 2) {
+                listOfDays.push('Tuesday');
+            } else if (i == 3) {
+                listOfDays.push('Wednesday');
+            } else if (i == 4) {
+                listOfDays.push('Thursday');
+            } else if (i == 5) {
+                listOfDays.push('Friday');
+            } else if (i == 6) {
+                listOfDays.push('Saturday')
+            } else {
+                listOfDays.push('Sunday');
+            }
+        }
+
+        function removeDays(i) {
+            if (i == 1) {
+                listOfDays = listOfDays.filter(e => e !== 'Monday');
+            } else if (i == 2) {
+                listOfDays = listOfDays.filter(e => e !== 'Tuesday');
+            } else if (i == 3) {
+                listOfDays = listOfDays.filter(e => e !== 'Wednesday');
+            } else if (i == 4) {
+                listOfDays = listOfDays.filter(e => e !== 'Thursday');
+            } else if (i == 5) {
+                listOfDays = listOfDays.filter(e => e !== 'Friday');
+            } else if (i == 6) {
+                listOfDays = listOfDays.filter(e => e !== 'Saturday');
+            } else {
+                listOfDays = listOfDays.filter(e => e !== 'Sunday');
+            }
+        }
+
+        var weekdays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday']
+        var weekends = ['Saturday', 'Sunday']
+
+        $('.js-date-checkbox:checkbox:checked').each(function () {
+            if (this.checked) {
+                addDays(parseInt($(this).val()));
+                editInput();    
+            } else {
+                removeDays(parseInt($(this).val()));
+                editInput();
+            }
+        });
+
+        function checkShortcut(days, check) {
+            for (var i = 0; i < days.length; i++) {
+                if ($.inArray(days[i], check) == -1) { return false; }
+            }
+            return true;
+        }
+
+        function editInput() {
+            if (listOfDays.length == 7) {
+                deliveryInput.html('Everyday');
+                deliveryInput.css('color', 'var(--muted-dark)');
+            } else if (listOfDays.length <= 6 && listOfDays.length >= 3) {
+                newDays = $.map(listOfDays, function(day) {
+                    return day.slice(0,3);
+                });
+                if (listOfDays.length == 5 && checkShortcut(listOfDays, weekdays) == true) {
+                    deliveryInput.html('Weekdays only');
+                } else {
+                    deliveryInput.html(newDays.join(', '));
+                }
+                deliveryInput.css('color', 'var(--muted-dark)')
+            } else if (listOfDays.length < 3 && listOfDays.length > 0) {
+                if (listOfDays.length == 2 && checkShortcut(listOfDays, weekends) == true) {
+                    deliveryInput.html('Weekends only');
+                } else {
+                    deliveryInput.html(listOfDays.join(', '));
+                }
+                deliveryInput.css('color', 'var(--muted-dark)');
+            } else {
+                deliveryInput.html('Everyday');
+                deliveryInput.css('color', 'var(--muted-lighter)')
+            }
+        }
+
+        window.onload = function() {
+            var toggleDeliveryInputBtns = document.getElementsByClassName('js-toggle-delivery-input');
+            var deliveryModalBg = document.getElementById('js-delivery-modal-bg');
+            var deliveryModal = document.getElementById('js-delivery-modal');
+
+            var checkInputs = $('input[type="checkbox"]');
+
+            for (x = 0; x < toggleDeliveryInputBtns.length; x++) {
+                toggleDeliveryInputBtns[x].addEventListener('click', function() {
+                    deliveryModalBg.style.display = 'flex';
+                    deliveryModal.classList.toggle('delivery__modal--appear');
+                });
+            };
+
+            // Subtract 1 to exclude COD Boolean Toggle Field
+            for (y = 0; y < checkInputs.length - 1; y++) {
+                checkInputs.eq(y).change(function() {
+                    if (this.checked) {
+                        addDays(parseInt($(this).val()));
+                        editInput();    
+                    } else {
+                        removeDays(parseInt($(this).val()));
+                        editInput();
+                    }
+                });
+            }
+
+            checkInputs.eq(-1).change(function() {
+                if (this.checked) {
+                    document.getElementById('js-switch-text').style.color = "var(--success-alt)"
+                } else {
+                    document.getElementById('js-switch-text').style.color = "var(--muted-light)"
+                }
+            })
+
+            deliveryModalBg.addEventListener('click', function(e) {
+                if (! deliveryModal.contains(e.target)) {
+                    deliveryModalBg.style.display = 'none';
+                    deliveryModal.classList.toggle('delivery__modal--appear');
+                }
+            });
+        }
+    </script>
+
+    <!-- AlgoliaJS – Autocomplete Address -->
+    <!-- Check https://www.algolia.com/apps/1DDI408VTY/dashboard -->
+    <script src="https://cdn.jsdelivr.net/npm/places.js@1.19.0"></script>
+
+    <script>
+        var inputLine1 = $('#id_line1');
+        var inputLine2 = $('#id_line2');
+        var inputCity = $('#id_city');
+        var inputProvince = $('#id_province');
+        var inputPostalCode = $('#id_postal_code');
+
+        const fixedOptions = {
+            container: document.querySelector('#id_line1'),
+            accessibility: {
+                pinButton: {
+                    'aria-label': 'use browser geolocation',
+                    'tab-index': 12,
+                },
+                clearButton: {
+                    'tab-index': 13,
+                }
+            }
+        }
+
+        const reconfigurableOptions = {
+            language: 'en', // Receives results in English
+            countries: ['ph'], // Search in the Philippines
+            useDeviceLocation: true // Ask and use the device location to strengthen search/boost around the source IP
+        };
+
+        var placesAutocomplete = places(fixedOptions).configure(reconfigurableOptions);
+
+        placesAutocomplete.on('change', function(e) {
+            inputLine1.val(e.suggestion.name);
+            inputLine2.val(e.suggestion.city);
+            
+            for (i = 0; i < document.getElementById('id_city').length; i++) {
+                if (document.getElementById('id_city').options[i].value == e.suggestion.county + " City") {
+                    console.log('Matching city found!')
+                    inputCity.val(e.suggestion.county + " City");
+                }
+            }
+
+            for (i = 0; i < document.getElementById('id_province').length; i++) {
+                if (e.suggestion.administrative == "Metro Manila") {
+                    console.log('Matching province found!')
+                    inputProvince.val("Metro Manila");
+                }
+            }
+
+            inputPostalCode.val(e.suggestion.postcode);
+        });
+    </script>
+
+    <!-- NOTY Notifications -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/noty/3.1.4/noty.min.js" integrity="sha512-lOrm9FgT1LKOJRUXF3tp6QaMorJftUjowOWiDcG5GFZ/q7ukof19V0HKx/GWzXCdt9zYju3/KhBNdCLzK8b90Q==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/noty/3.1.4/noty.js" integrity="sha512-mgZL3SZ/vIooDg2mU2amX6NysMlthFl/jDbscSRgF/k3zmICLe6muAs7YbITZ+61FeUoo1plofYAocoR5Sa1rQ==" crossorigin="anonymous"></script>
+
+    <!-- NOTY -->
+    <script>
+        var errors = $('#form-errors').text();
+        var jsonErrors = JSON.parse(errors);
+
+        var errorMessages = [];
+
+        for (var k in jsonErrors) {
+            for (var i in Object.keys(jsonErrors[k])) {
+                errorMessages.push([jsonErrors[k][i]['message']]);
+            }
+        }
+
+        function displayErrors() {
+            for (i = 0; i <= Object.keys(errorMessages).length; i++) {
+                if (errorMessages[String(i)] != undefined) {
+                    new Noty({
+                        type: 'error',
+                        theme: 'bootstrap-v4',
+                        text: errorMessages[String(i)],
+                        layout: "topRight",
+                        timeout: 5000,
+                        progressBar: true,
+                    }).show();
+                }
+            }
+        }
+    </script>
+{% endblock %}

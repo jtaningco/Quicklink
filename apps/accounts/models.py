@@ -64,6 +64,7 @@ class User(AbstractBaseUser, PermissionsMixin):
         max_length=150, 
         null=True, 
         unique=True,
+        help_text=_("Please use a business email address."),
         error_messages={"unique": _("That email is already being used by another account."),},
     )
 
@@ -133,7 +134,7 @@ class Address(models.Model):
         ("Metro Manila", _("Metro Manila")),
     ]
 
-    user = models.OneToOneField(User, related_name='user_address', on_delete=models.SET_NULL, null=True, blank=True)
+    user = models.OneToOneField(User, related_name='user_address', on_delete=models.CASCADE, null=True, blank=True)
     line1 = models.CharField(_("address line1"), null=True, blank=False, max_length=155)
     line2 = models.CharField(_("address line2"), null=True, blank=True, max_length=155)
     city = models.CharField(_("address city"), choices=CITIES, null=True, blank=False, max_length=55, default=None)
@@ -145,7 +146,7 @@ class Address(models.Model):
 
 # Social Media Links
 class SocialMediaLink(models.Model):
-    user = models.OneToOneField(User, related_name='user_links', on_delete=models.SET_NULL, null=True, blank=True)
+    user = models.OneToOneField(User, related_name='user_links', on_delete=models.CASCADE, null=True, blank=True)
     instagram = models.CharField(_("instagram link"), null=True, default="", max_length=255)
     facebook = models.CharField(_("facebook link"), null=True, default="", max_length=255)
     twitter = models.CharField(_("twitter link"), null=True, default="", max_length=255)
@@ -171,7 +172,7 @@ class BankAccount(models.Model):
         ("GrabPay", _("GrabPay")),
     ]
     
-    user = models.OneToOneField(User, related_name='user_account', on_delete=models.SET_NULL, null=True, blank=True)
+    user = models.OneToOneField(User, related_name='user_account', on_delete=models.CASCADE, null=True, blank=True)
     bank_name = models.CharField(_("bank name"), choices=BANKS, null=True, max_length=55)
     cardholder_name = models.CharField(_("cardholder name"), null=True, max_length=155)
     account_number = models.CharField(_("account number"), null=True, max_length=55)
@@ -214,7 +215,7 @@ class BankAccount(models.Model):
         return f"{self.cardholder_name} - {self.account_number}"
 
 class Notification(models.Model):
-    user = models.OneToOneField(User, related_name='customer_notifications', on_delete=models.SET_NULL, null=True, blank=True)
+    user = models.OneToOneField(User, related_name='customer_notifications', on_delete=models.CASCADE, null=True, blank=True)
     sms = models.BooleanField(_('sms notifications'), null=True, default=False)
     email = models.BooleanField(_('email notifications'), null=True, default=False)
 
@@ -250,11 +251,18 @@ class ShopInformation(models.Model):
         null=True, 
         unique=True, 
         help_text=_(
-            "Required. 150 characters or fewer. Letters, digits, and @/./+/-/_ only."
+            "This will be used for your order form link (quicklink.ph/username)."
         ),
         error_messages={"unique": _("A user with that username already exists."),},
     )
-    shop_cod = models.BooleanField(_("shop cash on delivery"), null=True, blank=True, default=False)
+    shop_email = models.EmailField(_("email address"), 
+        max_length=150, 
+        null=True,
+        help_text=_(
+            "Your customers will contact you through this email address."
+        ),
+    )
+    shop_delivery_fees = models.DecimalField(null=True, blank=False, max_digits=5, decimal_places=2)
 
     def __str__(self):
         return f"{self.shop_username} - {self.shop_name} ({self.shop_contact_number})"
@@ -297,16 +305,64 @@ WEEKDAYS = BitChoices((
     ('Sun', 'Sunday')
 ))
 
-class DeliveryDays(models.Model):
-    shop = models.OneToOneField(ShopInformation, related_name='delivery_days_shop', on_delete=models.SET_NULL, null=True, blank=True)
-    days = models.PositiveIntegerField(choices=WEEKDAYS)
-    everyday = models.BooleanField(_("everyday delivery"), null=True, default=False)
+# General Shop Settings
+class ShopGeneralSettings(models.Model):
+    HOUR_OF_DAY_24 = [
+        (0, "12:00 AM"),
+    ]
+
+    HOUR_OF_DAY_24 += [
+        (i,f"{i}:00 AM") for i in range(1,12)
+    ]
+
+    HOUR_OF_DAY_24 += [
+        (12, "12:00 PM"),
+    ]
+
+    HOUR_OF_DAY_24 += [
+        (i,f"{i-12}:00 PM") for i in range(13,25)
+    ]
+
+    shop = models.OneToOneField(ShopInformation, related_name='shop_general_settings', on_delete=models.CASCADE, null=True, blank=True)
+    shop_cod = models.BooleanField(_("shop cash on delivery"), null=True, blank=True, default=False)
+
+    # Order cut-off
+    cutoff_days = models.IntegerField(null=True, blank=False, default=0)
+    cutoff_time = models.CharField(max_length=10, null=True, blank=False)
+
+    # Delivery days
+    delivery_days = models.PositiveIntegerField(choices=WEEKDAYS)
+    delivery_everyday = models.BooleanField(_("everyday delivery"), null=True, default=False)
+
+    # Delivery hours
+    delivery_from_hour = models.PositiveSmallIntegerField(choices=HOUR_OF_DAY_24, null=True, default=None)
+    delivery_to_hour = models.PositiveSmallIntegerField(choices=HOUR_OF_DAY_24, null=True, default=None)
 
     def __str__(self):
-        if self.everyday:
-            return "Everyday"
-        else:
-            return f"{', '.join(WEEKDAYS.get_selected_values(self.days))}"
+        return f"{self.shop.name}"
+
+DELIVERY_OPTIONS = BitChoices((
+    (1, 'I book the courier'), 
+    (2, 'Buyer books courier'), 
+    (3, 'Buyer picks up from location'),
+))
+
+# General Shop Settings
+class ShopDeliverySettings(models.Model):
+    shop = models.OneToOneField(ShopInformation, related_name='shop_delivery_settings', on_delete=models.CASCADE, null=True, blank=True)
+    seller_books = models.BooleanField(_("seller books"), null=True, default=False)
+
+    buyer_books = models.BooleanField(_("buyer books"), null=True, default=False)
+    buyer_picks_up = models.BooleanField(_("buyer picks up"), null=True, default=False)
+
+    line1 = models.CharField(_("delivery line1"), null=True, blank=False, max_length=155, default="")
+    line2 = models.CharField(_("delivery line2"), null=True, blank=True, max_length=155, default="")
+    city = models.CharField(_("delivery city"), choices=Address.CITIES, null=True, blank=False, max_length=55, default=None)
+    province = models.CharField(_("delivery province"), choices=Address.PROVINCES, null=True, blank=False, max_length=55, default=None)
+    postal_code = models.CharField(_("delivery postal code"), null=True, max_length=4, blank=False, validators=[only_int], default="")
+
+    def __str__(self):
+        return f"{self.shop.name}"
 
 # Shop Open Hours
 class OpenHours(models.Model):
@@ -336,7 +392,7 @@ class OpenHours(models.Model):
         (7, _("Sunday")),
     ]
 
-    shop = models.OneToOneField(ShopInformation, related_name='open_hours_shop', on_delete=models.SET_NULL, null=True, blank=True)
+    shop = models.OneToOneField(ShopInformation, related_name='open_hours_shop', on_delete=models.CASCADE, null=True, blank=True)
     day_from = models.PositiveSmallIntegerField(choices=WEEKDAYS, null=True, default=None)
     day_to = models.PositiveSmallIntegerField(choices=WEEKDAYS, null=True, default=None)
     from_hour = models.PositiveSmallIntegerField(choices=HOUR_OF_DAY_24, null=True, default=None)
@@ -367,7 +423,7 @@ class Avatar(ImageSpec):
 register.generator('account:avatar', Avatar)
 
 class ShopLogo(models.Model):
-    shop = models.OneToOneField(ShopInformation, related_name='logo_shop', on_delete=models.SET_NULL, null=True, blank=True)
+    shop = models.OneToOneField(ShopInformation, related_name='logo_shop', on_delete=models.CASCADE, null=True, blank=True)
     logo = models.ImageField(upload_to='%Y/%m/%d/shop_logos', null=True, blank=True)
     logo_avatar = ImageSpecField(source='logo', processors=[ResizeToFit(16, 16)], format='JPEG', options={'quality': 75})
 
@@ -393,7 +449,7 @@ class ShopLogo(models.Model):
 
 class CustomerInformation(models.Model):
     customer = models.OneToOneField(
-        User, related_name="info_customer", on_delete=models.SET_NULL, null=True
+        User, related_name="info_customer", on_delete=models.CASCADE, null=True
     )
 
     customer_name = models.CharField(_("customer name"), max_length=150, null=True, blank=False)

@@ -8,7 +8,7 @@ from django.contrib.auth.decorators import login_required
 
 from apps.accounts.models import *
 from .forms import *
-from .decorators import allowed_users, unauthenticated_customer, unauthenticated_merchant
+from .decorators import allowed_users, unauthenticated_merchant
 
 # Email Verification
 from django_email_verification import send_email
@@ -69,7 +69,6 @@ def email_confirmation(request):
 @allowed_users(allowed_roles=[User.Types.MERCHANT, User.Types.ADMIN])
 def registerShopInformation(request):
     user = request.user
-    selected_dates = []
 
     if hasattr(user, 'info_shop'):
         shop = user.info_shop
@@ -77,8 +76,7 @@ def registerShopInformation(request):
             'shop_name': shop.shop_name,
             'shop_contact_number': shop.shop_contact_number,
             'shop_username': shop.shop_username,
-            'shop_cod': shop.shop_cod,
-            'delivery_schedule': shop.delivery_days_shop,
+            'shop_email': shop.shop_email,
             'line1' : user.user_address.line1,
             'line2' : user.user_address.line2,
             'city' : user.user_address.city,
@@ -88,8 +86,6 @@ def registerShopInformation(request):
             'facebook' : user.user_links.facebook,
             'twitter' : user.user_links.twitter,
         })
-
-        selected_dates = WEEKDAYS.get_selected_values(shop.delivery_days_shop.days)
     else:
         form = ShopInformationForm()
     
@@ -101,7 +97,6 @@ def registerShopInformation(request):
                 shop_info.shop_name = form.cleaned_data.get("shop_name")
                 shop_info.shop_contact_number = form.cleaned_data.get("shop_contact_number").strip()
                 shop_info.shop_username = form.cleaned_data.get("shop_username")
-                shop_info.shop_cod = form.cleaned_data.get("shop_cod")
                 shop_info.save()
             else: 
                 shop_info = ShopInformation.objects.create(
@@ -109,27 +104,8 @@ def registerShopInformation(request):
                     shop_name=form.cleaned_data.get("shop_name"),
                     shop_contact_number=form.cleaned_data.get("shop_contact_number").strip(),
                     shop_username=form.cleaned_data.get("shop_username"),
-                    shop_cod=form.cleaned_data.get("shop_cod"),
                 )
                 shop_info.save()
-                
-            if hasattr(shop_info, 'delivery_days_shop'):
-                delivery_days = DeliveryDays.objects.get(shop=shop_info)
-                delivery_days.days = form.cleaned_data.get("delivery_schedule")
-                
-                if delivery_days.days == 56:
-                    delivery_days.everyday = True
-
-                delivery_days.save()
-            else:
-                delivery_days = DeliveryDays.objects.create(
-                    shop=shop_info,
-                    days=form.cleaned_data.get("delivery_schedule")
-                )
-
-                if delivery_days.days == 56:
-                    delivery_days.everyday = True
-                delivery_days.save()
 
             if hasattr(user, 'user_address'):
                 shop_address = Address.objects.get(user=user)
@@ -187,7 +163,7 @@ def registerShopInformation(request):
 
             return redirect('accounts:merchant-add-logo')
 
-    context = {'form':form, 'selected_dates':selected_dates}
+    context = {'form':form}
     return render(request, 'accounts/add-shop-information.html', context)
 
 ### The Set Callback URLs API allows you to set your sub-accounts' Callback URLs.
@@ -221,10 +197,140 @@ def registerShopLogo(request):
                     logo=form.cleaned_data.get('logo')
                 )
                 shop_logo.save()
-            return redirect('accounts:merchant-add-payment')
+            return redirect('accounts:merchant-add-settings')
 
     context = {'form':form, 'shop':shop}
     return render(request, 'accounts/add-shop-logo.html', context)
+
+@login_required(login_url='accounts:merchant-login')
+@allowed_users(allowed_roles=[User.Types.MERCHANT, User.Types.ADMIN])
+def registerShopSettings(request):
+    shop = ShopInformation.objects.get(user=request.user)
+    selected_dates = []
+    selected_radio = ""
+    
+    if hasattr(shop, 'shop_general_settings'):
+        if shop.shop_general_settings.cutoff_time != None:
+            form = ShopSettingsForm(initial={
+                'shop_cod':shop.shop_general_settings.shop_cod,
+                'delivery_days':shop.shop_general_settings.delivery_days,
+                'cutoff_time':shop.shop_general_settings.cutoff_time,
+                'from_hour':shop.shop_general_settings.delivery_from_hour,
+                'to_hour':shop.shop_general_settings.delivery_to_hour,
+            })
+            selected_radio = "cutoff_time"
+        elif shop.shop_general_settings.cutoff_days != None:
+            form = ShopSettingsForm(initial={
+                'shop_cod':shop.shop_general_settings.shop_cod,
+                'delivery_days':shop.shop_general_settings.delivery_days,
+                'cutoff_days':shop.shop_general_settings.cutoff_days,
+                'from_hour':shop.shop_general_settings.delivery_from_hour,
+                'to_hour':shop.shop_general_settings.delivery_to_hour,
+            })
+            selected_radio = "cutoff_days"
+        else:
+            form = ShopSettingsForm(initial={
+                'shop_cod':shop.shop_general_settings.shop_cod,
+                'delivery_days':shop.shop_general_settings.delivery_days,
+                'from_hour':shop.shop_general_settings.delivery_from_hour,
+                'to_hour':shop.shop_general_settings.delivery_to_hour,
+            })
+
+        selected_dates = WEEKDAYS.get_selected_values(shop.shop_general_settings.delivery_days)
+    else:
+        form = ShopSettingsForm()
+
+    if request.method == 'POST':
+        form = ShopSettingsForm(request.POST)
+        if form.is_valid():
+            if hasattr(shop, 'shop_general_settings'):
+                shop_settings = ShopGeneralSettings.objects.get(shop=shop)
+                shop_settings.shop_cod=form.cleaned_data.get('shop_cod')
+                shop_settings.delivery_days=form.cleaned_data.get('delivery_days')
+                shop_settings.delivery_from_hour=form.cleaned_data.get('from_hour')
+                shop_settings.delivery_to_hour=form.cleaned_data.get('to_hour')
+                if 'radio-cutoff-time' in request.POST:
+                    shop_settings.cutoff_time=form.cleaned_data.get('cutoff_time')
+                    if shop_settings.cutoff_days != None:
+                        shop_settings.cutoff_days = None
+                elif 'radio-cutoff-day' in request.POST:
+                    shop_settings.cutoff_days=form.cleaned_data.get('cutoff_days')
+                    if shop_settings.cutoff_time != None:
+                        shop_settings.cutoff_time = None
+                shop_settings.save()
+            else:
+                shop_settings = ShopGeneralSettings.objects.create(
+                    shop=shop,
+                    shop_cod=form.cleaned_data.get('shop_cod'),
+                    delivery_days=form.cleaned_data.get('delivery_days'),
+                    delivery_from_hour=form.cleaned_data.get('from_hour'),
+                    delivery_to_hour=form.cleaned_data.get('to_hour')
+                )
+                if 'radio-cutoff-time' in request.POST:
+                    shop_settings.cutoff_time=form.cleaned_data.get('cutoff_time')
+                elif 'radio-cutoff-day' in request.POST:
+                    shop_settings.cutoff_days=form.cleaned_data.get('cutoff_days')
+                shop_settings.save()
+            return redirect('accounts:merchant-add-delivery')
+
+    context = {'form':form, 'selected_dates':selected_dates, 'selected_radio':selected_radio}
+    return render(request, 'accounts/add-shop-settings.html', context)
+
+@login_required(login_url='accounts:merchant-login')
+@allowed_users(allowed_roles=[User.Types.MERCHANT, User.Types.ADMIN])
+def registerShopDeliveries(request):
+    shop = ShopInformation.objects.get(user=request.user)
+    
+    if hasattr(shop, 'shop_delivery_settings'):
+        form = DeliverySettingsForm(initial={
+            'seller_books': shop.shop_delivery_settings.seller_books,
+            'buyer_books': shop.shop_delivery_settings.buyer_books,
+            'buyer_picks_up': shop.shop_delivery_settings.buyer_picks_up,
+            'line1': shop.shop_delivery_settings.line1,
+            'line2': shop.shop_delivery_settings.line2,
+            'city': shop.shop_delivery_settings.city,
+            'province': shop.shop_delivery_settings.province,
+            'postal_code': shop.shop_delivery_settings.postal_code
+        })
+    else:
+        form = DeliverySettingsForm()
+
+    if request.method == 'POST':
+        form = ShopSettingsForm(request.POST)
+        if form.is_valid():
+            if hasattr(shop, 'shop_delivery_settings'):
+                shop_settings = ShopGeneralSettings.objects.get(shop=shop)
+                shop_settings.seller_books = form.cleaned_data.get('seller_books')
+                shop_settings.buyer_books = form.cleaned_data.get('buyer_books')
+                shop_settings.buyer_picks_up = form.cleaned_data.get('buyer_picks_up')
+                shop_settings.line1 = form.cleaned_data.get('line1')
+                shop_settings.line2 = form.cleaned_data.get('line2')
+                shop_settings.city = form.cleaned_data.get('city')
+                shop_settings.province = form.cleaned_data.get('province')
+                shop_settings.postal_code = form.cleaned_data.get('postal_code')
+                shop_settings.save()
+            else:
+                shop_settings = ShopGeneralSettings.objects.create(
+                    shop=shop,
+                    seller_books=form.cleaned_data.get('seller_books'),
+                    buyer_books=form.cleaned_data.get('buyer_books'),
+                    buyer_picks_up=form.cleaned_data.get('buyer_picks_up'),
+                )
+
+                if form.cleaned_data.get('buyer_books') == True or form.cleaned_data.get('buyer_picks_up') == True:
+                    shop_settings.line1 = form.cleaned_data.get('line1')
+                    shop_settings.line2 = form.cleaned_data.get('line2')
+                    shop_settings.city = form.cleaned_data.get('city')
+                    shop_settings.province = form.cleaned_data.get('province')
+                    shop_settings.postal_code = form.cleaned_data.get('postal_code')
+                elif form.cleaned_data.get('seller_books') == True:
+                    shop.delivery_fees = form.cleaned_data.get('delivery_fees')
+
+                shop_settings.save()
+            return redirect('accounts:merchant-add-payment')
+
+    context = {'form':form, 'shop':shop}
+    return render(request, 'accounts/add-shop-deliveries.html', context)
 
 @login_required(login_url='accounts:merchant-login')
 @allowed_users(allowed_roles=[User.Types.MERCHANT, User.Types.ADMIN])
@@ -289,151 +395,151 @@ def logout_user(request):
     logout(request)
     return redirect('accounts:merchant-login')
 
-@unauthenticated_customer
-def registerCustomer(request):
-    form = CreateUserForm()
-    if request.method == 'POST':
-        form = CreateUserForm(request.POST)
-        if form.is_valid():
-            user = User.objects.create(
-                username=form.cleaned_data.get("username"),
-                email=form.cleaned_data.get("email"),
-                role=form.cleaned_data.get("role"),
-            )
-            user.set_password(form.cleaned_data.get("password"))
-            user.save()
+# @unauthenticated_customer
+# def registerCustomer(request):
+#     form = CreateUserForm()
+#     if request.method == 'POST':
+#         form = CreateUserForm(request.POST)
+#         if form.is_valid():
+#             user = User.objects.create(
+#                 username=form.cleaned_data.get("username"),
+#                 email=form.cleaned_data.get("email"),
+#                 role=form.cleaned_data.get("role"),
+#             )
+#             user.set_password(form.cleaned_data.get("password"))
+#             user.save()
 
-            username = form.cleaned_data.get('username')
-            messages.success(request, 'Account successfully created for ' + username)
-            return redirect('accounts:customer-login')
+#             username = form.cleaned_data.get('username')
+#             messages.success(request, 'Account successfully created for ' + username)
+#             return redirect('accounts:customer-login')
 
-    context = {'form':form}
-    return render(request, 'accounts/customer-register.html', context)
+#     context = {'form':form}
+#     return render(request, 'accounts/customer-register.html', context)
 
-@unauthenticated_customer
-def loginCustomer(request):
-    if request.method == 'POST':
-        username = request.POST.get('username')
-        password = request.POST.get('password')
+# @unauthenticated_customer
+# def loginCustomer(request):
+#     if request.method == 'POST':
+#         username = request.POST.get('username')
+#         password = request.POST.get('password')
 
-        user = authenticate(request, username=username, password=password)
+#         user = authenticate(request, username=username, password=password)
 
-        if user is not None:
-            login(request, user)
-            return redirect('accounts:customer-landing')
-        else:
-            messages.info(request, "Username or password is incorrect.")
+#         if user is not None:
+#             login(request, user)
+#             return redirect('accounts:customer-landing')
+#         else:
+#             messages.info(request, "Username or password is incorrect.")
     
-    context = {}
-    return render(request, 'accounts/customer-login.html', context)
+#     context = {}
+#     return render(request, 'accounts/customer-login.html', context)
 
-@login_required(login_url='accounts:customer-login')
-@allowed_users(allowed_roles=[User.Types.CUSTOMER, User.Types.ADMIN])
-def registerCustomerInformation(request):
-    user = request.user
-    form = CustomerInformationForm()
+# @login_required(login_url='accounts:customer-login')
+# @allowed_users(allowed_roles=[User.Types.CUSTOMER, User.Types.ADMIN])
+# def registerCustomerInformation(request):
+#     user = request.user
+#     form = CustomerInformationForm()
 
-    if request.method == 'POST':
-        form = CustomerInformationForm(request.POST)
-        if form.is_valid():
-            customer_info = CustomerInformation.objects.create(
-                customer = user,
-                customer_name=form.cleaned_data.get("customer_name"),
-                customer_contact_number=form.cleaned_data.get("customer_contact_number"),
-                customer_username=form.cleaned_data.get("customer_username"),
-            )
+#     if request.method == 'POST':
+#         form = CustomerInformationForm(request.POST)
+#         if form.is_valid():
+#             customer_info = CustomerInformation.objects.create(
+#                 customer = user,
+#                 customer_name=form.cleaned_data.get("customer_name"),
+#                 customer_contact_number=form.cleaned_data.get("customer_contact_number"),
+#                 customer_username=form.cleaned_data.get("customer_username"),
+#             )
 
-            social_links = SocialMediaLink.objects.create(
-                user=user,
-                instagram=form.cleaned_data.get("instagram"),
-                facebook=form.cleaned_data.get("facebook"),
-            )
+#             social_links = SocialMediaLink.objects.create(
+#                 user=user,
+#                 instagram=form.cleaned_data.get("instagram"),
+#                 facebook=form.cleaned_data.get("facebook"),
+#             )
 
-            customer_info.save()
-            social_links.save()
+#             customer_info.save()
+#             social_links.save()
 
-            messages.success(request, 'Profile successfully updated')
-            return redirect('accounts:customer-register-address')
+#             messages.success(request, 'Profile successfully updated')
+#             return redirect('accounts:customer-register-address')
     
-    context = {'form':form}
-    return render(request, 'accounts/add-customer-information.html', context)
+#     context = {'form':form}
+#     return render(request, 'accounts/add-customer-information.html', context)
 
-@login_required(login_url='accounts:customer-login')
-@allowed_users(allowed_roles=[User.Types.CUSTOMER, User.Types.ADMIN])
-def registerCustomerAddress(request):
-    user = request.user
-    form = CustomerAddressForm()
+# @login_required(login_url='accounts:customer-login')
+# @allowed_users(allowed_roles=[User.Types.CUSTOMER, User.Types.ADMIN])
+# def registerCustomerAddress(request):
+#     user = request.user
+#     form = CustomerAddressForm()
 
-    if request.method == 'POST':
-        form = CustomerAddressForm(request.POST)
-        if form.is_valid():
-            address = Address.objects.create(
-                user=user,
-                line1=form.cleaned_data.get("line1"),
-                line2=form.cleaned_data.get("line2"),
-                city=form.cleaned_data.get("city"),
-                province=form.cleaned_data.get("province"),
-                postal_code=form.cleaned_data.get("postal_code"),
-            )
+#     if request.method == 'POST':
+#         form = CustomerAddressForm(request.POST)
+#         if form.is_valid():
+#             address = Address.objects.create(
+#                 user=user,
+#                 line1=form.cleaned_data.get("line1"),
+#                 line2=form.cleaned_data.get("line2"),
+#                 city=form.cleaned_data.get("city"),
+#                 province=form.cleaned_data.get("province"),
+#                 postal_code=form.cleaned_data.get("postal_code"),
+#             )
 
-            address.save()
+#             address.save()
 
-            messages.success(request, 'Profile successfully updated')
-            return redirect('accounts:customer-register-payment')
+#             messages.success(request, 'Profile successfully updated')
+#             return redirect('accounts:customer-register-payment')
 
-    context = {'form':form}
-    return render(request, 'accounts/add-customer-address.html', context)
+#     context = {'form':form}
+#     return render(request, 'accounts/add-customer-address.html', context)
 
-@login_required(login_url='accounts:customer-login')
-@allowed_users(allowed_roles=[User.Types.CUSTOMER, User.Types.ADMIN])
-def registerCustomerAccount(request):
-    user = request.user
-    form = CustomerAccountForm()
+# @login_required(login_url='accounts:customer-login')
+# @allowed_users(allowed_roles=[User.Types.CUSTOMER, User.Types.ADMIN])
+# def registerCustomerAccount(request):
+#     user = request.user
+#     form = CustomerAccountForm()
 
-    if request.method == 'POST':
-        form = CustomerAccountForm(request.POST)
-        if form.is_valid():
-            bank_info = BankAccount.objects.create(
-                user=user,
-                bank_name=form.cleaned_data.get("bank_name"),
-                cardholder_name=form.cleaned_data.get("cardholder_name"),
-                account_number=form.cleaned_data.get("account_number"),
-                exp_date=form.cleaned_data.get("exp_date"),
-                cvv=form.cleaned_data.get("cvv"),
-            )
+#     if request.method == 'POST':
+#         form = CustomerAccountForm(request.POST)
+#         if form.is_valid():
+#             bank_info = BankAccount.objects.create(
+#                 user=user,
+#                 bank_name=form.cleaned_data.get("bank_name"),
+#                 cardholder_name=form.cleaned_data.get("cardholder_name"),
+#                 account_number=form.cleaned_data.get("account_number"),
+#                 exp_date=form.cleaned_data.get("exp_date"),
+#                 cvv=form.cleaned_data.get("cvv"),
+#             )
 
-            bank_info.save()
+#             bank_info.save()
 
-            messages.success(request, 'Profile successfully updated')
-            return redirect('accounts:customer-register-notifications')
+#             messages.success(request, 'Profile successfully updated')
+#             return redirect('accounts:customer-register-notifications')
 
-    context = {'form':form}
-    return render(request, 'accounts/add-customer-payment.html', context)
+#     context = {'form':form}
+#     return render(request, 'accounts/add-customer-payment.html', context)
 
-@login_required(login_url='accounts:customer-login')
-@allowed_users(allowed_roles=[User.Types.CUSTOMER, User.Types.ADMIN])
-def registerCustomerNotifications(request):
-    user = request.user
-    form = NotificationsForm()
+# @login_required(login_url='accounts:customer-login')
+# @allowed_users(allowed_roles=[User.Types.CUSTOMER, User.Types.ADMIN])
+# def registerCustomerNotifications(request):
+#     user = request.user
+#     form = NotificationsForm()
 
-    if request.method == 'POST':
-        form = NotificationsForm(request.POST)
-        if form.is_valid():
-            notifications = Notification.objects.create(
-                user=user,
-                sms=form.cleaned_data.get("sms"),
-                email=form.cleaned_data.get("email"),
-            )
-            print(notifications)
-            notifications.save()
+#     if request.method == 'POST':
+#         form = NotificationsForm(request.POST)
+#         if form.is_valid():
+#             notifications = Notification.objects.create(
+#                 user=user,
+#                 sms=form.cleaned_data.get("sms"),
+#                 email=form.cleaned_data.get("email"),
+#             )
+#             print(notifications)
+#             notifications.save()
 
-            messages.success(request, 'Profile successfully updated')
-            return redirect('accounts:customer-landing')
+#             messages.success(request, 'Profile successfully updated')
+#             return redirect('accounts:customer-landing')
 
-    context = {'form':form}
-    return render(request, 'accounts/add-customer-notifications.html', context)
+#     context = {'form':form}
+#     return render(request, 'accounts/add-customer-notifications.html', context)
 
-@allowed_users(allowed_roles=[User.Types.CUSTOMER, User.Types.ADMIN])
-def landingCustomer(request):
-    context = {}
-    return render(request, 'accounts/sample-customer-landing.html', context)
+# @allowed_users(allowed_roles=[User.Types.CUSTOMER, User.Types.ADMIN])
+# def landingCustomer(request):
+#     context = {}
+#     return render(request, 'accounts/sample-customer-landing.html', context)

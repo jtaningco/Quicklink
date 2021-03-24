@@ -11,22 +11,26 @@
         <div class="registration-header">
             <div class="pagination">
                 <a href="{% url 'accounts:merchant-add-shop' %}" class="pagination__circle body-big bold">1</a>
-                <div class="pagination__line"></div>
+                    <div class="pagination__line"></div>
                 <a href="{% url 'accounts:merchant-add-logo' %}" class="pagination__circle pagination__circle--active body-big bold">2</a>
-                <div class="pagination__line"></div>
-                <a href="{% url 'accounts:merchant-add-payment' %}" class="pagination__circle body-big bold">3</a>
+                    <div class="pagination__line"></div>
+                <a href="{% url 'accounts:merchant-add-settings' %}" class="pagination__circle  body-big bold">3</a>
+                    <div class="pagination__line"></div>
+                <a href="{% url 'accounts:merchant-add-delivery' %}" class="pagination__circle body-big bold">4</a>
+                    <div class="pagination__line"></div>
+                <a href="{% url 'accounts:merchant-add-payment' %}" class="pagination__circle body-big bold">5</a>
             </div>
             <h1 class="bold" style="color: var(--primary-main); padding: 0.25rem 0; ">Upload a Logo</h1>
             <h2 class="body" style="color: var(--muted-default);">Give your shop a brand!</h2>
         </div>
-        
+
         <form action="" method="post" enctype="multipart/form-data" style="width: 100%;">
             {% csrf_token %}
             {% if form.logo.value %}
                 <div class="logo__upload__container success" id="js-logo-upload">
                         <img src="{{ form.logo.value.url }}" alt="User uploaded logo" class="logo__upload__file">
                 </div>
-                <p class="logo__upload__text" style="text-align: center;">Drag or <span class="logo__upload__link" id="js-browse-files">choose another image from your files.</span></p>
+                <p class="logo__upload__text logo__upload__link" style="text-align: center;" id="js-browse-files">Replace image</p>
             {% else %}   
                 <div class="logo__upload__container" id="js-logo-upload">
                     <img src="https://ik.imagekit.io/ripzjge77zz/Quicklink_App/Merchant/Account_Creation/icons/u_image_XucX2a74QNx.svg" alt="Image Icon" class="logo__upload__icon">
@@ -34,6 +38,9 @@
                         <p class="logo__upload__text" id="js-logo-text">Drag your shop's logo here, </p>
                         <p class="logo__upload__text">or <span class="logo__upload__link" id="js-browse-files">browse through your files.</span></p>
                     </div>
+                </div>
+                <div class="logo__caption logo__upload__text" style="display: none;" id="js-browse-files-hidden">
+                    <span class="logo__upload__link" style="text-align: center;">Replace image</span>
                 </div>
             {% endif %}
             <div style="display: none; ">{{ form.as_p }}</div>
@@ -46,8 +53,8 @@
             <div id="form-errors">{{ form.errors.as_json }}</div>
 
             <div class="registration-content" style="margin-top: 2rem;">
-                <button type="submit" name="next" style="margin: 0.5rem 0; width: 100%;" class="primary-btn primary-btn-link">Next</button>
-                <a href="{% url 'accounts:merchant-add-shop' %}" class="btn__back" style="margin: 0;"><button type="button" class="secondary-btn secondary-btn-link" style="width: 100%;">Back</button></a>
+                <button type="submit" name="next" style="margin: 0.5rem 0; width: 100%;" class="primary-btn subtitle">Next</button>
+                <a href="{% url 'accounts:merchant-add-shop' %}" class="btn__back" style="margin: 0;"><button type="button" class="secondary-btn subtitle" style="width: 100%;">Back</button></a>
             </div>
         </form>
 {% endblock %}
@@ -58,6 +65,7 @@
         const dropArea = document.getElementById('js-logo-upload');
         const fileBrowse = document.getElementById('js-browse-files');
         const fileInput = document.getElementById('id_logo');
+        const replaceImageText = document.getElementById('js-browse-files-hidden');
         let file;
 
         function FileListItems (files) {
@@ -97,6 +105,9 @@
                     dropArea.innerHTML = imgTag;
                     dropArea.classList.remove("active");
                     dropArea.classList.add("success");
+                    replaceImageText.id = "js-browse-files";
+                    replaceImageText.style.display = "flex";
+                    fileBrowse = document.getElementById('js-browse-files');
                 }
                 fileReader.readAsDataURL(file);
                 var files = [file]
@@ -115,6 +126,11 @@
                 dropArea.innerHTML = imgTag;
                 dropArea.classList.remove("active");
                 dropArea.classList.add("success");
+                replaceImageText.id = "js-browse-files";
+                replaceImageText.style.display = "flex";
+                replaceImageText.addEventListener('click', function() {
+                    fileInput.click();
+                });
             }
 
             $("#id_logo").change(function(){
