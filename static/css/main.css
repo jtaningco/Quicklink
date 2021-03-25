@@ -152,7 +152,7 @@ button:focus {
 
 .secondary-btn:hover {
   border: 1px solid var(--muted-dark);
-  color: var(--muted-white);
+  color: var(--muted-dark);
 }
 
 .secondary-btn.active {
@@ -245,9 +245,17 @@ textarea {
   width: 120px;
   height: 40px;
   padding: 0 1rem;
+  display: flex; justify-content: center; align-items: center; align-content: center;
 }
 
-.smallest-input__container input { margin: 0; }
+.smallest-input__container input, .smallest-input__container .input,
+.small-input__container input, .small-input__container .input { margin: 0; }
+
+.small-input__container {
+  width: 200px;
+  height: 40px;
+  display: flex; justify-content: center; align-items: center; align-content: center;
+}
 
 .mobile-large-input {
   width: 288px;
@@ -267,28 +275,20 @@ textarea {
 .input.focused, .small-input.focused, .large-input.focused, .smallest-input.focused {
   color: var(--muted-dark);
   border: 1px solid var(--primary-main);
-  box-sizing: border-box;
-  border-radius: 5px;
 }
 
 .input.filled, .small-input.filled, .large-input.filled, .smallest-input.filled {
   border: 1px solid var(--muted-lighter);
-  box-sizing: border-box;
-  border-radius: 5px;
 }
 
 .input.error, .small-input.error, .large-input.error, .smallest-input.error {
   border: 1px solid var(--failure-main);
-  box-sizing: border-box;
-  border-radius: 5px;
 }
 
 .input.disabled, .small-input.disabled, .large-input.disabled, .smallest-input.disabled {
   color: var(--muted-light);
   background-color: #F8F8F8;
   border: 1px solid var(--muted-lighter);
-  box-sizing: border-box;
-  border-radius: 5px;
 }
 
 .searchbar {
@@ -313,6 +313,11 @@ textarea {
 }
 
 /* NICE SELECT STYLE */
+.nice-select .list {
+  max-height: 200px;
+  overflow: hidden;
+}
+
 .nice-select.open .list {
   border-radius: 0px;
   max-height: 200px;
@@ -323,7 +328,16 @@ textarea {
   background: var(--primary-light);
 }
 
+select:disabled, select.disabled, .nice-select.disabled {
+  color: var(--muted-light);
+  background-color: #F8F8F8;
+  border: 1px solid var(--muted-lighter);
+  pointer-events: none; 
+  user-select: none;
+}
+
 /* CONTROLS */
+/* Custom Checkbox */
 .checkbox {
   width: auto;
   display: flex;
@@ -352,6 +366,11 @@ textarea {
   /* outline: 1px solid var(--muted-lighter); */
 }
 
+.checkbox .checkmark.checkmark__small {
+  width: 16px;
+  height: 16px;
+}
+
 .checkbox:hover input ~ .checkmark {
   background-color: var(--muted-lightest);
 }
@@ -361,13 +380,14 @@ textarea {
   background-color: var(--success-main);
 }
 
-.checkmark:after {
+.checkmark:after, .checkmark.checkmark__small:after {
   content: "";
   position: absolute;
   display: none;
 }
 
-.checkbox input:checked ~ .checkmark:after {
+.checkbox input:checked ~ .checkmark:after,
+.checkbox input:checked ~ .checkmark.checkmark__small:after {
   display: block;
 }
 
@@ -382,7 +402,79 @@ textarea {
   transform: rotate(45deg);
 }
 
-/* MOBILE CONTROLS */
+.checkbox .checkmark.checkmark__small:after {
+  margin-top: -2px;
+  width: 4px;
+  height: 8px;
+  border: solid white;
+  border-width: 0 1px 1px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+
+/* Toggle Switch */
+.switch-whole {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+}
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 3rem;
+  height: 1.5rem;
+  margin: 0 1rem;
+}
+
+.switch input { opacity: 0; }
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  transition: all .4s ease-in-out;
+    -webkit-transition: all .4s ease-in-out;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 1.35rem;
+  width: 1.35rem;
+  left: 1px;
+  bottom: 1px;
+  background-color: white;
+  transition: all .4s ease-in-out;
+    -webkit-transition: all .4s ease-in-out;
+}
+
+input:checked + .slider { background-color: var(--success-main); }
+input:checked + .switch-text__yes { color: var(--success-main); }
+
+input:checked + .slider:before {
+  transform: translateX(1.5rem);
+    -webkit-transform: translateX(1.5rem);
+    -ms-transform: translateX(1.5rem);
+}
+
+/* Rounded sliders */
+.slider.round {
+  border-radius: 12px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+
+
+/* Custom Radio */
 .radio__select__row {
   width: 100%;
   height: auto;

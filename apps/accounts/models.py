@@ -262,7 +262,7 @@ class ShopInformation(models.Model):
             "Your customers will contact you through this email address."
         ),
     )
-    shop_delivery_fees = models.DecimalField(null=True, blank=False, max_digits=5, decimal_places=2)
+    shop_delivery_fees = models.DecimalField(null=True, blank=False, max_digits=5, decimal_places=2, default=0.00)
 
     def __str__(self):
         return f"{self.shop_username} - {self.shop_name} ({self.shop_contact_number})"
@@ -320,7 +320,7 @@ class ShopGeneralSettings(models.Model):
     ]
 
     HOUR_OF_DAY_24 += [
-        (i,f"{i-12}:00 PM") for i in range(13,25)
+        (i,f"{i-12}:00 PM") for i in range(13,24)
     ]
 
     shop = models.OneToOneField(ShopInformation, related_name='shop_general_settings', on_delete=models.CASCADE, null=True, blank=True)
@@ -339,30 +339,23 @@ class ShopGeneralSettings(models.Model):
     delivery_to_hour = models.PositiveSmallIntegerField(choices=HOUR_OF_DAY_24, null=True, default=None)
 
     def __str__(self):
-        return f"{self.shop.name}"
-
-DELIVERY_OPTIONS = BitChoices((
-    (1, 'I book the courier'), 
-    (2, 'Buyer books courier'), 
-    (3, 'Buyer picks up from location'),
-))
+        return f"{self.shop.shop_name}"
 
 # General Shop Settings
 class ShopDeliverySettings(models.Model):
     shop = models.OneToOneField(ShopInformation, related_name='shop_delivery_settings', on_delete=models.CASCADE, null=True, blank=True)
-    seller_books = models.BooleanField(_("seller books"), null=True, default=False)
+    seller_books = models.BooleanField(_("seller books"), blank=True, null=True, default=False)
+    buyer_books = models.BooleanField(_("buyer books"), blank=True, null=True, default=False)
+    buyer_picks_up = models.BooleanField(_("buyer picks up"), blank=True, null=True, default=False)
 
-    buyer_books = models.BooleanField(_("buyer books"), null=True, default=False)
-    buyer_picks_up = models.BooleanField(_("buyer picks up"), null=True, default=False)
-
-    line1 = models.CharField(_("delivery line1"), null=True, blank=False, max_length=155, default="")
-    line2 = models.CharField(_("delivery line2"), null=True, blank=True, max_length=155, default="")
-    city = models.CharField(_("delivery city"), choices=Address.CITIES, null=True, blank=False, max_length=55, default=None)
-    province = models.CharField(_("delivery province"), choices=Address.PROVINCES, null=True, blank=False, max_length=55, default=None)
-    postal_code = models.CharField(_("delivery postal code"), null=True, max_length=4, blank=False, validators=[only_int], default="")
+    line1 = models.CharField(_("delivery line1"), null=True, blank=True, max_length=155, default="Address Line 1")
+    line2 = models.CharField(_("delivery line2"), null=True, blank=True, max_length=155, default="Address Line 2")
+    city = models.CharField(_("delivery city"), choices=Address.CITIES, null=True, blank=True, max_length=55, default=Address.CITIES[0])
+    province = models.CharField(_("delivery province"), choices=Address.PROVINCES, null=True, blank=True, max_length=55, default=Address.PROVINCES[0])
+    postal_code = models.CharField(_("delivery postal code"), null=True, max_length=4, blank=True, validators=[only_int], default="0000")
 
     def __str__(self):
-        return f"{self.shop.name}"
+        return f"{self.shop.shop_name}"
 
 # Shop Open Hours
 class OpenHours(models.Model):

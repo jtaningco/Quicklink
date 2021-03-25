@@ -27,16 +27,16 @@
             <h2 class="body" style="color: var(--muted-default);">Let's set some default settings for your shop.</h2>
         </div>
         
-        <form action="" method="post" style="width: 100%;" id="js-shop-form">
+        <form action="" method="post" style="width: 100%;">
             {% csrf_token %}
             <div class="registration-content">
                 <p class="subtitle bold">Will your shop accept Cash-On-Delivery (COD)?<span style="color: var(--failure-main)">*</span></p>
-                <div class="switch-whole">
+                <div class="switch-whole" style="margin: 1rem 0;">
                     <p class="subtitle bold" style="color: var(--muted-light);">No</p>
                     <label class="switch">
                         {{ form.shop_cod }}
                         <span class="slider round"></span>
-                  </label>
+                    </label>
                     <p class="subtitle bold" id="js-switch-text" style="color: var(--muted-light); transition: color 0.3s ease">Yes</p>
                 </div>
             </div>
@@ -52,10 +52,10 @@
                         {% endif %}
                         <span class="radio-select-mobile"></span>
                     </label>
-                    <div class="smallest-input__container">
+                    <div class="smallest-input__container" style="padding-right: 0;">
                         {{ form.cutoff_days }}
                     </div>
-                    <p class="subtitle">day(s) before chosen delivery date</p>
+                    <p class="subtitle" style="padding-left: 1rem;">day(s) before chosen delivery date</p>
                 </div>
                 <div class="radio__select__row">
                     <label class="radio-mobile">
@@ -66,10 +66,10 @@
                         {% endif %}
                         <span class="radio-select-mobile"></span>
                     </label>
-                    <div class="smallest-input__container">
+                    <div class="smallest-input__container" style="padding-right: 0;"> 
                         {{ form.cutoff_time }} 
                     </div>
-                    <p class="subtitle">everyday</p>
+                    <p class="subtitle" style="padding-left: 1rem;">everyday</p>
                     </label> 
                 </div>
             </div>
@@ -127,8 +127,16 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-nice-select/1.1.0/js/jquery.nice-select.min.js" integrity="sha512-NqYds8su6jivy1/WLoW8x1tZMRD7/1ZfhWG/jcRQLOzV1k1rIODCpMgoBnar5QXshKJGV7vi0LXLNXPoFsM5Zg==" crossorigin="anonymous"></script>
     <script>
         $(document).ready(function() {
+            $('#id_cutoff_time').niceSelect();
             $('#id_from_hour').niceSelect();
             $('#id_to_hour').niceSelect();
+
+            if ($('#js-cutoff-days').is(':checked')) { 
+                $('#id_cutoff_time').prop('disabled', true).niceSelect();
+                cutoffDaysInput.classList.remove('disabled');
+            } else if ($('#js-cutoff-time').is(':checked')) {
+                $('#id_cutoff_time').prop('disabled', false).niceSelect('update');
+            }
         });
     </script>
 
@@ -136,41 +144,28 @@
         const cutoffDaysInput = document.getElementById("id_cutoff_days");
         const cutoffTimeInput = document.getElementById("id_cutoff_time");
 
-        $('.js-radio-btns:radio').each(function () {
-            if ($('#js-cutoff-days').is(':checked')) { 
-                cutoffDaysInput.disabled = false;
-                cutoffDaysInput.classList.remove('disabled');
-                cutoffDaysInput.classList.add('default');
-            } else if ($('#js-cutoff-time').is(':checked')) {
-                cutoffTimeInput.disabled = false;
-                cutoffTimeInput.classList.remove('disabled');
-                cutoffTimeInput.classList.add('default');
-            }
-        });
+        if ($('#js-cutoff-days').is(':checked')) { 
+            $('#id_cutoff_time').prop('disabled', true).niceSelect();
+            cutoffDaysInput.classList.remove('disabled');
+        }
 
         $('#js-cutoff-days').click(function() {
             if ($('#js-cutoff-days').is(':checked')) { 
                 cutoffDaysInput.disabled = false;
                 cutoffDaysInput.classList.remove('disabled');
-                cutoffDaysInput.classList.add('default');
             }
             
             $('#js-cutoff-time').prop('checked', false);
-            cutoffTimeInput.disabled = true;
-            cutoffTimeInput.classList.remove('default');
-            cutoffTimeInput.classList.add('disabled');
+            $('#id_cutoff_time').prop('disabled', true).niceSelect('update');
         });
 
         $('#js-cutoff-time').click(function() {
             if ($('#js-cutoff-time').is(':checked')) {
-                cutoffTimeInput.disabled = false;
-                cutoffTimeInput.classList.remove('disabled');
-                cutoffTimeInput.classList.add('default');
+                $('#id_cutoff_time').prop('disabled', false).niceSelect('update');
             }
 
             $('#js-cutoff-days').prop('checked', false);
             cutoffDaysInput.disabled = true;
-            cutoffDaysInput.classList.remove('default');
             cutoffDaysInput.classList.add('disabled');
         });
     </script>

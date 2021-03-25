@@ -27,89 +27,150 @@
             <h2 class="body" style="color: var(--muted-default);">How can your customers get their product?</h2>
         </div>
         
-        <form action="" method="post" style="width: 100%;" id="js-shop-form">
+        <form action="" method="post" style="width: 100%;">
             {% csrf_token %}
             <div class="registration-content">
-                <p class="subtitle bold">Shop Name<span style="color: var(--failure-main)">*</span></p>
-                {{form.shop_name}}
-            </div>
-
-            <div class="registration-content">
-                <p class="subtitle bold">Contact Number<span style="color: var(--failure-main)">*</span></p>
-                {{form.shop_contact_number}}
-            </div>
-
-            <div class="registration-content">
-                <p class="subtitle bold">Shop Quicklink Username<span style="color: var(--failure-main)">*</span></p>
-                {{form.shop_username}}
-            </div>
-
-            <div class="registration-content">
-                <p class="subtitle bold">Shop Delivery Schedule<span style="color: var(--failure-main)">*</span></p>
-                <div class="registration-content">
-                    <div class="input default delivery__input js-toggle-delivery-input">
-                        <p id="js-delivery-input" class="subtitle regular" style="color: var(--muted-lighter);">Everyday</p>
-                        <img src="https://ik.imagekit.io/ripzjge77zz/Quicklink_App/Merchant/Account_Creation/icons/fi_chevron-down_H9oiI7CW7d.png" onerror="this.style.display='none'" class="js-toggle-delivery-input">
+                <div class="registration-content__delivery">
+                    <p class="subtitle bold">I book the courier</p>
+                    <div class="switch-whole">
+                        <label class="switch">
+                            {{form.seller_books}}
+                            <span class="slider round"></span>
+                        </label>
                     </div>
-                    <div class="delivery__modal--background" id="js-delivery-modal-bg">
-                        <div class="delivery__modal" id="js-delivery-modal">
-                            {% for pk, day in form.delivery_schedule.field.widget.choices %}
-                                <div class="delivery__modal__option">
-                                    <label class="checkbox" data-value="{{ pk }}">
-                                        {% if day in selected_dates %}
-                                            <input type="checkbox" name="delivery_schedule" value="{{ pk }}" id="id_delivery_schedule_{{ forloop.counter0 }}" class="js-date-checkbox" checked>
-                                        {% else %}
-                                            <input type="checkbox" name="delivery_schedule" value="{{ pk }}" id="id_delivery_schedule_{{ forloop.counter0 }}" class="js-date-checkbox">
-                                        {% endif %}
-                                        <span class="checkmark"></span>
-                                    </label>
-                                    <p class="delivery__modal__option--label subtitle bold">{{ day }}</p>
-                                </div>
-                            {% endfor %}
-                        </div>
+                </div>
+                <div class="small-input__container" style="display: none;" id="js-seller-books-input">
+                    <h3 style="margin-right: 1rem;">&#8369</h1>
+                    {{form.shop_delivery_fees}}
+                </div>
+                <div class="registration-content__delivery">
+                    <p class="subtitle bold">Buyer books courier</p>
+                    <div class="switch-whole">
+                        <label class="switch">
+                            {{form.buyer_books}}
+                            <span class="slider round"></span>
+                        </label>
+                    </div>
+                </div>
+                <div class="registration-content__delivery">
+                    <p class="subtitle bold">Buyer picks up from location</p>
+                    <div class="switch-whole">
+                        <label class="switch">
+                            {{form.buyer_picks_up}}
+                            <span class="slider round"></span>
+                        </label>
                     </div>
                 </div>
             </div>
 
-            <div class="registration-content">
-                <p class="subtitle bold">Shop Address<span style="color: var(--failure-main)">*</span></p>
-                {{form.line1}}
-                {{form.line2}}
-                {{form.city}}
-                <div class="registration-content registration-content__row">
-                    <div class="registration-content__input--small" style="padding-right: 4px;">{{form.province}}</div>
-                    <div class="registration-content__input--small" style="padding-left: 4px;">{{form.postal_code}}</div>
+            <div class="registration-content" id="js-pick-up-point" style="display: none;">
+                <p class="subtitle bold">Pick-Up Point</p>
+                <div class="delivery__modal__option">
+                    <label class="checkbox">
+                        {% if use_same_address == True %}
+                            <input type="checkbox" name="use_shop_address" id="id_use_shop_address" class="js-date-checkbox" checked>
+                        {% else %}
+                            <input type="checkbox" name="use_shop_address" id="id_use_shop_address" class="js-date-checkbox">
+                        {% endif %}
+                        <span class="checkmark checkmark__small"></span>
+                    </label>
+                    <p class="delivery__modal__option--label subtitle">Same as shop address</p>
                 </div>
-            </div>
-
-            <div class="registration-content">
-                <p class="subtitle bold">Social Media Links</p>
-                {{form.instagram}}
-                {{form.facebook}}
-                {{form.twitter}}
-            </div>
-
-            <div class="registration-content">
-                <p class="subtitle bold">Will your shop accept Cash-On-Delivery (COD)?<span style="color: var(--failure-main)">*</span></p>
-                <div class="switch-whole">
-                    <p class="subtitle bold" style="color: var(--muted-light);">No</p>
-                    <label class="switch">
-                        {{ form.shop_cod }}
-                        <span class="slider round"></span>
-                  </label>
-                    <p class="subtitle bold" id="js-switch-text" style="color: var(--muted-light); transition: color 0.3s ease">Yes</p>
+                <div class="registration-content" id="js-address-input">
+                    {{form.line1}}
+                    {{form.line2}}
+                    {{form.city}}
+                    <div class="registration-content registration-content__row">
+                        <div class="registration-content__input--small" style="padding-right: 4px;">{{form.province}}</div>
+                        <div class="registration-content__input--small" style="padding-left: 4px;">{{form.postal_code}}</div>
+                    </div>
                 </div>
             </div>
 
             <div id="form-errors">{{ form.errors.as_json }}</div>
 
             <div class="registration-content">
-                <button type="submit" name="next" style="margin: 1rem 0; width: 100%;" class="primary-btn primary-btn-link">Next</button>
+                <button type="submit" name="next" style="margin: 1rem 0; width: 100%;" class="primary-btn disabled subtitle" id="js-submit-next">Next</button>
+                <a href="{% url 'accounts:merchant-add-settings' %}" class="btn__back" style="margin: 0;"><button type="button" class="secondary-btn subtitle" style="width: 100%;">Back</button></a>
             </div>
         </form>
 {% endblock %}
 
 {% block scriptsBody %}
+    <!-- Switch Toggle -->
+    <script>
+        const toggleBtns = $('input:checkbox');
+        const deliveryFeesInput = $('#js-seller-books-input');
+        const pickupInput = $('#js-pick-up-point');
+        const addressInput = $('#js-address-input');
+
+        function displayInputs(id) {
+            if (id == "id_seller_books") {
+                deliveryFeesInput.css("display", "flex");
+                deliveryFeesInput.css("margin", "0.5rem 0 0.75rem 0")
+            } else {
+                pickupInput.css("display", "flex");
+            }
+
+            if ($("#id_use_shop_address").is(":checked")) {
+                addressInput.css("display", "none");
+            }
+        }
+
+        function removeInputs(id) {
+            if (id == "id_seller_books") {
+                deliveryFeesInput.css("display", "none");
+            } else if (id == "id_use_shop_address") {
+                addressInput.css("display", "flex");
+            } else {
+                if ($("#id_buyer_books").prop('checked') == false && $("#id_buyer_picks_up").prop('checked') == false ) {
+                    pickupInput.css("display", "none");
+                }
+            }
+        }
+
+        function enableButton() {
+            var minimum = 0;
+            var toggled = 0;
+            
+            toggleBtns.each(function() {
+                if ($(this).attr('id') != "id_use_shop_address") {
+                    if (this.checked) {
+                        toggled += 1;
+                    }
+                }
+            });
+
+            if (toggled > minimum) {
+                $("#js-submit-next").removeClass('disabled');
+            } else {
+                $("#js-submit-next").addClass('disabled');
+            }
+        }
+
+        for (i = 0; i < toggleBtns.length; i++) {
+            toggleBtns.eq(i).click(function(){
+                if (this.checked) {
+                    displayInputs($(this).attr('id'));
+                } else {
+                    removeInputs($(this).attr('id'));
+                }
+                enableButton();
+            })
+        }
+
+        window.onload = function() {
+            toggleBtns.each(function() {
+                if ($(this).is(':checked')) {
+                    displayInputs($(this).attr('id'));
+                } else {
+                    removeInputs($(this).attr('id'));
+                }
+                enableButton();
+            })   
+        }
+    </script>
+
     <!-- Nice Select lightweight JQuery plugin -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-nice-select/1.1.0/js/jquery.nice-select.min.js" integrity="sha512-NqYds8su6jivy1/WLoW8x1tZMRD7/1ZfhWG/jcRQLOzV1k1rIODCpMgoBnar5QXshKJGV7vi0LXLNXPoFsM5Zg==" crossorigin="anonymous"></script>
     <script>
@@ -117,138 +178,6 @@
             $('#id_city').niceSelect();
             $('#id_province').niceSelect();
         });
-    </script>
-    
-    <!-- Available Schedule Deliveries -->
-    <script>
-        var deliveryInput = $('#js-delivery-input');
-        var listOfDays = [];
-
-        function addDays(i) {
-            if (i == 1) {
-                listOfDays.push('Monday');
-            } else if (i == 2) {
-                listOfDays.push('Tuesday');
-            } else if (i == 3) {
-                listOfDays.push('Wednesday');
-            } else if (i == 4) {
-                listOfDays.push('Thursday');
-            } else if (i == 5) {
-                listOfDays.push('Friday');
-            } else if (i == 6) {
-                listOfDays.push('Saturday')
-            } else {
-                listOfDays.push('Sunday');
-            }
-        }
-
-        function removeDays(i) {
-            if (i == 1) {
-                listOfDays = listOfDays.filter(e => e !== 'Monday');
-            } else if (i == 2) {
-                listOfDays = listOfDays.filter(e => e !== 'Tuesday');
-            } else if (i == 3) {
-                listOfDays = listOfDays.filter(e => e !== 'Wednesday');
-            } else if (i == 4) {
-                listOfDays = listOfDays.filter(e => e !== 'Thursday');
-            } else if (i == 5) {
-                listOfDays = listOfDays.filter(e => e !== 'Friday');
-            } else if (i == 6) {
-                listOfDays = listOfDays.filter(e => e !== 'Saturday');
-            } else {
-                listOfDays = listOfDays.filter(e => e !== 'Sunday');
-            }
-        }
-
-        var weekdays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday']
-        var weekends = ['Saturday', 'Sunday']
-
-        $('.js-date-checkbox:checkbox:checked').each(function () {
-            if (this.checked) {
-                addDays(parseInt($(this).val()));
-                editInput();    
-            } else {
-                removeDays(parseInt($(this).val()));
-                editInput();
-            }
-        });
-
-        function checkShortcut(days, check) {
-            for (var i = 0; i < days.length; i++) {
-                if ($.inArray(days[i], check) == -1) { return false; }
-            }
-            return true;
-        }
-
-        function editInput() {
-            if (listOfDays.length == 7) {
-                deliveryInput.html('Everyday');
-                deliveryInput.css('color', 'var(--muted-dark)');
-            } else if (listOfDays.length <= 6 && listOfDays.length >= 3) {
-                newDays = $.map(listOfDays, function(day) {
-                    return day.slice(0,3);
-                });
-                if (listOfDays.length == 5 && checkShortcut(listOfDays, weekdays) == true) {
-                    deliveryInput.html('Weekdays only');
-                } else {
-                    deliveryInput.html(newDays.join(', '));
-                }
-                deliveryInput.css('color', 'var(--muted-dark)')
-            } else if (listOfDays.length < 3 && listOfDays.length > 0) {
-                if (listOfDays.length == 2 && checkShortcut(listOfDays, weekends) == true) {
-                    deliveryInput.html('Weekends only');
-                } else {
-                    deliveryInput.html(listOfDays.join(', '));
-                }
-                deliveryInput.css('color', 'var(--muted-dark)');
-            } else {
-                deliveryInput.html('Everyday');
-                deliveryInput.css('color', 'var(--muted-lighter)')
-            }
-        }
-
-        window.onload = function() {
-            var toggleDeliveryInputBtns = document.getElementsByClassName('js-toggle-delivery-input');
-            var deliveryModalBg = document.getElementById('js-delivery-modal-bg');
-            var deliveryModal = document.getElementById('js-delivery-modal');
-
-            var checkInputs = $('input[type="checkbox"]');
-
-            for (x = 0; x < toggleDeliveryInputBtns.length; x++) {
-                toggleDeliveryInputBtns[x].addEventListener('click', function() {
-                    deliveryModalBg.style.display = 'flex';
-                    deliveryModal.classList.toggle('delivery__modal--appear');
-                });
-            };
-
-            // Subtract 1 to exclude COD Boolean Toggle Field
-            for (y = 0; y < checkInputs.length - 1; y++) {
-                checkInputs.eq(y).change(function() {
-                    if (this.checked) {
-                        addDays(parseInt($(this).val()));
-                        editInput();    
-                    } else {
-                        removeDays(parseInt($(this).val()));
-                        editInput();
-                    }
-                });
-            }
-
-            checkInputs.eq(-1).change(function() {
-                if (this.checked) {
-                    document.getElementById('js-switch-text').style.color = "var(--success-alt)"
-                } else {
-                    document.getElementById('js-switch-text').style.color = "var(--muted-light)"
-                }
-            })
-
-            deliveryModalBg.addEventListener('click', function(e) {
-                if (! deliveryModal.contains(e.target)) {
-                    deliveryModalBg.style.display = 'none';
-                    deliveryModal.classList.toggle('delivery__modal--appear');
-                }
-            });
-        }
     </script>
 
     <!-- AlgoliaJS – Autocomplete Address -->

@@ -92,54 +92,26 @@ def registerShopInformation(request):
     if request.method == 'POST':
         form = ShopInformationForm(request.POST)
         if form.is_valid():
-            if hasattr(user, 'info_shop'):
-                shop_info = ShopInformation.objects.get(user=user)
-                shop_info.shop_name = form.cleaned_data.get("shop_name")
-                shop_info.shop_contact_number = form.cleaned_data.get("shop_contact_number").strip()
-                shop_info.shop_username = form.cleaned_data.get("shop_username")
-                shop_info.save()
-            else: 
-                shop_info = ShopInformation.objects.create(
-                    user=user,
-                    shop_name=form.cleaned_data.get("shop_name"),
-                    shop_contact_number=form.cleaned_data.get("shop_contact_number").strip(),
-                    shop_username=form.cleaned_data.get("shop_username"),
-                )
-                shop_info.save()
+            shop_info, created = ShopInformation.objects.get_or_create(user=user)
+            shop_info.shop_name = form.cleaned_data.get("shop_name")
+            shop_info.shop_contact_number = form.cleaned_data.get("shop_contact_number").strip()
+            shop_info.shop_username = form.cleaned_data.get("shop_username")
+            shop_info.shop_email = form.cleaned_data.get("shop_email")
+            shop_info.save()
 
-            if hasattr(user, 'user_address'):
-                shop_address = Address.objects.get(user=user)
-                shop_address.line1 = form.cleaned_data.get("line1")
-                shop_address.line2 = form.cleaned_data.get("line2")
-                shop_address.city = form.cleaned_data.get("city")
-                shop_address.province = form.cleaned_data.get("province")
-                shop_address.postal_code = form.cleaned_data.get("postal_code")
-                shop_address.save()
-            else:
-                shop_address = Address.objects.create(
-                    user=user,
-                    line1=form.cleaned_data.get("line1"),
-                    line2=form.cleaned_data.get("line2"),
-                    city=form.cleaned_data.get("city"),
-                    province=form.cleaned_data.get("province"),
-                    postal_code=form.cleaned_data.get("postal_code"),
-                )
-                shop_address.save()
+            shop_address, created = Address.objects.get_or_create(user=user)
+            shop_address.line1 = form.cleaned_data.get("line1")
+            shop_address.line2 = form.cleaned_data.get("line2")
+            shop_address.city = form.cleaned_data.get("city")
+            shop_address.province = form.cleaned_data.get("province")
+            shop_address.postal_code = form.cleaned_data.get("postal_code")
+            shop_address.save()
 
-            if hasattr(user, 'user_links'):
-                social_links = SocialMediaLink.objects.get(user=user)
-                social_links.instagram = form.cleaned_data.get("instagram")
-                social_links.facebook = form.cleaned_data.get("facebook")
-                social_links.twitter = form.cleaned_data.get("twitter")
-                social_links.save()
-            else:
-                social_links = SocialMediaLink.objects.create(
-                    user=user,
-                    instagram=form.cleaned_data.get("instagram"),
-                    facebook=form.cleaned_data.get("facebook"),
-                    twitter=form.cleaned_data.get("twitter"),
-                )
-                social_links.save()
+            social_links, created = SocialMediaLink.objects.get_or_create(user=user)
+            social_links.instagram = form.cleaned_data.get("instagram")
+            social_links.facebook = form.cleaned_data.get("facebook")
+            social_links.twitter = form.cleaned_data.get("twitter")
+            social_links.save()
 
             # api_key = "xnd_development_L8LFCGlEVFmq8qcCLZKNoVnq303nlkB47u5W2TrknkwioknAn4H0KOQcFfbm7"
             # xendit_instance = Xendit(api_key=api_key)
@@ -187,16 +159,9 @@ def registerShopLogo(request):
     if request.method == 'POST':
         form = ShopLogoForm(request.POST, request.FILES)
         if form.is_valid():
-            if hasattr(shop, 'logo_shop'):
-                shop_logo = ShopLogo.objects.get(shop=shop)
-                shop_logo.logo = form.cleaned_data.get('logo')
-                shop_logo.save()
-            else:
-                shop_logo = ShopLogo.objects.create(
-                    shop=shop,
-                    logo=form.cleaned_data.get('logo')
-                )
-                shop_logo.save()
+            shop_logo, created = ShopLogo.objects.get_or_create(shop=shop)
+            shop_logo.logo = form.cleaned_data.get('logo')
+            shop_logo.save()
             return redirect('accounts:merchant-add-settings')
 
     context = {'form':form, 'shop':shop}
@@ -243,36 +208,26 @@ def registerShopSettings(request):
     if request.method == 'POST':
         form = ShopSettingsForm(request.POST)
         if form.is_valid():
-            if hasattr(shop, 'shop_general_settings'):
-                shop_settings = ShopGeneralSettings.objects.get(shop=shop)
-                shop_settings.shop_cod=form.cleaned_data.get('shop_cod')
-                shop_settings.delivery_days=form.cleaned_data.get('delivery_days')
-                shop_settings.delivery_from_hour=form.cleaned_data.get('from_hour')
-                shop_settings.delivery_to_hour=form.cleaned_data.get('to_hour')
-                if 'radio-cutoff-time' in request.POST:
-                    shop_settings.cutoff_time=form.cleaned_data.get('cutoff_time')
-                    if shop_settings.cutoff_days != None:
-                        shop_settings.cutoff_days = None
-                elif 'radio-cutoff-day' in request.POST:
-                    shop_settings.cutoff_days=form.cleaned_data.get('cutoff_days')
-                    if shop_settings.cutoff_time != None:
-                        shop_settings.cutoff_time = None
-                shop_settings.save()
-            else:
-                shop_settings = ShopGeneralSettings.objects.create(
-                    shop=shop,
-                    shop_cod=form.cleaned_data.get('shop_cod'),
-                    delivery_days=form.cleaned_data.get('delivery_days'),
-                    delivery_from_hour=form.cleaned_data.get('from_hour'),
-                    delivery_to_hour=form.cleaned_data.get('to_hour')
-                )
-                if 'radio-cutoff-time' in request.POST:
-                    shop_settings.cutoff_time=form.cleaned_data.get('cutoff_time')
-                elif 'radio-cutoff-day' in request.POST:
-                    shop_settings.cutoff_days=form.cleaned_data.get('cutoff_days')
-                shop_settings.save()
-            return redirect('accounts:merchant-add-delivery')
+            shop_settings, created = ShopGeneralSettings.objects.get_or_create(shop=shop)
+            shop_settings.delivery_days=form.cleaned_data.get('delivery_days')
+            shop_settings.delivery_from_hour=form.cleaned_data.get('from_hour')
+            shop_settings.delivery_to_hour=form.cleaned_data.get('to_hour')
 
+            radio_cutoff_time = request.POST.get("radio-cutoff-time", None)
+            radio_cutoff_days = request.POST.get("radio-cutoff-days", None)
+
+            if radio_cutoff_time is not None:
+                shop_settings.cutoff_time=form.cleaned_data.get('cutoff_time')
+                shop_settings.cutoff_days=None
+            elif radio_cutoff_days is not None:
+                shop_settings.cutoff_days=form.cleaned_data.get('cutoff_days')
+                shop_settings.cutoff_time=None
+
+            if 'shop_cod' in request.POST:
+                shop_settings.shop_cod=form.cleaned_data.get('shop_cod')
+
+            shop_settings.save()
+        return redirect('accounts:merchant-add-delivery')
     context = {'form':form, 'selected_dates':selected_dates, 'selected_radio':selected_radio}
     return render(request, 'accounts/add-shop-settings.html', context)
 
@@ -280,10 +235,12 @@ def registerShopSettings(request):
 @allowed_users(allowed_roles=[User.Types.MERCHANT, User.Types.ADMIN])
 def registerShopDeliveries(request):
     shop = ShopInformation.objects.get(user=request.user)
+    use_same_address = False
     
     if hasattr(shop, 'shop_delivery_settings'):
         form = DeliverySettingsForm(initial={
             'seller_books': shop.shop_delivery_settings.seller_books,
+            'shop_delivery_fees': shop.shop_delivery_fees,
             'buyer_books': shop.shop_delivery_settings.buyer_books,
             'buyer_picks_up': shop.shop_delivery_settings.buyer_picks_up,
             'line1': shop.shop_delivery_settings.line1,
@@ -292,44 +249,51 @@ def registerShopDeliveries(request):
             'province': shop.shop_delivery_settings.province,
             'postal_code': shop.shop_delivery_settings.postal_code
         })
+        if shop.shop_delivery_settings.line1 == shop.user.user_address.line1:
+            use_same_address = True
     else:
         form = DeliverySettingsForm()
 
     if request.method == 'POST':
-        form = ShopSettingsForm(request.POST)
+        form = DeliverySettingsForm(request.POST)
         if form.is_valid():
-            if hasattr(shop, 'shop_delivery_settings'):
-                shop_settings = ShopGeneralSettings.objects.get(shop=shop)
-                shop_settings.seller_books = form.cleaned_data.get('seller_books')
-                shop_settings.buyer_books = form.cleaned_data.get('buyer_books')
-                shop_settings.buyer_picks_up = form.cleaned_data.get('buyer_picks_up')
-                shop_settings.line1 = form.cleaned_data.get('line1')
-                shop_settings.line2 = form.cleaned_data.get('line2')
-                shop_settings.city = form.cleaned_data.get('city')
-                shop_settings.province = form.cleaned_data.get('province')
-                shop_settings.postal_code = form.cleaned_data.get('postal_code')
-                shop_settings.save()
+            shop_delivery_settings, created = ShopDeliverySettings.objects.get_or_create(shop=shop)
+            if 'seller_books' in request.POST:
+                shop_delivery_settings.seller_books = True
+                shop.shop_delivery_fees = form.clean_delivery_fees()
+                shop.save()
             else:
-                shop_settings = ShopGeneralSettings.objects.create(
-                    shop=shop,
-                    seller_books=form.cleaned_data.get('seller_books'),
-                    buyer_books=form.cleaned_data.get('buyer_books'),
-                    buyer_picks_up=form.cleaned_data.get('buyer_picks_up'),
-                )
+                shop_delivery_settings.seller_books = False
+                shop.shop_delivery_fees = None
+                shop.save()
+            
+            if 'buyer_books' in request.POST:
+                shop_delivery_settings.buyer_books = True
+            else:
+                shop_delivery_settings.buyer_books = False
 
-                if form.cleaned_data.get('buyer_books') == True or form.cleaned_data.get('buyer_picks_up') == True:
-                    shop_settings.line1 = form.cleaned_data.get('line1')
-                    shop_settings.line2 = form.cleaned_data.get('line2')
-                    shop_settings.city = form.cleaned_data.get('city')
-                    shop_settings.province = form.cleaned_data.get('province')
-                    shop_settings.postal_code = form.cleaned_data.get('postal_code')
-                elif form.cleaned_data.get('seller_books') == True:
-                    shop.delivery_fees = form.cleaned_data.get('delivery_fees')
+            if 'buyer_picks_up' in request.POST:
+                shop_delivery_settings.buyer_picks_up = True
+            else:
+                shop_delivery_settings.buyer_picks_up = False
 
-                shop_settings.save()
-            return redirect('accounts:merchant-add-payment')
+            if form.cleaned_data.get('buyer_books') == True or form.cleaned_data.get('buyer_picks_up') == True:
+                if 'use_shop_address' in request.POST:
+                    shop_delivery_settings.line1 = shop.user.user_address.line1
+                    shop_delivery_settings.line2 = shop.user.user_address.line2
+                    shop_delivery_settings.city = shop.user.user_address.city
+                    shop_delivery_settings.province = shop.user.user_address.province
+                    shop_delivery_settings.postal_code = shop.user.user_address.postal_code
+                else:    
+                    shop_delivery_settings.line1 = form.cleaned_data.get('line1')
+                    shop_delivery_settings.line2 = form.cleaned_data.get('line2')
+                    shop_delivery_settings.city = form.cleaned_data.get('city')
+                    shop_delivery_settings.province = form.cleaned_data.get('province')
+                    shop_delivery_settings.postal_code = form.cleaned_data.get('postal_code')
+            shop_delivery_settings.save()
+        return redirect('accounts:merchant-add-payment')
 
-    context = {'form':form, 'shop':shop}
+    context = {'form':form, 'use_same_address':use_same_address}
     return render(request, 'accounts/add-shop-deliveries.html', context)
 
 @login_required(login_url='accounts:merchant-login')
@@ -349,20 +313,11 @@ def registerShopAccount(request):
     if request.method == 'POST':
         form = ShopAccountForm(request.POST)
         if form.is_valid():
-            if hasattr(user, 'user_account'):
-                bank_info = BankAccount.objects.get(user=user)
-                bank_info.bank_name = form.cleaned_data.get('bank_name')
-                bank_info.cardholder_name = form.cleaned_data.get('cardholder_name')
-                bank_info.account_number = form.cleaned_data.get('account_number')
-                bank_info.save()
-            else:
-                bank_info=BankAccount.objects.create(
-                    user=user,
-                    bank_name=form.cleaned_data.get("bank_name"),
-                    cardholder_name=form.cleaned_data.get("cardholder_name"),
-                    account_number=form.cleaned_data.get("account_number")
-                )
-                bank_info.save()
+            bank_info, created = BankAccount.objects.get_or_create(user=user)
+            bank_info.bank_name = form.cleaned_data.get('bank_name')
+            bank_info.cardholder_name = form.cleaned_data.get('cardholder_name')
+            bank_info.account_number = form.cleaned_data.get('account_number')
+            bank_info.save()
             
             messages.success(request, 'Profile successfully registered!')
             return redirect('products:products')

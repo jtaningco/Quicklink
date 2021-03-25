@@ -124,7 +124,7 @@ class ShopLogoForm(ModelForm):
 class ShopSettingsForm(forms.Form):
     ## Shop COD
     # shop.shop_general_settings.shop_cod
-    shop_cod=forms.BooleanField()
+    shop_cod=forms.BooleanField(required=False)
 
     ## Order Cut-Off
     # shop.shop_general_settings.cutoff_days
@@ -136,11 +136,11 @@ class ShopSettingsForm(forms.Form):
     )
     
     # shop.shop_general_settings.cutoff_time
-    cutoff_time = forms.CharField(label='',
-        required=False,
-        widget=forms.fields.TextInput(attrs={
-        'class':'input default disabled subtitle',
-        'placeholder': '1:00 PM'}),
+    cutoff_time = forms.ChoiceField(widget=forms.Select(
+        attrs={'class': 'wide input default subtitle'}),
+        choices=ShopGeneralSettings.HOUR_OF_DAY_24,
+        initial=ShopGeneralSettings.HOUR_OF_DAY_24[16],
+        required=False
     )
 
     ## Delivery Schedule
@@ -154,52 +154,73 @@ class ShopSettingsForm(forms.Form):
 
     # shop.shop_general_settings.delivery_from_hour
     from_hour = forms.ChoiceField(widget=forms.Select(
-        attrs={'class': 'wide input default', 
-        'placeholder': '12:00PM'}),
+        attrs={'class': 'wide input default subtitle'}),
         choices=ShopGeneralSettings.HOUR_OF_DAY_24,
+        initial=ShopGeneralSettings.HOUR_OF_DAY_24[12]
     )
 
     # shop.shop_general_settings.delivery_from_hour
     to_hour = forms.ChoiceField(widget=forms.Select(
-        attrs={'class': 'wide input default', 
-        'placeholder': '6:00PM'}),
+        attrs={'class': 'wide input default subtitle'}),
         choices=ShopGeneralSettings.HOUR_OF_DAY_24,
+        initial=ShopGeneralSettings.HOUR_OF_DAY_24[18]
     )
 
-class DeliverySettingsForm(ModelForm):
-    class Meta:
-        model = ShopDeliverySettings
-        fields = [
-            'seller_books', 
-            'buyer_books', 
-            'buyer_picks_up',
-            'line1',
-            'line2',
-            'city',
-            'province',
-            'postal_code'
-        ]
+class DeliverySettingsForm(forms.Form):
+    # shop.shop_delivery_settings
+    seller_books=forms.BooleanField(required=False,
+    widget=forms.CheckboxInput())
+    buyer_books=forms.BooleanField(required=False,
+    widget=forms.CheckboxInput())
+    buyer_picks_up=forms.BooleanField(required=False,
+    widget=forms.CheckboxInput())
 
-        widgets = {
-            'line1': forms.fields.TextInput(attrs={
-                'class': 'input default', 
-                'placeholder': 'Address Line 1'}),
-            'line2': forms.fields.TextInput(attrs={
-                'class':'input default',
-                'placeholder': 'Cardholder Name'}),
-            'city': forms.Select(attrs={
-                'class': 'wide input default', 
-                'placeholder': 'City'}),
-            'province': forms.Select(attrs={
-                'class': 'wide input default', 
-                'placeholder': 'Province'}),
-            'postal_code': forms.fields.TextInput(attrs={
-                'class': 'input default', 
-                'placeholder': 'Postal Code'})
-        }
+    # shop.info_shop.shop_delivery_fees
+    shop_delivery_fees = forms.CharField(label='',
+        required=False,
+        widget=forms.fields.TextInput(attrs={
+        'class':'input default subtitle',
+        'placeholder': 'Fixed Delivery Fees'}),
+    )
 
-    def __init__(self, *args, **kwargs):
-        super(DeliverySettingsForm, self).__init__(*args, **kwargs)
+    # shop.shop_delivery_settings
+    line1=forms.CharField(label='', required=False,
+                        widget=forms.fields.TextInput(attrs={
+                        'class': 'input default', 
+                        'placeholder': 'Address Line 1'}))
+    line2=forms.CharField(label='', required=False,
+                        widget=forms.fields.TextInput(attrs={
+                        'class': 'input default', 
+                        'placeholder': 'Address Line 2'}))
+    city=forms.ChoiceField(label='', required=False,
+                        widget=forms.Select(attrs={
+                        'class': 'wide input default', 
+                        'placeholder': 'City'}),
+                        choices=Address.CITIES)
+    province=forms.ChoiceField(label='', required=False,
+                        widget=forms.Select(attrs={
+                        'class': 'wide input default', 
+                        'placeholder': 'Province'}),
+                        choices=Address.PROVINCES)
+    postal_code=forms.CharField(label='', required=False,
+                        widget=forms.fields.TextInput(attrs={
+                        'class': 'input default', 
+                        'placeholder': 'Postal Code'}))
+
+    def clean_delivery_fees(self):
+        fees = self.cleaned_data['shop_delivery_fees']
+        try:
+            response = fees.split()
+            numbers = []
+            for num in response:
+                try:
+                    if num.isdigit() or isinstance(float(num), float):
+                        numbers.append(num)
+                except: continue
+            fees = float(''.join(numbers))
+        except:    
+            raise forms.ValidationError(_('Invalid format in delivery fees.'), code='invalid_format')
+        return fees
 
 class ShopAccountForm(ModelForm):
     class Meta:

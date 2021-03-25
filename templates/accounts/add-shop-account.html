@@ -12,10 +12,14 @@
         <div class="registration-header">
             <div class="pagination">
                 <a href="{% url 'accounts:merchant-add-shop' %}" class="pagination__circle body-big bold">1</a>
-                <div class="pagination__line"></div>
+                    <div class="pagination__line"></div>
                 <a href="{% url 'accounts:merchant-add-logo' %}" class="pagination__circle body-big bold">2</a>
-                <div class="pagination__line"></div>
-                <a href="{% url 'accounts:merchant-add-payment' %}" class="pagination__circle pagination__circle--active body-big bold">3</a>
+                    <div class="pagination__line"></div>
+                <a href="{% url 'accounts:merchant-add-settings' %}" class="pagination__circle  body-big bold">3</a>
+                    <div class="pagination__line"></div>
+                <a href="{% url 'accounts:merchant-add-delivery' %}" class="pagination__circle body-big bold">4</a>
+                    <div class="pagination__line"></div>
+                <a href="{% url 'accounts:merchant-add-payment' %}" class="pagination__circle pagination__circle--active body-big bold">5</a>
             </div>
             <h1 class="bold" style="color: var(--primary-main); padding: 0.5rem 0; ">Where do you want to receive your money?</h1>
             <h2 class="body" style="color: var(--muted-default);">This won’t affect the payment options provided for your customers. This is simply where you want us to deposit your revenue to. You can always change this in your settings.</h2>
@@ -39,8 +43,8 @@
             <div id="form-errors">{{ form.errors.as_json }}</div>
 
             <div class="registration-content" style="margin-top: 2rem;">
-                <button type="submit" name="next" style="margin: 0.5rem 0; width: 100%;" class="primary-btn primary-btn-link">Next</button>
-                <a href="{% url 'accounts:merchant-add-logo' %}" class="btn__back" style="margin: 0;"><button type="button" class="secondary-btn secondary-btn-link" style="width: 100%;">Back</button></a>
+                <button type="submit" name="next" style="margin: 0.5rem 0; width: 100%;" class="primary-btn disabled subtitle" id="js-save-btn">Save Details</button>
+                <a href="{% url 'accounts:merchant-add-delivery' %}" class="btn__back" style="margin: 0;"><button type="button" class="secondary-btn subtitle" style="width: 100%;">Back</button></a>
             </div>
         </form>
 {% endblock %}
@@ -48,11 +52,28 @@
 {% block scriptsBody %}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-nice-select/1.1.0/js/jquery.nice-select.min.js" integrity="sha512-NqYds8su6jivy1/WLoW8x1tZMRD7/1ZfhWG/jcRQLOzV1k1rIODCpMgoBnar5QXshKJGV7vi0LXLNXPoFsM5Zg==" crossorigin="anonymous"></script>
     <script>
+        function enableButton() {
+            if (!$("#id_account_number").val()) {
+                $("#js-save-btn").addClass('disabled');
+            } else {
+                $("#js-save-btn").removeClass('disabled');
+            }
+        }
+
         $(document).ready(function() {
             $('#id_bank_name').niceSelect();
+            
+            enableButton();
 
-            if ($("#id_bank_name").val !== "") {
+            $(":input").each(function() {
+                $(this).change(enableButton);
+                $(this).keypress(enableButton);
+            });
+
+            if ($("#id_bank_name").val !== "") { 
                 $("#js-display-inputs").show();
+            } else { 
+                $("#js-display-inputs").hide();
             }
 
             $("#id_bank_name").change(function(){
