@@ -1,0 +1,19 @@
+{% include 'marketplace/navbar.html' %}
+{% load static %}
+
+
+{% include 'main.html' %}
+
+{% block marketplace %}
+<div class="merchant-list" style="flex-direction: column">
+    <div class="merchant-card">
+        {% block merchant-card-info %}
+
+        {% endblock %}
+
+    </div>
+</div>
+
+
+{% endblock %}
+{% endblock %}
