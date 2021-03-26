@@ -28,13 +28,13 @@ body {
 :root {
   /* COLORS */
   --primary-main: #798CF2;
-  --primary-alt: #0A28BC;
-  --primary-light: #A9B8FF;
-  --primary-pressed: #5569D3;
+  --primary-alt: #0A28BCCC;
+  --primary-light: #A9B8FFCC;
+  --primary-pressed: #5569D3CC;
 
-  --secondary-main: #FFAA2D;
-  --secondary-alt: #FF8A00;
-  --secondary-light: #FED9A4;
+  --secondary-main: #FFAA2DCC;
+  --secondary-alt: #FF8A00CC;
+  --secondary-light: #FED9A4CC;
 
   --muted-default: #575757;
   --muted-dark: #2C2C2C;
@@ -303,16 +303,11 @@ textarea {
 
 .searchbar:focus, .searchbar:hover { outline: none; }
 
-.select {
-  min-width: 120px;
-  max-width: auto;
-  height: 26px;
-  background: transparent;
-  border: none;
-  outline: none;
+/* NICE SELECT STYLE */
+.nice-select {
+  display: flex; justify-content: flex-start; align-items: center; align-content: center;
 }
 
-/* NICE SELECT STYLE */
 .nice-select .list {
   max-height: 200px;
   overflow: hidden;
@@ -323,17 +318,24 @@ textarea {
   max-height: 200px;
   overflow-y: scroll;
 }
+
+.nice-select .option {
+  font-weight: 700;
+}
+
 .nice-select .option:hover, .nice-select .option.focus, .nice-select .option.selected.focus {
   color: var(--primary-main);
   background: var(--primary-light);
 }
 
-select:disabled, select.disabled, .nice-select.disabled {
+.nice-select.disabled {
   color: var(--muted-light);
   background-color: #F8F8F8;
   border: 1px solid var(--muted-lighter);
   pointer-events: none; 
   user-select: none;
+} .nice-select.disabled:after {
+  border-color: var(--muted-lighter) 
 }
 
 /* CONTROLS */

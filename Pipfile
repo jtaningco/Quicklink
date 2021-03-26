@@ -18,6 +18,7 @@ django-cors-headers = "3.7.0"
 django-allauth = "0.44.0"
 django-email-verification = "0.1.0"
 django-imagekit = "*"
+pyisemail = "*"
 
 [dev-packages]
 

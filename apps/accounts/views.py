@@ -48,55 +48,35 @@ def email_verification(request, user_id):
     user = User.objects.get(id=user_id)
     if request.is_ajax and request.method == "POST":
         send_email(user)
-
     context = {'user': user}
     return render(request, 'accounts/email-verification.html', context)
 
 @csrf_exempt
 @unauthenticated_merchant
 def email_confirmation(request):
-    if request.is_ajax:
+    if request.POST and request.is_ajax:
         userId = request.POST.get('userId')
         user = User.objects.get(id=userId)
         if request.POST.get('message') == 'success':
             login(request, user, backend='django.contrib.auth.backends.ModelBackend')
-            return redirect('/user/merchant/shop/')
+            return redirect('accounts:merchant-add-shop')
         if request.POST.get('message') == 'failure':
             send_email(user)
-    return render(request, 'accounts/email-confirmation.html', context)
+    return JsonResponse(request.data, safe=False)
 
 @login_required(login_url='accounts:merchant-login')
 @allowed_users(allowed_roles=[User.Types.MERCHANT, User.Types.ADMIN])
 def registerShopInformation(request):
     user = request.user
-
-    if hasattr(user, 'info_shop'):
-        shop = user.info_shop
-        form = ShopInformationForm(initial={
-            'shop_name': shop.shop_name,
-            'shop_contact_number': shop.shop_contact_number,
-            'shop_username': shop.shop_username,
-            'shop_email': shop.shop_email,
-            'line1' : user.user_address.line1,
-            'line2' : user.user_address.line2,
-            'city' : user.user_address.city,
-            'province' : user.user_address.province,
-            'postal_code' : user.user_address.postal_code,
-            'instagram' : user.user_links.instagram,
-            'facebook' : user.user_links.facebook,
-            'twitter' : user.user_links.twitter,
-        })
-    else:
-        form = ShopInformationForm()
-    
     if request.method == 'POST':
         form = ShopInformationForm(request.POST)
         if form.is_valid():
+            validated_data = form.get_validated_data()
             shop_info, created = ShopInformation.objects.get_or_create(user=user)
-            shop_info.shop_name = form.cleaned_data.get("shop_name")
-            shop_info.shop_contact_number = form.cleaned_data.get("shop_contact_number").strip()
-            shop_info.shop_username = form.cleaned_data.get("shop_username")
-            shop_info.shop_email = form.cleaned_data.get("shop_email")
+            shop_info.shop_name = validated_data.get("shop_name")
+            shop_info.shop_contact_number = validated_data.get("shop_contact_number")
+            shop_info.shop_username = validated_data.get("shop_username")
+            shop_info.shop_email = validated_data.get("shop_email")
             shop_info.save()
 
             shop_address, created = Address.objects.get_or_create(user=user)
@@ -134,6 +114,25 @@ def registerShopInformation(request):
             # )
 
             return redirect('accounts:merchant-add-logo')
+    else:
+        if hasattr(user, 'shop_info'):
+            shop = user.shop_info
+            form = ShopInformationForm(initial={
+                'shop_name': shop.shop_name,
+                'shop_contact_number': shop.shop_contact_number,
+                'shop_username': shop.shop_username,
+                'shop_email': shop.shop_email,
+                'line1' : user.user_address.line1,
+                'line2' : user.user_address.line2,
+                'city' : user.user_address.city,
+                'province' : user.user_address.province,
+                'postal_code' : user.user_address.postal_code,
+                'instagram' : user.user_links.instagram,
+                'facebook' : user.user_links.facebook,
+                'twitter' : user.user_links.twitter,
+            })
+        else:
+            form = ShopInformationForm()
 
     context = {'form':form}
     return render(request, 'accounts/add-shop-information.html', context)
@@ -150,9 +149,8 @@ def accountCallback(request, user_id):
 def registerShopLogo(request):
     shop = ShopInformation.objects.get(user=request.user)
     
-    if hasattr(shop, 'logo_shop'):
-        form = ShopLogoForm(initial={'logo':shop.logo_shop.logo})
-        print(shop.logo_shop.logo)
+    if hasattr(shop, 'shop_logo'):
+        form = ShopLogoForm(initial={'logo':shop.shop_logo.logo})
     else:
         form = ShopLogoForm()
 
@@ -210,6 +208,8 @@ def registerShopSettings(request):
         if form.is_valid():
             shop_settings, created = ShopGeneralSettings.objects.get_or_create(shop=shop)
             shop_settings.delivery_days=form.cleaned_data.get('delivery_days')
+            print(shop_settings.delivery_days)
+            print(WEEKDAYS.get_selected_values(shop_settings.delivery_days))
             shop_settings.delivery_from_hour=form.cleaned_data.get('from_hour')
             shop_settings.delivery_to_hour=form.cleaned_data.get('to_hour')
 
@@ -335,20 +335,17 @@ def loginMerchant(request):
 
         if user is not None:
             login(request, user)
-            if not hasattr(user, 'info_shop'):
-                return redirect('accounts:merchant-add-shop')
-            else:
-                return redirect('products:products')
+            return redirect('products:products')
         else:
             messages.info(request, "Email or password is incorrect.")
-            return redirect ('accounts:merchant-login')
+            return redirect ('accounts:login')
     
     context = {}
     return render(request, 'accounts/merchant-login.html', context)
 
 def logout_user(request):
     logout(request)
-    return redirect('accounts:merchant-login')
+    return redirect('accounts:login')
 
 # @unauthenticated_customer
 # def registerCustomer(request):

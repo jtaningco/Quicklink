@@ -1,9 +1,12 @@
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from django import forms
-from django.forms import ModelForm
 from django.utils.translation import gettext_lazy as _
+ 
+from django.core.validators import URLValidator
+from pyisemail import is_email
 
 from apps.accounts.models import *
+from apps.accounts.validators import *
 
 # Create User
 class CreateUserForm(UserCreationForm):
@@ -77,45 +80,93 @@ class ShopInformationForm(forms.Form):
     # shop_address
     line1=forms.CharField(label='', 
                         widget=forms.fields.TextInput(attrs={
-                        'class': 'input default', 
+                        'class': 'input default subtitle', 
                         'placeholder': 'Address Line 1'}))
     line2=forms.CharField(label='', 
                         widget=forms.fields.TextInput(attrs={
-                        'class': 'input default', 
+                        'class': 'input default subtitle', 
                         'placeholder': 'Address Line 2'}))
     city=forms.ChoiceField(label='', 
                         widget=forms.Select(attrs={
-                        'class': 'wide input default', 
+                        'class': 'wide input default subtitle', 
                         'placeholder': 'City'}),
                         choices=Address.CITIES)
     province=forms.ChoiceField(label='', 
                         widget=forms.Select(attrs={
-                        'class': 'wide input default', 
+                        'class': 'wide input default subtitle', 
                         'placeholder': 'Province'}),
                         choices=Address.PROVINCES)
     postal_code=forms.CharField(label='', 
                         widget=forms.fields.TextInput(attrs={
-                        'class': 'input default', 
+                        'class': 'input default subtitle', 
                         'placeholder': 'Postal Code'}))
     
     # shop_links
     instagram=forms.URLField(label='',
                         widget=forms.fields.TextInput(attrs={
-                        'class': 'input default', 
+                        'class': 'input default subtitle', 
                         'placeholder': 'Instagram Link'}),
                         required = False)
     facebook=forms.URLField(label='',
                         widget=forms.fields.TextInput(attrs={
-                        'class': 'input default', 
+                        'class': 'input default subtitle', 
                         'placeholder': 'Facebook Link'}),
                         required = False)
     twitter=forms.URLField(label='',
                         widget=forms.fields.TextInput(attrs={
-                        'class': 'input default', 
+                        'class': 'input default subtitle', 
                         'placeholder': 'Twitter Link'}),
                         required = False)
 
-class ShopLogoForm(ModelForm):
+    def validate_shop_name(self):
+        cleaned_data = super().clean()
+        name = cleaned_data.get("shop_name")
+        if len(list(name)) > 30:
+            raise forms.ValidationError(_('Shop name should be no more than 30 characters.'), code='character_length')
+        return name
+
+    def validate_shop_contact_number(self):
+        cleaned_data = super().clean()
+        contact_number = cleaned_data.get("shop_contact_number")
+        print("Contact Number: ", contact_number)
+        contact_number_list = contact_number.strip().split()
+        if len(contact_number_list) > 12:
+            raise forms.ValidationError(_('Please input a valid contact number.'), code='character_length')
+        return contact_number
+
+    def validate_shop_username(self):
+        cleaned_data = super().clean()
+        username = cleaned_data.get("shop_username")
+        url_form_field = forms.URLField()
+        dev_url = "http://127.0.0.1:8000/" + str(username) + "/"
+        prod_url = "https://app.quicklink.ph/" + str(username) + "/"
+        try:
+            try:
+                url = url_form_field.clean(dev_url)
+            except:
+                url = url_form_field.clean(prod_url)
+        except:
+            raise forms.ValidationError(_('Only digits (0-9), letters (A-Z, a-z), and a few special characters ("-", ".", "_", "~") are accepted for shop usernames.'), code='invalid_format')
+        return username
+
+    def validate_shop_email(self):
+        cleaned_data = super().clean()
+        email = cleaned_data.get("shop_email")
+        if is_email(email):
+            print("Email: ", email)
+        else:
+            raise forms.ValidationError(_('Email not found.'), code='invalid_email')
+        return email
+
+    def get_validated_data(self):
+        return {
+            'shop_name': self.validate_shop_name(),
+            'shop_contact_number': self.validate_shop_contact_number(),
+            'shop_username': self.validate_shop_username(),
+            'shop_email': self.validate_shop_email(),
+        }
+
+class ShopLogoForm(forms.ModelForm):
     class Meta:
         model = ShopLogo
         fields = ['logo']
@@ -146,11 +197,7 @@ class ShopSettingsForm(forms.Form):
     ## Delivery Schedule
     # shop.shop_general_settings.delivery_days
     delivery_days = forms.IntegerField(label='',
-        widget=BinaryWidget(choices=(
-        ('1', 'Monday'), ('2', 'Tuesday'), ('3', 'Wednesday'),
-        ('4', 'Thursday'), ('5', 'Friday'), ('6', 'Saturday'),
-        ('7', 'Sunday')
-    )))
+        widget=BinaryWidget(choices=list(WEEKDAYS)))
 
     # shop.shop_general_settings.delivery_from_hour
     from_hour = forms.ChoiceField(widget=forms.Select(
@@ -175,7 +222,7 @@ class DeliverySettingsForm(forms.Form):
     buyer_picks_up=forms.BooleanField(required=False,
     widget=forms.CheckboxInput())
 
-    # shop.info_shop.shop_delivery_fees
+    # shop.shop_info.shop_delivery_fees
     shop_delivery_fees = forms.CharField(label='',
         required=False,
         widget=forms.fields.TextInput(attrs={
@@ -222,7 +269,7 @@ class DeliverySettingsForm(forms.Form):
             raise forms.ValidationError(_('Invalid format in delivery fees.'), code='invalid_format')
         return fees
 
-class ShopAccountForm(ModelForm):
+class ShopAccountForm(forms.ModelForm):
     class Meta:
         model = BankAccount
         fields = ['bank_name', 'cardholder_name', 'account_number']
@@ -242,7 +289,7 @@ class ShopAccountForm(ModelForm):
     def __init__(self, *args, **kwargs):
         super(ShopAccountForm, self).__init__(*args, **kwargs)
 
-class CustomerInformationForm(ModelForm):
+class CustomerInformationForm(forms.ModelForm):
     # shop_links
     instagram=forms.URLField(label='',
                         widget=forms.fields.TextInput(attrs={
@@ -276,7 +323,7 @@ class CustomerInformationForm(ModelForm):
                 'placeholder': 'Username'}),
         }
 
-class CustomerAddressForm(ModelForm):
+class CustomerAddressForm(forms.ModelForm):
     class Meta:
         model = Address
         fields = ["line1",
@@ -313,7 +360,7 @@ class CustomerAddressForm(ModelForm):
             'province': Address.PROVINCES
         }
 
-class CustomerAccountForm(ModelForm):
+class CustomerAccountForm(forms.ModelForm):
     class Meta:
         model = BankAccount
         fields = ["bank_name",
@@ -336,7 +383,7 @@ class CustomerAccountForm(ModelForm):
                     'placeholder': '***'}),
         }
 
-class NotificationsForm(ModelForm):
+class NotificationsForm(forms.ModelForm):
     class Meta:
         model = Notification
         fields = ['sms', 'email']

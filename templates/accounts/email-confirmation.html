@@ -19,12 +19,12 @@
                 <h1 class="bold" style="color: var(--primary-main); padding: 0.25rem 0; ">Your email address has successfully been verified!</h1>
                 <p class="body" style="color: var(--muted-dark); margin-top: 0.5rem; text-align: center;">Welcome to Quicklink. We're glad to have you onboard!</h2>
             </div>
-            <button type="button" style="margin: 0.5rem 0; width: 100%;" id="js-proceed-btn" class="primary-btn primary-btn-link" data-id="{{ user.id }}">Proceed</button>
+            <button type="submit" style="margin: 0.5rem 0; width: 100%;" id="js-proceed-btn" class="primary-btn primary-btn-link" data-id="{{ user.id }}">Proceed</button>
         {% else %}
                 <h1 class="bold" style="color: var(--muted-dark); padding: 0.25rem 0; ">Uh oh! Something went wrong.</h1>
                 <p class="body" style="color: var(--muted-dark); margin-top: 0.5rem; text-align: center;">You'll need to get a new verification link by hitting the button below.</h2>
             </div>
-            <button type="button" style="margin: 0.5rem 0; width: 100%;" id="js-resend-email-btn" class="primary-btn primary-btn-link" data-id="{{ user.id }}">Resend Email</button>
+            <button type="submit" style="margin: 0.5rem 0; width: 100%;" id="js-resend-email-btn" class="primary-btn primary-btn-link" data-id="{{ user.id }}">Resend Email</button>
         {% endif %}
     </div>
 {% endblock %}
@@ -33,13 +33,13 @@
     {% if success %}
         <script>
             var proceedBtn = document.getElementById('js-proceed-btn');
-            var current_url = window.location.href.split('/verification/')[0] + '/user/merchant/confirmation/';
-            console.log(current_url)
+            var current_url = '/user/merchant/confirmation/';
+            var next_url = '/user/merchant/shop/';
 
-            proceedBtn.addEventListener('click', function() {
-                var userId = proceedBtn.dataset.id
-                console.log(userId)
+            proceedBtn.addEventListener('click', function(e) {
+                e.preventDefault();
                 
+                var userId = proceedBtn.dataset.id
                 $.ajax({
                     url: current_url,
                     type: "POST",
@@ -50,23 +50,25 @@
                     error:function (xhr, textStatus, thrownError){
                         console.log("Can't send message data.", xhr, textStatus, thrownError);
                     }
-                });
-            })
+                }).then(
+                    setTimeout(function() {
+                        window.location.href = next_url
+                    }, 2000)
+                );
+            });
         </script>
     {% else %}
         <script>
-            const csrftoken = getToken('csrftoken');
-            
             var resendEmailBtn = document.getElementById('js-resend-email-btn');
-            var current_url = window.location.href.split('/verification/')[0] + '/user/merchant/confirmation/';
-            console.log(current_url)
+            // var current_url = window.location.href.split('/verification/')[0] + '/user/merchant/confirmation/';
+            var current_url = '/user/merchant/confirmation/';
 
-            resendEmailBtn.addEventListener('click', function() {
+            resendEmailBtn.addEventListener('click', function(e) {
+                e.preventDefault();
                 var userId = resendEmailBtn.dataset.id
                 var timer = 30;
                 resendEmailBtn.innerHTML = "Resend Email (" + String(timer) + ")"
                 resendEmailBtn.classList.toggle('disabled');
-                console.log(userId)
 
                 $.ajax({
                     url: current_url,

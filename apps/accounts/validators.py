@@ -4,7 +4,7 @@ def only_int(value):
     try:
         value.isdigit()==True
     except:
-        raise ValidationError('This field only accepts numerical values.')
+        raise ValidationError(_('This field only accepts numerical values.'), code='invalid_format')
 
 def exp_date(value):
     try:
@@ -12,6 +12,7 @@ def exp_date(value):
         if x[0].isdigit()==True and x[1].isdigit()==True:
             pass
         else:
-            raise ValidationError('Please input in this format: MM/YY.')            
+            raise ValidationError(_('Please input in this format: MM/YY.'), code='invalid_format')
     except:
-        raise ValidationError('Please input in this format: MM/YY.')
+        raise ValidationError(_('Please input in this format: MM/YY.'), code='invalid_format')
+

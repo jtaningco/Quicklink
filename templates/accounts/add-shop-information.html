@@ -8,9 +8,7 @@
 {% endblock %}
 
 {% block scriptsHead %}
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.12/js/intlTelInput.min.js" integrity="sha512-OnkjbJ4TwPpgSmjXACCb5J4cJwi880VRe+vWpPDlr8M38/L3slN5uUAeOeWU2jN+4vN0gImCXFGdJmc0wO4Mig==" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.12/js/utils.js" integrity="sha512-bUcJxlqkiGA3cmoYPuZaLRsyc5ChG9APG4ajom2AXKSlBtOmx4kLV3c8uv/6uSz43FMjI4Q2QI21+D223rT76w==" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.12/js/utils.min.js" integrity="sha512-JtpGKUjQUqCJmgw3TOr8bkL8QqB8oCbofRU39xgDnRYTfIDvfg0gQs2efeKxBCdwSAP/h3CSqhn87+giWSsxjw==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/imask/6.0.7/imask.min.js" integrity="sha512-qCt/OTd55ilhuXLRNAp/G8uONXUrpFoDWsXDtyjV4wMbvh46dOEjvHZyWkvnffc6I2g/WHSKsaFUCm0RISxnzQ==" crossorigin="anonymous"></script>
 {% endblock %}
 
 {% block cardContent %}    
@@ -84,6 +82,7 @@
                 {{form.twitter}}
             </div>
 
+            <!-- To edit style, edit .errorlist (ul) and .errorlist li (each message) -->
             <div id="form-errors">{{ form.errors.as_json }}</div>
 
             <div class="registration-content">
@@ -93,6 +92,15 @@
 {% endblock %}
 
 {% block scriptsBody %}
+    <!-- iMask lightweight JS plugin -->
+    <script>
+        var contactNumberInput = document.getElementById('id_shop_contact_number');
+        var maskOptions = {
+            mask: '(+{63}) 000 000 0000'
+        };
+        var mask = IMask(contactNumberInput, maskOptions);
+    </script>
+
     <!-- Nice Select lightweight JQuery plugin -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-nice-select/1.1.0/js/jquery.nice-select.min.js" integrity="sha512-NqYds8su6jivy1/WLoW8x1tZMRD7/1ZfhWG/jcRQLOzV1k1rIODCpMgoBnar5QXshKJGV7vi0LXLNXPoFsM5Zg==" crossorigin="anonymous"></script>
     <script>

@@ -96,8 +96,8 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     def get_initials(self):
         initials = []
-        if hasattr(self, 'info_shop'):
-            for name in list(self.info_shop.shop_name.split(' ')):
+        if hasattr(self, 'shop_info'):
+            for name in list(self.shop_info.shop_name.split(' ')):
                 initials.append(name[0])
             return ''.join(initials)
         elif hasattr(self, 'info_customer'):
@@ -242,7 +242,7 @@ class Notification(models.Model):
 # Shop Information
 class ShopInformation(models.Model):
     user = models.OneToOneField(
-        User, related_name="info_shop", on_delete=models.CASCADE
+        User, related_name="shop_info", on_delete=models.CASCADE
     )
     shop_name = models.CharField(_("shop name"), null=True, max_length=30)
     shop_contact_number = models.CharField(_("contact number"), max_length=15, null=True)
@@ -331,7 +331,7 @@ class ShopGeneralSettings(models.Model):
     cutoff_time = models.CharField(max_length=10, null=True, blank=False)
 
     # Delivery days
-    delivery_days = models.PositiveIntegerField(choices=WEEKDAYS)
+    delivery_days = models.PositiveIntegerField(choices=WEEKDAYS, null=True, blank=False)
     delivery_everyday = models.BooleanField(_("everyday delivery"), null=True, default=False)
 
     # Delivery hours
@@ -416,7 +416,7 @@ class Avatar(ImageSpec):
 register.generator('account:avatar', Avatar)
 
 class ShopLogo(models.Model):
-    shop = models.OneToOneField(ShopInformation, related_name='logo_shop', on_delete=models.CASCADE, null=True, blank=True)
+    shop = models.OneToOneField(ShopInformation, related_name='shop_logo', on_delete=models.CASCADE, null=True, blank=True)
     logo = models.ImageField(upload_to='%Y/%m/%d/shop_logos', null=True, blank=True)
     logo_avatar = ImageSpecField(source='logo', processors=[ResizeToFit(16, 16)], format='JPEG', options={'quality': 75})
 

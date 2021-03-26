@@ -84,7 +84,7 @@
 .terms-of-use-wrapper {
     width: 100%;
     display: flex; justify-content: flex-start; align-items: center; align-content: center;
-    padding: 0.25rem 0;
+    padding: 0.5rem 0;
 }
 
 .terms-of-use-wrapper p {

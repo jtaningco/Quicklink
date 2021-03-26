@@ -127,12 +127,11 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-nice-select/1.1.0/js/jquery.nice-select.min.js" integrity="sha512-NqYds8su6jivy1/WLoW8x1tZMRD7/1ZfhWG/jcRQLOzV1k1rIODCpMgoBnar5QXshKJGV7vi0LXLNXPoFsM5Zg==" crossorigin="anonymous"></script>
     <script>
         $(document).ready(function() {
-            $('#id_cutoff_time').niceSelect();
+            $('#id_cutoff_time').prop('disabled', true).niceSelect();
             $('#id_from_hour').niceSelect();
             $('#id_to_hour').niceSelect();
 
             if ($('#js-cutoff-days').is(':checked')) { 
-                $('#id_cutoff_time').prop('disabled', true).niceSelect();
                 cutoffDaysInput.classList.remove('disabled');
             } else if ($('#js-cutoff-time').is(':checked')) {
                 $('#id_cutoff_time').prop('disabled', false).niceSelect('update');
@@ -180,15 +179,15 @@
                 listOfDays.push('Monday');
             } else if (i == 2) {
                 listOfDays.push('Tuesday');
-            } else if (i == 3) {
-                listOfDays.push('Wednesday');
             } else if (i == 4) {
+                listOfDays.push('Wednesday');
+            } else if (i == 8) {
                 listOfDays.push('Thursday');
-            } else if (i == 5) {
+            } else if (i == 16) {
                 listOfDays.push('Friday');
-            } else if (i == 6) {
+            } else if (i == 32) {
                 listOfDays.push('Saturday')
-            } else if (i == 7) {
+            } else if (i == 64) {
                 listOfDays.push('Sunday');
             }
         }
@@ -198,15 +197,15 @@
                 listOfDays = listOfDays.filter(e => e !== 'Monday');
             } else if (i == 2) {
                 listOfDays = listOfDays.filter(e => e !== 'Tuesday');
-            } else if (i == 3) {
-                listOfDays = listOfDays.filter(e => e !== 'Wednesday');
             } else if (i == 4) {
+                listOfDays = listOfDays.filter(e => e !== 'Wednesday');
+            } else if (i == 8) {
                 listOfDays = listOfDays.filter(e => e !== 'Thursday');
-            } else if (i == 5) {
+            } else if (i == 16) {
                 listOfDays = listOfDays.filter(e => e !== 'Friday');
-            } else if (i == 6) {
+            } else if (i == 32) {
                 listOfDays = listOfDays.filter(e => e !== 'Saturday');
-            } else if (i == 7) {
+            } else if (i == 64) {
                 listOfDays = listOfDays.filter(e => e !== 'Sunday');
             }
         }
@@ -309,7 +308,6 @@
     <!-- NOTY -->
     <script>
         var errors = $('#form-errors').text();
-        console.log(errors);
         var jsonErrors = JSON.parse(errors);
 
         var errorMessages = [];
