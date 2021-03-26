@@ -68,7 +68,7 @@ body {
 
 
 /* FONTS */
-h1, h2, h3, p, a, input, .body, .subtitle, .caption, .overline {
+h1, h2, h3, p, a, input, span, .body, .subtitle, .caption, .overline {
   font-family: 'Overpass', sans-serif;
   font-style: normal;
   font-weight: 400;
@@ -117,7 +117,7 @@ button:focus {
   outline: none;
 }
 
-.nav-link { font-size: 16px; letter-spacing: 0.025em; }
+.nav-link { text-decoration: none;  }
 
 .primary-btn {
   background: var(--primary-main);

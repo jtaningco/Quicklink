@@ -35,17 +35,16 @@
                 {% endif %}
                 <div class="profile__pic--settings" id="js-profile-modal">
                     <a href="#" class="profile__pic--settings__link">
-                        <div class="profile__pic--settings__option">My Account</div>
+                        <div class="profile__pic--settings__option bold">My Account</div>
                     </a>
                     <a href="{% url 'accounts:logout' %}" class="profile__pic--settings__link">
-                        <div class="profile__pic--settings__option logout">Logout</div>
+                        <div class="profile__pic--settings__option bold logout">Logout</div>
                     </a>
                 </div>
             </div>
         </div>
     {% endif %}
 
-    {% include 'quicklink/navbar.html' %}
     <main>
         {% block maincontent %}
         {% endblock %}

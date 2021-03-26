@@ -172,7 +172,7 @@ class BankAccount(models.Model):
         ("GrabPay", _("GrabPay")),
     ]
     
-    user = models.OneToOneField(User, related_name='user_account', on_delete=models.CASCADE, null=True, blank=True)
+    user = models.OneToOneField(User, related_name='user_account', on_delete=models.SET_NULL, null=True)
     bank_name = models.CharField(_("bank name"), choices=BANKS, null=True, max_length=55)
     cardholder_name = models.CharField(_("cardholder name"), null=True, max_length=155)
     account_number = models.CharField(_("account number"), null=True, max_length=55)

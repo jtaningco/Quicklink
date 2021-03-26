@@ -30,7 +30,9 @@
                 <div class="logo__upload__container success" id="js-logo-upload">
                         <img src="{{ form.logo.value.url }}" alt="User uploaded logo" class="logo__upload__file">
                 </div>
-                <p class="logo__upload__text logo__upload__link" style="text-align: center;" id="js-browse-files">Replace image</p>
+                <div class="logo__caption logo__upload__text" id="js-browse-files-hidden">
+                    <span class="logo__upload__link" style="text-align: center;">Replace image</span>
+                </div>
             {% else %}   
                 <div class="logo__upload__container" id="js-logo-upload">
                     <img src="https://ik.imagekit.io/ripzjge77zz/Quicklink_App/Merchant/Account_Creation/icons/u_image_XucX2a74QNx.svg" alt="Image Icon" class="logo__upload__icon">
@@ -112,8 +114,6 @@
                 fileReader.readAsDataURL(file);
                 var files = [file]
                 fileInput.files = new FileListItems(files);
-
-                console.log(fileInput.files);
             } else {
                 alert("Supported image file formats are .jpg, .jpeg, .png only.");
             }
@@ -121,7 +121,7 @@
 
         window.onload = function() {
             function displayImage(file) {
-                fileURL = URL.createObjectURL(file)
+                fileURL = (window.URL ? URL : webkitURL).createObjectURL(file)
                 let imgTag = `<img src="${fileURL}" alt="User uploaded logo" class="logo__upload__file">`
                 dropArea.innerHTML = imgTag;
                 dropArea.classList.remove("active");

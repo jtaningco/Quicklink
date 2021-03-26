@@ -197,7 +197,11 @@ class ShopSettingsForm(forms.Form):
     ## Delivery Schedule
     # shop.shop_general_settings.delivery_days
     delivery_days = forms.IntegerField(label='',
-        widget=BinaryWidget(choices=list(WEEKDAYS)))
+        widget=BinaryWidget(choices=(
+        ('1', 'Monday'), ('2', 'Tuesday'), ('3', 'Wednesday'),
+        ('4', 'Thursday'), ('5', 'Friday'), ('6', 'Saturday'),
+        ('7', 'Sunday')
+    )))
 
     # shop.shop_general_settings.delivery_from_hour
     from_hour = forms.ChoiceField(widget=forms.Select(
@@ -233,25 +237,25 @@ class DeliverySettingsForm(forms.Form):
     # shop.shop_delivery_settings
     line1=forms.CharField(label='', required=False,
                         widget=forms.fields.TextInput(attrs={
-                        'class': 'input default', 
+                        'class': 'input default subtitle', 
                         'placeholder': 'Address Line 1'}))
     line2=forms.CharField(label='', required=False,
                         widget=forms.fields.TextInput(attrs={
-                        'class': 'input default', 
+                        'class': 'input default subtitle', 
                         'placeholder': 'Address Line 2'}))
     city=forms.ChoiceField(label='', required=False,
                         widget=forms.Select(attrs={
-                        'class': 'wide input default', 
+                        'class': 'wide input default subtitle', 
                         'placeholder': 'City'}),
                         choices=Address.CITIES)
     province=forms.ChoiceField(label='', required=False,
                         widget=forms.Select(attrs={
-                        'class': 'wide input default', 
+                        'class': 'wide input default subtitle', 
                         'placeholder': 'Province'}),
                         choices=Address.PROVINCES)
     postal_code=forms.CharField(label='', required=False,
                         widget=forms.fields.TextInput(attrs={
-                        'class': 'input default', 
+                        'class': 'input default subtitle', 
                         'placeholder': 'Postal Code'}))
 
     def clean_delivery_fees(self):
@@ -272,17 +276,15 @@ class DeliverySettingsForm(forms.Form):
 class ShopAccountForm(forms.ModelForm):
     class Meta:
         model = BankAccount
-        fields = ['bank_name', 'cardholder_name', 'account_number']
-        required_fields = ['bank_name', 'cardholder_name', 'account_number']
+        fields = ['bank_name', 'account_number']
+        required_fields = ['bank_name', 'account_number']
 
         widgets = {
             'bank_name': forms.Select(attrs={
-                'class':'wide input default'}),
-            'cardholder_name': forms.fields.TextInput(attrs={
-                'class':'input default',
-                'placeholder': 'Cardholder Name'}),
+                'class':'wide input default subtitle'}),
             'account_number': forms.fields.TextInput(attrs={
-                'class':'input default',
+                'id': 'js-display-inputs',
+                'class':'input default subtitle',
                 'placeholder': 'Account Number'}),
         }
 

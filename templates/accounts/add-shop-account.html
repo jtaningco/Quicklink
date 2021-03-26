@@ -30,19 +30,13 @@
             
             <div class="registration-content">
                 {{form.bank_name}}
-            </div>
-
-            <div class="registration-content" id="js-display-inputs" style="display: none;">
-                <div class="registration-content" style="margin-top: 0.25rem;">
-                    {{form.cardholder_name}}
-                    {{form.account_number}}
-                </div>
+                {{form.account_number}}
             </div>
 
             <div id="shop-info">{{ shop.shop_name }}</div>
             <div id="form-errors">{{ form.errors.as_json }}</div>
 
-            <div class="registration-content" style="margin-top: 2rem;">
+            <div class="registration-content" style="margin-top: 0.5rem;">
                 <button type="submit" name="next" style="margin: 0.5rem 0; width: 100%;" class="primary-btn disabled subtitle" id="js-save-btn">Save Details</button>
                 <a href="{% url 'accounts:merchant-add-delivery' %}" class="btn__back" style="margin: 0;"><button type="button" class="secondary-btn subtitle" style="width: 100%;">Back</button></a>
             </div>
@@ -53,7 +47,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-nice-select/1.1.0/js/jquery.nice-select.min.js" integrity="sha512-NqYds8su6jivy1/WLoW8x1tZMRD7/1ZfhWG/jcRQLOzV1k1rIODCpMgoBnar5QXshKJGV7vi0LXLNXPoFsM5Zg==" crossorigin="anonymous"></script>
     <script>
         function enableButton() {
-            if (!$("#id_account_number").val()) {
+            if (!$("#js-display-inputs").val()) {
                 $("#js-save-btn").addClass('disabled');
             } else {
                 $("#js-save-btn").removeClass('disabled');
@@ -70,7 +64,7 @@
                 $(this).keypress(enableButton);
             });
 
-            if ($("#id_bank_name").val !== "") { 
+            if ($("#id_bank_name").val() !== "") { 
                 $("#js-display-inputs").show();
             } else { 
                 $("#js-display-inputs").hide();

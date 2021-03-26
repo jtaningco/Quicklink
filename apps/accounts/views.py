@@ -158,7 +158,10 @@ def registerShopLogo(request):
         form = ShopLogoForm(request.POST, request.FILES)
         if form.is_valid():
             shop_logo, created = ShopLogo.objects.get_or_create(shop=shop)
-            shop_logo.logo = form.cleaned_data.get('logo')
+            if hasattr(shop, 'shop_logo') and not bool(form.cleaned_data.get('logo', False)):
+                shop_logo.logo = shop.shop_logo.logo
+            else:
+                shop_logo.logo = form.cleaned_data.get('logo')
             shop_logo.save()
             return redirect('accounts:merchant-add-settings')
 
@@ -208,8 +211,6 @@ def registerShopSettings(request):
         if form.is_valid():
             shop_settings, created = ShopGeneralSettings.objects.get_or_create(shop=shop)
             shop_settings.delivery_days=form.cleaned_data.get('delivery_days')
-            print(shop_settings.delivery_days)
-            print(WEEKDAYS.get_selected_values(shop_settings.delivery_days))
             shop_settings.delivery_from_hour=form.cleaned_data.get('from_hour')
             shop_settings.delivery_to_hour=form.cleaned_data.get('to_hour')
 

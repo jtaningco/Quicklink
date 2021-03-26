@@ -2,15 +2,15 @@
     position: fixed;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
     align-content: center;
     width: 192px;
-    height:100vh;
+    height: 100vh;
     top: 0;
     left: 0;
     z-index: 999;
-    background: #798CF2;
+    background: var(--primary-main);
     box-shadow: var(--navbar-shadow);
 }
 
@@ -21,7 +21,7 @@
     align-items: center;
     align-content: center;
     width: 100%;
-    flex-basis: 15%;
+    padding: 4rem;
 }
   
 .sidebar-logo img {
@@ -29,8 +29,7 @@
     height: 64px;
 }
   
-.sidebar-menu {
-    flex-basis: 85%;
+.sidebar__menu {
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -39,86 +38,81 @@
     align-content: center;
 }
 
-.sidebar-menu ul {
+.sidebar__items {
     background:#798CF2;
     height: 100%;
     width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
     list-style: none;
 }
   
-.sidebar-menu ul li {
-    line-height: 56px;
+.sidebar__items__item {
+    min-height: 56px;
     width: 100%;
     border-bottom: none;
 }
   
-.sidebar-menu ul li a {
+.nav__link {
     position: relative;
     color: white;
     display: block;
     width: 100%;
+    height: 100%;
+    padding: 0.5rem;
     transition: all 0.3s ease-out;
 }
   
-.sidebar-menu ul li a:hover {
+.nav__link:hover {
     color: #FFFFFF;
     background: var(--primary-pressed);
+    cursor: pointer;
 }
   
-.sidebar-menu ul li a:active {
+.sidebar__menu .sidebar__items .sidebar__items__item .nav__link:active {
     color: #FFFFFF;
     background: var(--primary-pressed);
 }
 
-.sidebar-menu ul li a img {
+.sidebar__menu .sidebar__items .sidebar__items__item .nav__link img {
     padding-right: 16px;
 }
   
-.sidebar-menu ul ul {
+.sidebar__menu .sidebar__items ul {
     position: static;
     display:none;
 }
   
-.sidebar-menu ul .feat-show.show {
-    display: block;
+.sidebar__items__item__subitems.show {
+    display: flex;
 }
 
-.sidebar-menu ul .serv-show.show1 {
-    display: block;
-}
-
-.sidebar-menu ul .cldk-show.show1 {
-    display: block;
-}
-
-.sidebar-menu ul ul li {
-    line-height: 42px;
-}
-
-.sidebar-menu ul ul li a {
+.sidebar__menu .sidebar__items ul li a {
     color: #FFFFFF;
     padding-left: 64px;
 }
 
-.sidebar-menu ul ul li a:hover {
+.sidebar__menu .sidebar__items ul li a:hover {
     color: #FFFFFF;
     background: var(--primary-pressed);
 }
   
-.sidebar-menu ul ul li a:active {
+.sidebar__menu .sidebar__items ul li a:active {
     color: #FFFFFF;
     background: var(--primary-pressed);
 }
 
-.sidebar-menu ul li a span {
+.nav__chevron {
     position: absolute;
-    top: 45%;
-    right: 15px;
+    top: 50%;
+    right: 16px;
     transform: translateY(-50%);
-    font-size: 14px;
     transition: transform 0.4s;
 }
 
-.sidebar-menu ul li a span.rotate {
+.nav__chevron.rotate {
     transform: translateY(-50%) rotate(90deg);
 }
