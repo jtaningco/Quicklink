@@ -1,0 +1,269 @@
+{% extends 'quicklink/signups.html' %}
+{% load static %}
+
+{% block pagetitle %}Merchant Shop Information{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-nice-select/1.1.0/css/nice-select.min.css" integrity="sha512-CruCP+TD3yXzlvvijET8wV5WxxEh5H8P4cmz0RFbKK6FlZ2sYl3AEsKlLPHbniXKSrDdFewhbmBK5skbdsASbQ==" crossorigin="anonymous" />
+{% endblock %}
+
+{% block scriptsHead %}
+{% endblock %}
+
+{% block cardContent %}    
+        <div class="registration-header">
+            <div class="pagination">
+                <a href="{% url 'accounts:merchant-add-shop' %}" class="pagination__circle body-big bold">1</a>
+                    <div class="pagination__line"></div>
+                <a href="{% url 'accounts:merchant-add-logo' %}" class="pagination__circle body-big bold">2</a>
+                    <div class="pagination__line"></div>
+                <a href="{% url 'accounts:merchant-add-settings' %}" class="pagination__circle  body-big bold">3</a>
+                    <div class="pagination__line"></div>
+                <a href="{% url 'accounts:merchant-add-delivery' %}" class="pagination__circle pagination__circle--active body-big bold">4</a>
+                    <div class="pagination__line"></div>
+                <a href="{% url 'accounts:merchant-add-payment' %}" class="pagination__circle body-big bold">5</a>
+            </div>
+            <h1 class="bold" style="color: var(--primary-main); padding: 0.25rem 0; ">Delivery and Courier</h1>
+            <h2 class="body" style="color: var(--muted-default);">How can your customers get their product?</h2>
+        </div>
+        
+        <form action="" method="post" style="width: 100%;">
+            {% csrf_token %}
+            <div class="registration-content">
+                <div class="registration-content__delivery">
+                    <p class="subtitle bold">I book the courier</p>
+                    <div class="switch-whole">
+                        <label class="switch">
+                            {{form.seller_books}}
+                            <span class="slider round"></span>
+                        </label>
+                    </div>
+                </div>
+                <div class="small-input__container" style="display: none;" id="js-seller-books-input">
+                    <h3 style="margin-right: 1rem;">&#8369</h1>
+                    {{form.shop_delivery_fees}}
+                </div>
+                <div class="registration-content__delivery">
+                    <p class="subtitle bold">Buyer books courier</p>
+                    <div class="switch-whole">
+                        <label class="switch">
+                            {{form.buyer_books}}
+                            <span class="slider round"></span>
+                        </label>
+                    </div>
+                </div>
+                <div class="registration-content__delivery">
+                    <p class="subtitle bold">Buyer picks up from location</p>
+                    <div class="switch-whole">
+                        <label class="switch">
+                            {{form.buyer_picks_up}}
+                            <span class="slider round"></span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="registration-content" id="js-pick-up-point" style="display: none;">
+                <p class="subtitle bold">Pick-Up Point</p>
+                <div class="delivery__modal__option">
+                    <label class="checkbox">
+                        {% if use_same_address == True %}
+                            <input type="checkbox" name="use_shop_address" id="id_use_shop_address" class="js-date-checkbox" checked>
+                        {% else %}
+                            <input type="checkbox" name="use_shop_address" id="id_use_shop_address" class="js-date-checkbox">
+                        {% endif %}
+                        <span class="checkmark checkmark__small"></span>
+                    </label>
+                    <p class="delivery__modal__option--label subtitle">Same as shop address</p>
+                </div>
+                <div class="registration-content" style="padding-top: 0rem;" id="js-address-input">
+                    {{form.line1}}
+                    {{form.line2}}
+                    {{form.city}}
+                    <div class="registration-content registration-content__row">
+                        <div class="registration-content__input--small" style="padding-right: 4px;">{{form.province}}</div>
+                        <div class="registration-content__input--small" style="padding-left: 4px;">{{form.postal_code}}</div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="form-errors">{{ form.errors.as_json }}</div>
+
+            <div class="registration-content">
+                <button type="submit" name="next" style="margin: 1rem 0; width: 100%;" class="primary-btn disabled subtitle" id="js-submit-next">Next</button>
+                <a href="{% url 'accounts:merchant-add-settings' %}" class="btn__back" style="margin: 0;"><button type="button" class="secondary-btn subtitle" style="width: 100%;">Back</button></a>
+            </div>
+        </form>
+{% endblock %}
+
+{% block scriptsBody %}
+    <!-- Switch Toggle -->
+    <script>
+        const toggleBtns = $('input:checkbox');
+        const deliveryFeesInput = $('#js-seller-books-input');
+        const pickupInput = $('#js-pick-up-point');
+        const addressInput = $('#js-address-input');
+
+        function displayInputs(id) {
+            if (id == "id_seller_books") {
+                deliveryFeesInput.css("display", "flex");
+                deliveryFeesInput.css("margin", "0.5rem 0 0.75rem 0")
+            } else {
+                pickupInput.css("display", "flex");
+            }
+
+            if ($("#id_use_shop_address").is(":checked")) {
+                addressInput.css("display", "none");
+            }
+        }
+
+        function removeInputs(id) {
+            if (id == "id_seller_books") {
+                deliveryFeesInput.css("display", "none");
+            } else if (id == "id_use_shop_address") {
+                addressInput.css("display", "flex");
+            } else {
+                if ($("#id_buyer_books").prop('checked') == false && $("#id_buyer_picks_up").prop('checked') == false ) {
+                    pickupInput.css("display", "none");
+                }
+            }
+        }
+
+        function enableButton() {
+            var minimum = 0;
+            var toggled = 0;
+            
+            toggleBtns.each(function() {
+                if ($(this).attr('id') != "id_use_shop_address") {
+                    if (this.checked) {
+                        toggled += 1;
+                    }
+                }
+            });
+
+            if (toggled > minimum) {
+                $("#js-submit-next").removeClass('disabled');
+            } else {
+                $("#js-submit-next").addClass('disabled');
+            }
+        }
+
+        for (i = 0; i < toggleBtns.length; i++) {
+            toggleBtns.eq(i).click(function(){
+                if (this.checked) {
+                    displayInputs($(this).attr('id'));
+                } else {
+                    removeInputs($(this).attr('id'));
+                }
+                enableButton();
+            })
+        }
+
+        window.onload = function() {
+            toggleBtns.each(function() {
+                if ($(this).is(':checked')) {
+                    displayInputs($(this).attr('id'));
+                } else {
+                    removeInputs($(this).attr('id'));
+                }
+                enableButton();
+            })   
+        }
+    </script>
+
+    <!-- Nice Select lightweight JQuery plugin -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-nice-select/1.1.0/js/jquery.nice-select.min.js" integrity="sha512-NqYds8su6jivy1/WLoW8x1tZMRD7/1ZfhWG/jcRQLOzV1k1rIODCpMgoBnar5QXshKJGV7vi0LXLNXPoFsM5Zg==" crossorigin="anonymous"></script>
+    <script>
+        $(document).ready(function() {
+            $('#id_city').niceSelect();
+            $('#id_province').niceSelect();
+        });
+    </script>
+
+    <!-- AlgoliaJS – Autocomplete Address -->
+    <!-- Check https://www.algolia.com/apps/1DDI408VTY/dashboard -->
+    <script src="https://cdn.jsdelivr.net/npm/places.js@1.19.0"></script>
+
+    <script>
+        var inputLine1 = $('#id_line1');
+        var inputLine2 = $('#id_line2');
+        var inputCity = $('#id_city');
+        var inputProvince = $('#id_province');
+        var inputPostalCode = $('#id_postal_code');
+
+        const fixedOptions = {
+            container: document.querySelector('#id_line1'),
+            accessibility: {
+                pinButton: {
+                    'aria-label': 'use browser geolocation',
+                    'tab-index': 12,
+                },
+                clearButton: {
+                    'tab-index': 13,
+                }
+            }
+        }
+
+        const reconfigurableOptions = {
+            language: 'en', // Receives results in English
+            countries: ['ph'], // Search in the Philippines
+            useDeviceLocation: true // Ask and use the device location to strengthen search/boost around the source IP
+        };
+
+        var placesAutocomplete = places(fixedOptions).configure(reconfigurableOptions);
+
+        placesAutocomplete.on('change', function(e) {
+            inputLine1.val(e.suggestion.name);
+            inputLine2.val(e.suggestion.city);
+            
+            for (i = 0; i < document.getElementById('id_city').length; i++) {
+                if (document.getElementById('id_city').options[i].value == e.suggestion.county + " City") {
+                    console.log('Matching city found!')
+                    inputCity.val(e.suggestion.county + " City");
+                }
+            }
+
+            for (i = 0; i < document.getElementById('id_province').length; i++) {
+                if (e.suggestion.administrative == "Metro Manila") {
+                    console.log('Matching province found!')
+                    inputProvince.val("Metro Manila");
+                }
+            }
+
+            inputPostalCode.val(e.suggestion.postcode);
+        });
+    </script>
+
+    <!-- NOTY Notifications -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/noty/3.1.4/noty.min.js" integrity="sha512-lOrm9FgT1LKOJRUXF3tp6QaMorJftUjowOWiDcG5GFZ/q7ukof19V0HKx/GWzXCdt9zYju3/KhBNdCLzK8b90Q==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/noty/3.1.4/noty.js" integrity="sha512-mgZL3SZ/vIooDg2mU2amX6NysMlthFl/jDbscSRgF/k3zmICLe6muAs7YbITZ+61FeUoo1plofYAocoR5Sa1rQ==" crossorigin="anonymous"></script>
+
+    <!-- NOTY -->
+    <script>
+        var errors = $('#form-errors').text();
+        var jsonErrors = JSON.parse(errors);
+
+        var errorMessages = [];
+
+        for (var k in jsonErrors) {
+            for (var i in Object.keys(jsonErrors[k])) {
+                errorMessages.push([jsonErrors[k][i]['message']]);
+            }
+        }
+
+        function displayErrors() {
+            for (i = 0; i <= Object.keys(errorMessages).length; i++) {
+                if (errorMessages[String(i)] != undefined) {
+                    new Noty({
+                        type: 'error',
+                        theme: 'bootstrap-v4',
+                        text: errorMessages[String(i)],
+                        layout: "topRight",
+                        timeout: 5000,
+                        progressBar: true,
+                    }).show();
+                }
+            }
+        }
+    </script>
+{% endblock %}

@@ -1,5 +1,5 @@
 # from django.forms.models import inlineformset_factory
-from apps.accounts.decorators import allowed_users
+from apps.accounts.decorators import allowed_users, setup_required
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
@@ -14,7 +14,8 @@ from .forms import *
 from django.db.models import Q
 
 # Create your views here.
-@login_required(login_url='accounts:merchant-login')
+@login_required(login_url='accounts:login')
+@setup_required
 @allowed_users(allowed_roles=[User.Types.MERCHANT, User.Types.ADMIN])
 def products(request):
     user = request.user
@@ -30,12 +31,14 @@ def products(request):
     return render(request, 'products/products.html', context)
 
 @login_required(login_url='accounts:merchant-login')
+@setup_required
 @allowed_users(allowed_roles=[User.Types.MERCHANT, User.Types.ADMIN])
 def productDetails(request, product_pk):
     product = Product.objects.get(id=product_pk)
     return render(request, 'products/product_modal.html', {'product':product})
 
 @login_required(login_url='accounts:merchant-login')
+@setup_required
 @allowed_users(allowed_roles=[User.Types.MERCHANT, User.Types.ADMIN])
 def addProduct(request):
     user = request.user
@@ -55,9 +58,7 @@ def addProduct(request):
                 user=user,
                 name=form.cleaned_data.get('name'),
                 description=form.cleaned_data.get('description'),
-                schedule=form.cleaned_data.get('schedule'),
-                days=form.cleaned_data.get('days'),
-                time=form.cleaned_data.get('time'),
+                orders=form.cleaned_data.get('orders'),
                 image=form.cleaned_data.get('image'),
                 instructions=form.cleaned_data.get('instructions'),
             )
@@ -107,6 +108,7 @@ def addProduct(request):
     return render(request, 'products/product_form.html', context)
 
 @login_required(login_url='accounts:merchant-login')
+@setup_required
 @allowed_users(allowed_roles=[User.Types.MERCHANT, User.Types.ADMIN])
 def updateProduct(request, product_pk):
     product = Product.objects.get(id=product_pk)
@@ -155,6 +157,7 @@ def updateProduct(request, product_pk):
     return render(request, 'products/edit_product.html', context)
 
 @login_required(login_url='accounts:merchant-login')
+@setup_required
 @allowed_users(allowed_roles=[User.Types.MERCHANT, User.Types.ADMIN])
 def deleteProduct(request, product_pk):
     product = Product.objects.get(id=product_pk)

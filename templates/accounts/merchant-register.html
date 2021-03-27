@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/noty/3.1.4/noty.min.css" integrity="sha512-0p3K0H3S6Q4bEWZ/WmC94Tgit2ular2/n0ESdfEX8l172YyQj8re1Wu9s/HT9T/T2osUw5Gx/6pAZNk3UKbESw==" crossorigin="anonymous">
 {% endblock %}
 
-{% block cardContent %}                   
+{% block cardContent %}
     <div class="registration-header">
         <img 
             src="https://ik.imagekit.io/ripzjge77zz/Quicklink_App/logos/Shortened-logo_BzQkxRgQX.svg" 
@@ -21,7 +21,7 @@
                 https://ik.imagekit.io/ripzjge77zz/Quicklink_App/logos/shortened/Shortened-logo_BzQkxRgQX.svg 1x,"
             style="padding-bottom: 0.75rem;"
         >
-        <h1 class="bold" style="color: var(--primary-main); padding: 0.25rem 0; ">Sign up for Quicklink!</h1>
+        <h1 class="bold" style="color: var(--primary-main); padding: 0.25rem 0;">Sign up for Quicklink!</h1>
         <h2 class="body" style="color: var(--muted-default);">One click closer to quick and easy transactions</h2>
     </div>
     <form action="" method="post" class="registration-form">
@@ -36,7 +36,7 @@
                     src="https://ik.imagekit.io/ripzjge77zz/Quicklink_App/Merchant/Account_Creation/icons/fi_info_DX4GENMoh.svg" 
                     alt="Guide" class="registration-content--email-icon" style="width: 1rem; height: 1rem;"
                 >
-                <p class="registration-content--email-guide caption">Please use a business email.</p>
+                <p class="registration-content--email-guide caption">{{ form.email.help_text }}</p>
             </div>
         </div>
 
@@ -53,19 +53,19 @@
         <div class="terms-of-use-wrapper">
             <label class="checkbox">
                 <input type="checkbox" name="terms" id="terms" required>
-                <span class="checkmark"></span>
+                <span class="checkmark checkmark__small"></span>
             </label>
             <p class="subtitle">I agree to the 
-                <a href="" class="subtitle terms-link">Terms of Use</a>
+                <a href="https://www.notion.so/quicklinkph/Terms-of-Use-bf5b1ebd28a64c1cb75f336e18f138bf" target="_blank" class="subtitle terms-link">Terms of Use</a>
                 and
-                <a href="" class="subtitle terms-link">Privacy Policy</a>
+                <a href="https://www.notion.so/Privacy-Policy-c91232dc494948a9afc7ae2ba2f96e7c" target="_blank" class="subtitle terms-link">Privacy Policy</a>
             </p>
         </div>
 
         <!-- To edit style, edit .errorlist (ul) and .errorlist li (each message) -->
         <div id="form-errors">{{ form.errors.as_json }}</div>
 
-        <button type="submit" style="margin: 24px 0; width: 100%;" id="js-sign-up-btn" class="primary-btn primary-btn-link disabled sign-up-btn">Sign Up</button>
+        <button type="submit" style="margin: 24px 0; width: 100%;" id="js-sign-up-btn" class="primary-btn primary-btn-link disabled ">Sign Up</button>
     </form>
     <div class="registration-footer">
         <div class="registration-footer--or-wrapper">
@@ -91,7 +91,6 @@
 
     <script>
         var accept = false;
-
         $(".input").on("keyup", function () {    	
             canChangeColor();
         });
@@ -126,37 +125,17 @@
     <script>
         var errors = $('#form-errors').text();
         var jsonErrors = JSON.parse(errors);
+
         var errorMessages = [];
-        
-        for (i = 0; i <= Object.keys(jsonErrors).length; i++) {
-            if ('email' in jsonErrors) {
-                for (i = 0; i < Object.keys(jsonErrors['email']).length; i++) {
-                    errorMessages.push(jsonErrors['email'][String(i)]['message'])
-                }
-            } else {
-                var emailError = null
-            }
-            
-            if ('password1' in jsonErrors) {
-                for (i = 0; i < Object.keys(jsonErrors['password1']).length; i++) {
-                    errorMessages.push(jsonErrors['password1'][String(i)]['message'])
-                }
-            } else {
-                var passwordError = null
-            }
-            
-            if ('password2' in jsonErrors) {
-                for (i = 0; i < Object.keys(jsonErrors['password2']).length; i++) {
-                    errorMessages.push(jsonErrors['password2'][String(i)]['message'])
-                }
-            } else {
-                var password2Error = null
+
+        for (var k in jsonErrors) {
+            for (var i in Object.keys(jsonErrors[k])) {
+                errorMessages.push([jsonErrors[k][i]['message']]);
             }
         }
 
         for (i = 0; i <= Object.keys(errorMessages).length; i++) {
             if (errorMessages[String(i)] != undefined) {
-                console.log(errorMessages[String(i)])
                 new Noty({
                     type: 'error',
                     theme: 'bootstrap-v4',

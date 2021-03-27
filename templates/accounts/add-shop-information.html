@@ -4,28 +4,31 @@
 {% block pagetitle %}Merchant Shop Information{% endblock %}
 
 {% block stylesheets %}
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-nice-select/1.1.0/css/nice-select.min.css" integrity="sha512-CruCP+TD3yXzlvvijET8wV5WxxEh5H8P4cmz0RFbKK6FlZ2sYl3AEsKlLPHbniXKSrDdFewhbmBK5skbdsASbQ==" crossorigin="anonymous" />
 {% endblock %}
 
 {% block scriptsHead %}
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.12/js/intlTelInput.min.js" integrity="sha512-OnkjbJ4TwPpgSmjXACCb5J4cJwi880VRe+vWpPDlr8M38/L3slN5uUAeOeWU2jN+4vN0gImCXFGdJmc0wO4Mig==" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.12/js/utils.min.js" integrity="sha512-JtpGKUjQUqCJmgw3TOr8bkL8QqB8oCbofRU39xgDnRYTfIDvfg0gQs2efeKxBCdwSAP/h3CSqhn87+giWSsxjw==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/imask/6.0.7/imask.min.js" integrity="sha512-qCt/OTd55ilhuXLRNAp/G8uONXUrpFoDWsXDtyjV4wMbvh46dOEjvHZyWkvnffc6I2g/WHSKsaFUCm0RISxnzQ==" crossorigin="anonymous"></script>
 {% endblock %}
 
 {% block cardContent %}    
         <div class="registration-header">
             <div class="pagination">
                 <a href="{% url 'accounts:merchant-add-shop' %}" class="pagination__circle pagination__circle--active body-big bold">1</a>
-                <div class="pagination__line"></div>
+                    <div class="pagination__line"></div>
                 <a href="{% url 'accounts:merchant-add-logo' %}" class="pagination__circle body-big bold">2</a>
-                <div class="pagination__line"></div>
-                <a href="{% url 'accounts:merchant-add-payment' %}" class="pagination__circle body-big bold">3</a>
+                    <div class="pagination__line"></div>
+                <a href="{% url 'accounts:merchant-add-settings' %}" class="pagination__circle  body-big bold">3</a>
+                    <div class="pagination__line"></div>
+                <a href="{% url 'accounts:merchant-add-delivery' %}" class="pagination__circle body-big bold">4</a>
+                    <div class="pagination__line"></div>
+                <a href="{% url 'accounts:merchant-add-payment' %}" class="pagination__circle body-big bold">5</a>
             </div>
             <h1 class="bold" style="color: var(--primary-main); padding: 0.25rem 0; ">Shop Information</h1>
             <h2 class="body" style="color: var(--muted-default);">Help us get to know your shop better.</h2>
         </div>
         
-        <form action="" method="post" style="width: 100%;">
+        <form action="" method="post" style="width: 100%;" id="js-shop-form">
             {% csrf_token %}
             <div class="registration-content">
                 <p class="subtitle bold">Shop Name<span style="color: var(--failure-main)">*</span></p>
@@ -38,34 +41,26 @@
             </div>
 
             <div class="registration-content">
+                <p class="subtitle bold">Display Email Address<span style="color: var(--failure-main)">*</span></p>
+                {{form.shop_email}}
+                <div class="input__helper__row">
+                    <img 
+                        src="https://ik.imagekit.io/ripzjge77zz/Quicklink_App/Merchant/Account_Creation/icons/fi_info_DX4GENMoh.svg" 
+                        alt="Guide" class="registration-content--email-icon" style="width: 1rem; height: 1rem;"
+                    >
+                    <p class="input__helper caption">Your customers will contact you through this email address.</p>
+                </div>
+            </div>
+            
+            <div class="registration-content">
                 <p class="subtitle bold">Shop Quicklink Username<span style="color: var(--failure-main)">*</span></p>
                 {{form.shop_username}}
-            </div>
-
-            <div class="registration-content">
-                <p class="subtitle bold">Shop Delivery Schedule<span style="color: var(--failure-main)">*</span></p>
-                <div class="registration-content">
-                    <div class="input default delivery__input js-toggle-delivery-input">
-                        <p id="js-delivery-input" class="subtitle regular" style="color: var(--muted-lighter);">Everyday</p>
-                        <img src="https://ik.imagekit.io/ripzjge77zz/Quicklink_App/Merchant/Account_Creation/icons/fi_chevron-down_H9oiI7CW7d.png" onerror="this.style.display='none'" class="js-toggle-delivery-input">
-                    </div>
-                    <div class="delivery__modal--background" id="js-delivery-modal-bg">
-                        <div class="delivery__modal" id="js-delivery-modal">
-                            {% for pk, day in form.delivery_schedule.field.widget.choices %}
-                                <div class="delivery__modal__option">
-                                    <label class="checkbox" data-value="{{ pk }}">
-                                        {% if day in selected_dates %}
-                                            <input type="checkbox" name="delivery_schedule" value="{{ pk }}" id="id_delivery_schedule_{{ forloop.counter0 }}" checked>
-                                        {% else %}
-                                            <input type="checkbox" name="delivery_schedule" value="{{ pk }}" id="id_delivery_schedule_{{ forloop.counter0 }}">
-                                        {% endif %}
-                                        <span class="checkmark"></span>
-                                    </label>
-                                    <p class="delivery__modal__option--label subtitle bold">{{ day }}</p>
-                                </div>
-                            {% endfor %}
-                        </div>
-                    </div>
+                <div class="input__helper__row">
+                    <img 
+                        src="https://ik.imagekit.io/ripzjge77zz/Quicklink_App/Merchant/Account_Creation/icons/fi_info_DX4GENMoh.svg" 
+                        alt="Guide" class="registration-content--email-icon" style="width: 1rem; height: 1rem;"
+                    >
+                    <p class="input__helper caption">This will be used for your order form link (quicklink.ph/username).</p>
                 </div>
             </div>
 
@@ -87,184 +82,32 @@
                 {{form.twitter}}
             </div>
 
-            <div class="registration-content">
-                <p class="subtitle bold">Will your shop accept Cash-On-Delivery (COD)?<span style="color: var(--failure-main)">*</span></p>
-                <div class="switch-whole">
-                    <p class="subtitle bold" style="color: var(--muted-light);">No</p>
-                    <label class="switch">
-                        {{ form.shop_cod }}
-                        <span class="slider round"></span>
-                  </label>
-                    <p class="subtitle bold" id="js-switch-text" style="color: var(--muted-light); transition: color 0.3s ease">Yes</p>
-                </div>
-            </div>
-
-            {{ form.errors }}
+            <!-- To edit style, edit .errorlist (ul) and .errorlist li (each message) -->
+            <div id="form-errors">{{ form.errors.as_json }}</div>
 
             <div class="registration-content">
-                <button type="submit" name="next" style="margin: 1rem 0; width: 100%;" class="primary-btn primary-btn-link">Next</button>
+                <button type="submit" name="next" style="margin: 1rem 0; width: 100%;" class="primary-btn subtitle">Next</button>
             </div>
         </form>
 {% endblock %}
 
 {% block scriptsBody %}
-    <!-- intlTelInput — Phone Number Validation -->
-    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.12/js/intlTelInput.js" integrity="sha512-lib7WdJvAnfLLBi5AHdN+wUkcWwpu1fmYzyEHQijZq7WedcwBiwdVNbcML2rAtKvwtOIU7thMGB+O9Kpb9g2Cw==" crossorigin="anonymous"></script>
-
+    <!-- iMask lightweight JS plugin -->
     <script>
-        var contactNumberInput = document.querySelector('#id_shop_contact_number');
+        var contactNumberInput = document.getElementById('id_shop_contact_number');
+        var maskOptions = {
+            mask: '(+{63}) 000 000 0000'
+        };
+        var mask = IMask(contactNumberInput, maskOptions);
+    </script>
 
-        var iti ==intlTelInput(contactNumberInput, {
-            utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.12/js/utils.js",
-            initialCountry: "auto",
-            geoIpLookup: function(success, failure) {
-                $.get("https://ipinfo.io", function() {}, "jsonp").always(function(resp) {
-                    var countryCode = (resp && resp.country) ? resp.country : "us";
-                    success(countryCode);
-                });
-            },
-            separateDialCode: true,
-        })
-
-        function verifyPhoneNumber() {
-            // PHONE NUMBER JQUERY
-            var contactNumber = iti.getNumber(intlTelInputUtils.numberFormat.E164);
-            if (contactNumber.indexOf(' ') >= 0) {
-                contactNumber = contactNumber.trim()
-            }
-
-            if (iti.isValidNumber()) {
-                contactNumberInput.classList.remove("error");
-            } else {
-                contactNumberInput.classList.add("error");
-            }
-        }
-
-        contactNumberInput.addEventListener('onkeyup', verifyPhoneNumber)
-    </script> -->
-
-    <!-- Available Schedule Deliveries -->
+    <!-- Nice Select lightweight JQuery plugin -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-nice-select/1.1.0/js/jquery.nice-select.min.js" integrity="sha512-NqYds8su6jivy1/WLoW8x1tZMRD7/1ZfhWG/jcRQLOzV1k1rIODCpMgoBnar5QXshKJGV7vi0LXLNXPoFsM5Zg==" crossorigin="anonymous"></script>
     <script>
-        var deliveryInput = $('#js-delivery-input');
-        var listOfDays = [];
-
-        function addDays(i) {
-            if (i == 1) {
-                listOfDays.push('Monday');
-            } else if (i == 2) {
-                listOfDays.push('Tuesday');
-            } else if (i == 3) {
-                listOfDays.push('Wednesday');
-            } else if (i == 4) {
-                listOfDays.push('Thursday');
-            } else if (i == 5) {
-                listOfDays.push('Friday');
-            } else if (i == 6) {
-                listOfDays.push('Saturday')
-            } else {
-                listOfDays.push('Sunday');
-            }
-        }
-
-        function removeDays(i) {
-            if (i == 1) {
-                listOfDays = listOfDays.filter(e => e !== 'Monday');
-            } else if (i == 2) {
-                listOfDays = listOfDays.filter(e => e !== 'Tuesday');
-            } else if (i == 3) {
-                listOfDays = listOfDays.filter(e => e !== 'Wednesday');
-            } else if (i == 4) {
-                listOfDays = listOfDays.filter(e => e !== 'Thursday');
-            } else if (i == 5) {
-                listOfDays = listOfDays.filter(e => e !== 'Friday');
-            } else if (i == 6) {
-                listOfDays = listOfDays.filter(e => e !== 'Saturday');
-            } else {
-                listOfDays = listOfDays.filter(e => e !== 'Sunday');
-            }
-        }
-
-        var weekdays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday']
-        var weekends = ['Saturday', 'Sunday']
-
-        function checkShortcut(days, check) {
-            console.log(check);
-            for (var i = 0; i < days.length; i++) {
-                if ($.inArray(days[i], check) == -1) { return false; }
-            }
-            return true;
-        }
-
-        function editInput() {
-            if (listOfDays.length == 7) {
-                deliveryInput.html('Everyday');
-                deliveryInput.css('color', 'var(--muted-dark)')
-            } else if (listOfDays.length <= 6 && listOfDays.length >= 3) {
-                newDays = $.map(listOfDays, function(day) {
-                    return day.slice(0,3);
-                });
-                if (listOfDays.length == 5 && checkShortcut(listOfDays, weekdays) == true) {
-                    deliveryInput.html('Weekdays only');
-                } else {
-                    deliveryInput.html(newDays.join(', '));
-                }
-                deliveryInput.css('color', 'var(--muted-dark)')
-            } else if (listOfDays.length < 3 && listOfDays.length > 0) {
-                if (listOfDays.length == 2 && checkShortcut(listOfDays, weekends) == true) {
-                    deliveryInput.html('Weekends only');
-                } else {
-                    deliveryInput.html(listOfDays.join(', '));
-                }
-                deliveryInput.css('color', 'var(--muted-dark)')
-            } else {
-                deliveryInput.html('Everyday');
-                deliveryInput.css('color', 'var(--muted-lighter)')
-            }
-        }
-
-        window.onload = function() {
-            var toggleDeliveryInputBtns = document.getElementsByClassName('js-toggle-delivery-input');
-            var deliveryModalBg = document.getElementById('js-delivery-modal-bg');
-            var deliveryModal = document.getElementById('js-delivery-modal');
-
-            var checkInputs = $('input[type="checkbox"]');
-
-            for (x = 0; x < toggleDeliveryInputBtns.length; x++) {
-                toggleDeliveryInputBtns[x].addEventListener('click', function() {
-                    deliveryModalBg.style.display = 'flex';
-                    deliveryModal.classList.toggle('delivery__modal--appear');
-                });
-            };
-
-            // Subtract 1 to exclude COD Boolean Toggle Field
-            for (y = 0; y < checkInputs.length - 1; y++) {
-                checkInputs.eq(y).change(function() {
-                    if (this.checked) {
-                        addDays(parseInt($(this).val()));
-                        editInput();
-                        
-                    } else {
-                        removeDays(parseInt($(this).val()));
-                        editInput();
-                    }
-                });
-            }
-
-            checkInputs.eq(-1).change(function() {
-                if (this.checked) {
-                    document.getElementById('js-switch-text').style.color = "var(--success-alt)"
-                } else {
-                    document.getElementById('js-switch-text').style.color = "var(--muted-light)"
-                }
-            })
-
-            deliveryModalBg.addEventListener('click', function(e) {
-                if (! deliveryModal.contains(e.target)) {
-                    deliveryModalBg.style.display = 'none';
-                    deliveryModal.classList.toggle('delivery__modal--appear');
-                }
-            });
-        }
+        $(document).ready(function() {
+            $('#id_city').niceSelect();
+            $('#id_province').niceSelect();
+        });
     </script>
 
     <!-- AlgoliaJS – Autocomplete Address -->
@@ -319,5 +162,38 @@
 
             inputPostalCode.val(e.suggestion.postcode);
         });
+    </script>
+
+    <!-- NOTY Notifications -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/noty/3.1.4/noty.min.js" integrity="sha512-lOrm9FgT1LKOJRUXF3tp6QaMorJftUjowOWiDcG5GFZ/q7ukof19V0HKx/GWzXCdt9zYju3/KhBNdCLzK8b90Q==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/noty/3.1.4/noty.js" integrity="sha512-mgZL3SZ/vIooDg2mU2amX6NysMlthFl/jDbscSRgF/k3zmICLe6muAs7YbITZ+61FeUoo1plofYAocoR5Sa1rQ==" crossorigin="anonymous"></script>
+
+    <!-- NOTY -->
+    <script>
+        var errors = $('#form-errors').text();
+        var jsonErrors = JSON.parse(errors);
+
+        var errorMessages = [];
+
+        for (var k in jsonErrors) {
+            for (var i in Object.keys(jsonErrors[k])) {
+                errorMessages.push([jsonErrors[k][i]['message']]);
+            }
+        }
+
+        function displayErrors() {
+            for (i = 0; i <= Object.keys(errorMessages).length; i++) {
+                if (errorMessages[String(i)] != undefined) {
+                    new Noty({
+                        type: 'error',
+                        theme: 'bootstrap-v4',
+                        text: errorMessages[String(i)],
+                        layout: "topRight",
+                        timeout: 5000,
+                        progressBar: true,
+                    }).show();
+                }
+            }
+        }
     </script>
 {% endblock %}

@@ -1,0 +1,64 @@
+{% load static %}
+{% load avatar_tags %}
+{% load imagekit %}
+
+{% block testing %}{% endblock %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    <link rel="stylesheet" href="{% static '/css/main.css' %}">
+    <link rel="stylesheet" href="{% static '/css/navbar.css' %}">
+    <link rel="stylesheet" href="{% static '/css/header.css' %}">
+    <script src="{% static '/js/datetime.js' %}"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+</head>
+<body onload="realtimeClock()">
+    {% if request.user.is_anonymous == True %}
+        <div class="header-container">
+            <div class="header-wrapper">
+                <div class="datetime" id="datetime"></div>
+            </div>
+        </div>
+    {% else %}
+        <div class="header-container">
+            <div class="header-wrapper">
+                <div class="datetime" id="datetime"></div>
+                {% if request.user|has_avatar %}
+                    {% avatar request.user 24 class="img-circle img-responsive" id="js-user-avatar" %}    
+                {% else %}
+                    <div class="profile__pic profile__pic--backup caption bold" id="js-user-avatar">{{ request.user.get_initials }}</div>
+                {% endif %}
+                <div class="profile__pic--settings" id="js-profile-modal">
+                    <a href="#" class="profile__pic--settings__link">
+                        <div class="profile__pic--settings__option bold">My Account</div>
+                    </a>
+                    <a href="{% url 'accounts:logout' %}" class="profile__pic--settings__link">
+                        <div class="profile__pic--settings__option bold logout">Logout</div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+
+    <main>
+        {% block maincontent %}
+        {% endblock %}
+    </main>
+
+    <script>
+        const userAvatar = $('#js-user-avatar');
+        const profilePicModal = document.getElementById('js-profile-modal');
+
+        userAvatar.click(function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            profilePicModal.classList.toggle('active')
+        });
+    </script>
+</body>
+</html>
