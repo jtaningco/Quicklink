@@ -1,0 +1,24 @@
+{% extends 'quicklink/app.html' %}
+{% load static %}
+
+{% block pagetitle %}{{shop.shop_name|title}}: Account Settings{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{% static 'css/merchant-settings/account.css' %}">
+{% endblock %}
+
+{% block scriptsHead %}{% endblock %}
+
+{% block maincontent %}
+    <div class="settings__container">
+        <h1 class="settings__header extra-bold">Account Settings</h1>
+        <div class="settings__wrapper">
+            <div class="settings__content">
+                <h2 class="subtitle bold">Email Address</h2>
+                <p class="subtitle">{{ user.email }}</p>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block scriptsBody %}{% endblock %}

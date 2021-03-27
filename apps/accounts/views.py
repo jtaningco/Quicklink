@@ -64,7 +64,7 @@ def email_confirmation(request):
             send_email(user)
     return JsonResponse(request.data, safe=False)
 
-@login_required(login_url='accounts:merchant-login')
+@login_required(login_url='accounts:login')
 @allowed_users(allowed_roles=[User.Types.MERCHANT, User.Types.ADMIN])
 def registerShopInformation(request):
     user = request.user
@@ -144,7 +144,7 @@ def accountCallback(request, user_id):
     user_id = user_id
     return HttpResponse(request.body)
 
-@login_required(login_url='accounts:merchant-login')
+@login_required(login_url='accounts:login')
 @allowed_users(allowed_roles=[User.Types.MERCHANT, User.Types.ADMIN])
 def registerShopLogo(request):
     shop = ShopInformation.objects.get(user=request.user)
@@ -168,7 +168,7 @@ def registerShopLogo(request):
     context = {'form':form, 'shop':shop}
     return render(request, 'accounts/add-shop-logo.html', context)
 
-@login_required(login_url='accounts:merchant-login')
+@login_required(login_url='accounts:login')
 @allowed_users(allowed_roles=[User.Types.MERCHANT, User.Types.ADMIN])
 def registerShopSettings(request):
     shop = ShopInformation.objects.get(user=request.user)
@@ -232,7 +232,7 @@ def registerShopSettings(request):
     context = {'form':form, 'selected_dates':selected_dates, 'selected_radio':selected_radio}
     return render(request, 'accounts/add-shop-settings.html', context)
 
-@login_required(login_url='accounts:merchant-login')
+@login_required(login_url='accounts:login')
 @allowed_users(allowed_roles=[User.Types.MERCHANT, User.Types.ADMIN])
 def registerShopDeliveries(request):
     shop = ShopInformation.objects.get(user=request.user)
@@ -297,7 +297,7 @@ def registerShopDeliveries(request):
     context = {'form':form, 'use_same_address':use_same_address}
     return render(request, 'accounts/add-shop-deliveries.html', context)
 
-@login_required(login_url='accounts:merchant-login')
+@login_required(login_url='accounts:login')
 @allowed_users(allowed_roles=[User.Types.MERCHANT, User.Types.ADMIN])
 def registerShopAccount(request):
     user = request.user
@@ -342,11 +342,19 @@ def loginMerchant(request):
             return redirect ('accounts:login')
     
     context = {}
-    return render(request, 'accounts/merchant-login.html', context)
+    return render(request, 'accounts/login.html', context)
 
 def logout_user(request):
     logout(request)
     return redirect('accounts:login')
+
+@login_required(login_url='accounts:login')
+@allowed_users(allowed_roles=[User.Types.MERCHANT, User.Types.ADMIN])
+def accountSettings(request):
+    user = request.user
+    shop = ShopInformation.objects.get(user=user)
+    context = {'user':user, 'shop':shop}
+    return render(request, 'settings/account.html', context)
 
 # @unauthenticated_customer
 # def registerCustomer(request):
