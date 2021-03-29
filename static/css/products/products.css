@@ -1,0 +1,226 @@
+/* PRODUCTS */
+.products__container {
+    width: 100%;
+    min-height: 100vh;
+    max-height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    background: var(--bg-color);
+}
+
+.products__header {
+    min-height: 10vh;
+    width: 100%;
+    padding: 2.5rem 5rem;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    align-content: center;
+}
+
+.products__header__wrapper {
+    height: 100%;
+    width: 90%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+}
+
+.products__searchbar {
+    flex-basis: 40%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    align-content: center;
+}
+
+.products__header__btns {
+    flex-basis: 60%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    align-content: center;
+}
+
+.products__header__btns button { margin: 0 0.5rem; }
+
+.products__list {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    align-content: center;
+}
+
+.products__wrapper {
+    height: 100%;
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+}
+
+.products__table { 
+    display: table;
+    table-layout: fixed;
+    border-collapse: collapse;
+    border-spacing: 0;
+    margin: 0;
+    width: 100%;
+}
+
+.products__table__header {
+    height: 72px;
+    width: 100%;
+    background: #FFFFFF;
+    border-top: 1px solid #DCDCDC;
+    border-bottom: 1px solid #DCDCDC;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.products__table__header th {
+    padding: 0; 
+    margin: 0;
+}
+
+.product__table__cell {
+    width: auto;
+    padding: 0 40px;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.products__table__row-1,  
+.products__table__row-2 {
+    height: 72px;
+    width: 100%;
+    text-align: center;
+    vertical-align: middle;
+    background-blend-mode: overlay;
+}
+
+.products__table__row-1 { background: rgba(169, 184, 255, 0.3); }
+.products__table__row-2 { background: #FFF; }
+
+.products__placeholder__container {
+    width: 100%;
+    height: 100%;
+    padding: 4rem;
+}
+
+.products__placeholder__wrapper {
+    width: 100%;
+    height: 100%;
+}
+
+.products__placeholder__wrapper, .products__placeholder__guide {
+    display: flex; 
+    flex-direction: column; 
+    justify-content: center; 
+    align-items: center; 
+    align-content: center;
+}
+
+.products__placeholder__img {
+    margin: 3rem 0;
+}
+
+.products__placeholder__guide__header {
+    color: var(--primary-alt);
+    margin-bottom: 1.5rem;
+}
+
+/* TOGGLE SWITCH */
+.button-wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+}
+
+.button {
+    position: relative;
+    width: 48px;
+    height: 24px;
+    border-radius: 12px;
+    background: transparent;
+    overflow: hidden;
+}
+
+.button.r, .button.r .layer {
+    border-radius: 12px;
+}
+
+.switch {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    margin: 0;
+    opacity: 0;
+    cursor: pointer;
+    z-index: 4;
+}
+
+.knobs {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 3;
+    transition: all 0.3s cubic-bezier(0.18, 0.89, 0.35, 1.15);
+}
+
+.layer {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background: var(--success-main);
+    transition: all 0.3s ease;
+    z-index: 2;
+}
+
+#button-1 .knobs:before {
+    content: '';
+    position: absolute;
+    top: 2px;
+    right: 2px;
+    width: 20px;
+    height: 20px;
+    color: #fff;
+    font-size: 10px;
+    font-weight: bold;
+    text-align: center;
+    line-height: 1;
+    background: #FFF;
+    border-radius: 50%;
+    transition: all 0.3s cubic-bezier(0.18, 0.89, 0.35, 1.15);
+}
+
+#button-1 .switch:checked + .knobs:before {
+    content: '';
+    left: 2px;
+}
+
+#button-1 .switch:checked ~ .layer {
+    background: var(--muted-lighter);
+}
+
+#button-1 .knobs, #button-1 .knobs:before, #button-1 .layer {
+    transition: all 0.3s ease;
+}
+

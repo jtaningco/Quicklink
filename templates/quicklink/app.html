@@ -37,7 +37,7 @@
                     <div class="profile__pic profile__pic--backup caption bold" id="js-user-avatar">{{ request.user.get_initials }}</div>
                 {% endif %}
                 <div class="profile__pic--settings" id="js-profile-modal">
-                    <a href="#" class="profile__pic--settings__link">
+                    <a href="{% url 'accounts:account-settings' %}" class="profile__pic--settings__link">
                         <div class="profile__pic--settings__option bold">My Account</div>
                     </a>
                     <a href="{% url 'accounts:logout' %}" class="profile__pic--settings__link">

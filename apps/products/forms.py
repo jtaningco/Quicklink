@@ -27,11 +27,11 @@ class ProductForm(ModelForm):
                 'placeholder': 'Describe your product for your customers to see!'}),
 
             'stock': forms.fields.NumberInput(attrs={
-                'class':'smallest-input disabled subtitle',
+                'class':'input default disabled subtitle',
                 'placeholder': '100'}),
 
             'orders': forms.fields.TextInput(attrs={
-                'class':'smallest-input disabled subtitle',
+                'class':'input default disabled subtitle',
                 'placeholder': '10'}),
             
             'instructions': forms.Textarea(attrs={
@@ -48,11 +48,11 @@ SizeFormset = inlineformset_factory(
                     fields=('size', 'price_size'),
                     widgets={
                         'size': forms.fields.TextInput(attrs={
-                            'class':'small-input default subtitle',
+                            'class':'input default subtitle',
                             'placeholder': 'Ex. 1 Dozen'}),
 
                         'price_size': forms.fields.NumberInput(attrs={
-                            'class':'small-input default subtitle',
+                            'class':'input default subtitle',
                             'placeholder': 'Php'}),
                     },
                     labels={
@@ -69,11 +69,11 @@ AddonFormset = inlineformset_factory(
                     fields=('addon', 'price_addon'),
                     widgets={
                         'addon': forms.fields.TextInput(attrs={
-                            'class':'small-input default subtitle',
+                            'class':'input default subtitle',
                             'placeholder': 'Additional Chocolate Chip'}),
 
                         'price_addon': forms.fields.NumberInput(attrs={
-                            'class':'small-input default subtitle',
+                            'class':'input default subtitle',
                             'placeholder': 'Php'}),
                     },
                     labels={

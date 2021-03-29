@@ -74,7 +74,6 @@ h1, h2, h3, p, a, input, span, .body, .subtitle, .caption, .overline {
   font-family: 'Overpass', sans-serif;
   font-style: normal;
   font-weight: 400;
-  padding-top: 4px;
   color: var(--muted-dark);
 }
 
@@ -84,8 +83,9 @@ h3, .body-big { font-size: 1.25rem; line-height: 2rem; }
 p, .body { font-size: 1rem; line-height: 1.6rem; }
 .subtitle { font-size: 0.875rem; line-height: 1.4rem; }
 .caption { font-size: 0.75rem; line-height: 1rem; }
-.overline { font-size: 0.625rem; line-height: 1rem; text-transform: uppercase; }
+.overline { font-size: 0.625rem; line-height: 1rem; letter-spacing: 1px; text-transform: uppercase; }
 
+.regular { font-weight: 400; }
 .medium { font-weight: 600; }
 .bold { font-weight: 700; }
 .extra-bold { font-weight: 800; }
@@ -123,6 +123,8 @@ button:hover {
 button.pressed, button.warning { box-shadow: none; }
 
 button p, button.subtitle, .primary-btn.subtitle, .secondary-btn.subtitle { padding-top: 0.5rem; }
+
+button img { margin-left: 0.5rem; }
 
 button:focus {
   outline: none;
@@ -168,7 +170,7 @@ button:focus {
 }
 
 .secondary-btn:hover {
-  border: 1px solid var(--primary-light);
+  border: 1px solid transparent;
   background: var(--primary-light); 
   color: var(--muted-white);
 }
@@ -201,7 +203,8 @@ button:focus {
   color: var(--primary-main);
 }
 
-.tertiary-btn.hover {
+.tertiary-btn:hover {
+  box-shadow: none;
   color: var(--primary-light);
 }
 
@@ -282,8 +285,9 @@ textarea {
 .small-input__container input, .small-input__container .input { margin: 0; }
 
 .small-input__container {
-  width: 200px;
+  width: 272px;
   height: 40px;
+  padding: 0 0.5rem;
   display: flex; justify-content: center; align-items: center; align-content: center;
 }
 
@@ -322,16 +326,23 @@ textarea {
 }
 
 .searchbar {
-  color: #000;
+  background: url("https://ik.imagekit.io/ripzjge77zz/Quicklink_App/Merchant/search_xpOqZFavfYg.png") no-repeat 2% 50%;
   border: 1px solid var(--secondary-alt);
-  background-color: #FFF;
-  height: 40px;
+  background-color: rgba(220, 220, 220, 0.3);
+  color: var(--muted-lighter);
   width: 512px;
+  height: 40px;
   border-radius: 5px;
-  padding: 2px 16px 0 20px;
+  padding: 0 1.5rem 0 3rem;
+  transition: all 0.3s ease;
 }
 
-.searchbar:focus, .searchbar:hover { outline: none; }
+.searchbar:focus { 
+  outline: none; 
+  opacity: 1;
+  background-color: var(--muted-white);
+  color: var(--muted-dark);
+}
 
 /* NICE SELECT STYLE */
 .nice-select {
@@ -435,7 +446,7 @@ textarea {
 }
 
 .checkbox .checkmark.checkmark__small:after {
-  margin-top: -2px;
+  margin-top: -6px;
   width: 4px;
   height: 8px;
   border: solid white;

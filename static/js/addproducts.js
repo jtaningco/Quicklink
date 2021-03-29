@@ -138,10 +138,8 @@ $('#made-to-order').click(function() {
     if ($('#stocks-input-select').is(':checked')) { 
         stocksInput.disabled = false;
         stocksInput.classList.remove('disabled');
-        stocksInput.classList.add('default');
     } else {
         stocksInput.disabled = true;
-        stocksInput.classList.remove('default');
         stocksInput.classList.add('disabled');
     }
 })
@@ -153,10 +151,8 @@ $('#stocks-input-select').click(function() {
     if ($('#stocks-input-select').is(':checked')) { 
         stocksInput.disabled = false;
         stocksInput.classList.remove('disabled');
-        stocksInput.classList.add('default');
     } else {
         stocksInput.disabled = true;
-        stocksInput.classList.remove('default');
         stocksInput.classList.add('disabled');
     }
  });
@@ -169,10 +165,8 @@ $('#open-days').click(function() {
     if ($('#open-days').is(':checked')) { 
         openDaysInput.disabled = false;
         openDaysInput.classList.remove('disabled');
-        openDaysInput.classList.add('default');
     } else {
         openDaysInput.disabled = true;
-        openDaysInput.classList.remove('default');
         openDaysInput.classList.add('disabled');
     }
 });
@@ -185,10 +179,8 @@ $('#cutoff-time').click(function() {
     if ($('#cutoff-time').is(':checked')) { 
         cutoffTimeInput.disabled = false;
         cutoffTimeInput.classList.remove('disabled');
-        cutoffTimeInput.classList.add('default');
     } else {
         cutoffTimeInput.disabled = true;
-        cutoffTimeInput.classList.remove('default');
         cutoffTimeInput.classList.add('disabled');
     }
 });
@@ -215,11 +207,9 @@ $('#orders-input-select').click(function() {
 
     if ($('#orders-input-select').is(':checked')) { 
         maxOrdersInput.disabled = false;
-        maxOrdersInput.classList.add('default');
         maxOrdersInput.classList.remove('disabled');
     } else {
         maxOrdersInput.disabled = true;
-        maxOrdersInput.classList.remove('default');
         maxOrdersInput.classList.add('disabled');
     }
  });

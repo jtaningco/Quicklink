@@ -48,11 +48,8 @@ def addProduct(request):
 
     if request.method == 'POST':
         form = ProductForm(request.POST)
-        print(form.errors.as_data())
         
-        if form.is_valid():
-            print(json.dumps(request.POST, indent=2), "\n")
-        
+        if form.is_valid():        
             # Create product in database
             product = Product.objects.create(
                 user=user,
@@ -98,11 +95,6 @@ def addProduct(request):
                         return redirect('/shop/products')
                 else:
                     return redirect('/shop/products')
-    
-            print("Product ID: ", product.id, "\n")
-            print("Product: ", product, "\n")
-            print("Size Formset: ", sizeFormset, "\n")
-            print("Addon Formset: ", addonFormset, "\n")
 
     context = {'form':form, 'sizeFormset':sizeFormset, 'addonFormset':addonFormset}
     return render(request, 'products/product_form.html', context)

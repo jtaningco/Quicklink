@@ -13,7 +13,6 @@ class Tag(models.Model):
 
 class Product(models.Model):
     # tags = models.ManyToManyField(Tag)
-
     # User manipulating the product (request.user — whoever is logged in)
     user = models.ForeignKey(User, null=True, on_delete=models.SET_NULL, related_name="shop_product")
 
@@ -65,6 +64,7 @@ class Addon(models.Model):
     addon = models.CharField(max_length=80, null=True, blank=False)
     price_addon = models.DecimalField(null=True, blank=False, max_digits=5, decimal_places=2)
 
+    @property
     def addon_to_json(self):
         return {
             "product": self.product,

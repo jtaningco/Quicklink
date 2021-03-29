@@ -1,122 +1,106 @@
 {% extends 'quicklink/app.html' %}
+{% load static %}
 
 {% block pagetitle %}Products{% endblock %}
 
+{% block stylesheets %}
+    <link rel="stylesheet" href="{% static '/css/products/products.css' %}">
+{% endblock %}
+
 {% block maincontent %}
+    <div class="products__container">
+        <div class="products__header">
+            <div class="products__header__wrapper">
+                <div class="products__searchbar">
+                    <form action="{% url 'products:products' %}">
+                        <input class="searchbar body regular" type="search" placeholder="Search" name="search">
+                    </form>
+                </div>
+                <div class="products__header__btns">
+                    <a href="{% url 'orders:menu-preview' %}" style="text-decoration: none;">
+                        <button class="secondary-btn subtitle bold">
+                            Copy Form Link
+                        </button>
+                    </a>
 
-    {% if not products %}
-        <div class="empty-products-container">
-            <div class="empty-products-wrapper">
-                <div class="empty-products-content">
-                    <div class="empty-products-header">
-                        <div class="add-product-btn">
-                            <a href="{% url 'products:add-product' %}" class="add-product-link">Add Product</a>
-                        </div>
-                    </div>
-                    <div class="empty-products-text">
-                        <h1>You have no products yet!</h1>
-                        <div class="add-product-btn">
-                            <a href="{% url 'products:add-product' %}" class="add-product-link">Add Product</a>
-                        </div>
-                    </div>
+                    <a href="{% url 'products:add-product' %}" style="text-decoration: none;">
+                        <button class="primary-btn subtitle bold">
+                            Add Product
+                            <img src="https://ik.imagekit.io/ripzjge77zz/Quicklink_App/Design_System/Icons/Buttons/add_product_icon_YYLwT5YiFK1.png" alt="Add">
+                        </button>
+                    </a>
                 </div>
             </div>
         </div>
 
-    {% else %}
-        <div class="products-container">
-
-            <div class="products-header">
-                <div class="products-header-wrapper">
-                    <div class="products-search-bar">
-                        <form action="{% url 'products:products' %}">
-                            <input class="searchbar body" type="search" placeholder="Search" name="search">
-                        </form>
+        <div class="products__list">
+            <div class="products__wrapper">
+                <table class="products__table">
+                    <tr class="products__table__header">
+                        <th class="product__table__cell">
+                            <label class="checkbox">
+                                <input type="checkbox" name="select_all" id="id_select_all">
+                                <span class="checkmark checkmark__small"></span>
+                            </label>
+                        </th>
+                        <th class="product__table__cell overline bold">Product</th>
+                        <th class="product__table__cell overline bold">Stocks</th>
+                        <th class="product__table__cell overline bold">Total Sold</th>
+                        <th class="product__table__cell overline bold">Available</th>
+                        <th></th>
+                    </tr>
+                {% if not products %}
+                </table>
+                    <div class="products__placeholder__container">
+                        <div class="products__placeholder__wrapper">
+                            <img src="https://ik.imagekit.io/ripzjge77zz/Quicklink_App/Merchant/Products/no_products_1x_T0Mzen8E-F.png" alt="No Products" class="products__placeholder__img"
+                            srcset="https://ik.imagekit.io/ripzjge77zz/Quicklink_App/Merchant/Products/no_products_1x_T0Mzen8E-F.png 1x,
+                                https://ik.imagekit.io/ripzjge77zz/Quicklink_App/Merchant/Products/no_products_2x_DagGLFUdTz.png 2x,
+                                https://ik.imagekit.io/ripzjge77zz/Quicklink_App/Merchant/Products/no_products_3x_vMnLCynarn.png 3x,
+                                https://ik.imagekit.io/ripzjge77zz/Quicklink_App/Merchant/Products/no_products_4x_XN7k6xtFfnA.png 4x">
+                            <div class="products__placeholder__guide">
+                                <h2 class="products__placeholder__guide__header bold">Oh! You haven’t added any product for sale yet!</h2>
+                                <a href="{% url 'products:add-product' %}" style="text-decoration: none;">
+                                    <button class="primary-btn subtitle bold">Add Product
+                                        <img src="https://ik.imagekit.io/ripzjge77zz/Quicklink_App/Design_System/Icons/Buttons/add_product_icon_YYLwT5YiFK1.png" alt="Add">
+                                    </button>
+                                </a>
+                            </div>
+                        </div>
                     </div>
-                    <div class="products-header-btns">
-                        <button class="secondary-btn">
-                            <a href="{% url 'orders:menu-preview' %}" class="secondary-btn-link">Preview Menu</a>
-                        </button>
-                        <button class="primary-btn">
-                            <a href="{% url 'products:add-product' %}" class="primary-btn-link">Add Product</a>
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-            <div class="products-list">
-                <div class="products-wrapper">
-                    <table class="products-table">
-                        <tr class="products-table-header">
-                            <th class="product-table-cell">
-                                <input type="checkbox" id="select_all" name="select_all" value="select_all">
-                            </th>
-                            <th class="table-header product-table-cell">Product</th>
-                            <th class="table-header product-table-cell">Stocks</th>
-                            <th class="table-header product-table-cell">Total Sold</th>
-                            <th class="table-header product-table-cell">Available</th>
-                            <th ></th>
-                        </tr>
-    
-                        {% for product in products %}
-                            {% if forloop.counter|divisibleby:2 %}
-                                <tr class="products-table-row-2">
-                                    <td class="product-table-cell">
-                                        <input type="checkbox" id="select" name="select" value="select">
-                                    </td>
-                                    <td class="product-table-cell subtitle bold">{{product.name}}</td>
-                                    <td class="product-table-cell subtitle">{{product.stock}}</td>
-                                    <td class="product-table-cell subtitle">{{product.sold}}</td> <!-- Insert Total Sold Here -->
-                                    <td class="product-table-cell">
-                                        <div class="button-wrapper">
-                                            <div class="button r" id="button-1">
-                                                <input type="checkbox" name="switch" class="switch" id="switch">
-                                                <div class="knobs"></div>
-                                                <div class="layer"></div>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td class="product-table-cell"><a href="{% url 'products:update-product' product.id %}" class="subtitle tertiary-btn-link">
-                                        Edit Product</a>
-                                        <br>
-                                        <a href="{% url 'products:delete-product' product.id %}" class="subtitle tertiary-btn-link failure">
-                                        Delete Product</a>
-                                    </td>
-                                </tr>
-                            {% else %}
-                            <tr class="products-table-row-1">
-                                <td class="product-table-cell table-select">
-                                    <input type="checkbox" id="select" name="select" value="select">
-                                </td>
-                                <td class="product-table-cell subtitle bold">{{product.name}}</td>
-                                <td class="product-table-cell subtitle">{{product.stock}}</td>
-                                <td class="product-table-cell subtitle">{{product.sold}}</td> <!-- Insert Total Sold Here -->
-                                <td class="product-table-cell">
-                                    <div class="button-wrapper">
-                                        <div class="button r" id="button-1">
-                                            <input type="checkbox" name="switch" class="switch" id="switch">
-                                            <div class="knobs"></div>
-                                            <div class="layer"></div>
-                                        </div>
+                {% else %}
+                    {% for product in products %}
+                        {% if forloop.counter|divisibleby:2 %}
+                            <tr class="products__table__row-2">
+                        {% else %}
+                            <tr class="products__table__row-1">
+                        {% endif %}
+                            <td class="product__table__cell table-select">
+                                <input type="checkbox" id="select" name="select" value="select">
+                            </td>
+                            <td class="product__table__cell subtitle bold">{{product.name}}</td>
+                            <td class="product__table__cell subtitle">{{product.stock}}</td>
+                            <td class="product__table__cell subtitle">{{product.sold}}</td> <!-- Insert Total Sold Here -->
+                            <td class="product__table__cell">
+                                <div class="button-wrapper">
+                                    <div class="button r" id="button-1">
+                                        <input type="checkbox" name="switch" class="switch" id="switch">
+                                        <div class="knobs"></div>
+                                        <div class="layer"></div>
                                     </div>
-                                </td>
-                                <td class="product-table-cell">
-                                    <a href="{% url 'products:update-product' product.id %}" class="subtitle tertiary-btn-link">
-                                    Edit Product</a>
-                                    <br>
-                                    <a href="{% url 'products:delete-product' product.id %}" class="subtitle tertiary-btn-link failure">
-                                        Delete Product</a>
-                                </td>
-                            </tr>
-                            {% endif %}
-                        {% endfor %}
-    
-                    </table>
-                </div>
+                                </div>
+                            </td>
+                            <td class="product__table__cell">
+                                <a href="{% url 'products:update-product' product.id %}" class="subtitle tertiary-btn-link">
+                                Edit Product</a>
+                                <br>
+                                <a href="{% url 'products:delete-product' product.id %}" class="subtitle tertiary-btn-link failure">
+                                    Delete Product</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </table>
+                {% endif %}
             </div>
         </div>
-
-
-    {% endif %}
-
 {% endblock %}
