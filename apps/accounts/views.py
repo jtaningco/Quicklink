@@ -378,6 +378,16 @@ def accountSettings(request):
 @allowed_users(allowed_roles=[User.Types.MERCHANT, User.Types.ADMIN])
 def notificationSettings(request):
     user = request.user
+
+    if request.method == "POST" and request.is_ajax:
+        if request.POST.get("message") == "received_payouts":
+            user.merchant_notifications.
+        if request.POST.get("message") == "daily_order_summary":
+
+        if request.POST.get("message") == "product_updates":
+
+        if request.POST.get("message") == "marketing_updates":
+
     context = {'user':user}
     return render(request, 'settings/notifications.html', context)
 
