@@ -18,6 +18,8 @@ urlpatterns = [
     path('settings/notifications/', views.notificationSettings, name='notification-settings'),
     path('settings/resources/faqs/', views.resourceSettingsFAQs, name='resource-settings-faqs'),
     path('settings/resources/feedback/', views.resourceSettingsFeedback, name='resource-settings-feedback'),
+    path('settings/resources/privacy-policy/', views.resourceSettingsPrivacyPolicy, name='resource-settings-privacy-policy'),
+    path('settings/resources/agreement/', views.resourceSettingsAgreement, name='resource-settings-agreement'),
     path('callback/<str:user_id>/', views.accountCallback, name='xendit-callback'),
 ]
 

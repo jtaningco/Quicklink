@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     'django_email_verification',
     'imagekit',
     'avatar',
+    'active_link',
 
     # OAuth
     'allauth',

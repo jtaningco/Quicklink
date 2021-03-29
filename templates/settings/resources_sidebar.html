@@ -1,40 +1,34 @@
+{% load active_link_tags %}
+
 <div class="resources__sidebar">
     <div class="resources__sidebar__wrapper">
         <h2 class="resources__sidebar__header bold">Resources</h2>
         <div class="resources__sidebar__menu">
             <ul class="resources__sidebar__items">
                 <li class="resources__sidebar__item">
-                    <a class="resources__sidebar__link" href="{% url 'accounts:resource-settings-faqs' %}">
-                        <svg class="resources__sidebar__icon">
-                            <use xlink:href="https://ik.imagekit.io/ripzjge77zz/Quicklink_App/Merchant/Settings/Resources/faqs__UmzDmQ88rk.svg" />
-                        </svg>
-                        FAQS
+                    <a href="{% url 'accounts:resource-settings-faqs' %}" class="resources__sidebar__link {% active_link 'accounts:resource-settings-faqs' 'active' %}">
+                        <div class="resources__sidebar__icon resources__sidebar__icon--faqs {% active_link 'accounts:resource-settings-faqs' 'active' %}"></div>
+                        <p class="subtitle bold">FAQS</p>
                     </a>
                 </li>
                 <li class="resources__sidebar__item">
-                    <a class="resources__sidebar__link" href="#">
-                        <svg class="resources__sidebar__icon">
-                            <use xlink:href="https://ik.imagekit.io/ripzjge77zz/Quicklink_App/Merchant/Settings/Resources/feedback_bvE3drqy3.svg" />
-                        </svg>
-                        Feedback Form
+                    <a href="{% url 'accounts:resource-settings-feedback' %}" class="resources__sidebar__link {% active_link 'accounts:resource-settings-feedback' 'active' %}">
+                        <div class="resources__sidebar__icon resources__sidebar__icon--feedback {% active_link 'accounts:resource-settings-feedback' 'active' %}"></div>
+                        <p class="subtitle bold">Feedback Form</p>
                     </a>
                 </li>
                 
                 <li class="resources__sidebar__item">
-                    <a class="resources__sidebar__link" href="#">
-                        <svg class="resources__sidebar__icon">
-                            <use xlink:href="https://ik.imagekit.io/ripzjge77zz/Quicklink_App/Merchant/Settings/Resources/privacy_policy_QhNGalb8g0Q.svg" />
-                        </svg>
-                        Privacy Policy
+                    <a href="{% url 'accounts:resource-settings-privacy-policy' %}" class="resources__sidebar__link {% active_link 'accounts:resource-settings-privacy-policy' 'active' %}">
+                        <div class="resources__sidebar__icon resources__sidebar__icon--privacy {% active_link 'accounts:resource-settings-privacy-policy' 'active' %}"></div>
+                        <p class="subtitle bold">Privacy Policy</p>
                     </a>
                 </li>
                 
                 <li class="resources__sidebar__item">
-                    <a class="resources__sidebar__link" href="#">
-                        <svg class="resources__sidebar__icon">
-                            <use xlink:href="https://ik.imagekit.io/ripzjge77zz/Quicklink_App/Merchant/Settings/Resources/agreement_MAoJPNN76.svg" />
-                        </svg>
-                        Agreement
+                    <a href="{% url 'accounts:resource-settings-agreement' %}" class="resources__sidebar__link {% active_link 'accounts:resource-settings-agreement' 'active' %}">
+                        <div class="resources__sidebar__icon resources__sidebar__icon--agreement {% active_link 'accounts:resource-settings-agreement' 'active' %}"></div>
+                        <p class="subtitle bold">Agreement</p>
                     </a>
                 </li>
             </ul>

@@ -45,6 +45,7 @@
 
 .resources__sidebar__link {
     display: flex;
+    flex-wrap: nowrap;
     justify-content: flex-start;
     align-items: center;
     align-content: center;
@@ -54,16 +55,30 @@
     text-align: center;
 }
 
-.resources__sidebar__link:hover {
+.resources__sidebar__link .subtitle { max-width: 100%; padding-bottom: 6px; }
+
+.resources__sidebar__link:hover, .resources__sidebar__link.active {
     background-color: var(--primary-light);
-    color: var(--primary-main);
 }
 
-.resources__sidebar__link:hover ~ .resources__sidebar__link .resources__sidebar__icon {
-    fill: var(--primary-main);
+.resources__sidebar__link.active .subtitle, .resources__sidebar__link:hover ~ .subtitle {
+    color: var(--primary-pressed);
 }
 
 .resources__sidebar__icon {
     width: 16px; height: 16px;
-    padding: 0 1rem 0 1.5rem
+    margin: 0 1rem 0 1.5rem;
+    transition: background-image 0.3s ease;
 }
+
+.resources__sidebar__icon--faqs { background-image: url("https://ik.imagekit.io/ripzjge77zz/Quicklink_App/Merchant/Settings/Resources/faqs_J2LNfd2bT41.svg"); }
+.resources__sidebar__icon--faqs.active { background-image: url("https://ik.imagekit.io/ripzjge77zz/Quicklink_App/Merchant/Settings/Resources/faqs_active_xS6iXzPUc.svg"); }
+
+.resources__sidebar__icon--feedback { background-image: url("https://ik.imagekit.io/ripzjge77zz/Quicklink_App/Merchant/Settings/Resources/feedback_bvE3drqy3.svg"); }
+.resources__sidebar__icon--feedback.active { background-image: url("https://ik.imagekit.io/ripzjge77zz/Quicklink_App/Merchant/Settings/Resources/feedback_active_wxGakcDPux.svg"); }
+
+.resources__sidebar__icon--privacy { background-image: url("https://ik.imagekit.io/ripzjge77zz/Quicklink_App/Merchant/Settings/Resources/privacy_policy_QhNGalb8g0Q.svg"); }
+.resources__sidebar__icon--privacy.active { background-image: url("https://ik.imagekit.io/ripzjge77zz/Quicklink_App/Merchant/Settings/Resources/privacy_policy_active_SsKIGYBq-kgz.svg"); }
+
+.resources__sidebar__icon--agreement { background-image: url("https://ik.imagekit.io/ripzjge77zz/Quicklink_App/Merchant/Settings/Resources/agreement_MAoJPNN76.svg"); }
+.resources__sidebar__icon--agreement.active { background-image: url("https://ik.imagekit.io/ripzjge77zz/Quicklink_App/Merchant/Settings/Resources/agreement_active_VXDWaSuAH.svg"); }

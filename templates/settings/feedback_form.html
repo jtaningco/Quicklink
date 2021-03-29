@@ -1,7 +1,7 @@
 {% extends 'quicklink/app.html' %}
 {% load static %}
 
-{% block pagetitle %}{{shop.shop_name|title}}: Account Settings{% endblock %}
+{% block pagetitle %}Quicklink Feedback Form{% endblock %}
 
 {% block stylesheets %}
     <link rel="stylesheet" href="{% static '/css/merchant-settings/account.css' %}">
@@ -58,4 +58,64 @@
 {% endblock %}
 
 {% block scriptsBody %}
+    <!-- NOTY Notifications -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/noty/3.1.4/noty.min.js" integrity="sha512-lOrm9FgT1LKOJRUXF3tp6QaMorJftUjowOWiDcG5GFZ/q7ukof19V0HKx/GWzXCdt9zYju3/KhBNdCLzK8b90Q==" crossorigin="anonymous"></script>
+
+    <!-- NOTY Errors -->
+    <script>
+        const errors = $('#form-errors').text();
+        const jsonErrors = JSON.parse(errors);
+
+        var errorMessages = [];
+
+        for (var k in jsonErrors) {
+            for (var i in Object.keys(jsonErrors[k])) {
+                errorMessages.push([jsonErrors[k][i]['message']]);
+            }
+        }
+
+        function displayErrors() {
+            for (i = 0; i < Object.keys(errorMessages).length; i++) {
+                if (errorMessages[i] != undefined) {
+                    new Noty({
+                        type: 'error',
+                        theme: 'bootstrap-v4',
+                        text: errorMessages[i],
+                        layout: "bottomRight",
+                        timeout: 3000,
+                        progressBar: true,
+                    }).show();
+                }
+            }
+        }
+
+        if (errors != "" || errors != undefined || errors != null) { displayErrors(); }
+    </script>
+
+    <!-- NOTY Successes -->
+    <script>
+        const successes = $(".js-success-msgs");
+        var successMessages = [];
+
+        successes.each(function() {
+            successMessages.push($(this).text());
+        });
+
+        function displaySuccesses() {
+            for (i = 0; i < successMessages.length; i++) {
+                if (successMessages[i] != undefined) {
+                    new Noty({
+                        type: 'success',
+                        theme: 'sunset',
+                        text: successMessages[i],
+                        layout: "bottomRight",
+                        timeout: 3000,
+                        progressBar: true,
+                    }).show();
+                }
+            }
+        }
+
+        if (successes != "" || successes != undefined || successes != null) { displaySuccesses(); }
+    </script>
 {% endblock %}

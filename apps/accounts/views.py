@@ -405,8 +405,24 @@ def resourceSettingsFeedback(request):
                 feedback=form.cleaned_data.get("feedback")
             )
             feedback.save()
+            messages.success(request, "Successfully sent feedback. We'll get back to you shortly!")
+
     context = {'user':user, 'form':form}
     return render(request, 'settings/feedback_form.html', context)
+
+@login_required(login_url='accounts:login')
+@allowed_users(allowed_roles=[User.Types.MERCHANT, User.Types.ADMIN])
+def resourceSettingsPrivacyPolicy(request):
+    user = request.user
+    context = {'user':user}
+    return render(request, 'settings/privacy_policy.html', context)
+
+@login_required(login_url='accounts:login')
+@allowed_users(allowed_roles=[User.Types.MERCHANT, User.Types.ADMIN])
+def resourceSettingsAgreement(request):
+    user = request.user
+    context = {'user':user}
+    return render(request, 'settings/agreement.html', context)
 
 # @unauthenticated_customer
 # def registerCustomer(request):
