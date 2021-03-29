@@ -2,15 +2,13 @@
 {% load avatar_tags %}
 {% load imagekit %}
 
-{% block testing %}{% endblock %}
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title></title>
+    <title>{% block pagetitle %}{% endblock %}</title>
     <link rel="stylesheet" href="{% static '/css/main.css' %}">
     <link rel="stylesheet" href="{% static '/css/navbar.css' %}">
     <link rel="stylesheet" href="{% static '/css/header.css' %}">

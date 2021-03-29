@@ -32,7 +32,7 @@
                     <h2 class="settings__content__header subtitle bold">Daily Order Summary</h2>
                     <div class="switch-whole">
                         <label class="switch">
-                            <input type="checkbox" name="received_payouts" id="id_received_payouts">
+                            <input type="checkbox" name="daily_order_summary" id="id_daily_order_summary">
                             <span class="slider round"></span>
                         </label>
                     </div>
@@ -45,7 +45,7 @@
                     <h2 class="settings__content__header subtitle bold">Product Updates</h2>
                     <div class="switch-whole">
                         <label class="switch">
-                            <input type="checkbox" name="received_payouts" id="id_received_payouts">
+                            <input type="checkbox" name="product_updates" id="id_product_updates">
                             <span class="slider round"></span>
                         </label>
                     </div>
@@ -58,7 +58,7 @@
                     <h2 class="settings__content__header subtitle bold">Marketing Updates</h2>
                     <div class="switch-whole">
                         <label class="switch">
-                            <input type="checkbox" name="received_payouts" id="id_received_payouts">
+                            <input type="checkbox" name="marketing_updates" id="id_marketing_updates">
                             <span class="slider round"></span>
                         </label>
                     </div>
@@ -79,104 +79,31 @@
 {% endblock %}
 
 {% block scriptsBody %}
+    <!-- Notifications Toggle -->
     <script>
-        // Modal Variables
-        const modalContainer = $("#js-modal-container");
-        const modalCard = $("#js-modal-card");
-        const exitModalBtn = $("#js-modal-exit-btn");
-
-        // Edit Password Variables
-        const editPasswordForm = $("#js-modal-edit-password");
-        const editPasswordBtn = $("#js-edit-password-btn");
-
-        // Delete Account Variables
-        const delAccountForm = $("#js-modal-del-account");
-        const delAccountBtn = $("#js-del-account-btn");
-
-        function showEditPasswordModal() {
-            modalContainer.css("display", "flex");
-            modalContainer.css("opacity", "1");
-            modalCard.css("display", "flex");
-            editPasswordForm.css("display", "flex");
-        }
-
-        function hideEditPasswordModal() {
-            modalContainer.css("display", "none");
-            modalContainer.css("opacity", "0");
-            modalCard.css("display", "none");
-            editPasswordForm.css("display", "none");
-        }
-
-        function showDelAccountModal() {
-            modalContainer.css("display", "flex");
-            modalContainer.css("opacity", "1");
-            modalCard.css("display", "flex");
-            delAccountForm.css("display", "flex");
-        }
-
-        function hideDelAccountModal() {
-            modalContainer.css("display", "none");
-            modalContainer.css("opacity", "0");
-            modalCard.css("display", "none");
-            delAccountForm.css("display", "none");
-        }
-
-        editPasswordBtn.click(function() {
-            showEditPasswordModal();
-        });
-
-        delAccountBtn.click(function() {
-            showDelAccountModal();
-        })
-
-        exitModalBtn.click(function() {
-            hideEditPasswordModal();
-            hideDelAccountModal();
-        });
-
-        modalContainer.click(function(e) {
-            if (! document.getElementById("js-modal-card").contains(e.target)) {
-                hideEditPasswordModal();
-                hideDelAccountModal();
-            }
-        });
-
-        // Account Deletion
         const current_url = window.location.href;
-        const cancelDeleteBtn = $("#js-cancel-delete");
-        const deleteAccountBtn = $("#js-delete-account");
+        const toggleBtns = $(":input:checkbox");
 
-        cancelDeleteBtn.click(function() {
-            hideDelAccountModal();
-        })
-
-        deleteAccountBtn.click(function() {
-            $.ajax({
-                url: current_url,
-                type: "POST",
-                data: {"message": "delete_account"},
-                success:function(response){
-                    console.log("Message data successfully sent.")
-                },
-                error:function (xhr, textStatus, thrownError){
-                    console.log("Can't send message data.", xhr, textStatus, thrownError);
+        toggleBtns.each(function() {
+            $(this).click(function() {
+                if (this.checked) {
+                    var msg = $(this).attr("name");
+                    $.ajax({
+                        url: current_url,
+                        type: "POST",
+                        data: {"message": msg},
+                        success:function(response){
+                            console.log("AJAX data successfully sent.")
+                        },
+                        error:function (xhr, textStatus, thrownError){
+                            console.log("Can't send AJAX data.", xhr, textStatus, thrownError);
+                        }
+                    });
                 }
-            });
+            })
         })
-    </script>
 
-    <!-- Password Form Validation -->
-    <script>
-        const passwordBtn = $("#js-password-btn");
-        const oldPassInput = $("#id_old_password");
-        const newPassInput = $("#id_new_password1");
-        const confirmNewPassInput = $("#id_new_password2");
-
-        $(":input").keyup(function() {
-            if (oldPassInput.val().length > 0 && newPassInput.val().length > 0 && confirmNewPassInput.val().length > 0 && newPassInput.val().length == confirmNewPassInput.val().length) {
-                passwordBtn.removeClass("disabled");
-            }
-        })
+        console.log(toggleBtns);
     </script>
 
     <!-- NOTY Notifications -->
