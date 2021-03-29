@@ -342,7 +342,7 @@ def loginMerchant(request):
             return redirect ('accounts:login')
     
     context = {}
-    return render(request, 'accounts/login.html', context)
+    return render(request, 'accounts/merchant-login.html', context)
 
 def logout_user(request):
     logout(request)
@@ -353,8 +353,60 @@ def logout_user(request):
 def accountSettings(request):
     user = request.user
     shop = ShopInformation.objects.get(user=user)
-    context = {'user':user, 'shop':shop}
+    form = NewPasswordForm()
+
+    if request.method == "POST":
+        if request.is_ajax and request.POST.get('message') == "delete_account":
+            logout(request)
+            user.is_active = False
+            user.save()
+            return redirect('accounts:login')
+        else:
+            form = NewPasswordForm(request.POST)
+            if form.is_valid() and form.validate_old_pass(user):
+                if form.validate_new_pass():
+                    new_pass = form.cleaned_data.get("new_password1")
+                    user.set_password(new_pass)
+                    user.save()
+                    login(request, user, backend='django.contrib.auth.backends.ModelBackend')
+                    messages.success(request, 'Successfully changed password!')
+
+    context = {'user':user, 'shop':shop, 'form':form}
     return render(request, 'settings/account.html', context)
+
+@login_required(login_url='accounts:login')
+@allowed_users(allowed_roles=[User.Types.MERCHANT, User.Types.ADMIN])
+def notificationSettings(request):
+    user = request.user
+    context = {'user':user}
+    return render(request, 'settings/notifications.html', context)
+
+@login_required(login_url='accounts:login')
+@allowed_users(allowed_roles=[User.Types.MERCHANT, User.Types.ADMIN])
+def resourceSettingsFAQs(request):
+    user = request.user
+    context = {'user':user}
+    return render(request, 'settings/faqs.html', context)
+
+@login_required(login_url='accounts:login')
+@allowed_users(allowed_roles=[User.Types.MERCHANT, User.Types.ADMIN])
+def resourceSettingsFeedback(request):
+    user = request.user
+    form = ShopFeedbackForm()
+
+    if request.method == "POST":
+        form = ShopFeedbackForm(request.POST)
+        if form.is_valid():
+            feedback = MerchantFeedback.objects.create(
+                user=user,
+                name=form.cleaned_data.get("name"),
+                email=form.cleaned_data.get("email"),
+                shop_name=form.cleaned_data.get("shop_name"),
+                feedback=form.cleaned_data.get("feedback")
+            )
+            feedback.save()
+    context = {'user':user, 'form':form}
+    return render(request, 'settings/feedback_form.html', context)
 
 # @unauthenticated_customer
 # def registerCustomer(request):

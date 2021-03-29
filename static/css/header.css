@@ -42,6 +42,7 @@
 }
 
 .profile__pic--backup {
+    padding: 0;
     background: var(--primary-light);
     color: white;
     display: flex; justify-content: center; align-items: center; align-content: center;

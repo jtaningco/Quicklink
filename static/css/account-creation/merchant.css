@@ -205,16 +205,6 @@
     border: 1px solid var(--muted-lightest);
 }
 
-@keyframes disappear {
-    from { opacity: 1; }
-    to { opacity: 0; display: none; }
-}
-
-@keyframes appear {
-    from { opacity: 0; }
-    to { opacity: 1; }
-}
-
 .delivery__modal--background {
     position: fixed;
     top: 0;
@@ -231,6 +221,7 @@
 .delivery__modal {
     width: 280px; height: 256px;
     display: none;
+    opacity: 0;
     flex-direction: column;
     flex-wrap: wrap;
     justify-content: flex-start;
@@ -241,9 +232,10 @@
     box-shadow: var(--regular-box-shadow);
     border-radius: 5px;
     z-index: 999;
+    transition: opacity 0.3s ease-in-out;
 }
 
-.delivery__modal--appear { display: flex; animation: appear 0.2s; }
+.delivery__modal--appear { display: flex; opacity: 1; }
 
 .delivery__modal__option {
     display: flex;

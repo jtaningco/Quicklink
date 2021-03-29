@@ -15,6 +15,9 @@ urlpatterns = [
     path('merchant/deliveries/', views.registerShopDeliveries, name='merchant-add-delivery'),
     path('merchant/payment/', views.registerShopAccount, name='merchant-add-payment'),
     path('settings/account/', views.accountSettings, name='account-settings'),
+    path('settings/notifications/', views.notificationSettings, name='notification-settings'),
+    path('settings/resources/faqs/', views.resourceSettingsFAQs, name='resource-settings-faqs'),
+    path('settings/resources/feedback/', views.resourceSettingsFeedback, name='resource-settings-feedback'),
     path('callback/<str:user_id>/', views.accountCallback, name='xendit-callback'),
 ]
 

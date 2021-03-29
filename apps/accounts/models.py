@@ -214,13 +214,34 @@ class BankAccount(models.Model):
     def __str__(self):
         return f"{self.cardholder_name} - {self.account_number}"
 
-class Notification(models.Model):
+class CustomerNotification(models.Model):
     user = models.OneToOneField(User, related_name='customer_notifications', on_delete=models.CASCADE, null=True, blank=True)
     sms = models.BooleanField(_('sms notifications'), null=True, default=False)
     email = models.BooleanField(_('email notifications'), null=True, default=False)
 
     def __str__(self):
         return f"SMS: {self.sms} | Email: {self.email}"
+
+class MerchantNotification(models.Model):
+    user = models.OneToOneField(User, related_name='merchant_notifications', on_delete=models.CASCADE, null=True)
+    # Get an email notification every time we send your revenue to your bank account.
+    received_payouts = models.BooleanField(null=True, default=True)
+
+    # Get an email that outlines your orders for the day.
+    daily_order_summary = models.BooleanField(null=True, default=True)
+
+    # Get informed whenever we release a new feature on Quicklink!
+    product_updates = models.BooleanField(null=True, default=True)
+
+    # Stay updated with news about Quicklink!
+    marketing_updates = models.BooleanField(null=True, default=True)
+
+class MerchantFeedback(models.Model):
+    user = models.ForeignKey(User, null=True, on_delete=models.SET_NULL, related_name="shop_feedback")
+    name = models.CharField(_("Merchant Feedback Sender"), null=True, max_length=55)
+    email = models.EmailField(_("Merchant Feedback Email"), null=True, max_length=55)
+    shop_name = models.CharField(_("Merchant Feedback Shop"), null=True, max_length=55)
+    feedback = models.CharField(_("Merchant Feedback"), null=True, max_length=255)
 
 # MERCHANT
 # class MerchantManager(models.Manager):

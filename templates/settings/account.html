@@ -4,7 +4,8 @@
 {% block pagetitle %}{{shop.shop_name|title}}: Account Settings{% endblock %}
 
 {% block stylesheets %}
-    <link rel="stylesheet" href="{% static 'css/merchant-settings/account.css' %}">
+    <link rel="stylesheet" href="{% static '/css/merchant-settings/account.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/noty/3.1.4/noty.min.css" integrity="sha512-0p3K0H3S6Q4bEWZ/WmC94Tgit2ular2/n0ESdfEX8l172YyQj8re1Wu9s/HT9T/T2osUw5Gx/6pAZNk3UKbESw==" crossorigin="anonymous">
 {% endblock %}
 
 {% block scriptsHead %}{% endblock %}
@@ -14,11 +15,247 @@
         <h1 class="settings__header extra-bold">Account Settings</h1>
         <div class="settings__wrapper">
             <div class="settings__content">
-                <h2 class="subtitle bold">Email Address</h2>
+                <h2 class="settings__content__header subtitle bold">Email Address</h2>
                 <p class="subtitle">{{ user.email }}</p>
+            </div>
+            <div class="settings__content">
+                <h2 class="settings__content__header subtitle bold">Password</h2>
+                <p class="settings__content__description subtitle">Change your password to keep your account secure.</p>
+                <button type="button" id="js-edit-password-btn" class="secondary-btn subtitle bold">Edit Password</button>
+            </div>
+            
+            <!-- LOG OUT OF ALL DEVICES FEATURE FOR V2 -->
+            <!-- <div class="settings__divider"></div>
+            
+            <div class="settings__content">
+                <h2 class="settings__content__header subtitle bold">Log out of other devices</h2>
+                <p class="settings__content__description subtitle">You will be logged out of all your other devices except this one.</p>
+                <button type="button" class="secondary-btn warning subtitle bold">Log Out</button>
+            </div> -->
+
+            <div class="settings__divider"></div>
+            
+            <div class="settings__content">
+                <h2 class="settings__content__header subtitle bold">Delete my account</h2>
+                <p class="settings__content__description subtitle">Doing this will erase all your data. You will have to set up a new account should you wish to come back to QuickLink.</p>
+                <button type="button" id="js-del-account-btn" class="secondary-btn warning subtitle bold">Delete Account</button>
+            </div>
+
+            <div class="modal__container" id="js-modal-container">
+                <div class="modal__card__wrapper" id="js-modal-card">
+                    <img 
+                        src="https://ik.imagekit.io/ripzjge77zz/Quicklink_App/Merchant/Settings/Account_Settings/modal_x_20oKHfTKy.png" 
+                        alt="Exit Modal" class="modal__exit__btn" id="js-modal-exit-btn"
+                    />
+                    <form action="" method="post" style="display: none; width: 100%;" id="js-modal-edit-password">
+                        {% csrf_token %}
+                        <div class="modal__card__header">
+                            <img src="https://ik.imagekit.io/ripzjge77zz/Quicklink_App/Merchant/Settings/Account_Settings/modal_lock_f-DWMn_qY.png" alt="Image Lock">
+                            <h1 class="bold">Edit Password</h1>
+                        </div>
+                        <div class="modal__card__form">
+                            <div class="modal__form__content">
+                                <h2 class="subtitle bold">Current Password</h2>
+                                {{ form.old_password }}
+                            </div>
+                            <div class="modal__form__content">
+                                <h2 class="subtitle bold">New Password</h2>
+                                {{ form.new_password1 }}
+                            </div>
+                            <div class="modal__form__content">
+                                <h2 class="subtitle bold">Confirm New Password</h2>
+                                {{ form.new_password2 }}
+                            </div>
+                        </div>
+                        <button type="submit" id="js-password-btn" class="primary-btn disabled subtitle bold" style="width: 100%;">Save Password</button>
+                    </form>
+                    <div class="modal__card__delete-account" id="js-modal-del-account">
+                        <div class="modal__card__header">
+                            <img src="https://ik.imagekit.io/ripzjge77zz/Quicklink_App/Merchant/Settings/Account_Settings/modal__alert-circle_vCjlPyZv134.png" alt="Alert">
+                        </div>
+                        <div class="modal__form__content" style="align-items: center;">
+                            <h1 class="body-big bold">Are you sure you want to delete your account?</h1>
+                            <p>This will permanently erase all your data stored in QuickLink.</p>
+                        </div>
+                        <div class="modal__form__content modal__form__content-row">
+                            <button class="primary-btn subtitle bold" id="js-cancel-delete">Take me back</button>
+                            <button class="secondary-btn warning subtitle bold" id="js-delete-account">Delete</button>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
+
+    {% if form.errors %}
+        <div id="form-errors" style="display: none;">{{ form.errors.as_json }}</div>
+    {% endif %}
+
+    {% for message in messages %}
+        <div class="js-success-msgs" style="display: none;">{{ message }}</div>
+    {% endfor %}
+
 {% endblock %}
 
-{% block scriptsBody %}{% endblock %}
+{% block scriptsBody %}
+    <script>
+        // Modal Variables
+        const modalContainer = $("#js-modal-container");
+        const modalCard = $("#js-modal-card");
+        const exitModalBtn = $("#js-modal-exit-btn");
+
+        // Edit Password Variables
+        const editPasswordForm = $("#js-modal-edit-password");
+        const editPasswordBtn = $("#js-edit-password-btn");
+
+        // Delete Account Variables
+        const delAccountForm = $("#js-modal-del-account");
+        const delAccountBtn = $("#js-del-account-btn");
+
+        function showEditPasswordModal() {
+            modalContainer.css("display", "flex");
+            modalContainer.css("opacity", "1");
+            modalCard.css("display", "flex");
+            editPasswordForm.css("display", "flex");
+        }
+
+        function hideEditPasswordModal() {
+            modalContainer.css("display", "none");
+            modalContainer.css("opacity", "0");
+            modalCard.css("display", "none");
+            editPasswordForm.css("display", "none");
+        }
+
+        function showDelAccountModal() {
+            modalContainer.css("display", "flex");
+            modalContainer.css("opacity", "1");
+            modalCard.css("display", "flex");
+            delAccountForm.css("display", "flex");
+        }
+
+        function hideDelAccountModal() {
+            modalContainer.css("display", "none");
+            modalContainer.css("opacity", "0");
+            modalCard.css("display", "none");
+            delAccountForm.css("display", "none");
+        }
+
+        editPasswordBtn.click(function() {
+            showEditPasswordModal();
+        });
+
+        delAccountBtn.click(function() {
+            showDelAccountModal();
+        })
+
+        exitModalBtn.click(function() {
+            hideEditPasswordModal();
+            hideDelAccountModal();
+        });
+
+        modalContainer.click(function(e) {
+            if (! document.getElementById("js-modal-card").contains(e.target)) {
+                hideEditPasswordModal();
+                hideDelAccountModal();
+            }
+        });
+
+        // Account Deletion
+        const current_url = window.location.href;
+        const cancelDeleteBtn = $("#js-cancel-delete");
+        const deleteAccountBtn = $("#js-delete-account");
+
+        cancelDeleteBtn.click(function() {
+            hideDelAccountModal();
+        })
+
+        deleteAccountBtn.click(function() {
+            $.ajax({
+                url: current_url,
+                type: "POST",
+                data: {"message": "delete_account"},
+                success:function(response){
+                    console.log("Message data successfully sent.")
+                },
+                error:function (xhr, textStatus, thrownError){
+                    console.log("Can't send message data.", xhr, textStatus, thrownError);
+                }
+            });
+        })
+    </script>
+
+    <!-- Password Form Validation -->
+    <script>
+        const passwordBtn = $("#js-password-btn");
+        const oldPassInput = $("#id_old_password");
+        const newPassInput = $("#id_new_password1");
+        const confirmNewPassInput = $("#id_new_password2");
+
+        $(":input").keyup(function() {
+            if (oldPassInput.val().length > 0 && newPassInput.val().length > 0 && confirmNewPassInput.val().length > 0 && newPassInput.val().length == confirmNewPassInput.val().length) {
+                passwordBtn.removeClass("disabled");
+            }
+        })
+    </script>
+
+    <!-- NOTY Notifications -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/noty/3.1.4/noty.min.js" integrity="sha512-lOrm9FgT1LKOJRUXF3tp6QaMorJftUjowOWiDcG5GFZ/q7ukof19V0HKx/GWzXCdt9zYju3/KhBNdCLzK8b90Q==" crossorigin="anonymous"></script>
+
+    <!-- NOTY Errors -->
+    <script>
+        const errors = $('#form-errors').text();
+        const jsonErrors = JSON.parse(errors);
+
+        var errorMessages = [];
+
+        for (var k in jsonErrors) {
+            for (var i in Object.keys(jsonErrors[k])) {
+                errorMessages.push([jsonErrors[k][i]['message']]);
+            }
+        }
+
+        function displayErrors() {
+            for (i = 0; i < Object.keys(errorMessages).length; i++) {
+                if (errorMessages[i] != undefined) {
+                    new Noty({
+                        type: 'error',
+                        theme: 'bootstrap-v4',
+                        text: errorMessages[i],
+                        layout: "bottomRight",
+                        timeout: 3000,
+                        progressBar: true,
+                    }).show();
+                }
+            }
+        }
+
+        if (errors != "" || errors != undefined || errors != null) { displayErrors(); }
+    </script>
+
+    <!-- NOTY Successes -->
+    <script>
+        const successes = $(".js-success-msgs");
+        var successMessages = [];
+
+        successes.each(function() {
+            successMessages.push($(this).text());
+        });
+
+        function displaySuccesses() {
+            for (i = 0; i < successMessages.length; i++) {
+                if (successMessages[i] != undefined) {
+                    new Noty({
+                        type: 'success',
+                        theme: 'sunset',
+                        text: successMessages[i],
+                        layout: "bottomRight",
+                        timeout: 3000,
+                        progressBar: true,
+                    }).show();
+                }
+            }
+        }
+
+        if (successes != "" || successes != undefined || successes != null) { displaySuccesses(); }
+    </script>
+{% endblock %}

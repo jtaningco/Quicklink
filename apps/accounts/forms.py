@@ -8,6 +8,8 @@ from pyisemail import is_email
 from apps.accounts.models import *
 from apps.accounts.validators import *
 
+from django.contrib.auth.hashers import make_password
+
 # Create User
 class CreateUserForm(UserCreationForm):
     password1=forms.CharField(widget=forms.PasswordInput(attrs={
@@ -36,7 +38,7 @@ class CreateUserForm(UserCreationForm):
         password2 = self.cleaned_data.get("password2")
         if password1 and password2 and password1 != password2:
             raise forms.ValidationError(
-                self.error_messages['Passwords does not match.'],
+                self.error_messages['Passwords do not match.'],
                 code='password_mismatch',
             )
         return True
@@ -47,6 +49,41 @@ class CreateUserForm(UserCreationForm):
         if commit:
             user.save()
         return user
+
+class NewPasswordForm(forms.Form):
+    old_password=forms.CharField(widget=forms.PasswordInput(attrs={
+                            'class': 'input default subtitle', 
+                            'placeholder': 'Enter Old Password'}))
+
+    new_password1=forms.CharField(widget=forms.PasswordInput(attrs={
+                            'class': 'input default subtitle', 
+                            'placeholder': 'Enter New Password'}))
+
+    new_password2=forms.CharField(widget=forms.PasswordInput(attrs={
+                            'class': 'input default subtitle', 
+                            'placeholder': 'Confirm New Password'}))
+
+    def validate_old_pass(self, user):
+        old_pass = self.cleaned_data.get("old_password")
+        new_pass_1 = self.cleaned_data.get("new_password1")
+
+        if not user.check_password(old_pass):
+            self.add_error('old_password', _('Old password is incorrect.'))
+            return False
+
+        if old_pass == new_pass_1:
+            self.add_error('old_password', _("You're already using this password."))
+            return False
+        return True
+
+    def validate_new_pass(self):
+        new_pass_1 = self.cleaned_data.get("new_password1")
+        new_pass_2 = self.cleaned_data.get("new_password2")
+
+        if new_pass_1 and new_pass_2 and new_pass_1 != new_pass_2:
+            self.add_error('new_password1', _("New passwords do not match."))
+            return False
+        return True
 
 # For Delivery Dates
 # See here for more information: https://stackoverflow.com/questions/19645227/django-create-multiselect-checkbox-input
@@ -291,6 +328,30 @@ class ShopAccountForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(ShopAccountForm, self).__init__(*args, **kwargs)
 
+class ShopFeedbackForm(forms.ModelForm):
+    class Meta:
+        model = MerchantFeedback
+        fields = ['name', 'email', 'shop_name', 'feedback']
+        required_fields = ['name', 'email', 'shop_name', 'feedback']
+
+        widgets = {
+            'name': forms.fields.TextInput(attrs={
+                'class':'input default subtitle',
+                'placeholder': 'Name'}),
+            'email': forms.fields.TextInput(attrs={
+                'class':'input default subtitle',
+                'placeholder': 'Email Address'}),
+            'shop_name': forms.fields.TextInput(attrs={
+                'class':'input default subtitle',
+                'placeholder': 'Shop Name'}),
+            'feedback': forms.Textarea(attrs={
+                'class':'large-input default subtitle',
+                'placeholder': 'Type your feedback here'}),
+        }
+
+    def __init__(self, *args, **kwargs):
+        super(ShopFeedbackForm, self).__init__(*args, **kwargs)
+
 class CustomerInformationForm(forms.ModelForm):
     # shop_links
     instagram=forms.URLField(label='',
@@ -387,7 +448,7 @@ class CustomerAccountForm(forms.ModelForm):
 
 class NotificationsForm(forms.ModelForm):
     class Meta:
-        model = Notification
+        model = CustomerNotification
         fields = ['sms', 'email']
         widgets = {
             'sms':forms.CheckboxInput(),

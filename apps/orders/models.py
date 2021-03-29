@@ -122,7 +122,7 @@ class OrderInformation(models.Model):
 
     # Guest session user payment details
     session_notifications = models.OneToOneField(
-        Notification, 
+        CustomerNotification, 
         related_name="sender_address", 
         on_delete=models.SET_NULL, 
         null=True,

@@ -5,3 +5,52 @@
     display: flex; flex-direction: column;
     justify-content: center; align-items: flex-start; align-content: center; 
 }
+
+.settings__header {
+    color: var(--secondary-alt);
+}
+
+.settings__wrapper {
+    max-width: 400px;
+    margin: 1.5rem 0;
+}
+
+.settings__wrapper--wide {
+    min-width: 552px;
+}
+
+.settings__content {
+    margin-bottom: 2rem;
+}
+
+.settings__content__row {
+    min-width: 600px;
+    max-width: 100%;
+    display: flex; justify-content: space-between; align-items: center; align-content: center;
+}
+
+.settings__content__header {
+    margin-bottom: 0.5rem;
+}
+
+.settings__content__description {
+    color: var(--muted-light);
+    margin-bottom: 1.5rem;
+}
+
+.settings__divider {
+    display: block;
+    background-color: var(--muted-lighter);
+    height: 1px;
+    width: 100%;
+    margin: 2rem 0;
+}
+
+.modal__card__delete-account {
+    width: 100%;
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+}

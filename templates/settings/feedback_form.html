@@ -1,0 +1,61 @@
+{% extends 'quicklink/app.html' %}
+{% load static %}
+
+{% block pagetitle %}{{shop.shop_name|title}}: Account Settings{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{% static '/css/merchant-settings/account.css' %}">
+    <link rel="stylesheet" href="{% static '/css/merchant-settings/subnav.css' %}">
+    <link rel="stylesheet" href="{% static '/css/merchant-settings/faqs.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/noty/3.1.4/noty.min.css" integrity="sha512-0p3K0H3S6Q4bEWZ/WmC94Tgit2ular2/n0ESdfEX8l172YyQj8re1Wu9s/HT9T/T2osUw5Gx/6pAZNk3UKbESw==" crossorigin="anonymous">
+{% endblock %}
+
+{% block scriptsHead %}{% endblock %}
+
+{% block maincontent %}
+        {% include 'settings/resources_sidebar.html' %}
+        <div class="resources__container">
+            <div class="settings__container" style="padding: 4rem;">
+                <h1 class="settings__header extra-bold">Feedback Form</h1>
+                <p class="subtitle">Have any comments? Suggestions? Fill out this form and we’ll get back to you as soon as we can!</p>
+                <div class="settings__wrapper settings__wrapper--wide">
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="settings__content">
+                            <h2 class="settings__content__header subtitle bold">What's your name?<span style="color: var(--failure-main)">*</span></h2>
+                            {{ form.name }}
+                        </div>
+        
+                        <div class="settings__content">
+                            <h2 class="settings__content__header subtitle bold">Can I get your email address?<span style="color: var(--failure-main)">*</span></h2>
+                            {{ form.email }}
+                        </div>
+        
+                        <div class="settings__content">
+                            <h2 class="settings__content__header subtitle bold">What's your shop's name?<span style="color: var(--failure-main)">*</span></h2>
+                            {{ form.shop_name }}
+                        </div>
+
+                        <div class="settings__content">
+                            <h2 class="settings__content__header subtitle bold">How can we help?<span style="color: var(--failure-main)">*</span></h2>
+                            {{ form.feedback }}
+                        </div>
+
+                        <button type="submit" class="primary-btn subtitle">Submit Feedback</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    {% if form.errors %}
+        <div id="form-errors" style="display: none;">{{ form.errors.as_json }}</div>
+    {% endif %}
+
+    {% for message in messages %}
+        <div class="js-success-msgs" style="display: none;">{{ message }}</div>
+    {% endfor %}
+
+{% endblock %}
+
+{% block scriptsBody %}
+{% endblock %}
