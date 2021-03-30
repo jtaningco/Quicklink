@@ -35,10 +35,27 @@
     line-height: 16px;
 }
 
+.profile__pic__container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+}
+
+.profile__pic__chevron {
+    cursor: pointer;
+    transition: transform 0.3s ease-in-out;
+}
+
+.profile__pic__chevron.active {
+    transform: rotate(180deg);
+}
+
 .profile__pic {
     cursor: pointer;
     width: 24px; height: 24px;
     border-radius: 50%;
+    margin-right: 0.5rem;
 }
 
 .profile__pic--backup {
@@ -54,6 +71,11 @@
         -ms-user-select: none;
 }
 
+@keyframes appear {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
 .profile__pic--settings {
     display: none; flex-direction: column; justify-content: center; align-content: center; align-items: center;
     position: fixed;
@@ -64,7 +86,7 @@
     padding: 0.5rem 0;
 }
 
-.profile__pic--settings.active { display: flex; }
+.profile__pic--settings.active { display: flex; animation: appear 0.15s linear; }
 
 .profile__pic--settings__link { width: 100%; text-decoration: none; }
 

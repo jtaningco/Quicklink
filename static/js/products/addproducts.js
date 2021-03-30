@@ -26,6 +26,8 @@ function addSize(selector, type) {
         $(this).attr('for', newFor);
     });
 
+    newSizeForm.find("i").css("display", "flex");
+
     sizeFormCount++;
     totalSizeForms.setAttribute('value', sizeFormCount);
     $('#id_' + type + '-TOTAL_FORMS').val(sizeFormCount);
@@ -37,8 +39,6 @@ $('#add-size').click(function() {
 
     if (sizeFormCount < max) {
         addSize('.size-formset:last', 'size_set')
-    } else {
-        alert("You can't have more than 10 available sizes or servings.");
     }
 })
 
@@ -53,8 +53,6 @@ mainForm.addEventListener("click", function (event) {
             event.target.parentElement.remove();
             sizeFormCount--;
             totalSizeForms.setAttribute('value', `${sizeFormCount}`);
-        } else {
-            alert("You can't have less than 1 available size or serving.");
         }
     }
 });
@@ -84,6 +82,8 @@ function addAddon(selector, type) {
             var newFor = $(this).attr('for').replace('-' + (addonFormCount-1) + '-', '-' + addonFormCount + '-');
             $(this).attr('for', newFor);
         });
+
+        newAddonForm.find("i").css("display", "flex");
         
         addonFormCount++;
         totalAddonForms.setAttribute('value', addonFormCount);
@@ -102,8 +102,6 @@ $('#add-addon').click(function() {
 
     if (addonFormCount < max) {
         addAddon('.addon-formset:last', 'addon_set')
-    } else {
-        alert("You can't have more than 10 available addons.");
     }
 })
 
@@ -117,11 +115,6 @@ mainForm.addEventListener("click", function (event) {
             event.target.parentElement.remove();
             addonFormCount--;
             totalAddonForms.setAttribute('value', `${addonFormCount}`);
-        } else {
-            $('.addon-formset').find(':input').each(function() {
-                $(this).css('display', 'none');
-            });
-            addonFormCount--;
         }
     }
 });
@@ -157,34 +150,6 @@ $('#stocks-input-select').click(function() {
     }
  });
 
-// Days Variables
-const openDaysRadio = document.getElementById('open-days');
-const openDaysInput = document.getElementById('id_days');
-
-$('#open-days').click(function() {
-    if ($('#open-days').is(':checked')) { 
-        openDaysInput.disabled = false;
-        openDaysInput.classList.remove('disabled');
-    } else {
-        openDaysInput.disabled = true;
-        openDaysInput.classList.add('disabled');
-    }
-});
-
-// Time Variables
-const cutoffTimeRadio = document.getElementById('cutoff-time');
-const cutoffTimeInput = document.getElementById('id_time');
-
-$('#cutoff-time').click(function() {
-    if ($('#cutoff-time').is(':checked')) { 
-        cutoffTimeInput.disabled = false;
-        cutoffTimeInput.classList.remove('disabled');
-    } else {
-        cutoffTimeInput.disabled = true;
-        cutoffTimeInput.classList.add('disabled');
-    }
-});
-
 // Maximum Orders Variables
 const noLimitsRadio = document.getElementById('no-order-limits');
 const maxOrdersRadio = document.getElementById('orders-input-select');
@@ -216,10 +181,8 @@ $('#orders-input-select').click(function() {
 
 window.onload = function() {
     stocksInput.disabled = true;
-    openDaysInput.disabled = true;
     maxOrdersInput.disabled = true;
 
-    $('.addon-formset').find(':input').each(function() {
-        $(this).css('display', 'none');
-    });
+    $(".size-formset").find("i").first().css("display", "none");
+    $(".addon-formset").find("i").first().css("display", "none");
 }

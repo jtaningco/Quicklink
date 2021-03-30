@@ -69,6 +69,15 @@
     margin: 2rem 0;
 }
 
+.product__image__content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    align-content: center;
+    width: 100%;
+}
+
 .product-form-label {
     height: auto;
     width: auto;
@@ -136,4 +145,15 @@
     justify-content: flex-start;
     align-items: center;
     align-content: center;
+}
+
+.del__icon {
+    color: var(--muted-lighter);
+    width: 12px; height: 12px;
+    margin-left: 1rem;
+    transition: color 0.3s ease-in-out;
+}
+
+.del__icon:hover {
+    color: var(--muted-light);
 }

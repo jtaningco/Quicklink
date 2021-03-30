@@ -11,7 +11,6 @@ function realtimeClock() {
     // Get Time Information
     var hours = rtClock.getHours();
     var minutes = rtClock.getMinutes();
-    var seconds = rtClock.getSeconds();
 
     // Adding the AM/PM System
     var amPm = ( hours < 12 ) ? "AM" : "PM";
@@ -22,10 +21,9 @@ function realtimeClock() {
     // Pad the hours, minutes, and seconds with leading zeros
     hours = ("0" + hours).slice(-2);
     minutes = ("0" + minutes).slice(-2);
-    seconds = ("0" + seconds).slice(-2);
 
     // Display the clock
     document.getElementById('datetime').innerHTML = 
-        month + " " + date + ", " + year + " — " + hours + ":" + minutes + ":" + seconds + " " + amPm;
+        month + " " + date + ", " + year + " — " + hours + ":" + minutes + " " + amPm;
     var t = setTimeout(realtimeClock, 500);
 }

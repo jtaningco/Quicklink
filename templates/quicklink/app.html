@@ -32,7 +32,11 @@
                 {% if request.user|has_avatar %}
                     {% avatar request.user 24 class="img-circle img-responsive" id="js-user-avatar" %}    
                 {% else %}
-                    <div class="profile__pic profile__pic--backup caption bold" id="js-user-avatar">{{ request.user.get_initials }}</div>
+                    <div class="profile__pic__container" id="js-user-avatar">
+                        <div class="profile__pic profile__pic--backup caption bold">{{ request.user.get_initials }}</div>
+                        <img src="https://ik.imagekit.io/ripzjge77zz/Quicklink_App/Merchant/Account_Creation/icons/fi_chevron-down_H9oiI7CW7d.png" 
+                        alt="Chevron Down" class="profile__pic__chevron" id="js-header-chevron">
+                    </div>
                 {% endif %}
                 <div class="profile__pic--settings" id="js-profile-modal">
                     <a href="{% url 'accounts:account-settings' %}" class="profile__pic--settings__link">
@@ -101,12 +105,14 @@
 
     <script>
         const userAvatar = $('#js-user-avatar');
+        const headerChevron = document.getElementById('js-header-chevron');
         const profilePicModal = document.getElementById('js-profile-modal');
 
         userAvatar.click(function(e) {
             e.preventDefault();
             e.stopPropagation();
-            profilePicModal.classList.toggle('active')
+            profilePicModal.classList.toggle('active');
+            headerChevron.classList.toggle('active');
         });
     </script>
 
