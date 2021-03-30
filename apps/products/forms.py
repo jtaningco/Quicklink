@@ -10,8 +10,7 @@ class ProductForm(ModelForm):
         model = Product
         fields = [
             'name', 
-            'description', 
-            'image',
+            'description',
             'stock',
             'orders',
             'instructions',
@@ -40,6 +39,15 @@ class ProductForm(ModelForm):
         }
 
 # FORMSET DRAFTS
+# The formset for placing images
+ImageFormset = inlineformset_factory(
+                    Product,
+                    Image,
+                    can_delete=False,
+                    fields=('image','default'),
+                    extra=3,
+                )
+
 # The formset for editing the size and prices that belong to a product
 SizeFormset = inlineformset_factory(
                     Product,

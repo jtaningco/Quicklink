@@ -58,8 +58,15 @@
                     </div>
 
                     <div class="product-form-images">
-                        {{ form.image }}
+                        {{ imageFormset.management_form }}
+                        <img src="https://ik.imagekit.io/ripzjge77zz/Quicklink_App/Merchant/Account_Creation/icons/u_image_XucX2a74QNx.svg" alt="Image Icon" class="upload__icon">
+                        <div class="upload__content">
+                            <p class="upload__text" id="js-logo-text">Drag your shop's logo here, </p>
+                            <p class="upload__text">or <span class="upload__link" id="js-browse-files">browse through your files.</span></p>
+                        </div>
                     </div>
+
+                    {{ imageFormset.as_p }}
 
                     <div class="product-form-content">
                         <div class="product-form-label">

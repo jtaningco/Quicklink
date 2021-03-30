@@ -43,6 +43,7 @@ def productDetails(request, product_pk):
 def addProduct(request):
     user = request.user
     form = ProductForm()
+    imageFormset = ImageFormset()
     sizeFormset = SizeFormset()
     addonFormset = AddonFormset()
 
@@ -56,7 +57,6 @@ def addProduct(request):
                 name=form.cleaned_data.get('name'),
                 description=form.cleaned_data.get('description'),
                 orders=form.cleaned_data.get('orders'),
-                image=form.cleaned_data.get('image'),
                 instructions=form.cleaned_data.get('instructions'),
             )
 
@@ -75,10 +75,14 @@ def addProduct(request):
             # Save Product
             product.save()
 
+            imageFormset = ImageFormset(request.POST, instance=product)
             sizeFormset = SizeFormset(request.POST, instance=product)
             addonFormset = AddonFormset(request.POST, instance=product)
             
             # Save Formsets
+            if imageFormsets.is_valid():
+                imageFormset.save()
+
             if sizeFormset.is_valid():
                 sizeFormset.save()
 
@@ -96,7 +100,7 @@ def addProduct(request):
                 else:
                     return redirect('/shop/products')
 
-    context = {'form':form, 'sizeFormset':sizeFormset, 'addonFormset':addonFormset}
+    context = {'form':form, 'imageFormset':imageFormset, 'sizeFormset':sizeFormset, 'addonFormset':addonFormset}
     return render(request, 'products/product_form.html', context)
 
 @login_required(login_url='accounts:merchant-login')
@@ -119,7 +123,6 @@ def updateProduct(request, product_pk):
             product.schedule = form.cleaned_data.get('schedule')
             product.days = form.cleaned_data.get('days')
             product.time = form.cleaned_data.get('time')
-            product.image = form.cleaned_data.get('image')
             product.instructions = form.cleaned_data.get('instructions')
             
             product.save()

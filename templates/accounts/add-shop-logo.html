@@ -27,26 +27,26 @@
         <form action="" method="post" enctype="multipart/form-data" style="width: 100%;">
             {% csrf_token %}
             {% if form.logo.value %}
-                <div class="logo__upload__container success" id="js-logo-upload">
-                        <img src="{{ form.logo.value.url }}" alt="User uploaded logo" class="logo__upload__file">
+                <div class="upload__container success" id="js-logo-upload">
+                        <img src="{{ form.logo.value.url }}" alt="User uploaded logo" class="upload__file">
                 </div>
-                <div class="logo__caption logo__upload__text" id="js-browse-files-hidden">
-                    <span class="logo__upload__link" style="text-align: center;">Replace image</span>
+                <div class="caption upload__text" id="js-browse-files">
+                    <span class="upload__link" style="text-align: center;">Replace image</span>
                 </div>
             {% else %}   
-                <div class="logo__upload__container" id="js-logo-upload">
-                    <img src="https://ik.imagekit.io/ripzjge77zz/Quicklink_App/Merchant/Account_Creation/icons/u_image_XucX2a74QNx.svg" alt="Image Icon" class="logo__upload__icon">
-                    <div class="logo__upload__content">
-                        <p class="logo__upload__text" id="js-logo-text">Drag your shop's logo here, </p>
-                        <p class="logo__upload__text">or <span class="logo__upload__link" id="js-browse-files">browse through your files.</span></p>
+                <div class="upload__container" id="js-logo-upload">
+                    <img src="https://ik.imagekit.io/ripzjge77zz/Quicklink_App/Merchant/Account_Creation/icons/u_image_XucX2a74QNx.svg" alt="Image Icon" class="upload__icon">
+                    <div class="upload__content">
+                        <p class="upload__text" id="js-logo-text">Drag your shop's logo here, </p>
+                        <p class="upload__text">or <span class="upload__link" id="js-browse-files">browse through your files.</span></p>
                     </div>
                 </div>
-                <div class="logo__caption logo__upload__text" style="display: none;" id="js-browse-files-hidden">
-                    <span class="logo__upload__link" style="text-align: center;">Replace image</span>
+                <div class="caption upload__text" style="display: none;" id="js-browse-files-hidden">
+                    <span class="upload__link" style="text-align: center;">Replace image</span>
                 </div>
             {% endif %}
             <div style="display: none; ">{{ form.as_p }}</div>
-            <div class="logo__caption">
+            <div class="caption">
                 <p class="subtitle">Supported file formats: .jpg, .jpeg, .png</p>
                 <p class="subtitle">Suggested size: 800x800 pixels</p>
             </div>
@@ -69,6 +69,7 @@
         const fileInput = document.getElementById('id_logo');
         const replaceImageText = document.getElementById('js-browse-files-hidden');
         let file;
+        console.log(dropArea, fileBrowse, fileInput, replaceImageText)
 
         function FileListItems (files) {
             var b = new ClipboardEvent("").clipboardData || new DataTransfer()
@@ -103,7 +104,7 @@
                 let fileReader = new FileReader();
                 fileReader.onload = function() {
                     let fileURL = fileReader.result;
-                    let imgTag = `<img src="${fileURL}" alt="User uploaded logo" class="logo__upload__file">`
+                    let imgTag = `<img src="${fileURL}" alt="User uploaded logo" class="upload__file">`
                     dropArea.innerHTML = imgTag;
                     dropArea.classList.remove("active");
                     dropArea.classList.add("success");
@@ -122,7 +123,7 @@
         window.onload = function() {
             function displayImage(file) {
                 fileURL = (window.URL ? URL : webkitURL).createObjectURL(file)
-                let imgTag = `<img src="${fileURL}" alt="User uploaded logo" class="logo__upload__file">`
+                let imgTag = `<img src="${fileURL}" alt="User uploaded logo" class="upload__file">`
                 dropArea.innerHTML = imgTag;
                 dropArea.classList.remove("active");
                 dropArea.classList.add("success");

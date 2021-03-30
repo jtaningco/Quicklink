@@ -344,6 +344,64 @@ textarea {
   color: var(--muted-dark);
 }
 
+/* Image Upload Container */
+.upload__container {
+  width: 100%;
+  height: auto;
+  padding: 40px 64px;
+  display: flex; flex-direction: column;
+  justify-content: center; align-items: center; align-content: center;
+  background: rgba(254, 217, 164, 0.1);
+  border: 1px dashed var(--secondary-main);
+  box-sizing: border-box;
+  border-radius: 5px;
+  margin: 0.5rem 0;
+  transition: transform 0.3s ease;
+}
+
+.upload__container.active  {
+  border: 1px solid var(--secondary-main);
+  box-shadow: var(--hover-box-shadow);
+}
+
+.upload__container.success.active {
+  border: 1px solid var(--success-main);
+  box-shadow: var(--hover-box-shadow);
+}
+
+.upload__container.success {
+  border: 1px dashed var(--success-main);
+  background: transparent;
+}
+
+.upload__file {
+  max-width: 400px;
+  max-height: 160px;
+}
+
+.upload__content {
+  padding-top: 1rem;
+  width: 100%;
+  display: flex; flex-direction: column; justify-content: center; align-items: center; align-content: center;
+}
+
+.upload__text {
+  margin-top: -4px;
+  padding: 2px;
+}
+
+.upload__link { 
+  cursor: pointer;
+  color: var(--primary-main);
+  border-bottom: 1px solid var(--primary-main);
+  transition: all 0.3s ease-in-out;
+}
+
+.upload__link:hover {
+  color: var(--primary-alt);
+  border-color: 1px solid var(--primary-alt);
+}
+
 /* NICE SELECT STYLE */
 .nice-select {
   display: flex; justify-content: flex-start; align-items: center; align-content: center;
