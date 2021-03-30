@@ -3,7 +3,7 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import Group
 from django.views.decorators.csrf import csrf_exempt
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.contrib.auth.decorators import login_required
 
 from apps.accounts.models import *
@@ -378,18 +378,55 @@ def accountSettings(request):
 @allowed_users(allowed_roles=[User.Types.MERCHANT, User.Types.ADMIN])
 def notificationSettings(request):
     user = request.user
+    shop = user.shop_info
+    merchant_notifications, created = MerchantNotification.objects.get_or_create(user=user)
+    settings = {
+        'received_payouts': merchant_notifications.received_payouts,
+        'daily_order_summary': merchant_notifications.daily_order_summary,
+        'product_updates': merchant_notifications.product_updates,
+        'marketing_updates': merchant_notifications.marketing_updates
+    }
+        
+    context = {'user':user, 'shop':shop, 'settings':settings}
+    return render(request, 'settings/notifications.html', context)
+
+@login_required(login_url='accounts:login')
+@allowed_users(allowed_roles=[User.Types.MERCHANT, User.Types.ADMIN])
+def saveNotificationSettings(request):
+    user = request.user
+    merchant_notifications, created = MerchantNotification.objects.get_or_create(user=user)
 
     if request.method == "POST" and request.is_ajax:
         if request.POST.get("message") == "received_payouts":
-            user.merchant_notifications.
+            if request.POST.get("status") == "true":
+                merchant_notifications.received_payouts = True
+            elif request.POST.get("status") == "false":
+                merchant_notifications.received_payouts = False
+                messages.success(request, "Disabled received payouts notification!")
         if request.POST.get("message") == "daily_order_summary":
-
+            if request.POST.get("status") == "true":
+                merchant_notifications.daily_order_summary = True
+                messages.success(request, "Toggled daily order summary notification!")
+            elif request.POST.get("status") == "false":
+                merchant_notifications.daily_order_summary = False
+                messages.success(request, "Disabled daily order summary notification!")
         if request.POST.get("message") == "product_updates":
-
+            if request.POST.get("status") == "true":
+                merchant_notifications.product_updates = True
+                messages.success(request, "Toggled product updates notification!")
+            elif request.POST.get("status") == "false":
+                merchant_notifications.product_updates = False
+                messages.success(request, "Disabled product updates notification!")
         if request.POST.get("message") == "marketing_updates":
-
-    context = {'user':user}
-    return render(request, 'settings/notifications.html', context)
+            if request.POST.get("status") == "true":
+                merchant_notifications.marketing_updates = True
+                messages.success(request, "Toggled marketing updates notification!")
+            elif request.POST.get("status") == "false":
+                merchant_notifications.marketing_updates = False
+                messages.success(request, "Disabled marketing updates notification!")
+        merchant_notifications.save()
+        return redirect('accounts:notification-settings')
+    return JsonResponse(request.POST, safe=False)
 
 @login_required(login_url='accounts:login')
 @allowed_users(allowed_roles=[User.Types.MERCHANT, User.Types.ADMIN])

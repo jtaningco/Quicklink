@@ -19,7 +19,11 @@
                     <h2 class="settings__content__header subtitle bold">Received Payouts</h2>
                     <div class="switch-whole">
                         <label class="switch">
-                            <input type="checkbox" name="received_payouts" id="id_received_payouts">
+                            {% if settings.received_payouts == True %}
+                                <input type="checkbox" name="received_payouts" id="id_received_payouts" checked>
+                            {% else %}
+                                <input type="checkbox" name="received_payouts" id="id_received_payouts">
+                            {% endif %}
                             <span class="slider round"></span>
                         </label>
                     </div>
@@ -32,7 +36,11 @@
                     <h2 class="settings__content__header subtitle bold">Daily Order Summary</h2>
                     <div class="switch-whole">
                         <label class="switch">
-                            <input type="checkbox" name="daily_order_summary" id="id_daily_order_summary">
+                            {% if settings.daily_order_summary == True %}
+                                <input type="checkbox" name="daily_order_summary" id="id_daily_order_summary" checked>
+                            {% else %}
+                                <input type="checkbox" name="daily_order_summary" id="id_daily_order_summary">
+                            {% endif %}
                             <span class="slider round"></span>
                         </label>
                     </div>
@@ -45,7 +53,11 @@
                     <h2 class="settings__content__header subtitle bold">Product Updates</h2>
                     <div class="switch-whole">
                         <label class="switch">
-                            <input type="checkbox" name="product_updates" id="id_product_updates">
+                            {% if settings.product_updates == True %}
+                                <input type="checkbox" name="product_updates" id="id_product_updates" checked>
+                            {% else %}
+                                <input type="checkbox" name="product_updates" id="id_product_updates">
+                            {% endif %}
                             <span class="slider round"></span>
                         </label>
                     </div>
@@ -58,7 +70,11 @@
                     <h2 class="settings__content__header subtitle bold">Marketing Updates</h2>
                     <div class="switch-whole">
                         <label class="switch">
-                            <input type="checkbox" name="marketing_updates" id="id_marketing_updates">
+                            {% if settings.marketing_updates == True %}
+                                <input type="checkbox" name="marketing_updates" id="id_marketing_updates" checked>
+                            {% else %}
+                                <input type="checkbox" name="marketing_updates" id="id_marketing_updates">
+                            {% endif %}
                             <span class="slider round"></span>
                         </label>
                     </div>
@@ -73,7 +89,7 @@
     {% endif %}
 
     {% for message in messages %}
-        <div class="js-success-msgs" style="display: none;">{{ message }}</div>
+        <div class="js-success-msgs" style="display: flex;">{{ message }}</div>
     {% endfor %}
 
 {% endblock %}
@@ -81,7 +97,8 @@
 {% block scriptsBody %}
     <!-- Notifications Toggle -->
     <script>
-        const current_url = window.location.href;
+        const next_url = window.location.href + "save/";
+        console.log(next_url)
         const toggleBtns = $(":input:checkbox");
 
         toggleBtns.each(function() {
@@ -89,9 +106,24 @@
                 if (this.checked) {
                     var msg = $(this).attr("name");
                     $.ajax({
-                        url: current_url,
+                        url: next_url,
+                        headers: { 'csrftoken' : csrftoken },
                         type: "POST",
-                        data: {"message": msg},
+                        data: {"message": msg, "status": true},
+                        success:function(response){
+                            console.log("AJAX data successfully sent.")
+                        },
+                        error:function (xhr, textStatus, thrownError){
+                            console.log("Can't send AJAX data.", xhr, textStatus, thrownError);
+                        }
+                    });
+                } else {
+                    var msg = $(this).attr("name");
+                    $.ajax({
+                        url: next_url,
+                        headers: {'csrftoken':csrftoken},
+                        type: "POST",
+                        data: {"message": msg, "status": false},
                         success:function(response){
                             console.log("AJAX data successfully sent.")
                         },
