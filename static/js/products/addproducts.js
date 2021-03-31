@@ -177,7 +177,59 @@ $('#orders-input-select').click(function() {
         maxOrdersInput.disabled = true;
         maxOrdersInput.classList.add('disabled');
     }
- });
+});
+
+$(".input").on("keyup", function() {    	
+    canChangeColor();
+});
+
+$(":input:file").change(function() {
+    canChangeColor();
+});
+
+$(":input:radio").change(function() {
+    canChangeColor();
+});
+
+function canChangeColor(index){          
+    var can = true;
+
+    if ($("#stocks-input-select").is(':checked')) {
+        console.log($("#id_stock").val());
+    }
+
+    if ($("#id_name").val()=='' && $("#id_description").val()=='') {
+        console.log("Name and Description Failed!")
+        can = false
+    } else if (document.getElementById('id_image_set-0-image').files.length == 0) {
+        console.log("Image Failed!")
+        can = false 
+    } else if ($("#id_size_set-0-size").val()=='' && $("#id_size_set-0-price_size").val()=='') {
+        console.log("Sizes Failed!")
+        can = false 
+    } else if (!$("#made-to-order").is(':checked')) {
+        can = false
+        if ($("#stocks-input-select").is(':checked') && $("#id_stock").val()!='') {
+            can = true
+        }
+    } else if ($("#stocks-input-select").is(':checked') && $("#id_stock").val()=='') {
+        can = false
+    } else if (!$("#no-order-limits").is(':checked')) {
+        can = false
+        if ($("#orders-input-select").is(':checked') && $("#id_orders").val()!='') {
+            can = true
+        }
+    } else if ($("#orders-input-select").is(':checked') && $("id_orders").val()=='') {
+        console.log("Orders input selected but input is blank!")
+        can = false
+    }
+    
+    if (can) {
+        $('#js-preview-product-btn').toggleClass('disabled', false)
+    } else {
+        $('#js-preview-product-btn').toggleClass('disabled', true)
+    }
+}
 
 window.onload = function() {
     stocksInput.disabled = true;

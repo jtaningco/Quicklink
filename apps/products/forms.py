@@ -56,11 +56,11 @@ SizeFormset = inlineformset_factory(
                     fields=('size', 'price_size'),
                     widgets={
                         'size': forms.fields.TextInput(attrs={
-                            'class':'input default subtitle',
+                            'class':'input default subtitle js-size-input',
                             'placeholder': 'Ex. 1 Dozen'}),
 
                         'price_size': forms.fields.NumberInput(attrs={
-                            'class':'input default subtitle',
+                            'class':'input default subtitle js-size-price-input',
                             'placeholder': 'Php'}),
                     },
                     labels={
@@ -77,11 +77,11 @@ AddonFormset = inlineformset_factory(
                     fields=('addon', 'price_addon'),
                     widgets={
                         'addon': forms.fields.TextInput(attrs={
-                            'class':'input default subtitle',
+                            'class':'input default subtitle js-addon-input',
                             'placeholder': 'Additional Chocolate Chip'}),
 
                         'price_addon': forms.fields.NumberInput(attrs={
-                            'class':'input default subtitle',
+                            'class':'input default subtitle js-addon-price-input',
                             'placeholder': 'Php'}),
                     },
                     labels={

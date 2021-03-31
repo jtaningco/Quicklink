@@ -30,14 +30,14 @@ def products(request):
     context = {'products':products}
     return render(request, 'products/products.html', context)
 
-@login_required(login_url='accounts:merchant-login')
+@login_required(login_url='accounts:login')
 @setup_required
 @allowed_users(allowed_roles=[User.Types.MERCHANT, User.Types.ADMIN])
 def productDetails(request, product_pk):
     product = Product.objects.get(id=product_pk)
     return render(request, 'products/product_modal.html', {'product':product})
 
-@login_required(login_url='accounts:merchant-login')
+@login_required(login_url='accounts:login')
 @setup_required
 @allowed_users(allowed_roles=[User.Types.MERCHANT, User.Types.ADMIN])
 def addProduct(request):
@@ -70,7 +70,7 @@ def addProduct(request):
             if 'orders-input-select' in request.POST:
                 product.orders = form.cleaned_data.get('orders')
             else:
-                product.orders = "No Limit"
+                product.no_order_limit = True
             
             # Save Product
             product.save()
@@ -80,7 +80,7 @@ def addProduct(request):
             addonFormset = AddonFormset(request.POST, instance=product)
             
             # Save Formsets
-            if imageFormsets.is_valid():
+            if imageFormset.is_valid():
                 imageFormset.save()
 
             if sizeFormset.is_valid():
@@ -103,7 +103,7 @@ def addProduct(request):
     context = {'form':form, 'imageFormset':imageFormset, 'sizeFormset':sizeFormset, 'addonFormset':addonFormset}
     return render(request, 'products/product_form.html', context)
 
-@login_required(login_url='accounts:merchant-login')
+@login_required(login_url='accounts:login')
 @setup_required
 @allowed_users(allowed_roles=[User.Types.MERCHANT, User.Types.ADMIN])
 def updateProduct(request, product_pk):
@@ -151,7 +151,7 @@ def updateProduct(request, product_pk):
     context = {'form':form, 'product':product, 'sizeFormset':sizeFormset, 'addonFormset':addonFormset}
     return render(request, 'products/edit_product.html', context)
 
-@login_required(login_url='accounts:merchant-login')
+@login_required(login_url='accounts:login')
 @setup_required
 @allowed_users(allowed_roles=[User.Types.MERCHANT, User.Types.ADMIN])
 def deleteProduct(request, product_pk):

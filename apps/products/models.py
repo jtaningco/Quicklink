@@ -20,15 +20,16 @@ class Product(models.Model):
 
     # Product name and description
     name = models.CharField(max_length=30, null=True, blank=False)
-    description = models.CharField(max_length=100, null=True, blank=False)
+    description = models.CharField(max_length=140, null=True, blank=False)
 
     # Stocks available
     stock = models.CharField(max_length=55, null=True, blank=True, default=0)
 
     # Maximum number of orders
+    no_order_limit = models.BooleanField(null=True, blank=True, default=False)
     orders = models.PositiveIntegerField(null=True, blank=True, default=0)
 
-    instructions = models.CharField(max_length=125, null=True, blank=True, default="")
+    instructions = models.CharField(max_length=140, null=True, blank=True, default="")
     
     # Cheapest and Highest Prices
     min_price = models.CharField(max_length=25, null=True, blank=True)
