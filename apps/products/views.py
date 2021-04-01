@@ -64,7 +64,7 @@ def addProduct(request):
             if 'stocks-input-select' in request.POST:
                 product.stock = form.cleaned_data.get('stock')
             else:
-                product.stock = "Made to Order"
+                product.made_to_order = True
 
             # Insert if radio is checked for order
             if 'orders-input-select' in request.POST:
@@ -112,25 +112,44 @@ def updateProduct(request, product_pk):
 
     sizes = Size.objects.filter(product=product)
     addons = Addon.objects.filter(product=product)
-    sizeFormset = SizeFormset()
-    addonFormset = AddonFormset()
+    imageFormset = ImageFormset(instance=product)
+    sizeFormset = SizeFormset(instance=product)
+    addonFormset = AddonFormset(instance=product)
 
     if request.method == 'POST':
         form = ProductForm(request.POST, instance=product)
         if form.is_valid():
-            product.name = form.cleaned_data.get('name')
-            product.description = form.cleaned_data.get('description')
-            product.schedule = form.cleaned_data.get('schedule')
-            product.days = form.cleaned_data.get('days')
-            product.time = form.cleaned_data.get('time')
-            product.instructions = form.cleaned_data.get('instructions')
+            product = Product.objects.create(
+                user=user,
+                name=form.cleaned_data.get('name'),
+                description=form.cleaned_data.get('description'),
+                orders=form.cleaned_data.get('orders'),
+                instructions=form.cleaned_data.get('instructions'),
+            )
+
+            # Insert if radio is checked for stock
+            if 'stocks-input-select' in request.POST:
+                product.stock = form.cleaned_data.get('stock')
+            else:
+                product.made_to_order = True
+
+            # Insert if radio is checked for order
+            if 'orders-input-select' in request.POST:
+                product.orders = form.cleaned_data.get('orders')
+            else:
+                product.no_order_limit = True
             
+            # Save Product
             product.save()
 
-            sizeFormset = SizeFormset(request.POST, instance=sizes)
-            addonFormset = AddonFormset(request.POST, instance=addons)
+            imageFormset = ImageFormset(request.POST, instance=product)
+            sizeFormset = SizeFormset(request.POST, instance=product)
+            addonFormset = AddonFormset(request.POST, instance=product)
             
             # Save Formsets
+            if imageFormset.is_valid():
+                imageFormset.save()
+
             if sizeFormset.is_valid():
                 sizeFormset.save()
 

@@ -3,6 +3,5 @@ from .models import *
 
 # Register your models here.
 admin.site.register(Product)
-admin.site.register(Tag)
 admin.site.register(Size)
 admin.site.register(Addon)

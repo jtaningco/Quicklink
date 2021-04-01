@@ -22,7 +22,7 @@ class ProductForm(ModelForm):
                 'placeholder': 'Ex. Chocolate Chip Cookies'}),
             
             'description': forms.Textarea(attrs={
-                'class':'large-input default subtitle',
+                'class':'input large-input default subtitle',
                 'placeholder': 'Describe your product for your customers to see!'}),
 
             'stock': forms.fields.NumberInput(attrs={
@@ -34,7 +34,7 @@ class ProductForm(ModelForm):
                 'placeholder': '10'}),
             
             'instructions': forms.Textarea(attrs={
-                'class':'large-input default subtitle',
+                'class':'input large-input default subtitle',
                 'placeholder': 'List them down here!'}),
         }
 

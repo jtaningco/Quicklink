@@ -265,6 +265,7 @@ textarea {
   height: 40px;
   padding: 0 16px;
   margin: 0.5rem 0;
+  border: 1px solid var(--muted-lighter);
 }
 
 .large-input { padding: 16px; min-height: 120px; }
@@ -274,6 +275,7 @@ textarea {
   color: var(--muted-lighter);
   margin-left: 0.25rem;
   margin-top: 0.1rem;
+  padding: 0;
 }
 
 .smallest-input__container {
@@ -394,6 +396,7 @@ textarea {
 }
 
 .upload__link { 
+  margin: 0.5rem;
   cursor: pointer;
   color: var(--primary-alt);
   border-bottom: 1px solid var(--primary-alt);
@@ -753,6 +756,7 @@ input:checked + .slider:before {
   background: var(--modal-bg-color);
   overflow: hidden;
   transition: all 0.4s ease;
+  z-index: 999;
 }
 
 .modal__card__wrapper {

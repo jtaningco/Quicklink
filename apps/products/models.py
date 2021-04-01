@@ -7,14 +7,13 @@ from imagekit.processors import ResizeToFill
 import pdb
 
 # Create your models here.
-class Tag(models.Model):
-    name = models.CharField(max_length=55, null=True, blank=True)
+# class Tag(models.Model):
+#     name = models.CharField(max_length=55, null=True, blank=True)
 
-    def __str__(self):
-        return self.name
+#     def __str__(self):
+#         return self.name
 
 class Product(models.Model):
-    # tags = models.ManyToManyField(Tag)
     # User manipulating the product (request.user — whoever is logged in)
     user = models.ForeignKey(User, null=True, on_delete=models.SET_NULL, related_name="shop_product")
 
@@ -23,7 +22,8 @@ class Product(models.Model):
     description = models.CharField(max_length=140, null=True, blank=False)
 
     # Stocks available
-    stock = models.CharField(max_length=55, null=True, blank=True, default=0)
+    made_to_order = models.BooleanField(null=True, blank=True, default=False)
+    stock = models.PositiveIntegerField(null=True, blank=True, default=0)
 
     # Maximum number of orders
     no_order_limit = models.BooleanField(null=True, blank=True, default=False)
@@ -36,6 +36,7 @@ class Product(models.Model):
     max_price = models.CharField(max_length=25, null=True, blank=True)
 
     # Number of orders sold
+    active = models.BooleanField(null=True, blank=True, default=True)
     sold = models.PositiveIntegerField(null=True, blank=True, default=0)
 
     def __str__(self):

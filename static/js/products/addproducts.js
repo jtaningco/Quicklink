@@ -181,46 +181,41 @@ $('#orders-input-select').click(function() {
 
 $(".input").on("keyup", function() {    	
     canChangeColor();
+    editPreview();
 });
 
 $(":input:file").change(function() {
     canChangeColor();
+    editPreview();
 });
 
 $(":input:radio").change(function() {
     canChangeColor();
+    editPreview();
 });
 
 function canChangeColor(index){          
     var can = true;
 
-    if ($("#stocks-input-select").is(':checked')) {
-        console.log($("#id_stock").val());
-    }
-
     if ($("#id_name").val()=='' && $("#id_description").val()=='') {
-        console.log("Name and Description Failed!")
         can = false
     } else if (document.getElementById('id_image_set-0-image').files.length == 0) {
-        console.log("Image Failed!")
         can = false 
     } else if ($("#id_size_set-0-size").val()=='' && $("#id_size_set-0-price_size").val()=='') {
-        console.log("Sizes Failed!")
         can = false 
     } else if (!$("#made-to-order").is(':checked')) {
-        can = false
-        if ($("#stocks-input-select").is(':checked') && $("#id_stock").val()!='') {
+        if ($("#stocks-input-select").is(':checked')) {
             can = true
+        } else {
+            can = false
         }
-    } else if ($("#stocks-input-select").is(':checked') && $("#id_stock").val()=='') {
-        can = false
     } else if (!$("#no-order-limits").is(':checked')) {
-        can = false
-        if ($("#orders-input-select").is(':checked') && $("#id_orders").val()!='') {
+        if ($("#orders-input-select").is(':checked')) {
             can = true
+        } else {
+            can = false
         }
-    } else if ($("#orders-input-select").is(':checked') && $("id_orders").val()=='') {
-        console.log("Orders input selected but input is blank!")
+    } else if ($("#orders-input-select").is(':checked') && $("id_orders").val() == '') {
         can = false
     }
     
@@ -231,10 +226,114 @@ function canChangeColor(index){
     }
 }
 
+const productHeader = document.getElementById("js-product-header");
+const productName = document.getElementById("js-product-name");
+const productDescription = document.getElementById("js-product-description");
+const productStocks = document.getElementById("js-product-stocks");
+const productInstructions = document.getElementById("js-product-instructions");
+const productSizes = document.getElementById("js-product-sizes");
+const includeAddons = document.getElementById("js-toggle-product-addons");
+const productAddons = document.getElementById("js-product-addons");
+
+function editPreview() {
+    if ($("#id_name").val() == "") {
+        productHeader.innerHTML = "Unnamed Product";
+    } else {
+        productHeader.innerHTML = $("#id_name").val();
+    }
+
+    productName.innerHTML = $("#id_name").val();
+    productDescription.innerHTML = $("#id_description").val();
+
+    if ($("#made-to-order").is(":checked")) {
+        productStocks.innerHTML = "Made to Order"
+    } else {
+        var stocks = $("#id_stock").val();
+        productStocks.innerHTML = `${stocks} stocks remaining`
+    }
+
+    if ($("#id_instructions").val()) {
+        var instructions = $("#id_instructions").val();
+        productInstructions.innerHTML = `Possible Allergens: ${instructions}`
+        $("#js-product-instructions").css("display", "flex");
+    }
+}
+
+function addSizesToPreview() {
+    const sizeInputs = $('.js-size-input');
+    var sizeList = [];
+
+    sizeInputs.each(function(index) {
+        var sizeInput = $(this).val();
+        var sizePriceInput = $('.js-size-price-input').eq(index).val();;
+        const sizeHTML = String(`<div class="modal__card__content--row"><label class="radio-mobile"><input type="radio"><span class="radio-select-mobile"></span></label><p>${String(sizeInput)} (PHP ${String(sizePriceInput)})</p></div>`)
+        sizeList.push(sizeHTML);
+    });
+
+    productSizes.innerHTML = sizeList.join("")
+}
+
+function addAddonsToPreview() {
+    const addonInputs = $('.js-addon-input');
+    var addonList = [];
+
+    addonInputs.each(function(index) {
+        var addonInput = $(this).val();
+        var addonPriceInput = $(".js-addon-price-input").eq(index).val();
+        const addonHTML = `<div class="modal__card__content--row"><label class="checkbox-mobile"><input type="checkbox"><span class="checkmark-mobile"></span></label><p>${String(addonInput)} <span style="color: var(--muted-lighter);">(+ PHP ${String(addonPriceInput)})</span></p></div>`
+        addonList.push(addonHTML);
+    });
+
+    if (addonList.length > 0) {
+        $("#js-toggle-product-addons").css("display", "flex");
+        productAddons.innerHTML = addonList.join("")
+    }
+}
+
+function modalAppear() {
+    $("main").css("overflow-y", "hidden");
+    $("#js-preview-product-modal").css("display", "flex");
+    $("#js-preview-product-modal").css("opacity", "1");
+}
+
+function modalExit() {
+    $("main").css("overflow-y", "auto");
+    $("#js-preview-product-modal").css("display", "none");
+    $("#js-preview-product-modal").css("opacity", "0");
+}
+
+function initializeSlider() {
+    loadImages(fileInput0.files[0], fileInput1.files[0], fileInput2.files[0]);
+    $('#js-image-slider').slick({
+        dots: true,
+        infinite: false,
+        speed: 400,
+        fade: true,
+        cssEase: 'linear',
+        autoplay: true,
+        autoplaySpeed: 4000,
+        adaptiveHeight: false
+    });
+}
+
 window.onload = function() {
     stocksInput.disabled = true;
     maxOrdersInput.disabled = true;
 
     $(".size-formset").find("i").first().css("display", "none");
     $(".addon-formset").find("i").first().css("display", "none");
+
+    $("#js-preview-product-btn").click(function() {
+        addSizesToPreview();
+        addAddonsToPreview();
+        modalAppear();
+        initializeSlider();
+    });
+
+    $(".js-exit-modal").each(function() {
+        $(this).click(function() {
+            modalExit();
+            $('#js-image-slider').slick('unslick');
+        });
+    });
 }

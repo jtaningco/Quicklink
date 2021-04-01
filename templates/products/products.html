@@ -76,15 +76,15 @@
                             <tr class="products__table__row-1">
                         {% endif %}
                             <td class="product__table__cell table-select">
-                                <input type="checkbox" id="select" name="select" value="select">
+                                <input type="checkbox" id="id_select_{{ forloop.counter0 }}"  class="js-select-btn" name="select" value="{{ product.id }}">
                             </td>
                             <td class="product__table__cell subtitle bold">{{product.name}}</td>
-                            <td class="product__table__cell subtitle">{{product.stock}}</td>
+                            <td class="product__table__cell subtitle">{% if product.made_to_order == True %}Made to Order{% else %}{{product.stock}}{% endif %}</td>
                             <td class="product__table__cell subtitle">{{product.sold}}</td> <!-- Insert Total Sold Here -->
                             <td class="product__table__cell">
                                 <div class="button-wrapper">
                                     <div class="button r" id="button-1">
-                                        <input type="checkbox" name="switch" class="switch" id="switch">
+                                        <input type="checkbox" name="switch" class="js-switch-btn" id="id_switch_{{ forloop.counter0 }}" value="{{ product.id }}">
                                         <div class="knobs"></div>
                                         <div class="layer"></div>
                                     </div>

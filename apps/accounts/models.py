@@ -26,7 +26,7 @@ class MyUserManager(BaseUserManager):
     ## A custom user manager to deal with emails as unique identifiers for auth
     # instead of usernames. The default that's used is "UserManager"
 
-    def create_user(self, email, password, **extra_fields):
+    def _create_user(self, email, password, **extra_fields):
         # Creates and saves a User with the given email and password.
         if not email:
             raise ValueError('The email must be set')
@@ -78,7 +78,7 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     USERNAME_FIELD = 'email'
     EMAIL_FIELD = 'email'
-    REQUIRED_FIELDS = ['role', 'password']
+    REQUIRED_FIELDS = []
     
     objects = MyUserManager()
 
