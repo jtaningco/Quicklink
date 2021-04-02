@@ -29,24 +29,29 @@ fileBrowse.addEventListener('click', function() {
     openInput();
 });
 
+function displayImageInputs(el) {
+    if (el.attr("id") == "id_image_set-0-image") {
+        var file_name = String(fileInput0.value).split("\\")[2];
+        document.getElementById("js-primary-image").innerHTML = `<div class='product-form-label'><p class='subtitle'>Display Image: <span class='upload__link subtitle' id='js-default'>${file_name}</span>`
+        $("#id_image_set-0-default").prop('checked', true);
+        $("#js-default").click(function(){ fileInput0.click(); })
+    } else if (el.attr("id") == "id_image_set-1-image" || el.attr("id") == "id_image_set-2-image") {
+        var file_name_2 = String(fileInput1.value).split("\\")[2];
+        var file_name_3 = String(fileInput2.value).split("\\")[2];
+        if (file_name_3 == undefined || file_name_3 == null) {
+            document.getElementById("js-other-images").innerHTML = `<p class='subtitle'>Other Images:</p><span class='upload__link subtitle' id='js-second-image'>${file_name_2}</span>`
+        } else {
+            document.getElementById("js-other-images").innerHTML = `<p class='subtitle'>Other Images:</p><span class='upload__link subtitle' id='js-second-image'>${file_name_2}</span><span class='upload__link subtitle' id='js-third-image'>${file_name_3}</span>`
+            fileBrowse.style.display = "none";
+        }
+        $("#js-second-image").click(function(){ fileInput1.click(); })
+        $("#js-third-image").click(function(){ fileInput2.click(); })
+    }
+}
+
 $(":input:file").each(function() {
     $(this).change(function() {
-        if ($(this).attr("id") == "id_image_set-0-image") {
-            var file_name = String(fileInput0.value).split("\\")[2];
-            document.getElementById("js-primary-image").innerHTML = `<div class='product-form-label'><p class='subtitle'>Display Image: <span class='upload__link subtitle' id='js-default'>${file_name}</span>`
-            $("#js-default").click(function(){ fileInput0.click(); })
-        } else if ($(this).attr("id") == "id_image_set-1-image" || $(this).attr("id") == "id_image_set-2-image") {
-            var file_name_2 = String(fileInput1.value).split("\\")[2];
-            var file_name_3 = String(fileInput2.value).split("\\")[2];
-            if (file_name_3 == undefined || file_name_3 == null) {
-                document.getElementById("js-other-images").innerHTML = `<p class='subtitle'>Other Images:</p><span class='upload__link subtitle' id='js-second-image'>${file_name_2}</span>`
-            } else {
-                document.getElementById("js-other-images").innerHTML = `<p class='subtitle'>Other Images:</p><span class='upload__link subtitle' id='js-second-image'>${file_name_2}</span><span class='upload__link subtitle' id='js-third-image'>${file_name_3}</span>`
-                fileBrowse.style.display = "none";
-            }
-            $("#js-second-image").click(function(){ fileInput1.click(); })
-            $("#js-third-image").click(function(){ fileInput2.click(); })
-        }
+        displayImageInputs($(this));
     });
 });
 

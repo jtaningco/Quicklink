@@ -165,7 +165,7 @@
 
 .modal__card__wrapper {
     padding: 0;
-    max-width: 600px;
+    width: 600px;
     max-height: 80vh;
     overflow-y: scroll;
     justify-content: flex-start;
@@ -204,12 +204,17 @@
     height: 176px;
 }
 
+.modal__card__content {
+    width: 100%;
+    padding: 1rem;
+}
+
 .modal__card__content__product {
     width: 100%;
     display: flex; flex-direction: column;
     justify-content: flex-start; align-items: flex-start; 
     align-content: center;
-    padding: 0.5rem 2rem;
+    padding: 1rem 0;
 }
 
 .modal__card__content__product.choices {
@@ -218,7 +223,7 @@
 
 .modal__card__footer {
     padding: 0 1.5rem;
-    height: 72px;
+    min-height: 72px;
     width: inherit;
     display: flex; flex-wrap: nowrap; justify-content: flex-end; 
     align-items: center; align-content: center;

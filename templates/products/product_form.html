@@ -106,10 +106,10 @@
                         <div class="product-form-stocks">
                             <div class="radio-select-row">
                                 <label class="radio-mobile">
-                                    <input type="radio" name="made-to-order" id="made-to-order">
+                                    {{ form.made_to_order }}
                                     <span class="radio-select-mobile"></span>
                                 </label>
-                                <label for="made-to-order" class="radio-label subtitle">Made to Order</label>
+                                <label for="made-to_order" class="radio-label subtitle">Made to Order</label>
                             </div>
                             <div class="radio-select-row">
                                 <label class="radio-mobile">
@@ -130,7 +130,7 @@
                         <div class="product-form-stocks">
                             <div class="radio-select-row">
                                 <label class="radio-mobile">
-                                    <input type="radio" name="no-order-limits" id="no-order-limits"> 
+                                    {{ form.no_order_limit }}
                                     <span class="radio-select-mobile"></span>
                                 </label>
                                 <label for="no-order-limits" class="radio-label subtitle">No Limit</label>
@@ -195,7 +195,7 @@
                             <h2 class="bold" style="padding-bottom: 0.5rem;" id="js-product-name"></h2>
                             <p class="subtitle" id="js-product-description"></p>
                             <p class="subtitle" style="padding: 1rem 0; color: var(--secondary-alt);" id="js-product-stocks"></p>
-                            <p class="subtitle" style="padding-bottom: 1rem; color: var(--muted-lighter);" id="js-product-instructions" style="display: none;"></p>
+                            <p class="subtitle" style="color: var(--muted-lighter);" id="js-product-instructions" style="display: none;"></p>
                         </div>
                         <div class="modal__card__content__product">
                             <p class="bold">Size</p>
@@ -209,10 +209,10 @@
                             <p class="bold">Special Instructions</p>
                             <div class="input default large-input"><p class="subtitle" style="color: var(--muted-lighter);">Leave us a note! (Optional)</p></div>
                         </div>
-                        <div class="modal__card__footer">
-                            <button type="button" class="secondary-btn subtitle bold js-exit-modal" style="margin-right: 1rem;">Back to Editing</button>
-                            <button type="submit" class="primary-btn subtitle bold">Save Product</button>
-                        </div>
+                    </div>
+                    <div class="modal__card__footer">
+                        <button type="button" class="secondary-btn subtitle bold js-exit-modal" style="margin-right: 1rem;">Back to Editing</button>
+                        <button type="submit" class="primary-btn subtitle bold">Save Product</button>
                     </div>
                 </div>
             </div>

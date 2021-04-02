@@ -56,7 +56,6 @@ def addProduct(request):
                 user=user,
                 name=form.cleaned_data.get('name'),
                 description=form.cleaned_data.get('description'),
-                orders=form.cleaned_data.get('orders'),
                 instructions=form.cleaned_data.get('instructions'),
             )
 
@@ -75,18 +74,25 @@ def addProduct(request):
             # Save Product
             product.save()
 
-            imageFormset = ImageFormset(request.POST, instance=product)
+            imageFormset = ImageFormset(request.POST, request.FILES, instance=product)
             sizeFormset = SizeFormset(request.POST, instance=product)
             addonFormset = AddonFormset(request.POST, instance=product)
             
             # Save Formsets
             if imageFormset.is_valid():
                 imageFormset.save()
+                images = Image.objects.filter(product=product)
+                count = 0
+                for image in images:
+                    name = f"{image.get_product_name()}_{count}"
+                    image.name = name
+                    image.save()
+                    count += 1
 
             if sizeFormset.is_valid():
                 sizeFormset.save()
 
-            if addonFormset.is_valid():
+            if addonFormset.is_valid():                
                 addonInputs = request.POST.get('addonForm-TOTAL_FORMS')
                 if int(addonInputs) > 1:
                     addonFormset.save()
@@ -107,11 +113,11 @@ def addProduct(request):
 @setup_required
 @allowed_users(allowed_roles=[User.Types.MERCHANT, User.Types.ADMIN])
 def updateProduct(request, product_pk):
+    user = request.user
     product = Product.objects.get(id=product_pk)
     form = ProductForm(instance=product)
+    images = list(Image.objects.filter(product=product))
 
-    sizes = Size.objects.filter(product=product)
-    addons = Addon.objects.filter(product=product)
     imageFormset = ImageFormset(instance=product)
     sizeFormset = SizeFormset(instance=product)
     addonFormset = AddonFormset(instance=product)
@@ -119,14 +125,10 @@ def updateProduct(request, product_pk):
     if request.method == 'POST':
         form = ProductForm(request.POST, instance=product)
         if form.is_valid():
-            product = Product.objects.create(
-                user=user,
-                name=form.cleaned_data.get('name'),
-                description=form.cleaned_data.get('description'),
-                orders=form.cleaned_data.get('orders'),
-                instructions=form.cleaned_data.get('instructions'),
-            )
-
+            product.name = form.cleaned_data.get('name')
+            product.description = form.cleaned_data.get('description')
+            product.instructions = form.cleaned_data.get('instructions')
+            
             # Insert if radio is checked for stock
             if 'stocks-input-select' in request.POST:
                 product.stock = form.cleaned_data.get('stock')
@@ -142,13 +144,28 @@ def updateProduct(request, product_pk):
             # Save Product
             product.save()
 
-            imageFormset = ImageFormset(request.POST, instance=product)
+            imageFormset = ImageFormset(request.POST, request.FILES, instance=product)
             sizeFormset = SizeFormset(request.POST, instance=product)
             addonFormset = AddonFormset(request.POST, instance=product)
             
             # Save Formsets
             if imageFormset.is_valid():
                 imageFormset.save()
+                new_images = Image.objects.filter(product=product)
+                count = 0
+                for image in new_images:
+                    name = f"{image.get_product_name()}_{count}"
+                    image.name = name
+                    image.save()
+                    count += 1
+            else:
+                new_images = Image.objects.filter(product=product)
+                count = 0
+                for image in new_images:
+                    name = f"{image.get_product_name()}_{count}"
+                    image.name = name
+                    image.save()
+                    count += 1
 
             if sizeFormset.is_valid():
                 sizeFormset.save()
@@ -167,7 +184,7 @@ def updateProduct(request, product_pk):
                 else:
                     return redirect('/shop/products')
 
-    context = {'form':form, 'product':product, 'sizeFormset':sizeFormset, 'addonFormset':addonFormset}
+    context = {'form':form, 'product':product, 'images':images, 'imageFormset':imageFormset, 'sizeFormset':sizeFormset, 'addonFormset':addonFormset}
     return render(request, 'products/edit_product.html', context)
 
 @login_required(login_url='accounts:login')

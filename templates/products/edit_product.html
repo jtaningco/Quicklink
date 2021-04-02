@@ -5,199 +5,292 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edit Product</title>
+    <title>Edit Product: {{ product.name }}</title>
     <link rel="stylesheet" href="{% static '/css/main.css' %}">
     <link rel="stylesheet" href="{% static '/css/navbar.css' %}">
-    <link rel="stylesheet" href="{% static '/css/products.css' %}">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.1/css/all.css" integrity="sha384-vp86vTRFVJgpjF9jiIGPEEqYqlDwgyBgEF109VFjmqGmIY/Y4HV4d3Gp2irVfcrp" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static '/css/header.css' %}">
+    <link rel="stylesheet" href="{% static '/css/products/product-form.css' %}">
+
+    <!-- NOTY Notification Stylesheets -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/noty/3.1.4/noty.min.css" integrity="sha512-0p3K0H3S6Q4bEWZ/WmC94Tgit2ular2/n0ESdfEX8l172YyQj8re1Wu9s/HT9T/T2osUw5Gx/6pAZNk3UKbESw==" crossorigin="anonymous">
 
     <!-- FONT AWESOME KIT -->
-    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.1/css/all.css" integrity="sha384-vp86vTRFVJgpjF9jiIGPEEqYqlDwgyBgEF109VFjmqGmIY/Y4HV4d3Gp2irVfcrp" crossorigin="anonymous">
 
     <!-- JQUERY < 3.0.0 -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+    <!-- SLICK SLIDER -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css" integrity="sha512-yHknP1/AwR+yx26cB1y0cjvQUMvEa2PFzt1c9LlS4pRQ5NOTZFWbhBig+X9G9eYW/8m0/4OXNx8pxJ6z57x0dw==" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css" integrity="sha512-17EgCFERpgZKcm0j0fEq1YCJuyAWdz9KUtv1EjVuaOz8pDnh/0nZxmU6BBXwaaxqoi9PQXnRWqlcDB027hgv9A==" crossorigin="anonymous" />
 </head>
 <body>
-    <form id="product-form" action="" method="POST">
-    <div class="product-header-container">
-        <div class="product-header-wrapper">
-            <div class="product-header-content">
-                <h3 class="bold">{{ product.name }}</h1>
-            </div>
-            <div class="product-header-btns">   
-                <button class="secondary-btn">
-                    <a href="{% url 'products:products' %}" class="secondary-btn-link">Cancel</a>
-                </button>
-                <button class="primary-btn" id="preview-btn">
-                    <input type="submit" name="Submit" value="Preview Product" id="submitBtn" class="preview-btn">
-                </button>
-            </div>
-        </div>
-    </div>
-    
-    {% include 'quicklink/navbar.html' %}
-
-    <main>
-        <div class="product-form-container">
-            <div class="product-form-wrapper">
-                <div class="product-form-back">
-                    <a href="{% url 'products:products' %}" class="subtitle">
-                        <i class="fas fa-chevron-left"></i>
-                        Back to Products
+    <form id="product-form" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="header-container product-header-container">
+            <div class="header-wrapper product-header-wrapper">
+                <h1 class="body bold" id="js-product-header">{{ product.name|title }}</h1>
+                <div class="product-header-btns">
+                    <a href="{% url 'products:products' %}" style="text-decoration: none; margin-right: 8px;">
+                        <button type="button" class="secondary-btn subtitle bold">
+                            Cancel
+                       </button>
                     </a>
+                    <button type="button" id="js-preview-product-btn" class="primary-btn disabled subtitle bold">Preview Product</button>
                 </div>
-        
-                <h2 class="bold" style="color: #FF8A00;">Edit Product</h2>
-                
-                {% csrf_token %}
-                
-                <div class="product-form-content">
-                    <div class="product-form-label">
-                        <p>Name</p><span style="color: var(--failure-main);">*</span>
-                    </div>
-                    {{ form.name }}
-                </div>
-
-                <div class="product-form-content">
-                    <div class="product-form-label">
-                        <p>Description</p><span style="color: var(--failure-main);">*</span>
-                    </div>
-                    {{ form.description }}
-                </div>
-
-                <div class="product-form-images">
-                    {{ form.image }}
-                </div>
-
-                <div class="product-form-content">
-                    <div class="product-form-label">
-                        <p>Available Sizes or Servings</p><span style="color: var(--failure-main);">*</span>
-                    </div>
-                    {{ sizeFormset.management_form }}
-
-                    <!-- The form-TOTAL_FORMS input contains the value of the total number of forms being submitted. If it doesn't match the actual number of forms Django receives when the forms are submitted, an error will be raised. -->
-                    <input type="hidden" name="sizeForm-TOTAL_FORMS" value="1" id="sizeForm-TOTAL_SIZES">
-                    <input type="hidden" name="sizeForm-MIN_NUM_FORMS" value="1" id="sizeForm-MIN_NUM_SIZES">
-                    <input type="hidden" name="sizeForm-MAX_NUM_FORMS" value="10" id="sizeForm-MAX_NUM_SIZES">
-                    
-                    {% for size in sizeFormset %}    
-                    <div class="product-form-formset size-formset">
-                        {{ size }}
-                        <button type="button" name="id_size-set-0-remove" id="id_size-set-0-remove" class="tertiary-btn tertiary-btn-link delete-size-form">Remove</button>
-                    </div>
-                    {% endfor %}
-                    <button type="button" id="add-size" class="tertiary-btn tertiary-btn-link bold">Add Option</button>
-                </div>
-
-                <div class="product-form-content">
-                    <div class="product-form-label">
-                        <p>Stocks</p><span style="color: var(--failure-main);">*</span>
-                    </div>
-                    <div class="product-form-stocks">
-                        <div class="radio-select-row">
-                            <input type="radio" name="made-to-order" id="made-to-order" checked> 
-                            <label for="made-to-order" class="radio-label subtitle">Made to Order</label>
-                        </div>
-                        <div class="radio-select-row">
-                            <input type="radio" name="stocks-input-select" id="stocks-input-select">
-                            <label for="stocks-input-select">
-                                {{ form.stock }}
-                            </label>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="product-form-content">
-                    <div class="product-form-label">
-                        <p>Available Delivery Schedules</p><span style="color: var(--failure-main);">*</span>
-                    </div>
-                    {{ form.schedule }}
-                </div>
-
-                <div class="product-form-content">
-                    <div class="product-form-label">
-                        <p>Order Cut-Off</p><span style="color: var(--failure-main);">*</span>
-                    </div>
-                    <div class="product-form-dates">
-                        <div class="radio-select-row">
-                            <input type="radio" name="open-days" id="open-days">
-                            <label for="open-days" class="radio-label subtitle">
-                                {{ form.days }} day(s) before chosen delivery date
-                            </label> 
-                        </div>
-                        <div class="radio-select-row">
-                            <input type="radio" name="cutoff-time" id="cutoff-time">
-                            <label for="cutoff-time" class="radio-label subtitle">
-                                {{ form.time }} everyday
-                            </label> 
-                        </div>
-                    </div>
-                </div>
-
-                <div class="product-form-content">
-                    <div class="product-form-label">
-                        <p>Maximum Orders Taken / Day</p><span style="color: var(--failure-main);">*</span>
-                    </div>
-                    <div class="product-form-stocks">
-                        <div class="radio-select-row">
-                            <input type="radio" name="no-order-limits" id="no-order-limits" checked> 
-                            <label for="no-order-limits" class="radio-label subtitle">No Limit</label>
-                        </div>
-                        <div class="radio-select-row">
-                            <input type="radio" name="orders-input-select" id="orders-input-select">
-                            <label for="orders-input-select">
-                                {{ form.orders }}
-                            </label>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="product-form-content">
-                    <div class="product-form-label">
-                        <p>Possible Add-Ons</p><span style="color: var(--failure-main);">*</span>
-                    </div>
-                    {{ addonFormset.management_form }}
-
-                    <!-- The form-TOTAL_FORMS input contains the value of the total number of forms being submitted. If it doesn't match the actual number of forms Django receives when the forms are submitted, an error will be raised. -->
-                    <input type="hidden" name="addonForm-TOTAL_FORMS" value="1" id="addonForm-TOTAL_SIZES">
-                    <input type="hidden" name="addonForm-MIN_NUM_FORMS" value="1" id="addonForm-MIN_NUM_SIZES">
-                    <input type="hidden" name="addonForm-MAX_NUM_FORMS" value="10" id="addonForm-MAX_NUM_SIZES">
-
-                    {% for addon in addonFormset %}
-                    <div class="product-form-formset addon-formset">
-                        {{ addon }}
-                        <button type="button" name="id_addon-set-0-remove" id="id_addon-set-0-remove" class="tertiary-btn tertiary-btn-link delete-addon-form">Remove</button>
-                    </div>
-                    {% endfor %}
-                    <button type="button" id="add-addon" class="tertiary-btn tertiary-btn-link bold">Add Option</button>
-                </div>
-
-                <div class="product-form-content">
-                    <div class="product-form-label">
-                        <p>Any special instructions, allergens, etc.?</p><span style="color: var(--failure-main);">*</span>
-                    </div>
-                    {{ form.instructions }}
-                </div>
-
-                {% if form.errors %}
-                    {% for field in form %}
-                        {% for error in field.errors %}
-                            <div class="alert alert-danger">
-                                <strong>{{ error|escape }}</strong>
-                            </div>
-                        {% endfor %}
-                    {% endfor %}
-                    {% for error in form.non_field_errors %}
-                        <div class="alert alert-danger">
-                            <italic>{{ error|escape }}</italic>
-                        </div>
-                    {% endfor %}
-                {% endif %}
             </div>
         </div>
-    </main>
+
+        <main>
+            <div class="product-form-container">
+                <div class="product-form-wrapper">            
+                    <h2 class="bold" style="color: #FF8A00;">Add a new product</h2>
+                    
+                    <div class="product-form-content">
+                        <div class="product-form-label">
+                            <p class="subtitle bold">Name</p><span style="color: var(--failure-main);">*</span>
+                        </div>
+                        {{ form.name }}
+                    </div>
+
+                    <div class="product-form-content">
+                        <div class="product-form-label">
+                            <p class="subtitle bold">Description</p><span style="color: var(--failure-main);">*</span>
+                        </div>
+                        {{ form.description }}
+                    </div>
+
+                    <div class="product-form-content">
+                        <div class="product-form-label">
+                            <p class="subtitle bold">Product Images</p><span style="color: var(--failure-main);">*</span>
+                        </div>
+                        <p class="subtitle" style="color: var(--muted-lighter); margin-bottom: 1rem;">Upload up to three (3) product images!</p>
+                        {{ imageFormset.management_form }}
+                        {% if images.0 %}
+                            <div class='product-form-label'>
+                                <p class='subtitle'>
+                                    Display Image: 
+                                <span class='upload__link subtitle' id='js-default'>{{ images.0.name }}</span>
+                            </div>
+                            {% if images.1 %}
+                                <p class='subtitle'>
+                                    Other Images:
+                                </p>
+                                <span class='upload__link subtitle' id='js-second-image'>
+                                    {{ images.1.name }}
+                                </span>
+                                <button type="button" id="js-browse-files" class="tertiary-btn btn__add-option bold">Upload Image</button>
+                            {% elif images.2 %}
+                                <p class='subtitle'>
+                                    Other Images:
+                                </p>
+                                <span class='upload__link subtitle' id='js-second-image'>
+                                    {{ images.1.name }}
+                                </span>
+                                <span class='upload__link subtitle' id='js-third-image'>
+                                    {{ images.2.name }}
+                                </span>
+                            {% else %}
+                                <button type="button" id="js-browse-files" class="tertiary-btn btn__add-option bold">Upload Image</button>
+                            {% endif %}
+                        {% else %}
+                            <div class="product__image__content" id="js-primary-image"></div>
+                            <div class="product__image__content" id="js-other-images"></div>
+                            <button type="button" id="js-browse-files" class="tertiary-btn btn__add-option bold">Upload Image</button>
+                        {% endif %}
+                    </div>
+                    
+                    <div style="display: flex;">{{ imageFormset.as_p }}</div>
+
+                    <div class="product-form-content">
+                        <div class="product-form-label">
+                            <p class="subtitle bold">Available Sizes or Servings</p><span style="color: var(--failure-main);">*</span>
+                        </div>
+                        <p class="subtitle" style="color: var(--muted-lighter);">You can add a maximum of ten (10) sizes or servings.</p>
+                        {{ sizeFormset.management_form }}
+
+                        <!-- The form-TOTAL_FORMS input contains the value of the total number of forms being submitted. If it doesn't match the actual number of forms Django receives when the forms are submitted, an error will be raised. -->
+                        <input type="hidden" name="sizeForm-TOTAL_FORMS" value="{{ sizeFormset.fields|length}}" id="sizeForm-TOTAL_SIZES">
+                        <input type="hidden" name="sizeForm-MIN_NUM_FORMS" value="1" id="sizeForm-MIN_NUM_SIZES">
+                        <input type="hidden" name="sizeForm-MAX_NUM_FORMS" value="10" id="sizeForm-MAX_NUM_SIZES">
+                        
+                        {% for size in sizeFormset %}    
+                        <div class="product-form-formset size-formset">
+                            <div class="small-input__container" style="padding-left: 0;">
+                                {{ size.size }}
+                            </div>
+                            <div class="small-input__container" style="padding-right: 0;">
+                                {{ size.price_size }}
+                            </div>
+                            <i class="fa fa-times-thin fa-lg del__icon delete-size-form" aria-hidden="true" name="id_size-set-0-remove" id="id_size-set-0-remove"></i>
+                        </div>
+                        {% endfor %}
+                        <button type="button" id="add-size" class="tertiary-btn btn__add-option bold">Add Option</button>
+                    </div>
+
+                    <div class="product-form-content">
+                        <div class="product-form-label">
+                            <p class="subtitle bold">Stocks</p><span style="color: var(--failure-main);">*</span>
+                        </div>
+                        <div class="product-form-stocks">
+                            <div class="radio-select-row">
+                                <label class="radio-mobile">
+                                    {{ form.made_to_order }}
+                                    <span class="radio-select-mobile"></span>
+                                </label>
+                                <label for="made-to-order" class="radio-label subtitle">Made to Order</label>
+                            </div>
+                            <div class="radio-select-row">
+                                <label class="radio-mobile">
+                                    {% if not product.is_made_to_order %}
+                                        <input type="radio" name="stocks-input-select" id="stocks-input-select" checked>
+                                    {% else %}
+                                        <input type="radio" name="stocks-input-select" id="stocks-input-select">
+                                    {% endif %}
+                                    <span class="radio-select-mobile"></span>
+                                </label>
+                                <label for="stocks-input-select">
+                                    {{ form.stock }}
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="product-form-content">
+                        <div class="product-form-label">
+                            <p class="subtitle bold">Maximum Orders Taken / Day</p><span style="color: var(--failure-main);">*</span>
+                        </div>
+                        <div class="product-form-stocks">
+                            <div class="radio-select-row">
+                                <label class="radio-mobile">
+                                    {{ form.no_order_limit }} 
+                                    <span class="radio-select-mobile"></span>
+                                </label>
+                                <label for="no-order-limits" class="radio-label subtitle">No Limit</label>
+                            </div>
+                            <div class="radio-select-row">
+                                <label class="radio-mobile">
+                                    {% if not product.has_no_order_limit %}
+                                        <input type="radio" name="orders-input-select" id="orders-input-select" checked >
+                                    {% else %}
+                                        <input type="radio" name="orders-input-select" id="orders-input-select">
+                                    {% endif %}
+                                    <span class="radio-select-mobile"></span>
+                                </label>
+                                <label for="orders-input-select">
+                                    {{ form.orders }}
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="product-form-content">
+                        <div class="product-form-label">
+                            <p class="subtitle bold">Possible Add-Ons</p>
+                        </div>
+                        <p class="subtitle" style="color: var(--muted-lighter);">You can leave this blank if you don’t have any add-ons.</p>
+                        {{ addonFormset.management_form }}
+
+                        <!-- The form-TOTAL_FORMS input contains the value of the total number of forms being submitted. If it doesn't match the actual number of forms Django receives when the forms are submitted, an error will be raised. -->
+                        <input type="hidden" name="addonForm-TOTAL_FORMS" value="{{ addonFormset.fields|length }}" id="addonForm-TOTAL_SIZES">
+                        <input type="hidden" name="addonForm-MIN_NUM_FORMS" value="1" id="addonForm-MIN_NUM_SIZES">
+                        <input type="hidden" name="addonForm-MAX_NUM_FORMS" value="5" id="addonForm-MAX_NUM_SIZES">
+
+                        {% for addon in addonFormset %}
+                        <div class="product-form-formset addon-formset">
+                            <div class="small-input__container" style="padding-left: 0;">
+                                {{ addon.addon }}
+                            </div>
+                            <div class="small-input__container" style="padding-right: 0;">
+                                {{ addon.price_addon }}
+                            </div>
+                            <i class="fa fa-times-thin fa-lg del__icon delete-addon-form" aria-hidden="true" name="id_addon-set-0-remove" id="id_addon-set-0-remove"></i>
+                        </div>
+                        {% endfor %}
+                        <button type="button" id="add-addon" class="tertiary-btn btn__add-option bold">Add Option</button>
+                    </div>
+
+                    <div class="product-form-content">
+                        <div class="product-form-label">
+                            <p class="subtitle bold">Any special instructions, allergens, etc.?</p>
+                        </div>
+                        {{ form.instructions }}
+                    </div>
+
+                    <div id="form-errors" style="display: none;">{{ form.errors.as_json }}</div>
+                    
+                </div>
+            </div>
+
+            <div class="modal__container" id="js-preview-product-modal">
+                <div class="modal__card__wrapper">
+                    <img src="https://ik.imagekit.io/ripzjge77zz/Quicklink_App/Merchant/Products/Group_84_ec2u-W6uioV.svg" 
+                    alt="Exit Modal" class="modal__card__exit__icon js-exit-modal">
+                    <div class="modal__card__slider" id="js-image-slider">
+                        {% for image in images %}
+                            <img src="{{ image.url }}" class="modal__card__slider__image">
+                        {% endfor %}
+                    </div>
+                    <div class="modal__card__content">
+                        <div class="modal__card__content__product">
+                            <h2 class="bold" style="padding-bottom: 0.5rem;" id="js-product-name"></h2>
+                            <p class="subtitle" id="js-product-description"></p>
+                            <p class="subtitle" style="padding: 1rem 0; color: var(--secondary-alt);" id="js-product-stocks"></p>
+                            <p class="subtitle" style="padding-bottom: 1rem; color: var(--muted-lighter);" id="js-product-instructions" style="display: none;"></p>
+                        </div>
+                        <div class="modal__card__content__product">
+                            <p class="bold">Size</p>
+                            <div class="modal__card__content__product choices" id="js-product-sizes"></div>
+                        </div>
+                        <div class="modal__card__content__product" style="display: none;" id="js-toggle-product-addons">
+                            <p class="bold">Add-Ons</p>
+                            <div class="modal__card__content__product choices" id="js-product-addons"></div>
+                        </div>
+                        <div class="modal__card__content__product" style="margin-bottom: 1rem;">
+                            <p class="bold">Special Instructions</p>
+                            <div class="input default large-input"><p class="subtitle" style="color: var(--muted-lighter);">Leave us a note! (Optional)</p></div>
+                        </div>
+                    </div>
+                    <div class="modal__card__footer">
+                        <button type="button" class="secondary-btn subtitle bold js-exit-modal" style="margin-right: 1rem;">Back to Editing</button>
+                        <button type="submit" class="primary-btn subtitle bold">Save Product</button>
+                    </div>
+                </div>
+            </div>
+        </main>
     </form>
-    
-    <script src="{% static '/js/addproduct.js' %}"></script>
+
+    <!-- SLICK IMAGE SLIDER -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js" integrity="sha512-XtmMtDEcNz2j7ekrtHvOVR4iwwaD6o/FUJe6+Zq+HgcCsk3kj4uSQQR8weQ2QVj1o0Pk6PwYLohm206ZzNfubg==" crossorigin="anonymous"></script>
+
+    <script src="{% static '/js/products/images.js' %}"></script>
+    <script src="{% static '/js/products/addproducts.js' %}"></script>
+
+    <!-- NOTY -->
+    <script>
+        var errors = $('#form-errors').text();
+        var jsonErrors = JSON.parse(errors);
+
+        var errorMessages = [];
+
+        for (var k in jsonErrors) {
+            for (var i in Object.keys(jsonErrors[k])) {
+                errorMessages.push([jsonErrors[k][i]['message']]);
+            }
+        }
+
+        for (i = 0; i <= Object.keys(errorMessages).length; i++) {
+            if (errorMessages[String(i)] != undefined) {
+                new Noty({
+                    type: 'error',
+                    theme: 'bootstrap-v4',
+                    text: errorMessages[String(i)],
+                    layout: "topRight",
+                    timeout: 5000,
+                    progressBar: true,
+                }).show();
+            }
+        }
+    </script>
 </body>
 </html>

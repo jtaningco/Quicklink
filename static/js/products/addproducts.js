@@ -36,7 +36,6 @@ function addSize(selector, type) {
 
 $('#add-size').click(function() {
     var max = parseInt($(maxSizeForms).attr('value'));
-
     if (sizeFormCount < max) {
         addSize('.size-formset:last', 'size_set')
     }
@@ -99,7 +98,6 @@ function addAddon(selector, type) {
 
 $('#add-addon').click(function() {
     var max = parseInt($(maxAddonForms).attr('value'));
-
     if (addonFormCount < max) {
         addAddon('.addon-formset:last', 'addon_set')
     }
@@ -109,7 +107,6 @@ $('#add-addon').click(function() {
 mainForm.addEventListener("click", function (event) {
     if (event.target.classList.contains("delete-addon-form")) {
         var min = parseInt($(minAddonForms).attr('value'));
-
         if (addonFormCount > min) {
             event.preventDefault();
             event.target.parentElement.remove();
@@ -120,14 +117,13 @@ mainForm.addEventListener("click", function (event) {
 });
 
 // Stocks Variables
-const madeToOrderRadio = document.getElementById('made-to-order');
+const madeToOrderRadio = document.getElementById('id_made_to_order');
 const stocksInputRadio = document.getElementById('stocks-input-select');
 const stocksInput = document.getElementById('id_stock');
 
 // Clicking on Made to Order Radio
-$('#made-to-order').click(function() {
+$('#id_made_to_order').click(function() {
     stocksInputRadio.checked = false;
-
     if ($('#stocks-input-select').is(':checked')) { 
         stocksInput.disabled = false;
         stocksInput.classList.remove('disabled');
@@ -151,12 +147,12 @@ $('#stocks-input-select').click(function() {
  });
 
 // Maximum Orders Variables
-const noLimitsRadio = document.getElementById('no-order-limits');
+const noLimitsRadio = document.getElementById('id_no_order_limit');
 const maxOrdersRadio = document.getElementById('orders-input-select');
 const maxOrdersInput = document.getElementById('id_orders');
 
 // Clicking on No Order Limits Radio
-$('#no-order-limits').click(function() {
+$('#id_no_order_limit').click(function() {
     maxOrdersRadio.checked = false;
 
     if ($('#orders-input-select').is(':checked')) { 
@@ -199,17 +195,15 @@ function canChangeColor(index){
 
     if ($("#id_name").val()=='' && $("#id_description").val()=='') {
         can = false
-    } else if (document.getElementById('id_image_set-0-image').files.length == 0) {
-        can = false 
     } else if ($("#id_size_set-0-size").val()=='' && $("#id_size_set-0-price_size").val()=='') {
         can = false 
-    } else if (!$("#made-to-order").is(':checked')) {
+    } else if (!$("#id_made_to_order").is(':checked')) {
         if ($("#stocks-input-select").is(':checked')) {
             can = true
         } else {
             can = false
         }
-    } else if (!$("#no-order-limits").is(':checked')) {
+    } else if (!$("#id_no_order_limit").is(':checked')) {
         if ($("#orders-input-select").is(':checked')) {
             can = true
         } else {
@@ -245,7 +239,7 @@ function editPreview() {
     productName.innerHTML = $("#id_name").val();
     productDescription.innerHTML = $("#id_description").val();
 
-    if ($("#made-to-order").is(":checked")) {
+    if ($("#id_made_to_order").is(":checked")) {
         productStocks.innerHTML = "Made to Order"
     } else {
         var stocks = $("#id_stock").val();
@@ -265,9 +259,12 @@ function addSizesToPreview() {
 
     sizeInputs.each(function(index) {
         var sizeInput = $(this).val();
-        var sizePriceInput = $('.js-size-price-input').eq(index).val();;
-        const sizeHTML = String(`<div class="modal__card__content--row"><label class="radio-mobile"><input type="radio"><span class="radio-select-mobile"></span></label><p>${String(sizeInput)} (PHP ${String(sizePriceInput)})</p></div>`)
-        sizeList.push(sizeHTML);
+        var sizePriceInput = $('.js-size-price-input').eq(index).val();
+        const sizeHTML = `<div class="modal__card__content--row"><label class="radio-mobile"><input type="radio"><span class="radio-select-mobile"></span></label><p>${String(sizeInput)} (PHP ${String(sizePriceInput)})</p></div>`
+        
+        if ($(this).val() != "" || $('.js-size-price-input').eq(index).val() != "") {
+            sizeList.push(sizeHTML);
+        }
     });
 
     productSizes.innerHTML = sizeList.join("")
@@ -281,7 +278,10 @@ function addAddonsToPreview() {
         var addonInput = $(this).val();
         var addonPriceInput = $(".js-addon-price-input").eq(index).val();
         const addonHTML = `<div class="modal__card__content--row"><label class="checkbox-mobile"><input type="checkbox"><span class="checkmark-mobile"></span></label><p>${String(addonInput)} <span style="color: var(--muted-lighter);">(+ PHP ${String(addonPriceInput)})</span></p></div>`
-        addonList.push(addonHTML);
+        
+        if ($(this).val() != "" || $('.js-addon-price-input').eq(index).val() != "") {
+            addonList.push(addonHTML);
+        }
     });
 
     if (addonList.length > 0) {
@@ -291,13 +291,13 @@ function addAddonsToPreview() {
 }
 
 function modalAppear() {
-    $("main").css("overflow-y", "hidden");
+    $("body").css("overflow-y", "hidden");
     $("#js-preview-product-modal").css("display", "flex");
     $("#js-preview-product-modal").css("opacity", "1");
 }
 
 function modalExit() {
-    $("main").css("overflow-y", "auto");
+    $("body").css("overflow-y", "auto");
     $("#js-preview-product-modal").css("display", "none");
     $("#js-preview-product-modal").css("opacity", "0");
 }
@@ -319,6 +319,8 @@ function initializeSlider() {
 window.onload = function() {
     stocksInput.disabled = true;
     maxOrdersInput.disabled = true;
+    $("#sizeForm-TOTAL_SIZES").val($(".size-formset").length);
+    $("#addonForm-TOTAL_SIZES").val($(".addon-formset").length);
 
     $(".size-formset").find("i").first().css("display", "none");
     $(".addon-formset").find("i").first().css("display", "none");

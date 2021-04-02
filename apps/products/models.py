@@ -42,6 +42,14 @@ class Product(models.Model):
     def __str__(self):
         return f"{self.name}"
 
+    @property
+    def is_made_to_order(self):
+        return self.made_to_order is True
+
+    @property
+    def has_no_order_limit(self):
+        return self.no_order_limit is True
+
 # Product Thumbnails
 class Thumbnail(ImageSpec):
     processors = [ResizeToFill(320, 176)]

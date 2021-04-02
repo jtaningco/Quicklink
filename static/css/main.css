@@ -510,7 +510,7 @@ textarea {
 }
 
 .checkbox .checkmark.checkmark__small:after {
-  margin-top: -6px;
+  margin-top: -4px;
   width: 4px;
   height: 8px;
   border: solid white;
@@ -600,7 +600,7 @@ input:checked + .slider:before {
   align-content: center;
 }
 
-.radio-mobile input[type="radio"] {
+.radio-mobile input[type="radio"], .radio-mobile input[type="checkbox"] {
   position: absolute;
   opacity: 0;
   cursor: pointer;

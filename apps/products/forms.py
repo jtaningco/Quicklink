@@ -12,7 +12,9 @@ class ProductForm(ModelForm):
             'name', 
             'description',
             'stock',
+            'made_to_order',
             'orders',
+            'no_order_limit',
             'instructions',
         ]
 
@@ -24,6 +26,10 @@ class ProductForm(ModelForm):
             'description': forms.Textarea(attrs={
                 'class':'input large-input default subtitle',
                 'placeholder': 'Describe your product for your customers to see!'}),
+
+            'made_to_order': forms.CheckboxInput(),
+
+            'no_order_limit': forms.CheckboxInput(),
 
             'stock': forms.fields.NumberInput(attrs={
                 'class':'input default disabled subtitle',
@@ -67,7 +73,7 @@ SizeFormset = inlineformset_factory(
                         'size':'',
                         'price_size':'',
                     },
-                    extra=2
+                    extra=1
                 )
 
 AddonFormset = inlineformset_factory(
