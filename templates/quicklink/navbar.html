@@ -1,7 +1,7 @@
 {% load static %}    
     
 <nav class="sidebar">
-    <div class="sidebar-logo">
+    <div class="sidebar__ql-logo">
         <img 
             src="https://ik.imagekit.io/ripzjge77zz/Quicklink_App/logos/white/white-logo-1x_hVgWTlNgE.png" 
             alt="Quicklink Logo" 
@@ -14,56 +14,47 @@
     </div>
     <div class="sidebar__menu">
         <ul class="sidebar__items">
-            <!-- 1st button and sub bar  -->
-            <li class="sidebar__items__item">
-                <a href="#" class="nav__link body extra-bold">
-                    <img src="https://ik.imagekit.io/ripzjge77zz/Quicklink_App/Navbar/u_create-dashboard_hSYH09hkrbW.png">
-                    Dashboard
-                </a>
-            </li>
-    
-            <!-- 2nd button and sub bar  -->
-            <li class="sidebar__items__item">
-                <a class="nav__link body extra-bold" id="js-feat-btn">
-                    <img src="https://ik.imagekit.io/ripzjge77zz/Quicklink_App/Navbar/u_shopping-bag_GZkGQPWQY.png">
-                    Shop
-                    <img src="https://ik.imagekit.io/ripzjge77zz/Quicklink_App/Navbar/fi_chevron-right_WkAS3Sp7O.png" class="nav__chevron" id="js-first-nav-link">
-                </a>
-                <ul class="sidebar__items__item__subitems" id="js-feat-show">
-                    <li><a href="{% url 'orders:order-summary' %}" class="bold">Order Summary</a></li>
-                    <li><a href="{% url 'orders:pending-orders' %}" class="bold">Pending Orders</a></li>
-                    <li><a href="{% url 'products:products' %}" class="bold">Products</a></li>
-                </ul>
-            </li>
-        
-            <!-- 3rd button and sub bar  -->
-            <li class="sidebar__items__item">
-                <a class="nav__link body extra-bold" id="js-serv-btn">
-                    <img src="https://ik.imagekit.io/ripzjge77zz/Quicklink_App/Navbar/u_money-bill_W0-WNOqf7.png">
-                    Finances
-                    <img src="https://ik.imagekit.io/ripzjge77zz/Quicklink_App/Navbar/fi_chevron-right_WkAS3Sp7O.png" class="nav__chevron" id="js-second-nav-link">
-                </a>
-                <ul class="sidebar__items__item__subitems" id="js-serv-show">
-                    <li><a href="#" class="bold">Total Revenue</a></li>
-                    <li><a href="#" class="bold">Profit</a></li>
-                    <li><a href="#" class="bold">Expenses</a></li>
-                </ul>
-            </li>
-        
-            <!-- 4th button and sub bar  -->
-            <li class="sidebar__items__item">
-                <a class="nav__link body extra-bold" id="js-cldk-btn">
-                    <img src="https://ik.imagekit.io/ripzjge77zz/Quicklink_App/Navbar/u_setting_CNB5wNSAq0dD.png">
-                    Settings
-                    <img src="https://ik.imagekit.io/ripzjge77zz/Quicklink_App/Navbar/fi_chevron-right_WkAS3Sp7O.png" class="nav__chevron" id="js-third-nav-link">
-                </a>
-                <ul class="sidebar__items__item__subitems" id="js-cldk-show">
-                    <li><a href="#" class="bold">My Shop</a></li>
-                    <li><a href="#" class="bold">Account</a></li>
-                    <li><a href="#" class="bold">Notifications</a></li>
-                    <li><a href="#" class="bold">Resources</a></li>
-                </ul>
-            </li>
+            <!-- 1st nav button -->
+            <a href="#" class="nav__link body bold">
+                <img src="https://ik.imagekit.io/ripzjge77zz/Quicklink_App/Navbar/white-dashboard-icon_xuNVZx7vkS.svg" 
+                alt="Dashboard Icon" id="navbar__icons">
+                Dashboard
+            </a>
+            <!-- 2nd nav button and sub bar -->
+            <a href="#" class="nav__link body bold" id="js-feat-btn">
+                <img src="https://ik.imagekit.io/ripzjge77zz/Quicklink_App/Navbar/white-shop-icon_Xxd8mPFmt-b.svg"
+                alt="Shop Icon" id="navbar__icons">
+                Shop
+                <img src="https://ik.imagekit.io/ripzjge77zz/Quicklink_App/Navbar/white-chevron-right_hCqRvYLHA.svg" class="nav__chevron" id="js-first-nav-link">
+            </a>
+            <ul class="sidebar__items-subitems" id="js-feat-show">
+                <a href="#" class="sidebar_sub-item subtitle semi-bold" id="sidebar__subitem-custom">My Shop</a>
+                <a href="#" class="sidebar_sub-item subtitle semi-bold" id="sidebar__subitem-custom">All Orders</a>
+                <a href="#" class="sidebar_sub-item subtitle semi-bold" id="sidebar__subitem-custom">Pending Items</a>
+                <a href="{% url 'products:products' %}" class="sidebar_sub-item subtitle semi-bold" id="sidebar__subitem-custom">Products</a>
+            </ul>
+            <!--3rd nav button and sub bar -->
+            <a href="#" class="nav__link body bold" id="js-serv-btn">
+                <img src="https://ik.imagekit.io/ripzjge77zz/Quicklink_App/Navbar/white-finances-icon_naPJo2Dej.svg"
+                alt="Shop Icon" id="navbar__icons">
+                Finances
+                <img src="https://ik.imagekit.io/ripzjge77zz/Quicklink_App/Navbar/white-chevron-right_hCqRvYLHA.svg" class="nav__chevron" id="js-second-nav-link">
+            </a>
+            <ul class="sidebar__items-subitems" id="js-serv-show">
+                <a href="#" class="sidebar_sub-item subtitle semi-bold" id="sidebar__subitem-custom">Total Revenue</a>
+            </ul>
+            <!-- 4th nav button and sub bar -->
+            <a href="#" class="nav__link body bold" id="js-cldk-btn">
+                <img src="https://ik.imagekit.io/ripzjge77zz/Quicklink_App/Navbar/white-settings-icon_WJexo4RiDrW.svg"
+                alt="Shop Icon" id="navbar__icons">
+                Settings
+                <img src="https://ik.imagekit.io/ripzjge77zz/Quicklink_App/Navbar/white-chevron-right_hCqRvYLHA.svg" class="nav__chevron" id="js-third-nav-link">
+            </a>
+            <ul class="sidebar__items-subitems" id="js-cldk-show">
+                <a href="#" class="sidebar_sub-item subtitle semi-bold" id="sidebar__subitem-custom">Account</a>
+                <a href="#" class="sidebar_sub-item subtitle semi-bold" id="sidebar__subitem-custom">Notifications</a>
+                <a href="#" class="sidebar_sub-item subtitle semi-bold" id="sidebar__subitem-custom">Resources</a>
+            </ul>
         </ul>
     </div>
 </nav>
@@ -75,11 +66,11 @@
     });
     
     $('#js-serv-btn').click(function(){
-        $('#js-serv-show').toggleClass("show1");
+        $('#js-serv-show').toggleClass("show");
         $('#js-second-nav-link').toggleClass("rotate");
     });
     $('#js-cldk-btn').click(function(){
-        $('#js-cldk-show').toggleClass("show1");
+        $('#js-cldk-show').toggleClass("show");
         $('#js-third-nav-link').toggleClass("rotate");
     });
 </script>
