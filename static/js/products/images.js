@@ -59,6 +59,7 @@ const imageSlider = document.getElementById("js-image-slider");
 
 function loadImages(file, file_2, file_3) {
     if (file != undefined || file != null) {
+        console.log(file)
         try {
             var fileURL = (window.URL ? URL : webkitURL).createObjectURL(file);
             let imgTag = `<img src="${fileURL}" alt="" class="modal__card__slider__image">`
@@ -73,11 +74,13 @@ function loadImages(file, file_2, file_3) {
             };
         }
         if (file_2 != undefined || file_2 != null) {
+            console.log(file_2)
             var fileURL = (window.URL ? URL : webkitURL).createObjectURL(file);
             var fileURL2 = (window.URL ? URL : webkitURL).createObjectURL(file_2);
             let imgTag = `<img src="${fileURL}" alt="User uploaded logo" class="modal__card__slider__image"><img src="${fileURL2}" alt="User uploaded logo" class="modal__card__slider__image">`
             imageSlider.innerHTML = imgTag
             if (file_3 != undefined || file_3 != null) {
+                console.log(file_3)
                 var fileURL = (window.URL ? URL : webkitURL).createObjectURL(file);
                 var fileURL2 = (window.URL ? URL : webkitURL).createObjectURL(file_2);
                 var fileURL3 = (window.URL ? URL : webkitURL).createObjectURL(file_3);

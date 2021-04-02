@@ -67,40 +67,64 @@
                         <p class="subtitle" style="color: var(--muted-lighter); margin-bottom: 1rem;">Upload up to three (3) product images!</p>
                         {{ imageFormset.management_form }}
                         {% if images.0 %}
-                            <div class='product-form-label'>
-                                <p class='subtitle'>
-                                    Display Image: 
-                                <span class='upload__link subtitle' id='js-default'>{{ images.0.name }}</span>
+                            <div class="product__image__content" id="js-primary-image">
+                                <div class='product-form-label'>
+                                    <p class='subtitle'>
+                                        Display Image: 
+                                    <span class='upload__link subtitle' id='js-default'>{{ images.0.name }}</span>
+                                </div>
                             </div>
-                            {% if images.1 %}
-                                <p class='subtitle'>
-                                    Other Images:
-                                </p>
-                                <span class='upload__link subtitle' id='js-second-image'>
-                                    {{ images.1.name }}
-                                </span>
+                            {% if images.1 and not images.2 %}
+                                <div class="product__image__content" id="js-other-images">
+                                    <p class='subtitle'>
+                                        Other Images:
+                                    </p>
+                                    <span class='upload__link subtitle' id='js-second-image'>
+                                        {{ images.1.name }}
+                                    </span>
+                                </div>
                                 <button type="button" id="js-browse-files" class="tertiary-btn btn__add-option bold">Upload Image</button>
-                            {% elif images.2 %}
-                                <p class='subtitle'>
-                                    Other Images:
-                                </p>
-                                <span class='upload__link subtitle' id='js-second-image'>
-                                    {{ images.1.name }}
-                                </span>
-                                <span class='upload__link subtitle' id='js-third-image'>
-                                    {{ images.2.name }}
-                                </span>
+                            {% elif images.1 and images.2 %}
+                                <div class="product__image__content" id="js-other-images">
+                                    <p class='subtitle'>
+                                        Other Images:
+                                    </p>
+                                    <span class='upload__link subtitle' id='js-second-image'>
+                                        {{ images.1.name }}
+                                    </span>
+                                    <span class='upload__link subtitle' id='js-third-image'>
+                                        {{ images.2.name }}
+                                    </span>
+                                </div>
                             {% else %}
+                                <div class="product__image__content" id="js-other-images"></div>
                                 <button type="button" id="js-browse-files" class="tertiary-btn btn__add-option bold">Upload Image</button>
                             {% endif %}
                         {% else %}
-                            <div class="product__image__content" id="js-primary-image"></div>
-                            <div class="product__image__content" id="js-other-images"></div>
-                            <button type="button" id="js-browse-files" class="tertiary-btn btn__add-option bold">Upload Image</button>
+                            <div class="product__image__content" id="js-primary-image">
+                                <div class='product-form-label'>
+                                    <p class='subtitle'>
+                                        Display Image: 
+                                    <span class='upload__link subtitle' id='js-default'>Upload Default Image</span>
+                                </div>
+                            </div>
+                            
+                            <div class="product__image__content" id="js-other-images">
+                                <p class='subtitle'>
+                                    Other Images:
+                                </p>
+                                <span class='upload__link subtitle' id='js-second-image'>
+                                    Upload Image Two
+                                </span>
+                                <span class='upload__link subtitle' id='js-third-image'>
+                                    Upload Image Three
+                                </span>
+                            </div>
+                            
                         {% endif %}
                     </div>
                     
-                    <div style="display: flex;">{{ imageFormset.as_p }}</div>
+                    <div style="display: none;">{{ imageFormset.as_p }}</div>
 
                     <div class="product-form-content">
                         <div class="product-form-label">
@@ -228,7 +252,7 @@
                     alt="Exit Modal" class="modal__card__exit__icon js-exit-modal">
                     <div class="modal__card__slider" id="js-image-slider">
                         {% for image in images %}
-                            <img src="{{ image.url }}" class="modal__card__slider__image">
+                            <img src="{{ image.image.url }}" class="modal__card__slider__image">
                         {% endfor %}
                     </div>
                     <div class="modal__card__content">
@@ -265,6 +289,12 @@
 
     <script src="{% static '/js/products/images.js' %}"></script>
     <script src="{% static '/js/products/addproducts.js' %}"></script>
+
+    <script>
+        $("#js-default").click(function(){ fileInput0.click(); })
+        $("#js-second-image").click(function(){ fileInput1.click(); })
+        $("#js-third-image").click(function(){ fileInput2.click(); })
+    </script>
 
     <!-- NOTY -->
     <script>

@@ -76,7 +76,7 @@
     to { opacity: 1; }
 }
 
-.profile__pic--settings {
+.profile__pic--settings, .product__option--settings {
     display: none; flex-direction: column; justify-content: center; align-content: center; align-items: center;
     position: fixed;
     transform: translateY(60%);
@@ -86,7 +86,7 @@
     padding: 0.5rem 0;
 }
 
-.profile__pic--settings.active { display: flex; animation: appear 0.15s linear; }
+.profile__pic--settings.active, .product__option--settings.active { display: flex; animation: appear 0.15s linear; }
 
 .profile__pic--settings__link { width: 100%; text-decoration: none; }
 

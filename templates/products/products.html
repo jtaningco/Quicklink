@@ -81,9 +81,9 @@
                                     <span class="checkmark checkmark__small"></span>
                                 </label>
                             </td>
-                            <td class="product__table__cell subtitle bold">{{product.name}}</td>
-                            <td class="product__table__cell subtitle">{% if product.made_to_order == True %}Made to Order{% else %}{{product.stock}}{% endif %}</td>
-                            <td class="product__table__cell subtitle">{{product.sold}}</td> <!-- Insert Total Sold Here -->
+                            <td class="product__table__cell subtitle bold">{{ product.name }}</td>
+                            <td class="product__table__cell subtitle">{% if product.is_made_to_order %}Made to Order{% else %}{{ product.stock }}{% endif %}</td>
+                            <td class="product__table__cell subtitle">{{ product.sold }}</td>
                             <td class="product__table__cell">
                                 <div class="switch-whole">
                                     <label class="switch">
@@ -95,6 +95,16 @@
                             <td class="product__table__cell">
                                 <a href="{% url 'products:update-product' product.id %}" class="tertiary-btn subtitle bold" 
                                 style="text-decoration: none;">Edit Product</a>
+                                <img src="https://ik.imagekit.io/ripzjge77zz/Quicklink_App/Merchant/Products/u_ellipsis-v_d_ZCjBl8H.png" 
+                                alt="Ellipsis" class="product__ellipsis" id="js-product-options-btn-{{forloop.counter0}}">
+                                <div class="product__option--settings" id="js-product-options-modal-{{forloop.counter0}}">
+                                    <a href="{% url 'products:duplicate-product' product.id %}" class="profile__pic--settings__link">
+                                        <div class="profile__pic--settings__option bold">Duplicate</div>
+                                    </a>
+                                    <a href="{% url 'products:delete-product' product.id %}" class="profile__pic--settings__link">
+                                        <div class="profile__pic--settings__option bold logout">Delete</div>
+                                    </a>
+                                </div>
                             </td>
                         </tr>
                     {% endfor %}
@@ -102,4 +112,19 @@
                 {% endif %}
             </div>
         </div>
+{% endblock %}
+
+{% block scriptsBody %}
+<script>
+    const ellipsis = $(".product__ellipsis");
+
+    ellipsis.each(function(index) {
+        const id = $(`#js-product-options-modal-${index}`);
+        $(this).click(function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            id.toggleClass('active');
+        });
+    });
+</script>
 {% endblock %}

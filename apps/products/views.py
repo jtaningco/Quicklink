@@ -62,14 +62,18 @@ def addProduct(request):
             # Insert if radio is checked for stock
             if 'stocks-input-select' in request.POST:
                 product.stock = form.cleaned_data.get('stock')
+                product.made_to_order = False
             else:
                 product.made_to_order = True
+                product.stock = 0
 
             # Insert if radio is checked for order
             if 'orders-input-select' in request.POST:
                 product.orders = form.cleaned_data.get('orders')
+                product.no_order_limit = False
             else:
                 product.no_order_limit = True
+                product.orders = 0
             
             # Save Product
             product.save()
@@ -84,10 +88,9 @@ def addProduct(request):
                 images = Image.objects.filter(product=product)
                 count = 0
                 for image in images:
-                    name = f"{image.get_product_name()}_{count}"
+                    name = image.get_product_name
                     image.name = name
                     image.save()
-                    count += 1
 
             if sizeFormset.is_valid():
                 sizeFormset.save()
@@ -96,15 +99,15 @@ def addProduct(request):
                 addonInputs = request.POST.get('addonForm-TOTAL_FORMS')
                 if int(addonInputs) > 1:
                     addonFormset.save()
-                    return redirect('/shop/products')
+                    return redirect('/shop/products/')
                 elif int(addonInputs) == 1:
                     if request.POST.get('addon_set-0-addon') == '':
                         pass
                     else:
                         addonFormset.save()
-                        return redirect('/shop/products')
+                        return redirect('/shop/products/')
                 else:
-                    return redirect('/shop/products')
+                    return redirect('/shop/products/')
 
     context = {'form':form, 'imageFormset':imageFormset, 'sizeFormset':sizeFormset, 'addonFormset':addonFormset}
     return render(request, 'products/product_form.html', context)
@@ -128,18 +131,22 @@ def updateProduct(request, product_pk):
             product.name = form.cleaned_data.get('name')
             product.description = form.cleaned_data.get('description')
             product.instructions = form.cleaned_data.get('instructions')
-            
+
             # Insert if radio is checked for stock
             if 'stocks-input-select' in request.POST:
                 product.stock = form.cleaned_data.get('stock')
+                product.made_to_order = False
             else:
                 product.made_to_order = True
+                product.stock = 0
 
             # Insert if radio is checked for order
             if 'orders-input-select' in request.POST:
                 product.orders = form.cleaned_data.get('orders')
+                product.no_order_limit = False
             else:
                 product.no_order_limit = True
+                product.orders = 0
             
             # Save Product
             product.save()
@@ -149,24 +156,6 @@ def updateProduct(request, product_pk):
             addonFormset = AddonFormset(request.POST, instance=product)
             
             # Save Formsets
-            if imageFormset.is_valid():
-                imageFormset.save()
-                new_images = Image.objects.filter(product=product)
-                count = 0
-                for image in new_images:
-                    name = f"{image.get_product_name()}_{count}"
-                    image.name = name
-                    image.save()
-                    count += 1
-            else:
-                new_images = Image.objects.filter(product=product)
-                count = 0
-                for image in new_images:
-                    name = f"{image.get_product_name()}_{count}"
-                    image.name = name
-                    image.save()
-                    count += 1
-
             if sizeFormset.is_valid():
                 sizeFormset.save()
 
@@ -174,15 +163,24 @@ def updateProduct(request, product_pk):
                 addonInputs = request.POST.get('addonForm-TOTAL_FORMS')
                 if int(addonInputs) > 1:
                     addonFormset.save()
-                    return redirect('/shop/products')
+                    return redirect('/shop/products/')
                 elif int(addonInputs) == 1:
                     if request.POST.get('addon_set-0-addon') == '':
                         pass
                     else:
                         addonFormset.save()
-                        return redirect('/shop/products')
-                else:
-                    return redirect('/shop/products')
+                else: pass
+
+            if imageFormset.is_valid():
+                imageFormset.save()
+                new_images = Image.objects.filter(product=product)
+                for image in new_images:
+                    name = image.get_product_name
+                    image.name = name
+                    image.save()
+                return redirect('/shop/products/')
+            else:
+                return redirect('/shop/products/')
 
     context = {'form':form, 'product':product, 'images':images, 'imageFormset':imageFormset, 'sizeFormset':sizeFormset, 'addonFormset':addonFormset}
     return render(request, 'products/edit_product.html', context)
@@ -190,11 +188,16 @@ def updateProduct(request, product_pk):
 @login_required(login_url='accounts:login')
 @setup_required
 @allowed_users(allowed_roles=[User.Types.MERCHANT, User.Types.ADMIN])
+def duplicateProduct(request, product_pk):
+    product = Product.objects.get(id=product_pk)
+    product.id = None
+    product.save()
+    return redirect('/shop/products/')
+
+@login_required(login_url='accounts:login')
+@setup_required
+@allowed_users(allowed_roles=[User.Types.MERCHANT, User.Types.ADMIN])
 def deleteProduct(request, product_pk):
     product = Product.objects.get(id=product_pk)
-    if request.method == "POST":
-        product.delete()
-        return redirect('/shop/products/')
-
-    context = {'product':product}
-    return render(request, 'products/delete_product.html', context)
+    product.delete()
+    return redirect('/shop/products/')

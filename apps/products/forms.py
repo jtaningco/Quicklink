@@ -52,6 +52,7 @@ ImageFormset = inlineformset_factory(
                     can_delete=False,
                     fields=('image','default'),
                     extra=3,
+                    max_num=3,
                 )
 
 # The formset for editing the size and prices that belong to a product

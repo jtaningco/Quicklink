@@ -2,6 +2,10 @@ from django.db import models
 from django.db.models.fields import IntegerField
 
 from apps.accounts.models import User
+
+import shortuuid
+from shortuuidfield import ShortUUIDField
+
 from imagekit import ImageSpec, register
 from imagekit.processors import ResizeToFill
 import pdb
@@ -14,6 +18,12 @@ import pdb
 #         return self.name
 
 class Product(models.Model):
+    # Product UUID
+    id = ShortUUIDField(primary_key=True, max_length=15, blank=True, editable=False)
+
+    # Product ID (According to Shop)
+    product_id = models.PositiveIntegerField(null=True, default=0)
+
     # User manipulating the product (request.user — whoever is logged in)
     user = models.ForeignKey(User, null=True, on_delete=models.SET_NULL, related_name="shop_product")
 
@@ -42,6 +52,14 @@ class Product(models.Model):
     def __str__(self):
         return f"{self.name}"
 
+    def save(self, *args, **kwargs):
+        self.product_list = Product.objects.order_by('product_id')
+        if len(self.product_list) == 0:  # if there are no products
+            self.product_id = 1
+        else:
+            self.product_id = self.product_list.last().product_id + 1
+        super(Product, self).save()
+
     @property
     def is_made_to_order(self):
         return self.made_to_order is True
@@ -68,13 +86,13 @@ register.generator('products:carousel', Carousel)
 
 def get_image_filename(instance, filename):
     name = instance.product.name
-    return "%Y/%m/%d/products/%s" % (name)
+    return f"%Y/%m/%d/products/{name}.{filename.split('.')[-1]}"
 
 # Class Image for implementation of inline formsets
 class Image(models.Model):
     product = models.ForeignKey(Product, null=True, on_delete=models.SET_NULL)
     name = models.CharField(max_length=80, null=True, blank=True, verbose_name='Image Name')
-    image = models.ImageField(upload_to=get_image_filename, null=True, blank=True, verbose_name='Image')
+    image = models.ImageField(upload_to="%Y/%m/%d/products/", null=True, blank=True, verbose_name='Image')
     default = models.BooleanField(default=False, verbose_name='Default')
 
     @property

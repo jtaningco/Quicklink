@@ -227,3 +227,18 @@
 #button-1 .knobs, #button-1 .knobs:before, #button-1 .layer {
     transition: all 0.3s ease;
 }
+
+.product__ellipsis {
+    cursor: pointer;
+    margin-left: 1rem;
+    transition: background-color 0.3s ease;
+}
+
+.product__ellipsis:hover {
+    background-color: var(--muted-lightest);
+}
+
+.product__option--settings {
+    width: 120px;
+    transform: translate(20%, 5%);
+}
