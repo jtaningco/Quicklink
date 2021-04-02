@@ -41,12 +41,14 @@ class Product(models.Model):
 
     instructions = models.CharField(max_length=140, null=True, blank=True, default="")
     
-    # Cheapest and Highest Prices
+    # Cheapest and highest prices
     min_price = models.CharField(max_length=25, null=True, blank=True)
     max_price = models.CharField(max_length=25, null=True, blank=True)
 
-    # Number of orders sold
+    # Product is active / available
     active = models.BooleanField(null=True, blank=True, default=True)
+
+    # Number of orders sold
     sold = models.PositiveIntegerField(null=True, blank=True, default=0)
 
     def __str__(self):
@@ -54,7 +56,7 @@ class Product(models.Model):
 
     def save(self, *args, **kwargs):
         self.product_list = Product.objects.order_by('product_id')
-        if len(self.product_list) == 0:  # if there are no products
+        if len(self.product_list) == 0:
             self.product_id = 1
         else:
             self.product_id = self.product_list.last().product_id + 1

@@ -36,7 +36,23 @@
         <div class="products__list">
             <div class="products__wrapper">
                 <table class="products__table">
-                    <tr class="products__table__header">
+                    <tr class="products__table__header hide" id="js-select-products">
+                        <th class="product__table__cell">
+                            <div class="selected__products__container">
+                                <label class="checkbox">
+                                    <input type="checkbox" checked>
+                                    <span class="checkmark checkmark__small"></span>
+                                </label>
+                                <p class="subtitle bold" id="js-selected-input" style="margin-left: 0.5rem;"></p>
+                            </div>
+                        </th>
+                        <th class="product__table__cell"><button type="button" class="secondary-btn subtitle bold" id="js-set-as-inactive-btn">Set as inactive</button></th>
+                        <th class="product__table__cell"><button type="button" class="secondary-btn warning subtitle bold" id="js-delete-selected-btn">Delete</button></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                    <tr class="products__table__header" id="js-normal-table-header">
                         <th class="product__table__cell">
                             <label class="checkbox">
                                 <input type="checkbox" name="select_all" id="id_select_all">
@@ -85,9 +101,13 @@
                             <td class="product__table__cell subtitle">{% if product.is_made_to_order %}Made to Order{% else %}{{ product.stock }}{% endif %}</td>
                             <td class="product__table__cell subtitle">{{ product.sold }}</td>
                             <td class="product__table__cell">
-                                <div class="switch-whole">
+                                <div class="button-wrapper">
                                     <label class="switch">
-                                        <input type="checkbox" name="toggle_availability" class="js-switch-btn" id="id_switch_{{ forloop.counter0 }}" value="{{ product.id }}">
+                                        {% if product.active %}
+                                            <input type="checkbox" name="toggle_availability" class="js-switch-btn" id="id_switch_{{ forloop.counter0 }}" value="{{ product.id }}" checked>
+                                        {% else %}
+                                            <input type="checkbox" name="toggle_availability" class="js-switch-btn" id="id_switch_{{ forloop.counter0 }}" value="{{ product.id }}">
+                                        {% endif %}
                                         <span class="slider round"></span>
                                     </label>
                                 </div>
@@ -127,4 +147,6 @@
         });
     });
 </script>
+
+<script src="{% static 'js/products/products-table.js' %}"></script>
 {% endblock %}
