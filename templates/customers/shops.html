@@ -1,14 +1,31 @@
 {% extends 'quicklink/customers.html' %}
 {% load static %}
 
-{% block pagetitle %}Quicklink: Shops{% endblock %}
+{% block stylesheets %}
+<link rel="stylesheet" href="{% static '/css/shops.css' %}">
+{% endblock %}
+
 
 {% block maincontent %}
 
-    {% for shop in shops %}
-        <h1>{{ shop.shop_name }}</h1>
-        <p>Contact Number: {{ shop.shop_contact_number }} </p>
-        <a href="{% url 'customers:view-products' shop.id %}">Check Products</a>
-    {% endfor %}
+<div class="shops__container">
+    <div class="shops__wrapper">
+        <div class="shops__page-display">
+            <h1 class="shops__page-text">
+                Delicious local food, just a few clicks away.</h1>
+            <form action="{% url 'customers:view-shops' %}" class="searchbar__container">
+                <input class="searchbar searchbar__shops body regular" type="search" placeholder="Search" name="search">
+            </form>
+        </div>
+        <div class="shops__scroll-down-items">
+            <div class="subtitle shops__scroll-down-text">See our beloved merchants</div>
+            <img src="https://ik.imagekit.io/ripzjge77zz/Quicklink/icons/gray-chevrons-down_RcvAmvaje.svg" id="shops__scroll-down-icon" alt="Scroll Down Icon">
+        </div>
+    </div>
+</div>
+
+{% include 'customers/shops-marketplace.html' %}
 
 {% endblock %}
+
+

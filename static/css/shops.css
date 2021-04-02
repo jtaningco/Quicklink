@@ -1,0 +1,187 @@
+body {
+    background: url('https://ik.imagekit.io/ripzjge77zz/Quicklink/background/bg-1_uAo-FBZvH.png') no-repeat;
+    background-size: cover;
+    margin: 0;
+    padding:0;
+}
+.shops__container {
+    height: 100vh;
+}
+.shops__wrapper {
+    width: 100%;
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+}
+/* nav*/
+.shop__nav {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+.nav__quick-access {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.nav__quick-access {
+    background: rgba(220, 220, 220, 0.5);
+    height: 2.5rem;
+    width: 100%;
+    padding: 0 7rem;
+}
+
+.nav__ql-easy-access {
+    color: var(--muted-default);
+    font-weight: 700;
+    text-decoration: none;
+    padding: 0 2.5rem;
+}
+
+.nav__merchant-btn {
+    color: var(--primary-main);
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.nav__content {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    padding: 1rem 7rem;
+}
+
+.nav__btn-elements {
+    display: flex;
+}
+
+#nav__tertiary-btn {
+    Background-color: transparent; 
+    box-shadow: none; 
+    color: var(--muted-lighter);
+}
+
+/* shops.html */
+.shops__page-display {
+    width: 40rem;
+    padding: 7.125rem 0 0 7.5rem; 
+}
+
+.shops__page-text {
+    color: var(--muted-default);
+    font-weight: 800; 
+    font-size: 3rem; 
+    line-height: 4.75rem;
+}
+
+.searchbar__container {
+    margin: 2rem 0;
+    width: 7.5rem;
+}
+
+.searchbar.searchbar__shops {
+    color: var(--muted-lighter);
+    border:none;
+    height: 3.5rem;
+    padding: 0 3.5rem;
+    background-color: var(--muted-white);
+    filter: drop-shadow(0px 3px 20px rgba(51, 51, 51, 0.1));
+}
+
+.shops__scroll-down-items {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding: 9.75rem 0 0 0;
+}
+
+.shops__scroll-down-text {
+color: var(--muted-light);
+}
+
+#shops__scroll-down-icon {
+    padding: 0.5rem 0;
+}
+
+/* shops-marketplace.html */
+.merchant__list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    padding: 0 7.625rem;
+}
+
+.merchant__card {
+    display: flex;
+    flex-direction: column;
+    width: 24.5rem;
+    height:17rem;
+    margin: 0 1rem;
+}
+
+.merchant__card-display {
+    background: url("https://ik.imagekit.io/ripzjge77zz/Quicklink/thumbnail_KQ5n35XyH.png") no-repeat 2% 50%;
+    position: relative;
+    height:10rem;
+}
+#merchant__logo {
+    position: absolute;
+    border-radius: 50%; 
+    width:4rem; 
+    height: 4rem;
+    bottom:0px;
+    margin: 0.5rem;
+}
+
+.merchant__card-info {
+    padding: 0.9rem 1.25rem;
+    background-color: #FFF;
+    box-shadow: 0px 3px 10px rgba(171, 185, 255, 0.25);
+}
+
+.merchant__company-name {
+    color: var(--muted-dark);
+    font-weight: 700;
+}
+
+.merchant__company-location {
+    color: var(--muted-dark);
+    font-weight: 400;
+}
+
+/*footer.html*/
+.shops__footer {
+    bottom:0;
+    width: 100%;
+    margin: 7.5rem 0 0 0;
+    background-color: var(--primary-main);
+}
+
+#footer__ql-logo {
+    padding: 2.5rem 7.5rem;
+}
+
+.footer__text-content {
+    display: flex; 
+    justify-content: space-between; 
+    width: 100%;
+    padding: 0.75rem 0 0 0;
+}
+.footer__items {
+    display: flex;
+    justify-content: space-between;
+    width: 28.5rem;
+}
+
+.footer__text {
+    text-decoration: none;
+    color: var(--muted-white);
+    font-size: 0.75rem;
+    font-weight: 400;
+    padding: .875rem 0;
+}

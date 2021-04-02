@@ -1,0 +1,20 @@
+{% load static %}
+
+{% block stylesheets %}
+<link rel="stylesheet" href="{% static '/css/shops.css' %}">
+{% endblock %}
+
+<nav class="shop__nav">
+    <div class="nav__quick-access">
+        <a href="#" class="subtitle nav__ql-easy-access">Quicklink for Business</a>
+        <a href="#" class="subtitle nav__merchant-btn">Merchant Sign In</a>
+    </div>
+    <div class="nav__content">
+        <a href="#" id="ql-logo"><img src="https://ik.imagekit.io/ripzjge77zz/Quicklink_App/Order_Form/purple-ql-logo-and-name_60flJs2lG2.svg" 
+            alt="Quicklink Logo"></a>
+        <div class="nav__btn-elements">
+            <button class="tertiary-btn-link" id="nav__tertiary-btn">Log In</button>
+            <button class="primary-btn" id="nav__primary-btn">Sign Up</button>
+        </div>
+    </div>
+</nav>

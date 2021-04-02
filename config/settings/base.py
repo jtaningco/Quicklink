@@ -48,7 +48,6 @@ INSTALLED_APPS = [
     # Third-Party Apps
     # 'rest_framework',
     'django_filters',
-    'crispy_forms',
     'corsheaders',
     'django_email_verification',
     'imagekit',
