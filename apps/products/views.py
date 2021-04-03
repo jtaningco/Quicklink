@@ -3,6 +3,8 @@ from apps.accounts.decorators import allowed_users, setup_required
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.views.decorators.csrf import csrf_exempt
+from django.http import JsonResponse
 
 # from django.views.generic import FormView
 # from django.views.generic.detail import SingleObjectMixin
@@ -22,8 +24,10 @@ def products(request):
     search_query = request.GET.get('search', '')
 
     if search_query:
-        products = Product.objects.filter(Q(name__icontains=search_query) |
-            Q(stock__icontains=search_query))
+        products = Product.objects.filter(Q(user=user) & 
+            Q(name__icontains=search_query) |
+            Q(stock__icontains=search_query)
+        )
     else:
         products = Product.objects.filter(user=user)
 
@@ -184,6 +188,43 @@ def updateProduct(request, product_pk):
 
     context = {'form':form, 'product':product, 'images':images, 'imageFormset':imageFormset, 'sizeFormset':sizeFormset, 'addonFormset':addonFormset}
     return render(request, 'products/edit_product.html', context)
+
+@login_required(login_url='accounts:login')
+@setup_required
+@allowed_users(allowed_roles=[User.Types.MERCHANT, User.Types.ADMIN])
+def setProductsAsActive(request):
+    if request.method == "POST" and request.is_ajax:
+        productId = request.POST.get('products')
+        product = Product.objects.get(pk=productId)
+        product.active = True
+        product.save()
+        return redirect('/shop/products/')
+    return JsonResponse(request.POST, safe=False)
+
+@login_required(login_url='accounts:login')
+@setup_required
+@allowed_users(allowed_roles=[User.Types.MERCHANT, User.Types.ADMIN])
+def setProductsAsInactive(request):
+    if request.method == "POST" and request.is_ajax:
+        productsList = json.loads(request.POST.get('products'))
+        for productId in productsList:
+            product = Product.objects.get(pk=productId)
+            product.active = False
+            product.save()
+        return redirect('/shop/products/')
+    return JsonResponse(request.POST, safe=False)
+
+@login_required(login_url='accounts:login')
+@setup_required
+@allowed_users(allowed_roles=[User.Types.MERCHANT, User.Types.ADMIN])
+def deleteSelectedProducts(request):
+    if request.method == "POST" and request.is_ajax:
+        productsList = json.loads(request.POST.get('products'))
+        for productId in productsList:
+            product = Product.objects.get(pk=productId)
+            product.delete()
+        return redirect('/shop/products/')
+    return JsonResponse(request.POST, safe=False)
 
 @login_required(login_url='accounts:login')
 @setup_required

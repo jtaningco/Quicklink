@@ -52,7 +52,10 @@ class Product(models.Model):
     sold = models.PositiveIntegerField(null=True, blank=True, default=0)
 
     def __str__(self):
-        return f"{self.name}"
+        if hasattr(self.user, "shop_info"):
+            return f"{self.user.shop_info.shop_name} — {self.name}"
+        else:
+            return f"{self.name}"
 
     def save(self, *args, **kwargs):
         self.product_list = Product.objects.order_by('product_id')

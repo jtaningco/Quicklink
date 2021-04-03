@@ -37,25 +37,24 @@
             <div class="products__wrapper">
                 <table class="products__table">
                     <tr class="products__table__header hide" id="js-select-products">
-                        <th class="product__table__cell">
-                            <div class="selected__products__container">
-                                <label class="checkbox">
-                                    <input type="checkbox" checked>
-                                    <span class="checkmark checkmark__small"></span>
-                                </label>
-                                <p class="subtitle bold" id="js-selected-input" style="margin-left: 0.5rem;"></p>
+                        <th class="product__table__cell" colspan="6">
+                            <div class="products__table__btns">
+                                <button type="button" class="selected__products__container" id="js-deselect-all-products-btn">
+                                    <label class="checkbox">
+                                        <input type="checkbox" checked>
+                                        <span class="checkmark checkmark__small"></span>
+                                    </label>
+                                    <p class="subtitle bold" id="js-selected-input" style="margin-left: 0.5rem;"></p>
+                                </button>
+                                <button type="button" class="secondary-btn subtitle bold set-as-inactive__btn" id="js-set-as-inactive-btn">Set as inactive</button>
+                                <button type="button" class="secondary-btn warning subtitle bold" id="js-open-delete-modal">Delete</button>
                             </div>
                         </th>
-                        <th class="product__table__cell"><button type="button" class="secondary-btn subtitle bold" id="js-set-as-inactive-btn">Set as inactive</button></th>
-                        <th class="product__table__cell"><button type="button" class="secondary-btn warning subtitle bold" id="js-delete-selected-btn">Delete</button></th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
                     </tr>
                     <tr class="products__table__header" id="js-normal-table-header">
                         <th class="product__table__cell">
                             <label class="checkbox">
-                                <input type="checkbox" name="select_all" id="id_select_all">
+                                <input type="checkbox" name="select_all" id="js-select-all-products-btn">
                                 <span class="checkmark checkmark__small"></span>
                             </label>
                         </th>
@@ -130,6 +129,25 @@
                     {% endfor %}
                 </table>
                 {% endif %}
+                <div class="modal__container" id="js-delete-products-modal">
+                    <div class="modal__card__wrapper" style="max-width: 338px;">
+                        <img 
+                            src="https://ik.imagekit.io/ripzjge77zz/Quicklink_App/Merchant/Settings/Account_Settings/modal_x_20oKHfTKy.png" 
+                            alt="Exit Modal" class="modal__exit__btn js-modal-exit-btn"
+                        />
+                        <div class="modal__card__header">
+                            <img src="https://ik.imagekit.io/ripzjge77zz/Quicklink_App/Merchant/Settings/Account_Settings/modal__alert-circle_vCjlPyZv134.png" alt="Alert">
+                        </div>
+                        <div class="modal__form__content" style="min-width: 100%; align-items: center;">
+                            <h1 class="body-big bold" style="text-align: center;">Are you sure you want to delete these 4 items?</h1>
+                            <p style="margin-top: 0.5rem; text-align: center;">This will permanently remove the item from your order form.</p>
+                        </div>
+                        <div class="modal__form__content modal__form__content-row">
+                            <button class="secondary-btn subtitle bold js-modal-exit-btn">Cancel</button>
+                            <button class="primary-btn warning subtitle bold" id="js-delete-selected-btn">Delete</button>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 {% endblock %}

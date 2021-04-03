@@ -101,6 +101,7 @@ p, .body { font-size: 1rem; line-height: 1.6rem; }
 
 /* BUTTONS */
 button {
+  cursor: pointer;
   font-family: 'Overpass', sans-serif;
   font-size: 0.9rem; line-height: 1.25rem;
   width: auto;
@@ -117,7 +118,7 @@ button {
 
 button.pressed, button.warning { box-shadow: none; }
 
-button p, button.subtitle, .primary-btn.subtitle, .secondary-btn.subtitle { padding-top: 0.5rem; }
+button p, button.subtitle, .primary-btn.subtitle, .secondary-btn.subtitle { padding-top: 10px; }
 
 button img { margin-left: 0.5rem; }
 
@@ -758,6 +759,8 @@ input:checked + .slider:before {
   transition: all 0.4s ease;
   z-index: 999;
 }
+
+.modal__container.show { display: flex; opacity: 1; }
 
 .modal__card__wrapper {
   position: relative;

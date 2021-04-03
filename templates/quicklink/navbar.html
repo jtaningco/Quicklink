@@ -51,9 +51,9 @@
                 <img src="https://ik.imagekit.io/ripzjge77zz/Quicklink_App/Navbar/white-chevron-right_hCqRvYLHA.svg" class="nav__chevron" id="js-third-nav-link">
             </a>
             <ul class="sidebar__items-subitems" id="js-cldk-show">
-                <a href="#" class="sidebar_sub-item subtitle semi-bold" id="sidebar__subitem-custom">Account</a>
-                <a href="#" class="sidebar_sub-item subtitle semi-bold" id="sidebar__subitem-custom">Notifications</a>
-                <a href="#" class="sidebar_sub-item subtitle semi-bold" id="sidebar__subitem-custom">Resources</a>
+                <a href="{% url 'accounts:account-settings' %}" class="sidebar_sub-item subtitle semi-bold" id="sidebar__subitem-custom">Account</a>
+                <a href="{% url 'accounts:notification-settings' %}" class="sidebar_sub-item subtitle semi-bold" id="sidebar__subitem-custom">Notifications</a>
+                <a href="{% url 'accounts:resource-settings-faqs' %}" class="sidebar_sub-item subtitle semi-bold" id="sidebar__subitem-custom">Resources</a>
             </ul>
         </ul>
     </div>
