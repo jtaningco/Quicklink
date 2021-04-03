@@ -26,7 +26,7 @@ body {
 }
 
 main {
-  min-height: 95vh;
+  min-height: 98vh;
   width: 100%;
   background: var(--bg-color);
 }
@@ -257,6 +257,12 @@ button:focus {
   display: flex;
   justify-content: space-between;
   align-items: center; align-content: center;
+  transition: border 0.3s ease-in-out;
+}
+
+.date-input:hover, .date-input:hover ~ .date-input-img {
+  cursor: pointer;
+  border-color: var(--muted-lightest);
 }
 
 .date-input .date-input-content {
@@ -834,6 +840,7 @@ input:checked + .slider:before {
   justify-content: center;
   align-items: center;
   align-content: center;
+  overflow-x: hidden;
   opacity: 1;
   background: var(--muted-white);
   box-shadow: var(--regular-box-shadow);
@@ -887,6 +894,24 @@ input:checked + .slider:before {
 
 .modal__form__content-row button {
   margin: 0 0.5rem;
+}
+
+.slick-dotted.slick-slider {
+  margin: 0;
+}
+
+/* Flatpickr JQuery Plugin */
+.flatpickr-monthDropdown-months, .flatpickr-monthDropdown-month, .numInput {
+  font-family: 'Overpass', sans-serif !important;
+}
+
+.flatpickr-day.today {
+  border-color: var(--primary-alt) !important;
+}
+
+.flatpickr-day.selected {
+  background: var(--primary-main) !important;
+  border-color: var(--primary-main) !important;
 }
 
 /*

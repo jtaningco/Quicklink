@@ -52,10 +52,10 @@ class Product(models.Model):
     sold = models.PositiveIntegerField(null=True, blank=True, default=0)
 
     def __str__(self):
-        if hasattr(self.user, "shop_info"):
-            return f"{self.user.shop_info.shop_name} — {self.name}"
-        else:
-            return f"{self.name}"
+        # if hasattr(self.user, "shop_info"):
+        #     return f"{self.user.shop_info.shop_name} — {self.name}"
+        # else:
+        return f"{self.name}"
 
     def save(self, *args, **kwargs):
         self.product_list = Product.objects.order_by('product_id')
@@ -100,6 +100,14 @@ class Image(models.Model):
     image = models.ImageField(upload_to="%Y/%m/%d/products/", null=True, blank=True, verbose_name='Image')
     default = models.BooleanField(default=False, verbose_name='Default')
 
+    def __str__(self):
+        if self.name and self.image:
+            return f"{self.name} — {self.image.url}"
+        elif self.name:
+            return f"{self.name}"
+        else:
+            return "No Images Found"
+
     @property
     def get_product_name(self):
         name = self.product.name
@@ -110,7 +118,7 @@ class Image(models.Model):
 
 # Class Size for implementation of inline formsets
 class Size(models.Model):
-    product = models.ForeignKey(Product, null=True, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, null=True, related_name="product_sizes", on_delete=models.CASCADE)
     size = models.CharField(max_length=80, null=True, blank=False)
     price_size = models.DecimalField(null=True, blank=False, max_digits=6, decimal_places=2)
 
@@ -127,7 +135,7 @@ class Size(models.Model):
 
 # Class Addon for implementation of inline formsets
 class Addon(models.Model):
-    product = models.ForeignKey(Product, null=True, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, null=True, related_name="product_addons", on_delete=models.CASCADE)
     addon = models.CharField(max_length=80, null=True, blank=False)
     price_addon = models.DecimalField(null=True, blank=False, max_digits=5, decimal_places=2)
 

@@ -6,6 +6,8 @@
 {% block stylesheets %}
     <link rel="stylesheet" href="{% static '/css/orders/orders.css' %}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-nice-select/1.1.0/css/nice-select.min.css" integrity="sha512-CruCP+TD3yXzlvvijET8wV5WxxEh5H8P4cmz0RFbKK6FlZ2sYl3AEsKlLPHbniXKSrDdFewhbmBK5skbdsASbQ==" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+Usage
 {% endblock %}
 
 {% block maincontent %}
@@ -31,7 +33,14 @@
                         </div>
                     </form>
                 </div>
-                <div class="orders__total"></div>
+                <div class="orders__total">
+                    {% for size in product.product_sizes %}
+                        <div class="orders__sizes__container">
+                            <p class="subtitle">{{ size.name }}</p>
+                            <p class="subtitle bold size__count">{{ sizeCount }}</p>
+                        </div>
+                    {% endfor %}
+                </div>
             </div>
         </div>
 
@@ -68,7 +77,7 @@
                         </div>
                     </div>
     {% else %}
-                {% for i in products %}
+                {% for i in productFilter.qs %}
                     {% if forloop.counter|divisibleby:2 %}
                         <tr class="order-table-row-2">
                     {% else %}
@@ -86,19 +95,16 @@
                             <td class="order-table-cell subtitle">{{ i.size.size }}</td>
 
                             {% for addon in addons %}
-                                {% if products_verification == productOrders_verification %}
-                                {% else %}
-                                    <td class="order-table-cell subtitle">
-                                        <label class="checkbox">
-                                                {% if addon in selected_addons %}
-                                                    <input type="checkbox" checked>
-                                                {% else %}
-                                                    <input type="checkbox">
-                                                {% endif %}
-                                            <span class="checkmark"></span>
-                                        </label>
-                                    </td>
-                                {% endif %}
+                                <td class="order-table-cell subtitle">
+                                    <label class="checkbox">
+                                            {% if addon in selected_addons %}
+                                                <input type="checkbox" checked>
+                                            {% else %}
+                                                <input type="checkbox">
+                                            {% endif %}
+                                        <span class="checkmark"></span>
+                                    </label>
+                                </td>
                             {% endfor %}
                             
                             <td class="order-table-cell subtitle">
@@ -120,8 +126,27 @@
         $(document).ready(function() {
             $('#id_product').niceSelect();
         });
+    </script>
 
+    <!-- Flatpickr lightweight JQuery plugin — See docs for more info: https://flatpickr.js.org/examples/ -->
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script>
+        $("#id_delivery_date").flatpickr({
+            enableTime: false,
+            altInput: true,
+            altFormat: "F j, Y",
+            dateFormat: "Y-m-d",
+            maxDate: new Date().fp_incr(21),
+        });
+    </script>
+
+    <!-- Filter form auto submit on change -->
+    <script>
         $("#id_product").change(function() {
+            $(this).closest('form').submit();
+        });
+
+        $("#id_delivery_date").change(function() {
             $(this).closest('form').submit();
         });
     </script>

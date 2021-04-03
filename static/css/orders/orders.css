@@ -12,7 +12,7 @@
 .orders__header {
     min-height: 10vh;
     width: 100%;
-    padding: 2rem 6rem 1rem 6rem;
+    padding: 4rem 6rem 1rem 6rem;
     display: flex;
     justify-content: flex-end;
     align-items: center;
@@ -86,7 +86,7 @@
     border-collapse: collapse;
     border-spacing: 0;
     margin: 0;
-    width: 98%;
+    width: 100%;
 }
 
 .orders__table-header {
@@ -160,4 +160,20 @@
 
 .orders__total {
     padding-right: 32px;
+}
+
+.orders__sizes__container {
+    height: 40px;
+    width: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    align-content: center;
+    padding: 1rem;
+    border: 1px solid var(--muted-lighter);
+}
+
+.size__count {
+    color: var(--secondary-alt) !important;
+    padding-left: 1rem;
 }

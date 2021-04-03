@@ -34,6 +34,10 @@ class PendingOrderFilter(filters.FilterSet):
 
         return parent.filter(order__shop=user) \
             | parent.filter(order__order_status="Pending")
+
+    @property
+    def get_product(self):
+        return self.filters['product']
         
     def __init__(self, data=None, queryset=None, request=None, prefix=None):
         # Initialize Filter

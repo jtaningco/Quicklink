@@ -45,6 +45,9 @@ def pendingOrders(request):
 
     # Get initial value for filter set (Alphabetical Order)
     productChoices = Product.objects.filter(user=user).order_by('name')
+    product = productChoices[0]
+    data = request.GET.copy()
+    data.setdefault('product', product)
 
     # Get pending orders
     orders = Order.objects.filter(shop=user, order_status="Pending")
@@ -52,11 +55,8 @@ def pendingOrders(request):
     # Get pending product orders
     productOrders = ProductOrder.objects.filter(order__in=orders).order_by('product')
 
-    # Get total count of orders that are in pending orders Query set
-    orderCount = ProductOrder.objects.filter(order__in=orders).count()
-
     # Product filter form
-    productFilter = PendingOrderFilter(request.GET, request=request, queryset=productOrders)
+    productFilter = PendingOrderFilter(data, request=request, queryset=productOrders)
     products = productFilter.qs
     
     try:
@@ -76,9 +76,7 @@ def pendingOrders(request):
     
     context = {'orders':orders, 
     'products':products,
-    'productOrders':productOrders, 
-    'products_verification':list(products),
-    'productOrders_verification':list(productOrders), 
+    'productOrders':productOrders,
     'productFilter':productFilter, 
     'orderCount':orderCount, 
     'addons':addons, 
