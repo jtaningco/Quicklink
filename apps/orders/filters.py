@@ -18,10 +18,12 @@ class PendingOrderFilter(filters.FilterSet):
     class Meta:
         model = ProductOrder
         fields = [
-            'product'
+            'product', 
+            'delivery_date',
         ]
         labels = {
             'product': '',
+            'delivery_date': '',
         }
 
     # Filter product owners to only those that are owned by the logged-in user
@@ -38,5 +40,9 @@ class PendingOrderFilter(filters.FilterSet):
         super(PendingOrderFilter, self).__init__(data=data, queryset=queryset, request=request, prefix=prefix)
         self.filters['product'].label=''
         self.filters['product'].field.widget.attrs.update({
-            'class':'select subtitle bold',
+            'class':'subtitle bold',
+        })
+        self.filters['delivery_date'].label=''
+        self.filters['delivery_date'].field.widget.attrs.update({
+            'class':'date-input-content subtitle',
         })

@@ -25,12 +25,12 @@
                 <img src="https://ik.imagekit.io/ripzjge77zz/Quicklink_App/Navbar/white-shop-icon_Xxd8mPFmt-b.svg"
                 alt="Shop Icon" id="navbar__icons">
                 Shop
-                <img src="https://ik.imagekit.io/ripzjge77zz/Quicklink_App/Navbar/white-chevron-right_hCqRvYLHA.svg" class="nav__chevron" id="js-first-nav-link">
+                <img src="https://ik.imagekit.io/ripzjge77zz/Quicklink_App/Navbar/white-chevron-right_hCqRvYLHA.svg" class="nav__chevron rotate" id="js-first-nav-link">
             </a>
-            <ul class="sidebar__items-subitems" id="js-feat-show">
+            <ul class="sidebar__items-subitems show" id="js-feat-show">
                 <a href="#" class="sidebar_sub-item subtitle semi-bold" id="sidebar__subitem-custom">My Shop</a>
-                <a href="#" class="sidebar_sub-item subtitle semi-bold" id="sidebar__subitem-custom">All Orders</a>
-                <a href="#" class="sidebar_sub-item subtitle semi-bold" id="sidebar__subitem-custom">Pending Items</a>
+                <a href="{% url 'orders:order-summary' %}" class="sidebar_sub-item subtitle semi-bold" id="sidebar__subitem-custom">All Orders</a>
+                <a href="{% url 'orders:pending-orders' %}" class="sidebar_sub-item subtitle semi-bold" id="sidebar__subitem-custom">Pending Items</a>
                 <a href="{% url 'products:products' %}" class="sidebar_sub-item subtitle semi-bold" id="sidebar__subitem-custom">Products</a>
             </ul>
             <!--3rd nav button and sub bar -->
@@ -38,9 +38,9 @@
                 <img src="https://ik.imagekit.io/ripzjge77zz/Quicklink_App/Navbar/white-finances-icon_naPJo2Dej.svg"
                 alt="Shop Icon" id="navbar__icons">
                 Finances
-                <img src="https://ik.imagekit.io/ripzjge77zz/Quicklink_App/Navbar/white-chevron-right_hCqRvYLHA.svg" class="nav__chevron" id="js-second-nav-link">
+                <img src="https://ik.imagekit.io/ripzjge77zz/Quicklink_App/Navbar/white-chevron-right_hCqRvYLHA.svg" class="nav__chevron rotate" id="js-second-nav-link">
             </a>
-            <ul class="sidebar__items-subitems" id="js-serv-show">
+            <ul class="sidebar__items-subitems show" id="js-serv-show">
                 <a href="#" class="sidebar_sub-item subtitle semi-bold" id="sidebar__subitem-custom">Total Revenue</a>
             </ul>
             <!-- 4th nav button and sub bar -->
@@ -48,9 +48,9 @@
                 <img src="https://ik.imagekit.io/ripzjge77zz/Quicklink_App/Navbar/white-settings-icon_WJexo4RiDrW.svg"
                 alt="Shop Icon" id="navbar__icons">
                 Settings
-                <img src="https://ik.imagekit.io/ripzjge77zz/Quicklink_App/Navbar/white-chevron-right_hCqRvYLHA.svg" class="nav__chevron" id="js-third-nav-link">
+                <img src="https://ik.imagekit.io/ripzjge77zz/Quicklink_App/Navbar/white-chevron-right_hCqRvYLHA.svg" class="nav__chevron rotate" id="js-third-nav-link">
             </a>
-            <ul class="sidebar__items-subitems" id="js-cldk-show">
+            <ul class="sidebar__items-subitems show" id="js-cldk-show">
                 <a href="{% url 'accounts:account-settings' %}" class="sidebar_sub-item subtitle semi-bold" id="sidebar__subitem-custom">Account</a>
                 <a href="{% url 'accounts:notification-settings' %}" class="sidebar_sub-item subtitle semi-bold" id="sidebar__subitem-custom">Notifications</a>
                 <a href="{% url 'accounts:resource-settings-faqs' %}" class="sidebar_sub-item subtitle semi-bold" id="sidebar__subitem-custom">Resources</a>

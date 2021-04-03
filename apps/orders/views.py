@@ -45,7 +45,6 @@ def pendingOrders(request):
 
     # Get initial value for filter set (Alphabetical Order)
     productChoices = Product.objects.filter(user=user).order_by('name')
-    product = productChoices[0]
 
     # Get pending orders
     orders = Order.objects.filter(shop=user, order_status="Pending")

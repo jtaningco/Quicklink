@@ -1,71 +1,58 @@
-.empty-orders-content {
-    width: 90%;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    align-content: center;
-}
-
-.empty-orders-content h1 {
-    margin-top: -40px;
-}
-
-.orders-container {
-    width: 100vw;
-    height: auto;
+.orders__container {
+    width: 100%;
+    min-height: 95vh;
+    max-height: 100%;
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    justify-content: flex-start;
+    align-items: column;
     align-content: center;
-    background: var(--bg-color);
 }
 
-.orders-header {
-    height: 10vh;
+.orders__header {
+    min-height: 10vh;
     width: 100%;
+    padding: 2rem 6rem 1rem 6rem;
     display: flex;
     justify-content: flex-end;
     align-items: center;
-    align-content: center;
+    align-content: center;;
 }
 
-.orders-header-wrapper {
+.orders__header__wrapper {
     height: 100%;
     width: 90%;
-    padding: 40px 40px 0 40px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    align-content: center;
-}
-
-.orders-header-content, .orders-products {
-    flex-basis: 40%;
     display: flex;
     justify-content: flex-start;
     align-items: center;
     align-content: center;
 }
 
-.orders-header-content h1 { color: var(--secondary-alt); }
+.orders__header__content, .orders__products {
+    flex-basis: 50%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    align-content: center;
+}
 
-.orders-header-btns, .orders-total {
-    flex-basis: 60%;
+.orders__header__content h1 { color: var(--secondary-alt); }
+
+.orders__header__btns, .orders__total {
+    flex-basis: 50%;
     display: flex;
     justify-content: flex-end;
     align-items: center;
     align-content: center;
 }
 
-.orders-header-btns form {
+.orders__header__btns form {
     width: auto;
     display: flex;
     flex-flow: row wrap;
 }
 
-.orders-search-bar {
+.orders__search-bar {
     margin: 0 24px;
 }
 
@@ -73,45 +60,46 @@
     margin: 0 0 0 8px;
 }
 
-.orders-summary {
+.orders__summary {
     width: 100%;
     height: auto;
     display: flex;
     justify-content: flex-end;
     align-items: center;
     align-content: center;
-    margin-top: 32px;
+    margin-top: 1rem;
 }
 
-.orders-wrapper {
+.orders__wrapper {
     height: 100%;
     width: 90%;
     display: flex;
+    flex-direction: column;
     justify-content: center;
-    align-items: center;
+    align-items: flex-end;
     align-content: center;
 }
 
-.orders-summary-table { 
+.orders__summary-table { 
     display: table;
     table-layout: fixed;
     border-collapse: collapse;
     border-spacing: 0;
     margin: 0;
-    width: 100%;
+    width: 98%;
 }
 
-.orders-table-header {
+.orders__table-header {
     height: 72px;
-    width: 100%;
-    background: #FFFFFF;
-    border-top: 1px solid #DCDCDC;
-    border-bottom: 1px solid #DCDCDC;
+    max-width: 100%;
+    background: var(--muted-white);
+    border-top: 1px solid var(--muted-lightest);
+    border-bottom: 1px solid var(--muted-lightest);
     text-align: center;
     vertical-align: middle;
 }
 
-.orders-table-header th {
+.orders__table-header th {
     padding: 0; 
     margin: 0;
 }
@@ -126,16 +114,14 @@
 }
 
 .order-table-row-1 { background: rgba(169, 184, 255, 0.03); }
-.order-table-row-2 { background: #FFF; }
+.order-table-row-2 { background: var(--muted-white); }
 
 .order-table-cell {
     width: auto;
-    padding: 0 16px;
+    padding: 0 2rem;
     text-align: center;
     vertical-align: middle;
 }
-
-.table-header { font-size: 10px; }
 
 .status-container {
     width: 100%;
@@ -146,20 +132,21 @@
 }
 
 /* PENDING ORDERS */
-.orders-header-btns button {
+.orders__header__btns button {
     margin: 0 8px;
 }
 
-.orders-subheader {
-    height: 7.5vh;
-    width: 100vw;
+.orders__subheader {
+    min-height: 7.5vh;
+    width: 100%;
+    padding: 0 6rem 2rem 6rem;
     display: flex;
     justify-content: flex-end;
     align-items: center;
     align-content: center;
 }
 
-.orders-subheader form {
+.orders__subheader form {
     display: flex;
     flex-flow: row wrap;
     justify-content: center;
@@ -167,10 +154,10 @@
     align-content: center;
 }
 
-.orders-subheader button {
+.orders__subheader button {
     margin: 0 40px;
 }
 
-.orders-total {
+.orders__total {
     padding-right: 32px;
 }

@@ -175,11 +175,22 @@ class ProductOrder(models.Model):
     # Total product fees (Auto-filled in views.py under updateItem, line 265)
     total = models.DecimalField(null=True, default=0, max_digits=8, decimal_places=2)
 
+    # Preferred delivery date of when the product will be delivered (Auto-filled)
+    delivery_date = models.DateField(null=True)
+
     # Date of when the order was published (Auto-filled)
     order_date = models.DateTimeField(auto_now_add=True, null=True)
     
     def __str__(self):
         return f"{self.quantity} {self.product} - Total of PHP {self.total}"
+
+    @property
+    def get_delivery_date(self):
+        if self.order.delivery_date != None:
+            delivery_date = self.order.delivery_date
+        else:
+            delivery_date = None
+        return delivery_date
 
     @property
     def get_total(self):

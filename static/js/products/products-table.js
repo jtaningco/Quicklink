@@ -112,6 +112,8 @@ toggleBtns.each(function() {
 // Open delete selected products modal
 openDelModal.click(function() {
     $("#js-delete-products-modal").addClass("show");
+    var selected = $(".js-select-btn:checked").length
+    document.getElementById("js-delete-text").innerHTML = `Are you sure you want to delete these ${selected} items?`
 });
 
 // Exit modal buttons

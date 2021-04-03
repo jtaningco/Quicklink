@@ -1,112 +1,128 @@
-{% extends 'quicklink/base.html' %}
+{% extends 'quicklink/app.html' %}
 {% load static %}
 
 {% block pagetitle %}Pending Orders{% endblock %}
 
+{% block stylesheets %}
+    <link rel="stylesheet" href="{% static '/css/orders/orders.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-nice-select/1.1.0/css/nice-select.min.css" integrity="sha512-CruCP+TD3yXzlvvijET8wV5WxxEh5H8P4cmz0RFbKK6FlZ2sYl3AEsKlLPHbniXKSrDdFewhbmBK5skbdsASbQ==" crossorigin="anonymous" />
+{% endblock %}
+
 {% block maincontent %}
-
-{% if not orders %}
-        <div class="empty-orders-container">
-            <div class="empty-orders-wrapper">
-                <div class="empty-orders-content">
-                    <h1>You have no pending orders</h1>
-                </div>
-            </div>
-        </div>
-
-    {% else %}
-    <div class="orders-container">
-
-        <div class="orders-header">
-            <div class="orders-header-wrapper">
-                <div class="orders-header-content">
+    <div class="orders__container">
+        <div class="orders__header">
+            <div class="orders__header__wrapper">
+                <div class="orders__header__content">
                     <h1 class="extra-bold">Pending Orders</h1>
                 </div>
             </div>
         </div>
 
-        <div class="orders-subheader">
-            <div class="orders-header-wrapper">
-                <div class="orders-products">
+        <div class="orders__subheader">
+            <div class="orders__header__wrapper">
+                <div class="orders__products">
                     <form method="get">
-                        {{ productFilter.form }}
-                        <button type="submit" class="tertiary-btn-link tertiary-btn subtitle bold">Search</button>
+                        {{ productFilter.form.product }}
+                        <div class="date-input" style="margin-left: 1rem;">
+                            {{ productFilter.form.delivery_date }}
+                            <div class="date-input-img">
+                                <img src="https://ik.imagekit.io/ripzjge77zz/Quicklink_App/Merchant/Orders/fi_calendar_E4TS-cMJH.png" alt="">
+                            </div>
+                        </div>
                     </form>
                 </div>
-                <div class="orders-total">
-                    {% if OrderCount == 0 %}
-                        <p class="bold">Total Pending: 0</p>
+                <div class="orders__total"></div>
+            </div>
+        </div>
+
+        <div class="orders__summary">
+            <div class="orders__wrapper">
+                <table class="orders__summary-table">
+                    <tr class="orders__table-header">
+                        <th class="order-table-cell overline bold">Date of Delivery</th>
+                        <th class="order-table-cell overline bold">Customer</th>
+                        <th class="order-table-cell overline bold">Product</th>
+                        <th class="order-table-cell overline bold">Quantity</th>
+                        <th class="order-table-cell overline bold">Size</th>
+                        <th class="order-table-cell overline bold">Add-on #1</th>
+                        <th class="order-table-cell overline bold">Add-on #2</th>
+                        <th class="order-table-cell overline bold">Order Details</th>
+                    </tr>
+    {% if not orders %}
+                    </table>
+                    <div class="table__placeholder__container">
+                        <div class="table__placeholder__wrapper">
+                            <img src="https://ik.imagekit.io/ripzjge77zz/Quicklink_App/Merchant/Orders/no_orders_1x_UpAhOttbO5T.png" alt="No Orders" class="table__placeholder__img"
+                            srcset="https://ik.imagekit.io/ripzjge77zz/Quicklink_App/Merchant/Orders/no_orders_1x_UpAhOttbO5T.png 1x,
+                                https://ik.imagekit.io/ripzjge77zz/Quicklink_App/Merchant/Orders/no_orders_2x_2KmmBTpMV.png 2x,
+                                https://ik.imagekit.io/ripzjge77zz/Quicklink_App/Merchant/Orders/no_orders_3x_dkL_jbZsu.png 3x,
+                                https://ik.imagekit.io/ripzjge77zz/Quicklink_App/Merchant/Orders/no_orders_4x_i6ehCdf-YF0W.png 4x">
+                            <div class="table__placeholder__guide">
+                                <h2 class="table__placeholder__guide__header bold">Kinda quiet here...</h2>
+                                <a href="{% url 'products:products' %}" style="text-decoration: none;">
+                                    <button class="primary-btn subtitle bold">See my products
+                                        <img src="https://ik.imagekit.io/ripzjge77zz/Quicklink_App/Design_System/Icons/Buttons/primary_icon_only-enabled-hover-pressed_BO_t1npIp.svg" alt="Add">
+                                    </button>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+    {% else %}
+                {% for i in products %}
+                    {% if forloop.counter|divisibleby:2 %}
+                        <tr class="order-table-row-2">
                     {% else %}
-                        <p class="bold">Total Pending: {{ orderCount }}</p>
+                        <tr class="order-table-row-1">
                     {% endif %}
+                            <td class="order-table-cell subtitle">{{ i.order.delivery_date|date:"d-m-Y" }}</td>
+                            {% if i.order.user.info_customer %}
+                                <td class="order-table-cell subtitle">{{ i.order.user.info_customer.customer_name | title }}</td>
+                            {% else %}
+                                <td class="order-table-cell subtitle">{{ i.order.user.info_shop.shop_name | title }}</td>
+                            {% endif %}
+                            <td class="order-table-cell subtitle">{{ i.product.name }}</td>
+                            
+                            <td class="order-table-cell subtitle">{{ i.quantity }}</td>
+                            <td class="order-table-cell subtitle">{{ i.size.size }}</td>
+
+                            {% for addon in addons %}
+                                {% if products_verification == productOrders_verification %}
+                                {% else %}
+                                    <td class="order-table-cell subtitle">
+                                        <label class="checkbox">
+                                                {% if addon in selected_addons %}
+                                                    <input type="checkbox" checked>
+                                                {% else %}
+                                                    <input type="checkbox">
+                                                {% endif %}
+                                            <span class="checkmark"></span>
+                                        </label>
+                                    </td>
+                                {% endif %}
+                            {% endfor %}
+                            
+                            <td class="order-table-cell subtitle">
+                                <a href="" class="tertiary-btn-link bold">See Notes</a>
+                            </td>
+                        </tr>
+                    </table>
+                {% endfor %}
                 </div>
             </div>
         </div>
-
-        <div class="orders-summary">
-            <div class="orders-wrapper">
-                <table class="orders-summary-table">
-                    <tr class="orders-table-header">
-                        <th class="table-header order-table-cell">Delivery Date</th>
-                        <th class="table-header order-table-cell">Customer</th>
-                        <th class="table-header order-table-cell">Product</th>
-                        <th class="table-header order-table-cell">Quantity</th>
-                        <th class="table-header order-table-cell">Size</th>
-
-                        {% for addon in addons %}
-                            {% if products_verification == productOrders_verification %}
-                            {% else %}
-                                <th class="table-header order-table-cell">w/ {{ addon.addon }}</th>
-                            {% endif %}
-                        {% endfor %}
-                        
-                        <th class="table-header order-table-cell">Additional Notes</th>
-                    </tr>
-
-                    {% for i in products %}
-                        {% if forloop.counter|divisibleby:2 %}
-                            <tr class="order-table-row-2">
-                        {% else %}
-                            <tr class="order-table-row-1">
-                        {% endif %}
-                                <td class="order-table-cell subtitle">{{ i.order.delivery_date|date:"d-m-Y" }}</td>
-                                {% if i.order.user.info_customer %}
-                                    <td class="order-table-cell subtitle">{{ i.order.user.info_customer.customer_name | title }}</td>
-                                {% else %}
-                                    <td class="order-table-cell subtitle">{{ i.order.user.info_shop.shop_name | title }}</td>
-                                {% endif %}
-                                <td class="order-table-cell subtitle">{{ i.product.name }}</td>
-                                
-                                <td class="order-table-cell subtitle">{{ i.quantity }}</td>
-                                <td class="order-table-cell subtitle">{{ i.size.size }}</td>
-
-                                {% for addon in addons %}
-                                    {% if products_verification == productOrders_verification %}
-                                    {% else %}
-                                        <td class="order-table-cell subtitle">
-                                            <label class="checkbox">
-                                                    {% if addon in selected_addons %}
-                                                        <input type="checkbox" checked>
-                                                    {% else %}
-                                                        <input type="checkbox">
-                                                    {% endif %}
-                                                <span class="checkmark"></span>
-                                            </label>
-                                        </td>
-                                    {% endif %}
-                                {% endfor %}
-                                
-                                <td class="order-table-cell subtitle">
-                                    <a href="" class="tertiary-btn-link bold">See Notes</a>
-                                </td>
-                            </tr>
-                    {% endfor %}
-
-                </table>
-            </div>
-        </div>
-
-    </div>
     {% endif %}
+{% endblock %}
 
+{% block scriptsBody %}
+    <!-- Nice Select lightweight JQuery plugin -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-nice-select/1.1.0/js/jquery.nice-select.min.js" integrity="sha512-NqYds8su6jivy1/WLoW8x1tZMRD7/1ZfhWG/jcRQLOzV1k1rIODCpMgoBnar5QXshKJGV7vi0LXLNXPoFsM5Zg==" crossorigin="anonymous"></script>
+    <script>
+        $(document).ready(function() {
+            $('#id_product').niceSelect();
+        });
+
+        $("#id_product").change(function() {
+            $(this).closest('form').submit();
+        });
+    </script>
 {% endblock %}

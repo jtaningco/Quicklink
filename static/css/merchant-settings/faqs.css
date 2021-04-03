@@ -2,9 +2,9 @@
     width: 100%;
     min-height: 100%;
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
     align-content: center;
-    margin-left: 20vw;
+    margin-left: 24rem;
     background: var(--bg-color);
 }
