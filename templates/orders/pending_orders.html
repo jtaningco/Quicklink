@@ -24,8 +24,12 @@ Usage
             <div class="orders__header__wrapper">
                 <div class="orders__products">
                     <form method="get">
-                        {{ productFilter.form.product }}
-                        <div class="date-input" style="margin-left: 1rem;">
+                        {% if product %}
+                            {{ productFilter.form.product }}
+                            <div class="date-input" style="margin-left: 1rem;">
+                        {% else %}
+                            <div class="date-input">
+                        {% endif %}
                             {{ productFilter.form.delivery_date }}
                             <div class="date-input-img">
                                 <img src="https://ik.imagekit.io/ripzjge77zz/Quicklink_App/Merchant/Orders/fi_calendar_E4TS-cMJH.png" alt="">
@@ -34,10 +38,10 @@ Usage
                     </form>
                 </div>
                 <div class="orders__total">
-                    {% for size in product.product_sizes %}
+                    {% for size in sizes %}
                         <div class="orders__sizes__container">
-                            <p class="subtitle">{{ size.name }}</p>
-                            <p class="subtitle bold size__count">{{ sizeCount }}</p>
+                            <p class="subtitle">{{ size.size }}</p>
+                            <p class="subtitle bold size__count">{{ size.order_item_size.count }}</p>
                         </div>
                     {% endfor %}
                 </div>
@@ -53,8 +57,21 @@ Usage
                         <th class="order-table-cell overline bold">Product</th>
                         <th class="order-table-cell overline bold">Quantity</th>
                         <th class="order-table-cell overline bold">Size</th>
-                        <th class="order-table-cell overline bold">Add-on #1</th>
-                        <th class="order-table-cell overline bold">Add-on #2</th>
+                        {% if addons %}
+                            {% for addon in addons %}
+                                <th class="order-table-cell">
+                                    <div style="display: flex; justify-content: center; align-items: center; align-content: center;">
+                                        <p class="order-addon overline bold">{{ addon.addon }}</p>
+                                        <img src="https://ik.imagekit.io/ripzjge77zz/Quicklink_App/Design_System/Icons/Buttons/u_info-circle_V3XlR7RfK.png" 
+                                        alt="Helper" class="js-addon" style="margin-left: 0.25rem;">
+                                    </div>
+                                    <div class="order__addon--helper caption" id="js-addon-helper-{{forloop.counter0}}"></div>
+                                </th>
+                            {% endfor %}
+                        {% else %}
+                            <th class="order-table-cell overline bold">Add-on #1</th>
+                            <th class="order-table-cell overline bold">Add-on #2</th>
+                        {% endif %}
                         <th class="order-table-cell overline bold">Order Details</th>
                     </tr>
     {% if not orders %}
@@ -148,6 +165,22 @@ Usage
 
         $("#id_delivery_date").change(function() {
             $(this).closest('form').submit();
+        });
+    </script>
+
+    <!-- Helper text on addon hover -->
+    <script>
+        $(".js-addon").each(function(index) {
+            var helper = $(`#js-addon-helper-${index}`);
+            helper.html($(this).prev().html());
+            $(this).hover(function() {
+                helper.addClass("show");
+            }, function() {
+                helper.removeClass("show");
+            });
+            $(this).on("touchmove", function() {
+                helper.toggleClass("show");
+            });
         });
     </script>
 {% endblock %}

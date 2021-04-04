@@ -7,6 +7,8 @@ from apps.accounts.models import *
 from apps.products.models import *
 import uuid
 
+import django_tables2 as tables
+
 # Create your models here.
 class Order(models.Model):
     ORDER_STATUS = [
@@ -158,13 +160,13 @@ class ProductOrder(models.Model):
     order = models.ForeignKey(Order, null=True, blank=True, on_delete=models.SET_NULL) 
 
     # Product ordered
-    product = models.ForeignKey(Product, null=True, on_delete=models.SET_NULL)
+    product = models.ForeignKey(Product, related_name="order_item_product", null=True, on_delete=models.SET_NULL)
 
     # Product size
-    size = models.ForeignKey(Size, null=True, on_delete=models.SET_NULL)
+    size = models.ForeignKey(Size, related_name="order_item_size", null=True, on_delete=models.SET_NULL)
     
     # Product addons
-    addons = models.ManyToManyField(Addon, blank=True)  
+    addons = models.ManyToManyField(Addon, related_name="order_item_addons", blank=True)  
     
     # Product quantity ordered
     quantity = models.IntegerField(null=True, default=1)
@@ -199,3 +201,6 @@ class ProductOrder(models.Model):
             for i in self.addons.all(): addons_total += (self.quantity * i.price_addon)
         total = (self.size.price_size * self.quantity) + addons_total
         return total 
+
+class PendingOrderTable(tables.Table):
+    delivery_date = tables.Column(attrs={"th": {"id": "foo"}})

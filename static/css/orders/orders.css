@@ -117,10 +117,23 @@
 .order-table-row-2 { background: var(--muted-white); }
 
 .order-table-cell {
+    display: table-cell;
     width: auto;
     padding: 0 2rem;
     text-align: center;
     vertical-align: middle;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.order-addon {
+    max-width: 144px;
+    text-align: center;
+    vertical-align: middle;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .status-container {
@@ -177,3 +190,24 @@
     color: var(--secondary-alt) !important;
     padding-left: 1rem;
 }
+
+.order__addon--helper {
+    position: absolute;
+    display: none; justify-content: center;
+    align-items: center; align-content: center;
+    opacity: 0;
+    max-width: 160px;
+    height: auto;
+    background: var(--muted-lightest);
+    padding: 0.5rem;
+}
+
+@keyframes show-helper {
+    from {
+        opacity: 0; transform: translate(5%, 0);
+    } to {
+        opacity: 1; transform: translate(5%, -200%);
+    }
+}
+
+.order__addon--helper.show { display: flex; opacity: 1; transform: translate(5%, -200%); animation: show-helper 0.3s; }

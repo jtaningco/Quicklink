@@ -14,13 +14,11 @@
 .products__header {
     min-height: 10vh;
     width: 100%;
-    padding: 2.5rem 5rem;
+    padding: 6rem 6rem 4rem 6rem;
     display: flex;
     justify-content: flex-end;
     align-items: center;
     align-content: center;
-    position: sticky;
-    top: 2.5vh;
     z-index: 99;
     background: var(--bg-color);
 }

@@ -37,7 +37,7 @@ class PendingOrderFilter(filters.FilterSet):
 
     @property
     def get_product(self):
-        return self.filters['product']
+        return self.data['product']
         
     def __init__(self, data=None, queryset=None, request=None, prefix=None):
         # Initialize Filter

@@ -45,42 +45,41 @@ def pendingOrders(request):
 
     # Get initial value for filter set (Alphabetical Order)
     productChoices = Product.objects.filter(user=user).order_by('name')
-    product = productChoices[0]
-    data = request.GET.copy()
-    data.setdefault('product', product)
+    if len(productChoices) > 0:
+        product = productChoices[0]
+        data = request.GET.copy()
+        data.setdefault('product', product)
 
-    # Get pending orders
-    orders = Order.objects.filter(shop=user, order_status="Pending")
-    
-    # Get pending product orders
-    productOrders = ProductOrder.objects.filter(order__in=orders).order_by('product')
+        # Get pending orders
+        orders = Order.objects.filter(shop=user, order_status="Pending")
+        
+        # Get pending product orders
+        productOrders = ProductOrder.objects.filter(order__in=orders).order_by('product')
 
-    # Product filter form
-    productFilter = PendingOrderFilter(data, request=request, queryset=productOrders)
-    products = productFilter.qs
-    
+        # Product filter form
+        productFilter = PendingOrderFilter(data, request=request, queryset=productOrders)
+        products = productFilter.qs
+        sizes = Size.objects.filter(product=productFilter.get_product)
+    else:
+        product = None
+        orders = Order.objects.filter(shop=user, order_status="Pending")
+        productOrders = ProductOrder.objects.filter(order__in=orders).order_by('product')
+        productFilter = PendingOrderFilter(request.GET, request=request, queryset=productOrders)
+        products = productFilter.qs
+        sizes = None
+
     try:
-        addons = Addon.objects.filter(product=products[0].product)
-        selected_addons = []
-        for product in products:
-            for addon in product.addons.all():
-                if addon in addons: selected_addons.append(addon)
-        orderCount = products.count()
+        addons = Addon.objects.filter(product=productFilter.get_product)
     except:
-        addons = Addon.objects.filter(product=product)
-        selected_addons = []
-        for product in productOrders:
-            for addon in product.addons.all():
-                if addon in addons: selected_addons.append(addon.addon)
-        orderCount = productOrders.count()
+        addons = None
     
     context = {'orders':orders, 
     'products':products,
+    'product':product,
     'productOrders':productOrders,
-    'productFilter':productFilter, 
-    'orderCount':orderCount, 
-    'addons':addons, 
-    'selected_addons':selected_addons}
+    'productFilter':productFilter,
+    'sizes':sizes, 
+    'addons':addons}
     return render(request, 'orders/pending_orders.html', context)
 
 # View Products (Merchant Preview)

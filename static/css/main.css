@@ -901,6 +901,21 @@ input:checked + .slider:before {
 }
 
 /* Flatpickr JQuery Plugin */
+.flatpickr-calendar {
+  padding: 1.5rem 1.5rem !important;
+  width: auto;
+}
+
+.flatpickr-months {
+  padding: 0.5rem !important;
+}
+
+.flatpickr-months .flatpickr-prev-month, .flatpickr-months .flatpickr-next-month { top: 1.5rem !important; }
+.flatpickr-months .flatpickr-prev-month { left: 1.5rem !important; }
+.flatpickr-months .flatpickr-next-month { right: 1.5rem !important; }
+
+.flatpickr-monthDropdown-months { margin-right: 0.5rem !important; }
+
 .flatpickr-monthDropdown-months, .flatpickr-monthDropdown-month, .numInput {
   font-family: 'Overpass', sans-serif !important;
 }
