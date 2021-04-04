@@ -26,7 +26,7 @@ body {
 }
 
 main {
-  min-height: 98vh;
+  min-height: 100vh;
   width: 100%;
   background: var(--bg-color);
 }
@@ -96,15 +96,6 @@ p, .body { font-size: 1rem; line-height: 1.6rem; }
 .bold { font-weight: 700; }
 .extra-bold { font-weight: 800; }
 
-.table-header {
-  font-family: 'Roboto', sans-serif;
-  font-style: normal;
-  font-weight: 500;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  color: var(--muted-dark);
-}
-
 /* BUTTONS */
 button {
   cursor: pointer;
@@ -157,6 +148,7 @@ button:focus {
 
 .primary-btn.disabled {
   background: var(--muted-lightest);
+  box-shadow: none;
   cursor: default;
   pointer-events: none; 
   user-select: none;
@@ -377,6 +369,10 @@ textarea {
   border-radius: 5px;
   padding: 1.2rem 1.5rem 1rem 3rem;
   transition: all 0.3s ease;
+}
+
+.searchbar.searchbar--small {
+  width: 280px;
 }
 
 .searchbar:focus { 
@@ -787,8 +783,13 @@ input:checked + .slider:before {
 /* TABLES */
 .table__placeholder__container {
   width: 100%;
-  height: 100%;
-  padding: 2rem;
+  min-height: 60vh;
+  max-height: 100%;
+  display: flex; 
+  flex-direction: column; 
+  justify-content: center; 
+  align-items: center; 
+  align-content: center;
 }
 
 .table__placeholder__wrapper {

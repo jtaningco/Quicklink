@@ -3,7 +3,7 @@ from django.db import models
 from django import forms
 
 from apps.products.models import Product
-from apps.orders.models import ProductOrder
+from apps.orders.models import Order, ProductOrder
 from django.utils.translation import gettext as _
 
 def productChoices(request):
@@ -46,6 +46,33 @@ class PendingOrderFilter(filters.FilterSet):
         self.filters['product'].field.widget.attrs.update({
             'class':'subtitle bold',
         })
+        self.filters['delivery_date'].label=''
+        self.filters['delivery_date'].field.widget.attrs.update({
+            'class':'date-input-content subtitle',
+        })
+
+class OrderFilter(filters.FilterSet):
+    delivery_date = filters.DateFilter()
+    class Meta:
+        model = Order
+        fields = [
+            'delivery_date',
+        ]
+        labels = {
+            'delivery_date': '',
+        }
+
+    # Filter product owners to only those that are owned by the logged-in user
+    @property
+    def qs(self):
+        parent = super().qs
+        user = getattr(self.request, 'user', None)
+
+        return parent.filter(shop=user)
+        
+    def __init__(self, data=None, queryset=None, request=None, prefix=None):
+        # Initialize Filter
+        super(OrderFilter, self).__init__(data=data, queryset=queryset, request=request, prefix=prefix)
         self.filters['delivery_date'].label=''
         self.filters['delivery_date'].field.widget.attrs.update({
             'class':'date-input-content subtitle',

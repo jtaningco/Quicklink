@@ -4,7 +4,7 @@ from django.db.models import Q
 from django.contrib.auth.decorators import login_required
 
 from .forms import PreviewOrderForm, OrderForm
-from .filters import PendingOrderFilter
+from .filters import OrderFilter, PendingOrderFilter
 from apps.products.models import Product, Size, Addon
 from apps.orders.models import Order, ProductOrder
 from apps.accounts.decorators import allowed_users
@@ -21,19 +21,11 @@ import json
 @allowed_users(allowed_roles=[User.Types.MERCHANT, User.Types.ADMIN])
 def orders(request):
     user = request.user
-    search_query = request.GET.get('search', '')
+    data = request.GET.copy()
+    orderFilter = OrderFilter(data, request=request)
+    orders = orderFilter.qs
 
-    if search_query:
-        orders = Order.objects.filter(shop=user | 
-            Q(order_status__icontains=search_query) |
-            Q(payment_status__icontains=search_query) |
-            Q(order_date__icontains=search_query) |
-            Q(delivery_date__icontains=search_query) |
-            Q(id__icontains=search_query))
-    else:
-        orders = Order.objects.filter(shop=user)
-
-    context = {'orders':orders }
+    context = {'orders':orders, 'orderFilter':orderFilter}
     return render(request, 'orders/order_summary.html', context)
 
 # Pending Orders

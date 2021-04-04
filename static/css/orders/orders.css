@@ -46,6 +46,12 @@
     align-content: center;
 }
 
+
+
+.orders__total input, .orders__total button {
+    margin: 0 0.5rem !important;
+}
+
 .orders__header__btns form {
     width: auto;
     display: flex;

@@ -285,6 +285,9 @@ class ShopInformation(models.Model):
     )
     shop_delivery_fees = models.DecimalField(null=True, blank=False, max_digits=5, decimal_places=2, default=0.00)
 
+    # Check if new update can be sent to customers (under Orders Page)
+    can_send_updates = models.BooleanField(null=True, default=False)
+
     def __str__(self):
         return f"{self.shop_username} - {self.shop_name} ({self.shop_contact_number})"
 

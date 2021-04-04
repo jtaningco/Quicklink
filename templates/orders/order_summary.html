@@ -1,117 +1,198 @@
-{% extends 'quicklink/base.html' %}
+{% extends 'quicklink/app.html' %}
 {% load static %}
 
 {% block pagetitle %}Order Summary{% endblock %}
 
+{% block stylesheets %}
+    <link rel="stylesheet" href="{% static '/css/orders/orders.css' %}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+{% endblock %}
+
 {% block maincontent %}
-
-{% if not orders %}
-        <div class="empty-orders-container">
-            <div class="empty-orders-wrapper">
-                <div class="empty-orders-content">
-                    <h1>You have no orders yet!</h1>
-                </div>
-            </div>
-        </div>
-
-    {% else %}
-    <div class="orders-container">
-
-        <div class="orders-header">
-            <div class="orders-header-wrapper">
-                <div class="orders-header-content">
-                    <h1 class="extra-bold">Order Summary</h1>
-                </div>
-                <div class="orders-header-btns">
-                    <form action="{% url 'orders:order-summary' %}">
-                        <div class="orders-search-bar">
-                            <input class="searchbar body" type="search" placeholder="Search" name="search">
-                        </div>
-                        <button class="primary-btn" type='submit'>
-                            <a class="primary-btn-link">Filter
-                            <img src="{% static 'media/icons/filter.png' %}">
-                            </a>
-                        </button>
-                    </form>
-                </div>
-            </div>
-        </div>
-
-        <div class="orders-summary">
-            <div class="orders-wrapper">
-                <table class="orders-summary-table">
-                    <tr class="orders-table-header">
-                        <th class="table-header order-table-cell">Date of Delivery</th>
-                        <th class="table-header order-table-cell">Order Number</th>
-                        <th class="table-header order-table-cell">Customer Name</th>
-                        <th class="table-header order-table-cell">Order Details</th>
-                        <th class="table-header order-table-cell">Items</th>
-                        <th class="table-header order-table-cell">Total Amount</th>
-                        <th class="table-header order-table-cell">Order Status</th>
-                        <th class="table-header order-table-cell">Payment Status</th>
-                    </tr>
-
-                    {% for order in orders %}
-                        {% if forloop.counter|divisibleby:2 %}
-                            <tr class="order-table-row-2">
-                        {% else %}
-                            <tr class="order-table-row-1">
-                        {% endif %}
-                            <td class="order-table-cell subtitle">{{ order.delivery_date|date:"d-m-Y" }}</td>
-                            <td class="order-table-cell subtitle">{{ order.id }}</td>
-                                {% if order.user.info_customer %}
-                                    <td class="order-table-cell subtitle">{{ order.user.info_customer.customer_name | title }}</td>
-                                {% else %}
-                                    <td class="order-table-cell subtitle">{{ order.user.info_shop.shop_name | title }}</td>
-                                {% endif %}
-                            <td class="order-table-cell subtitle"><a class="tertiary-btn-link bold" href="">See Details</a></td>
-                            <td class="order-table-cell subtitle">{{ order.quantity }}</td>
-                            <td class="order-table-cell subtitle">PHP {{ order.total }}</td>
-
-                            <td class="order-table-cell">
-                                <div class="status-container">
-                                    {% if order.order_status == "Pending" %}
-                                        <div class="order-status pending">
-                                            <div class="order-status-text pending-text">
-                                    {% elif order.order_status == "Sent" %}
-                                        <div class="order-status sent">
-                                            <div class="order-status-text sent-text">
-                                    {% elif order.order_status == "Received" %}
-                                        <div class="order-status received">
-                                            <div class="order-status-text received-text">
-                                    {% else %}
-                                        <div class="order-status cancelled">
-                                            <div class="order-status-text cancelled-text">
-                                    {% endif %}
-                                                {{ order.order_status }}
-                                            </div>
-                                        </div>
-                                    </div>
-                                </td>
-
-                                <td class="order-table-cell">
-                                    <div class="status-container">
-                                        {% if order.payment_status == "To Receive" %}
-                                            <div class="payment-status to-receive">
-                                                <div class="payment-status-text to-receive-text">
-                                        {% elif order.payment_status == "Processing" %}
-                                            <div class="payment-status processing">
-                                                <div class="payment-status-text processing-text">
-                                        {% else %}
-                                            <div class="payment-status received">
-                                                <div class="payment-status-text received-text">
-                                        {% endif %}
-                                                    {{ order.payment_status }}
-                                            </div>
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
-                    {% endfor %}
-                </table>
+<div class="orders__container">
+    <div class="orders__header">
+        <div class="orders__header__wrapper">
+            <div class="orders__header__content">
+                <h1 class="extra-bold">All Orders</h1>
             </div>
         </div>
     </div>
-{% endif %}
 
+    <div class="orders__subheader">
+        <div class="orders__header__wrapper">
+            <div class="orders__products" style="flex-basis: 40%">
+                <form method="get">
+                    <div class="date-input">
+                        {{ orderFilter.form.delivery_date }}
+                        <div class="date-input-img">
+                            <img src="https://ik.imagekit.io/ripzjge77zz/Quicklink_App/Merchant/Orders/fi_calendar_E4TS-cMJH.png" alt="">
+                        </div>
+                    </div>
+                    <!-- <input type="submit" name="delivery_date_sub" />      -->
+                </form>
+            </div>
+            <div class="orders__total" style="flex-basis: 60%">
+                <form method="get">
+                    <input class="searchbar searchbar--small body" type="search" placeholder="Search" name="search">
+                </form>
+                <button type="button" class="secondary-btn subtitle bold" id="js-copy-link-btn">
+                    Download Summary
+                    <img src="https://ik.imagekit.io/ripzjge77zz/Quicklink_App/Merchant/Orders/fi_download_yjU2hNHxOFk.png" 
+                    alt="Copy Form Link" id="js-copy-link-btn-icon">
+                </button>
+                <button class="primary-btn {% if request.user.shop_info.can_send_updates == False %} disabled {% endif %} subtitle bold" id="js-send-updates-btn">
+                    Send Customer Updates
+                    <img src="https://ik.imagekit.io/ripzjge77zz/Quicklink_App/Merchant/Orders/fi_send_BlG2boVnC.svg" 
+                    alt="Send Customer Updates" id="js-send-updates-btn-icon">
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="orders__summary">
+        <div class="orders__wrapper">
+            <table class="orders__summary-table" id="js-pending-orders-table">
+                <tr class="orders__table-header">
+                    <th class="order-table-cell">
+                        <label class="checkbox">
+                            <input type="checkbox" name="select_all" id="js-select-all-orders-btn">
+                            <span class="checkmark checkmark__small"></span>
+                        </label>
+                    </th>
+                    <th class="order-table-cell overline bold" colspan="2">Date of Delivery</th>
+                    <th class="order-table-cell overline bold">Order Number</th>
+                    <th class="order-table-cell overline bold" colspan="2">Customer Name</th>
+                    <th class="order-table-cell overline bold" colspan="2">Order Details</th>
+                    <th class="order-table-cell overline bold">Items</th>
+                    <th class="order-table-cell overline bold" colspan="2">Total Amount</th>
+                    <th class="order-table-cell overline bold" colspan="2">Order Status</th>
+                    <th class="order-table-cell overline bold" colspan="2">Payment Status</th>
+                </tr>
+    {% if not orders %}
+            </table>
+            <div class="table__placeholder__container">
+                <div class="table__placeholder__wrapper">
+                    <img src="https://ik.imagekit.io/ripzjge77zz/Quicklink_App/Merchant/Orders/no_orders_1x_UpAhOttbO5T.png" alt="No Orders" class="table__placeholder__img"
+                    srcset="https://ik.imagekit.io/ripzjge77zz/Quicklink_App/Merchant/Orders/no_orders_1x_UpAhOttbO5T.png 1x,
+                        https://ik.imagekit.io/ripzjge77zz/Quicklink_App/Merchant/Orders/no_orders_2x_2KmmBTpMV.png 2x,
+                        https://ik.imagekit.io/ripzjge77zz/Quicklink_App/Merchant/Orders/no_orders_3x_dkL_jbZsu.png 3x,
+                        https://ik.imagekit.io/ripzjge77zz/Quicklink_App/Merchant/Orders/no_orders_4x_i6ehCdf-YF0W.png 4x">
+                    <div class="table__placeholder__guide">
+                        <h2 class="table__placeholder__guide__header bold">Kinda quiet here...</h2>
+                        <a href="{% url 'products:products' %}" style="text-decoration: none;">
+                            <button class="primary-btn subtitle bold">See my products
+                                <img src="https://ik.imagekit.io/ripzjge77zz/Quicklink_App/Design_System/Icons/Buttons/primary_icon_only-enabled-hover-pressed_BO_t1npIp.svg" alt="Add">
+                            </button>
+                        </a>
+                    </div>
+                </div>
+            </div>
+    {% else %}
+            {% for order in orders %}
+            {% if forloop.counter|divisibleby:2 %}
+                <tr class="order-table-row-2">
+            {% else %}
+                <tr class="order-table-row-1">
+            {% endif %}
+                    <td class="order-table-cell">
+                        <label class="checkbox">
+                            <input type="checkbox" id="id_select_{{ forloop.counter0 }}"  class="js-select-btn" name="select" value="{{ order.id }}">
+                            <span class="checkmark checkmark__small"></span>
+                        </label>
+                    </td>
+                    <td class="order-table-cell subtitle" colspan="2">{{ order.delivery_date|date:"d-m-Y" }}</td>
+                    <td class="order-table-cell subtitle">{{ order.id }}</td>
+                    <td class="order-table-cell subtitle" colspan="2">{{ order.sender_information.customer_name | title }}</td>
+                    <td class="order-table-cell subtitle" colspan="2"><a class="tertiary-btn-link bold" href="">See Details</a></td>
+                    <td class="order-table-cell subtitle">{{ order.productorder_set.count }}</td>
+                    <td class="order-table-cell subtitle" colspan="2">PHP {{ order.total }}</td>
+                    <td class="order-table-cell" colspan="2">
+                        <div class="status-container">
+                        {% if order.order_status == "Pending" %}
+                            <div class="order-status pending">
+                                <div class="order-status-text pending-text">
+                        {% elif order.order_status == "Sent" %}
+                            <div class="order-status sent">
+                                <div class="order-status-text sent-text">
+                        {% elif order.order_status == "Received" %}
+                            <div class="order-status received">
+                                <div class="order-status-text received-text">
+                        {% else %}
+                            <div class="order-status cancelled">
+                                <div class="order-status-text cancelled-text">
+                        {% endif %}
+                                    {{ order.order_status }}
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+
+                    <td class="order-table-cell" colspan="2">
+                        <div class="status-container">
+                            {% if order.payment_status == "To Receive" %}
+                                <div class="payment-status to-receive">
+                                    <div class="payment-status-text to-receive-text">
+                            {% elif order.payment_status == "Processing" %}
+                                <div class="payment-status processing">
+                                    <div class="payment-status-text processing-text">
+                            {% else %}
+                                <div class="payment-status received">
+                                    <div class="payment-status-text received-text">
+                            {% endif %}
+                                        {{ order.payment_status }}
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        {% endfor %}
+        </div>
+    </div>
+{% endif %}
+{% endblock %}
+
+{% block scriptsBody %}
+    <!-- Flatpickr lightweight JQuery plugin — See docs for more info: https://flatpickr.js.org/examples/ -->
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script>
+        $("#id_delivery_date").flatpickr({
+            enableTime: false,
+            altInput: true,
+            altFormat: "F j, Y",
+            dateFormat: "Y-m-d",
+            maxDate: new Date().fp_incr(21),
+        });
+    </script>
+
+    <script>
+        $("#id_delivery_date").change(function() {
+            $(this).closest('form').submit();
+        });
+
+        $("#js-copy-link-btn").hover(function() {
+            // Change to white icon
+            $("#js-copy-link-btn-icon").attr("src","https://ik.imagekit.io/ripzjge77zz/Quicklink_App/Merchant/Orders/fi_download-white_gIVzCyXeC.png");
+        }, function() {
+            // Change to colored icon
+            $("#js-copy-link-btn-icon").attr("src","https://ik.imagekit.io/ripzjge77zz/Quicklink_App/Merchant/Orders/fi_download_yjU2hNHxOFk.png");
+        });
+
+        function changeSendBtnIcon(el) {
+            if (el.hasClass("disabled")) {
+                $("#js-send-updates-btn-icon").attr("src", "https://ik.imagekit.io/ripzjge77zz/Quicklink_App/Merchant/Orders/fi_send-disabled__qCn5-xDq.svg");
+            } else {
+                $("#js-send-updates-btn-icon").attr("src", "https://ik.imagekit.io/ripzjge77zz/Quicklink_App/Merchant/Orders/fi_send_BlG2boVnC.svg");
+                el.hover(function() {
+                    // Change to colored icon
+                    $("#js-send-updates-btn-icon").attr("src","https://ik.imagekit.io/ripzjge77zz/Quicklink_App/Merchant/Orders/fi_send-main_LHP7ZzHp1.svg");
+                }, function() {
+                    // Change to white icon
+                    $("#js-send-updates-btn-icon").attr("src","https://ik.imagekit.io/ripzjge77zz/Quicklink_App/Merchant/Orders/fi_send_BlG2boVnC.svg");
+                });
+            }
+        };
+
+        changeSendBtnIcon($("#js-send-updates-btn"));
+    </script>
 {% endblock %}

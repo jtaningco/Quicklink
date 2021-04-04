@@ -7,7 +7,6 @@
     <link rel="stylesheet" href="{% static '/css/orders/orders.css' %}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-nice-select/1.1.0/css/nice-select.min.css" integrity="sha512-CruCP+TD3yXzlvvijET8wV5WxxEh5H8P4cmz0RFbKK6FlZ2sYl3AEsKlLPHbniXKSrDdFewhbmBK5skbdsASbQ==" crossorigin="anonymous" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-Usage
 {% endblock %}
 
 {% block maincontent %}
@@ -15,7 +14,7 @@ Usage
         <div class="orders__header">
             <div class="orders__header__wrapper">
                 <div class="orders__header__content">
-                    <h1 class="extra-bold">Pending Orders</h1>
+                    <h1 class="extra-bold">Pending Items</h1>
                 </div>
             </div>
         </div>
@@ -50,7 +49,7 @@ Usage
 
         <div class="orders__summary">
             <div class="orders__wrapper">
-                <table class="orders__summary-table">
+                <table class="orders__summary-table" id="js-pending-orders-table">
                     <tr class="orders__table-header">
                         <th class="order-table-cell overline bold">Date of Delivery</th>
                         <th class="order-table-cell overline bold">Customer</th>
@@ -154,6 +153,15 @@ Usage
             altFormat: "F j, Y",
             dateFormat: "Y-m-d",
             maxDate: new Date().fp_incr(21),
+        });
+    </script>
+
+    <!-- Tablesorter lightweight JQuery plugin — See docs for more info: https://mottie.github.io/tablesorter/docs/-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.31.3/js/jquery.tablesorter.min.js" integrity="sha512-qzgd5cYSZcosqpzpn7zF2ZId8f/8CHmFKZ8j7mU4OUXTNRd5g+ZHBPsgKEwoqxCtdQvExE5LprwwPAgoicguNg==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.31.3/js/jquery.tablesorter.widgets.min.js" integrity="sha512-dj/9K5GRIEZu+Igm9tC16XPOTz0RdPk9FGxfZxShWf65JJNU2TjbElGjuOo3EhwAJRPhJxwEJ5b+/Ouo+VqZdQ==" crossorigin="anonymous"></script>
+    <script>
+        $(function() {
+            $("#js-pending-orders-table").tablesorter({ sortList: [[0,0], [1,0]] });
         });
     </script>
 
