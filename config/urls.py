@@ -20,9 +20,11 @@ from django.conf.urls.static import static
 from config import settings
 
 from django_email_verification import urls as email_urls
+import debug_toolbar
 
 urlpatterns = [
     path('accounts/', include('allauth.urls')),
+    path('__debug__/', include(debug_toolbar.urls)),
     path('admin/', admin.site.urls),
     path('verification/', include(email_urls)),
     path('avatar/', include('avatar.urls')),

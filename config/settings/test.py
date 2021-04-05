@@ -29,24 +29,15 @@ EMAIL_HOST_USER = env("DEV_EMAIL")
 EMAIL_HOST_PASSWORD = env("DEV_EMAIL_PW")
 EMAIL_USE_TLS = True
 
-SECRET_KEY = env("DEV_SECRET_KEY")
+SECRET_KEY = env("TEST_SECRET_KEY")
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': str(os.path.join(BASE_DIR, "db.sqlite3"))
+    "default": {
+        "ENGINE": "django.db.backends.postgresql_psycopg2",
+        "NAME": env("TEST_DB_NAME"),
+        "USER": env("TEST_DB_USER"),
+        "PASSWORD": env("TEST_DB_PW"),
+        "HOST": env("TEST_DB_HOST"),
+        "PORT": env("TEST_DB_PORT"),
     }
 }
-
-# SECRET_KEY = env("TEST_SECRET_KEY")
-
-# DATABASES = {
-#     "default": {
-#         "ENGINE": "django.db.backends.postgresql_psycopg2",
-#         "NAME": env("TEST_DB_NAME"),
-#         "USER": env("TEST_DB_USER"),
-#         "PASSWORD": env("TEST_DB_PW"),
-#         "HOST": env("TEST_DB_HOST"),
-#         "PORT": env("TEST_DB_PORT"),
-#     }
-# }
