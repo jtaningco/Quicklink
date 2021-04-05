@@ -79,6 +79,9 @@ def registerShopInformation(request):
             shop_info.shop_email = validated_data.get("shop_email")
             shop_info.save()
 
+            shop_info.shop_slug = shop_info.slugify_name
+            shop_info.save()
+
             shop_address, created = Address.objects.get_or_create(user=user)
             shop_address.line1 = form.cleaned_data.get("line1")
             shop_address.line2 = form.cleaned_data.get("line2")

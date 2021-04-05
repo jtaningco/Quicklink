@@ -35,11 +35,14 @@
                 <form method="get">
                     <input class="searchbar searchbar--small body" type="search" placeholder="Search" name="search">
                 </form>
-                <button type="button" class="secondary-btn subtitle bold" id="js-copy-link-btn">
-                    Download Summary
-                    <img src="https://ik.imagekit.io/ripzjge77zz/Quicklink_App/Merchant/Orders/fi_download_yjU2hNHxOFk.png" 
-                    alt="Copy Form Link" id="js-copy-link-btn-icon">
-                </button>
+                <form method="post">
+                    {% csrf_token %}
+                    <button type="submit" name="download_summary" class="secondary-btn subtitle bold" id="js-copy-link-btn">
+                        Download Summary
+                        <img src="https://ik.imagekit.io/ripzjge77zz/Quicklink_App/Merchant/Orders/fi_download_yjU2hNHxOFk.png" 
+                        alt="Copy Form Link" id="js-copy-link-btn-icon">
+                    </button>
+                </form>
                 <button class="primary-btn {% if request.user.shop_info.can_send_updates == False %} disabled {% endif %} subtitle bold" id="js-send-updates-btn">
                     Send Customer Updates
                     <img src="https://ik.imagekit.io/ripzjge77zz/Quicklink_App/Merchant/Orders/fi_send_BlG2boVnC.svg" 

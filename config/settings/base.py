@@ -53,6 +53,7 @@ INSTALLED_APPS = [
     'imagekit',
     'avatar',
     'active_link',
+    'openpyxl',
 
     # OAuth
     'allauth',

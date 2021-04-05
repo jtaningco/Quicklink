@@ -11,6 +11,8 @@ from imagekit import ImageSpec, register
 from imagekit.models import ImageSpecField
 from imagekit.processors import ResizeToFit
 
+import re
+
 ### Create your models here.
 ## Django Roles, Permissions, and Groups: https://medium.com/djangotube/django-roles-groups-and-permissions-introduction-a54d1070544
 ## Django Custom Authentication: https://docs.djangoproject.com/en/3.1/topics/auth/customizing/
@@ -285,11 +287,32 @@ class ShopInformation(models.Model):
     )
     shop_delivery_fees = models.DecimalField(null=True, blank=False, max_digits=5, decimal_places=2, default=0.00)
 
+    # Shop slug
+    shop_slug = models.SlugField(null=True)
+
     # Check if new update can be sent to customers (under Orders Page)
     can_send_updates = models.BooleanField(null=True, default=False)
 
     def __str__(self):
         return f"{self.shop_username} - {self.shop_name} ({self.shop_contact_number})"
+
+    # https://www.peterbe.com/plog/fastest-python-function-to-slugify-a-string
+    @property
+    def slugify_name(self):
+        non_url_safe = ['"', '#', '$', '%', '&', '+',
+                ',', '/', ':', ';', '=', '?',
+                '@', '[', '\\', ']', '^', '`',
+                '{', '|', '}', '~', "'"]
+
+        translate_table = {ord(char): u'' for char in non_url_safe}
+        non_url_safe_regex = re.compile(
+            r'[{}]'.format(''.join(re.escape(x) for x in non_url_safe)))
+
+        name = self.shop_name
+        name = name.translate(translate_table)
+        name = u'_'.join(name.split())
+        name = name.lower()
+        return name
 
 # Available Delivery Schedule
 # See more information on how to do it here: https://stackoverflow.com/questions/3663898/representing-a-multi-select-field-for-weekdays-in-a-django-model
