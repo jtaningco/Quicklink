@@ -1,0 +1,110 @@
+{% extends 'quicklink/app.html' %}
+{% load static %}
+
+{% block pagetitle %}Total Revenue{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{% static '/css/finances.css' %}">
+{% endblock %}
+
+{% block maincontent %}
+{% include 'quicklink/navbar.html' %}
+
+    <div class="finances__container">
+        <div class="finances__header">
+            <h1 class="finances_page_title">Total Revenue</h1>
+            <div class="finances__header__wrapper">
+                <div class="finances__header__cards">
+                    <div class="finances__header_card">
+                        <h3 class="finances__card__title">Total Expected Revenue</h3>
+                        <h1 class="finances__card__value">Php 25,000.00</h1>
+                        <div class="finances__card__text">This is the complete total revenue you have.</div>
+                    </div>
+                    <div class="finances__header_card">
+                        <h3 class="finances__card__title">Payments Received</h3>
+                        <h1 class="finances__card__value">Php 23,585.00</h1>
+                        <div class="finances__card__text">These are the payments you have successfully received.</div>
+                    </div>
+                    <div class="finances__header_card">
+                        <h3 class="finances__card__title">Payments Receivable</h3>
+                        <h1 class="finances__card__value">Php 1,415.00</h1>
+                        <div class="finances__card__text">These payments are still being processed.</div>
+                    </div>
+                </div>
+                <div class="finances__table__header" id="js-normal-table-header">
+                    <th><p class="finances__table__cell overline bold">DATE<img src="https://ik.imagekit.io/ripzjge77zz/Quicklink_App/Merchant/Finances/Icons/black-arrow-down_JmBoYHIvL.svg" alt="Dropdown Button"></p></th>
+                    <th><p class="finances__table__cell overline bold">ORDER NUMBER</th>
+                    <th><p class="finances__table__cell overline bold">CHECKOUT</th>
+                    <th><p class="finances__table__cell overline bold">FEES</th>
+                    <th><p class="finances__table__cell overline bold">NET TOTAL</th>
+                    <th><p class="finances__table__cell overline bold">PAYMENT STATUS</th>
+                </div>
+            </div>
+        </div>
+        <div class="finances__list">
+            <div class="finances__body__wrapper">
+                <table class="finances__table">
+                    {% if not orders %}
+                    <div class="table__placeholder__container">
+                        <div class="table__placeholder__wrapper">
+                            <img src="https://ik.imagekit.io/ripzjge77zz/Quicklink_App/Merchant/Finances/Illustrations/finance-illustration-x1_FK7LKjqet.png" alt="No Financial Data Available" class="table__placeholder__img"
+                            srcset="https://ik.imagekit.io/ripzjge77zz/Quicklink_App/Merchant/Finances/Illustrations/finance-illustration-x1_FK7LKjqet.png 1x
+                            https://ik.imagekit.io/ripzjge77zz/Quicklink_App/Merchant/Finances/Illustrations/finance-illustration-x2_aZVUx4L5iUI.png 2x
+                            https://ik.imagekit.io/ripzjge77zz/Quicklink_App/Merchant/Finances/Illustrations/finance-illustration-x3_7uablwbhL.png 3x
+                            https://ik.imagekit.io/ripzjge77zz/Quicklink_App/Merchant/Finances/Illustrations/finance-illustration-x4_WMnj37onx.png 4x">
+                            <div class="table__placeholder__info">
+                                <h2 class="table__placeholder__text bold">Whoops! You haven’t sold anything yet through QuickLink!</h2>
+                                <a href="#" style="text-decoration: none;">
+                                    <button class="primary-btn subtitle bold"style="margin: 1rem 0;">See my products
+                                        <img src="https://ik.imagekit.io/ripzjge77zz/Quicklink_App/Design_System/Icons/Buttons/secondary_icon_only-hover-pressed_VqSEZYWY8.svg" alt="View here">
+                                    </button>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    {% else %}
+                    <tr class="finances__table__row">
+                        <td><p><div class="finances__table__date">
+                            <p class="finances__table__text subtitle">Apr 21, 2021</p>
+                            <p class="finances__table__text subtitle" style="color: var(--muted-light);">05:45 PM</p>
+                        </div></td></p>
+                        <td><p class="finances__table__text subtitle">#00045</p></td>
+                        <td><p class="finances__table__text subtitle">PHP 700.00</p></td>
+                        <td><p class="finances__table__text subtitle">PHP 28.00</p></td>
+                        <td><p class="finances__table__text subtitle bold">PHP 672.00</p></td>
+                        <td><p class="finances__table__text subtitle">
+                            <div class="finances__table__payment-status-RECEIVED subtitle" style="color: var(--success-alt); font-size: 10px;">RECEIVED</div>
+                        </p></td>
+                    </tr>
+                    <tr class="finances__table__row">
+                        <td><p><div class="finances__table__date">
+                            <p class="finances__table__text subtitle">Apr 21, 2021</p>
+                            <p class="finances__table__text subtitle" style="color: var(--muted-light);">05:45 PM</p>
+                        </div></td></p>
+                        <td><p class="finances__table__text subtitle">#00045</p></td>
+                        <td><p class="finances__table__text subtitle">PHP 700.00</p></td>
+                        <td><p class="finances__table__text subtitle">PHP 28.00</p></td>
+                        <td><p class="finances__table__text subtitle bold">PHP 672.00</p></td>
+                        <td><p class="finances__table__text subtitle">
+                            <div class="finances__table__payment-status-TO-RECEIVE subtitle" style="color: var(--secondary-alt); font-size: 10px;">TO RECEIVE</div>
+                        </p></td>
+                    </tr>
+                    <tr class="finances__table__row">
+                        <td><p><div class="finances__table__date">
+                            <p class="finances__table__text subtitle">Apr 21, 2021</p>
+                            <p class="finances__table__text subtitle" style="color: var(--muted-light);">05:45 PM</p>
+                        </div></td></p>
+                        <td><p class="finances__table__text subtitle">#00045</p></td>
+                        <td><p class="finances__table__text subtitle">PHP 700.00</p></td>
+                        <td><p class="finances__table__text subtitle">PHP 28.00</p></td>
+                        <td><p class="finances__table__text subtitle bold">PHP 672.00</p></td>
+                        <td><p class="finances__table_text">
+                        </p></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endif %}
+{% endblock %}

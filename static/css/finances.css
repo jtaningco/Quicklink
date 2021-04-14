@@ -1,0 +1,204 @@
+.finances__container {
+    width: 100%;
+    height: 100%;
+    margin: 0 0 0 12rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: column;
+    align-content: center;
+    background: var(--bg-color);
+}
+
+.finances__header {
+    width: 100%;
+    padding: 4.625rem 0 0 0;
+    display: flex;
+    flex-direction: column;
+    background: var(--bg-color);
+}
+
+.finances_page_title {
+    color: var(--secondary-alt);
+    padding: 0 2.5rem;
+    font-weight: 800;
+
+}
+.finances__header__wrapper {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.finances__header__cards {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    padding: 1.5rem 1.25rem;
+}
+
+.finances__header_card {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    background-color: var(--muted-white);
+    padding: 1rem;
+    margin: 0.75rem;
+    max-width: 24rem;
+    height: 9.5rem;
+    box-shadow: 0px 3px 5px rgba(51, 51, 51, 0.15);
+    border-radius: 5px;
+}
+
+.finances__card__title { 
+    color: var(--secondary-alt); 
+    font-weight: 700;
+}
+
+.finances__card__value {
+    color: var(--muted-dark);
+    font-weight: 800;
+    padding: 0.25rem 0 0 0;
+    align-items: baseline;
+}
+
+.finances__card__text { 
+    color: var(--muted-light); 
+    font-family: 'Overpass', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 0.875rem;
+    padding: 0.75rem 0 0 0;
+}
+
+.finances__list {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+}
+
+.finances__table__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 4.5rem;
+    width: 100%;
+    background: var(--muted-white);
+    border-top: 1px solid var(--muted-lightest);
+    border-bottom: 1px solid var(--muted-lightest);
+}
+
+.finances__table__cell {
+    font-family: 'Overpass', sans-serif;
+    font-style: normal;
+    width: 100%;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.finances__body__wrapper {
+    width: 100%;
+}
+
+.finances__table {
+    width: 100%;
+}
+
+.finances__table__row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    justify-content: space-between;
+    text-align: center;
+    height: 4.5rem;
+}
+
+.finances__table__date {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.finances__table__row-1,  
+.finances__table__row-2 {
+    height: 4.5rem;
+    width: 100%;
+    text-align: center;
+    vertical-align: middle;
+    background-blend-mode: overlay;
+}
+
+tr:nth-child(even) {background: var(--muted-white)}
+tr:nth-child(odd) {background: var(--bg-color)}
+
+/* PAYMENT STATUS BUTTONS */
+
+.finances__table__payment-status-RECEIVED {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    justify-content: center;
+    background-color: #93EACB;
+    border-radius: 5px;
+    width: 4.5rem;
+}
+
+.finances__table__payment-status-TO-RECEIVE {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--secondary-light);
+    border-radius: 5px;
+    width: 4.5rem;
+}
+
+.finances__table__payment-status-PROCESSING {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--primary-light);
+    border-radius: 5px;
+    width: 4.5rem;
+}
+
+.table__placeholder__wrapper {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+}
+
+.table__placeholder__info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+}
+
+.table__placeholder__text {
+    color: var(--primary-alt); 
+    padding: 1rem 0;
+}
+/*
+.selected__finances__container {
+    width: auto;
+    height: auto;
+    display: flex; justify-content: center;
+    align-items: center; align-content: center;
+    padding: 0.5rem 1.5rem;
+    border: 1px solid var(--muted-lighter);
+    box-sizing: border-box;
+    border-radius: 4px;
+}
+
+.selected__finances__container p {
+    color: var(--muted-lighter);
+}

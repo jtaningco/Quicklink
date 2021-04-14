@@ -65,8 +65,8 @@ def orders(request):
 
             for col in init_sheet:
                 for row in ws.iter_rows(min_row=1, max_col=3, max_row=2):
-            ...    for cell in row:
-            ...        print(cell)
+                    for cell in row:
+                        print(cell)
 
             wb.save(file_path + file_name)
 
