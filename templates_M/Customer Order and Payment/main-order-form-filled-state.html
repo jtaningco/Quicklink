@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/customer-order-form.css">  
+    <link href="jquery.nice-number.css" rel="stylesheet">
+    <title>Order Form</title>
+</head>
+
+<body>
+    <div class="orderform__container">
+        {% block whiteNavBar %}        
+        <div class="orderform__white-nav">
+            <div>
+                <img src="https://ik.imagekit.io/ripzjge77zz/Quicklink_App/Order_Form/purple-ql-logo-and-name_60flJs2lG2.svg" id="orderform__quicklink-logo">
+            </div>
+            <div class="orderform__nav-buttons">
+                <button class="btn__nav-outline">Sign In</button>
+                <button class="btn__nav-primary">Register</button>
+            </div>
+        </div>
+        {% endblock %}
+        <div class="orderform__wrapper">
+            <div class="orderform__page-body">
+                <div class="orderform__content">
+                    <img src="assets/sample-bg.png" id="orderform__company-bg">
+                    <div class="orderform__company-header">
+                        <img src="assets/sample-bg.png" id="orderform__company-dp">
+                        <div class="orderform__company-details">
+                            <h1 id="orderform__company-detail-header">Kitty Simps</h1>
+                            <div class="orderform__header-atom"><img src="https://ik.imagekit.io/ripzjge77zz/Quicklink_App/Order_Form/purple-clock-icon_EdqdNj-sNx_.svg" id="purple-icons"><p id="date-available">Everyday, 1pm-5pm</p></div>
+                            <div class="orderform__header-element">
+                                <div class="orderform__header-molecules">
+                                    <div class="orderform__header-atom"><img src="https://ik.imagekit.io/ripzjge77zz/Quicklink_App/Order_Form/purple-phone-icon_e_opdm-gQB.svg" id="purple-icons"><p class="molecule-text">@gatchaliancapital@gmail.com</p></div>
+                                    <div class="orderform__header-atom"><img src="https://ik.imagekit.io/ripzjge77zz/Quicklink_App/Order_Form/purple-mail-icon_ORmGZcfqCFhP.svg" id="purple-icons"><p class="molecule-text">emailme@gmail.com</p></div>
+                                </div>
+                                <div class="orderform__header-molecules">
+                                    <div class="orderform__header-atom"><img src="https://ik.imagekit.io/ripzjge77zz/Quicklink_App/Order_Form/purple-link-icon_kW_7P9U90U.svg" id="purple-icons"><p class="molecule-text">+911 844 3744</p></div>
+                                    <div class="orderform__header-atom"><img src="https://ik.imagekit.io/ripzjge77zz/Quicklink_App/Order_Form/purple-store-icon_qW_mPWzcTGS.svg" id="purple-icons"><p class="molecule-text">@mjimlee16</p></div>                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="orderform__custom-searchbar">
+                        <img src="https://ik.imagekit.io/ripzjge77zz/Quicklink_App/Order_Form/yellow-search-icon_2HsRdkggeuj.svg" id="yellow-search-icon">
+                        <input type="text" placeholder="Search">
+                    </div>
+
+                    <div class="orderform__order-grid">
+                        <div class="orderform__card-whole">
+                            <img src="https://ik.imagekit.io/ripzjge77zz/Quicklink_App/Order_Form/Rectangle_38_GGw_rDo_M-.png" id="item-dp">
+                            <div class="orderform__card-name">Chocolate Chip Cookies</div>
+                            <div class="orderform__card-subtext">PHP 500.00</div>
+                        </div>
+                        <div class="orderform__card-whole">
+                            <img src="assets/Rectangle 38.png" id="item-dp">
+                            <div class="orderform__card-name">Chocolate Chip Cookies</div>
+                            <div class="orderform__card-subtext">PHP 500.00</div>
+                        </div>
+                        <div class="orderform__card-whole">
+                            <img src="assets/Rectangle 38.png" id="item-dp">
+                            <div class="orderform__card-name">Chocolate Chip Cookies</div>
+                            <div class="orderform__card-subtext">PHP 500.00</div>
+                        </div>
+                        <div class="orderform__card-whole">
+                            <img src="assets/Rectangle 38.png" id="item-dp">
+                            <div class="orderform__card-name">Chocolate Chip Cookies</div>
+                            <div class="orderform__card-subtext">PHP 500.00</div>
+                        </div>
+                        <div class="orderform__card-whole">
+                            <img src="assets/Rectangle 38.png" id="item-dp">
+                            <div class="orderform__card-name">Chocolate Chip Cookies</div>
+                            <div class="orderform__card-subtext">PHP 500.00</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="orderform__wrapper__basket">
+                    <div class="orderform__basket__header">
+                        <div class="orderform__basket-header-display">
+                            <img src="https://ik.imagekit.io/ripzjge77zz/Quicklink_App/Order_Form/yellow-basket-icon_xRp29p9Yhkc.svg" id="yellow-basket-icon">
+                            <h3 id="orderform__basket-header-text">My Basket</h3>
+                        </div>
+                        <div>
+                            <button id="show-display-btn">Show Details</button>
+                        </div>
+                    </div>
+                    <div class="orderform__basket__body">
+                        <div class="basket__empty-basket-text">
+                            It’s a bit quiet here... Let’s add some items to your basket!
+                        </div>
+                    </div>
+                    <div class="orderform__basket-end">
+                        <div class="basket__fees">
+                            <div class="basket__fee-div">
+                                <p class="basket__subtotal-text">Subtotal</p>
+                                <div class="basket__subtotal-price"><p class="basket__subtotal-php">PHP</p><p id="basket__subtotal-price">1000.00</p></div>
+                            </div>
+                            <div class="basket__fee-div">
+                                <p class="basket__subtotal-text">Convenience Fee</p>
+                                <div class="basket__subtotal-price"><p class="basket__subtotal-php">PHP</p><p id="basket__subtotal-price">50.00</p></div>
+                            </div>
+                            <div class="basket__fee-div">
+                                <p id="basket__total-text">Total</p>
+                                <div class="basket__total-price"><p class="basket__total-php">PHP</p>1050.00</div>
+                            </div>
+                        </div>
+                            <button class="yellow-btn">Proceed to Check Out</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+   
+</body>
+
+</html>
+
